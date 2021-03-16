@@ -49,12 +49,12 @@ class SignUp extends Component {
 
     componentDidMount() {
         // custom rule will have name 'isPasswordMatch'
-        ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
-            if (value !== this.state.password) {
-                return false;
-            }
-            return true;
-        });
+        // ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
+        //     if (value !== this.state.password) {
+        //         return false;
+        //     }
+        //     return true;
+        // });
     }
 
     render() {
@@ -252,8 +252,8 @@ class SignUp extends Component {
                                                 value={this.state.repassword}
                                                 onChange={this.handleChange}
                                                 InputLabelProps={{style: {fontFamily: 'IRANSansWeb'}}}
-                                                validators={['isPasswordMatch', 'required']}
-                                                errorMessages={['رمز عبور مطابقت ندارد', 'لطفا رمز عبور خود را تکرار کنید']}
+                                                validators={[ 'required']}
+                                                errorMessages={[ 'لطفا رمز عبور خود را تکرار کنید']}
                                                 InputProps={{
                                                     style: {fontFamily: 'IRANSansWeb'},
                                                     endAdornment: (

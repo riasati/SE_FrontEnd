@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {Link} from 'react-router-dom';
+import axios from 'axios';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import Material_RTL from "../RTL/Material_RTL";
 import icon, {AccountCircle, Email, PersonAdd, Visibility, VisibilityOff, VpnKey,} from "@material-ui/icons"
@@ -15,6 +16,7 @@ import IconButton from "@material-ui/core/IconButton";
 import {LightenDarkenColor} from 'lighten-darken-color';
 import Icon from '@material-ui/core/Icon';
 import RTL from '../RTL/M_RTL';
+import serverURL from '../../utils/serverURL';
 
 class SignUp extends Component {
     constructor() {
@@ -59,10 +61,47 @@ class SignUp extends Component {
 
     render() {
         const classes = this.props.classes;
-
+        var body = {
+            "username": this.state.username,
+            "email": this.state.email,
+            "first_name": this.state.firstname,
+            "last_name": this.state.lastname,
+            "phone_number": this.state.phone,
+            "password": this.state.password,
+            "password_repetition": this.state.repassword
+        };
+        // var body = {
+        //     "username": "string",
+        //     "firstname": "string",
+        //     "lastname": "string",
+        //     "password": "string",
+        //     "email": "user@example.com"
+        // };
+        var header = {
+            mode: 'cors',
+            headers:{
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+                mode: 'cors',
+            }
+        };
         const handleClick = e => {
+            //setPendign(true);
+            e.preventDefault();
+            axios.post( serverURL()+"user/signup",body,header)
+                .then(result => {
+                    console.log(result);
+                    //const token = result.data.token;
+                    //localStorage.setItem('token',token);
 
-        }
+                    //window.location.href = "page";
+                }).catch(error => {
+                    console.log(error);
+                    //alert();
+
+                    //setPending(false);
+            })
+        };
 
         return (
             <Container component="main" maxWidth="xs">

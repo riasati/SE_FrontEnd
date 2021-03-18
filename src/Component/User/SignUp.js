@@ -16,7 +16,8 @@ import IconButton from "@material-ui/core/IconButton";
 import {LightenDarkenColor} from 'lighten-darken-color';
 import Icon from '@material-ui/core/Icon';
 import RTL from '../RTL/M_RTL';
-import serverURL from '../../utils/serverURL';
+import ErrorDialog from '../../utils/ErrorDialog';
+import serverURL from "../../utils/serverURL";
 
 class SignUp extends Component {
     constructor() {
@@ -31,6 +32,7 @@ class SignUp extends Component {
             phone: '',
             showPassword: false,
             isLoading: false,
+            setErrorDialog:false
         }
     }
 
@@ -85,9 +87,13 @@ class SignUp extends Component {
                 mode: 'cors',
             }
         };
-        const handleClick = e => {
+        var handleClick = e => {
             //setPendign(true);
             e.preventDefault();
+            console.log("salam");
+            this.setState({setErrorDialog:true});
+            // let a = this.state.setErrorDialog;
+            // console.log(a);
             axios.post( serverURL()+"user/signup",body,header)
                 .then(result => {
                     console.log(result);
@@ -96,12 +102,13 @@ class SignUp extends Component {
 
                     //window.location.href = "page";
                 }).catch(error => {
-                    console.log(error);
-                    //alert();
-
-                    //setPending(false);
+                console.log(error);
+                //alert();
+                //  setErrorDialog = true;
+                //setPending(false);
             })
         };
+
 
         return (
             <Container component="main" maxWidth="xs">
@@ -312,6 +319,7 @@ class SignUp extends Component {
                                                         variant="contained" style={{fontFamily: 'IRANSansWeb'}}>
                                                     {'ثبت نام'}
                                                 </Button>
+                                                <ErrorDialog open={this.state.setErrorDialog} errorText={"مشکلی به وجود آمده است"} />
                                             </Grid>
                                         </Grid>
                                     </Grid>

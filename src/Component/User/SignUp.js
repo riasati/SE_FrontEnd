@@ -37,6 +37,7 @@ class SignUp extends Component {
     }
 
     handleChange = e => {
+        this.setState({setErrorDialog:false});
         this.setState({[e.target.name]: e.target.value});
     }
 
@@ -91,10 +92,10 @@ class SignUp extends Component {
             //setPendign(true);
             e.preventDefault();
             console.log("salam");
-            this.setState({setErrorDialog:true});
+            //window.location.href = "/signin";
             // let a = this.state.setErrorDialog;
             // console.log(a);
-            axios.post( serverURL()+"user/signup",body,header)
+            axios.post( serverURL() /*"https://parham-backend.herokuapp.com/"*/+"user/signup",body,header)
                 .then(result => {
                     console.log(result);
                     //const token = result.data.token;
@@ -103,6 +104,7 @@ class SignUp extends Component {
                     //window.location.href = "page";
                 }).catch(error => {
                 console.log(error);
+                this.setState({setErrorDialog:true});
                 //alert();
                 //  setErrorDialog = true;
                 //setPending(false);

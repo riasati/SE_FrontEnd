@@ -1,7 +1,8 @@
 import './App.css';
 import React, {Component} from 'react';
 import SignIn from "./Component/User/SignIn";
-import SignUp from "./Component/User/SignUp";
+import SignUpConsultant from "./Component/User/SignUpConsultant";
+import SignUpUser from "./Component/User/SignUpUser";
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 
 class App extends Component {
@@ -11,7 +12,8 @@ class App extends Component {
                 <Router>
                     <Route path="/" exact component={SignIn}/>
                     <Route path="/signIn" component={SignIn}/>
-                    <Route path="/signUp" component={SignUp}/>
+                    <Route path="/SignUpConsultant" component={SignUpConsultant}/>
+                    <Route path="/SignUpUser" component={SignUpUser}/>
                 </Router>
             </div>
         );

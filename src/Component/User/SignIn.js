@@ -139,7 +139,7 @@ class SignIn extends Component {
                                     <Grid container>
                                         <Grid item xs={12}>
                                             <Grid>
-                                                <Link to="/signUp" style={{color: 'white',textDecoration : 'none',fontFamily: 'IRANSansWeb'}}>
+                                                <Link to="/SignUpUser" style={{color: 'white',textDecoration : 'none',fontFamily: 'IRANSansWeb'}}>
                                                     <Button
                                                         type="submit"
                                                         variant="contained"

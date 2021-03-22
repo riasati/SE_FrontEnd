@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {Link} from 'react-router-dom';
+import axios from 'axios';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import Material_RTL from "../RTL/Material_RTL";
 import icon, {AccountCircle, Email, PersonAdd, Visibility, VisibilityOff, VpnKey, PhoneAndroid,Person,PermIdentity} from "@material-ui/icons"
@@ -21,6 +22,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import ErrorDialog from '../../utils/ErrorDialog';
+import serverURL from "../../utils/serverURL";
+
 class SignUpUser extends Component {
     constructor() {
         super();
@@ -35,10 +39,12 @@ class SignUpUser extends Component {
             consulltant_type: '',
             showPassword: false,
             isLoading: false,
+            setErrorDialog:false
         }
     }
 
     handleChange = e => {
+        this.setState({setErrorDialog:false});
         this.setState({[e.target.name]: e.target.value});
     }
 
@@ -65,10 +71,53 @@ class SignUpUser extends Component {
 
     render() {
         const classes = this.props.classes;
+        var body = {
+            "username": this.state.username,
+            "email": this.state.email,
+            "first_name": this.state.firstname,
+            "last_name": this.state.lastname,
+            "phone_number": this.state.phone,
+            "password": this.state.password,
+            "password_repetition": this.state.repassword
+        };
+        // var body = {
+        //     "username": "string",
+        //     "firstname": "string",
+        //     "lastname": "string",
+        //     "password": "string",
+        //     "email": "user@example.com"
+        // };
+        var header = {
+            mode: 'cors',
+            headers:{
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+                mode: 'cors',
+            }
+        };
+        var handleClick = e => {
+            //setPendign(true);
+            e.preventDefault();
+            console.log("salam");
+            //window.location.href = "/signin";
+            // let a = this.state.setErrorDialog;
+            // console.log(a);
+            axios.post( serverURL() /*"https://parham-backend.herokuapp.com/"*/+"user/signup",body,header)
+                .then(result => {
+                    console.log(result);
+                    //const token = result.data.token;
+                    //localStorage.setItem('token',token);
 
-        const handleClick = e => {
+                    //window.location.href = "page";
+                }).catch(error => {
+                console.log(error);
+                this.setState({setErrorDialog:true});
+                //alert();
+                //  setErrorDialog = true;
+                //setPending(false);
+            })
+        };
 
-        }
 
         return (
             
@@ -305,6 +354,7 @@ class SignUpUser extends Component {
                                                         variant="contained" style={{fontFamily: 'IRANSansWeb'}}>
                                                     {'ثبت نام'}
                                                 </Button>
+                                                <ErrorDialog open={this.state.setErrorDialog} errorText={"مشکلی به وجود آمده است"} />
                                             </Grid>
                                         </Grid>
                                     </Grid>

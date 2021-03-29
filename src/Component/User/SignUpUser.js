@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
@@ -10,20 +9,14 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import Material_RTL from "../RTL/Material_RTL";
-import icon, {AccountCircle, Email, PersonAdd, Visibility, VisibilityOff, VpnKey, PhoneAndroid,Person,PermIdentity} from "@material-ui/icons"
+import  {AccountCircle, Email, Visibility, VisibilityOff, VpnKey, PhoneAndroid,Person,PermIdentity} from "@material-ui/icons"
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSignInAlt , faFileImage} from '@fortawesome/free-solid-svg-icons';
+import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import IconButton from "@material-ui/core/IconButton";
-import {LightenDarkenColor} from 'lighten-darken-color';
-import Icon from '@material-ui/core/Icon';
 import RTL from '../RTL/M_RTL';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import ErrorDialog from '../../utils/ErrorDialog';
-import serverURL from "../../utils/serverURL";
+import ErrorDialog from '../../RequestConfig/ErrorDialog';
+import serverURL from "../../RequestConfig/serverURL";
 
 class SignUpUser extends Component {
     constructor() {
@@ -36,7 +29,6 @@ class SignUpUser extends Component {
             email: '',
             password_repetition: '',
             phone_number: '',
-            consulltant_type: '',
             showPassword: false,
             isLoading: false,
             setErrorDialog:false
@@ -101,8 +93,8 @@ class SignUpUser extends Component {
             console.log("salam");
             //window.location.href = "/signin";
             // let a = this.state.setErrorDialog;
-            // console.log(a);
-            axios.post( serverURL() /*"https://parham-backend.herokuapp.com/"*/+"user/signup",body,header)
+            console.log(body);
+            axios.post( serverURL() /*"https://parham-backend.herokuapp.com/"*/+"user/signup/",body,header)
                 .then(result => {
                     console.log(result);
                     //const token = result.data.token;
@@ -121,7 +113,7 @@ class SignUpUser extends Component {
 
         return (
             
-            <Container component="main" maxWidth="xs" >
+            <Container component="main" maxWidth="md" >
                 <CssBaseline/>
                 <div>
                     <div className={classes.paper}>
@@ -156,9 +148,9 @@ class SignUpUser extends Component {
                             <RTL>
                                 <ValidatorForm className={classes.form} noValidate>
                                     <Grid container spacing={2} component="h6">
-                                        <Grid item xs={12} sm={6}>
+                                        <Grid item xs={12} sm={3}>
                                             <TextValidator
-                                                size="small"
+                                                size="normal"
                                                 variant="outlined"
                                                 required
                                                 fullWidth
@@ -182,9 +174,9 @@ class SignUpUser extends Component {
                                                 }}
                                             />
                                         </Grid>
-                                        <Grid item xs={12} sm={6}>
+                                        <Grid item xs={12} sm={3}>
                                             <TextValidator
-                                                size="small"
+                                                size="normal"
                                                 variant="outlined"
                                                 required
                                                 fullWidth
@@ -210,7 +202,7 @@ class SignUpUser extends Component {
                                         </Grid>
                                         <Grid item xs={12} sm={6}>
                                             <TextValidator  
-                                                size="small"
+                                                size="normal"
                                                 variant="outlined"
                                                 required
                                                 fullWidth
@@ -236,7 +228,7 @@ class SignUpUser extends Component {
                                         </Grid>
                                         <Grid item xs={12} sm={6}>
                                             <TextValidator
-                                                size="small"
+                                                size="normal"
                                                 variant="outlined"
                                                 required
                                                 fullWidth
@@ -263,7 +255,7 @@ class SignUpUser extends Component {
                                         
                                         <Grid item xs={12} sm={6}>
                                             <TextValidator
-                                                size="small"
+                                                size="normal"
                                                 variant="outlined"
                                                 required
                                                 fullWidth
@@ -289,7 +281,7 @@ class SignUpUser extends Component {
                                         </Grid>
                                         <Grid item xs={12} sm={6}>
                                             <TextValidator
-                                                size="small"
+                                                size="normal"
                                                 variant="outlined"
                                                 required
                                                 fullWidth
@@ -321,7 +313,7 @@ class SignUpUser extends Component {
                                         </Grid>
                                         <Grid item xs={12} sm={6}>
                                             <TextValidator
-                                                size="small"
+                                                size="normal"
                                                 variant="outlined"
                                                 required
                                                 fullWidth
@@ -365,14 +357,11 @@ class SignUpUser extends Component {
                                                 <Link to="/signIn" style={{color: 'white', textDecoration: 'none',}}>
 
                                                     <Button
+                                                        className={classes.bottomButton}
                                                         type="submit"
                                                         fullWidth
                                                         variant="contained"
-                                                        style={{
-                                                            backgroundColor: '#0e918c',
-                                                            color: 'white',
-                                                            fontFamily: 'IRANSansWeb'
-                                                        }}
+                                                        
                                                         startIcon={<FontAwesomeIcon icon={faSignInAlt} size="2x" style={{color: 'white'}}/>}
                                                     >
                                                         {'ورود'}
@@ -396,13 +385,23 @@ const useStyles = makeStyles((theme) => ({
             fontFamily: 'IRANSansWeb',
         },
     },
-    root: {},
     topButton: {
-        backgroundColor: '#3aadd9',
+        fontFamily: 'IRANSansWeb',
+        backgroundColor: '#5073ed',
         color: 'white',
-        transition: 'all 0.8s esaeIn',
+        transition: 'all 0.5s ease-in',
         "&:hover": {
-            backgroundColor: '#5073ed',
+            backgroundColor: '#3aadd9' ,
+            color: 'white'
+        },
+    },
+    bottomButton:{
+        backgroundColor: '#2ab371',
+        color: 'white',
+        fontFamily: 'IRANSansWeb',
+        transition: 'all 0.5s ease-in',
+        "&:hover": {
+            backgroundColor: '#0e918c' ,
             color: 'white'
         },
     },
@@ -418,26 +417,10 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '10px',
         opacity: '95%',
     },
-    avatar: {
-        margin: theme.spacing(1),
-        // backgroundColor: theme.palette.success.main,
-        color: 'black',
-        fontFamily: 'IRANSansWeb !important',
-    },
     form: {
-        width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(3),
-        color: 'black',
-        font: 'IRANSansWeb',
-    },
-    submit: {
-        margin: theme.spacing(3, 0, 2),
-        color: 'black',
-        fontFamily: 'IRANSansWeb !important',
-        backgroundColor: 'blue',
     },
     formControl: {
-        // margin: theme.spacing(1),
         minWidth: '100%',
     },
 }));

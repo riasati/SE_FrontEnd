@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
@@ -14,7 +13,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignInAlt , faFileImage} from '@fortawesome/free-solid-svg-icons';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from "@material-ui/core/IconButton";
-import Icon from '@material-ui/core/Icon';
 import RTL from '../RTL/M_RTL';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -22,8 +20,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import axios from 'axios';
 import Tooltip from '@material-ui/core/Tooltip';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
 import Zoom from '@material-ui/core/Zoom';
+import serverURL from "../../RequestConfig/serverURL";
 class SignUpConsultant extends Component {
     constructor() {
         super();
@@ -35,10 +33,9 @@ class SignUpConsultant extends Component {
             email: '',
             password_repetition: '',
             phone_number: '',
-            consulltant_type: '',
+            consultant_type: '',
             certificate: null,
             showPassword: false,
-            isLoading: false,
         }
     }
 
@@ -66,36 +63,57 @@ class SignUpConsultant extends Component {
         //     return true;
         // });
     }
-    onFileChange = event => { 
-        this.setState({ certificate: event.target.files[0] }); 
-      };
     render() {
         const classes = this.props.classes;
-
-        const handleClick = e => {       
+        const [file,setFile] = this.props.isFileLoaded;
+        const onFileChange = event => { 
+            this.setState({ certificate: event.target.files[0] }); 
+            setFile(true);
+        };
+        const handleClick = e => { 
             const formData = new FormData(); 
             formData.append( 
-              "myFile", 
-              this.state.certificate, 
-              this.state.certificate.name 
+              "certificate", 
+              this.state.certificate
             ); 
-            this.setState({ certificate: formData });
-            // // Details of the uploaded file 
-            console.log(this.state.certificate); 
-            console.log(formData); 
-           
-            // Request made to the backend api 
-            // Send formData object 
-            axios.post("http://consultantiust.herokuapp.com/consultant/signup/", this.state)
+            formData.append( 
+                "username", 
+                this.state.username
+            );   
+            formData.append( 
+                "first_name", 
+                this.state.first_name
+            );
+            formData.append( 
+              "last_name", 
+              this.state.last_name
+            );
+            formData.append( 
+              "email", 
+              this.state.email
+            );   
+            formData.append( 
+              "consultant_type", 
+              this.state.consultant_type
+            );
+            formData.append( 
+              "phone_number", 
+              this.state.phone_number
+            );
+            formData.append( 
+              "password", 
+              this.state.password
+            );
+            formData.append( 
+              "password_repetition", 
+              this.state.password_repetition
+            );
+            axios.post(serverURL()+"consultant/signup/",formData)
             .then(res =>{
-                console.log(this.state);
-              console.log(res)
-              const token = "Bearer " + res.data.token;
-                      localStorage.setItem('token', token); 
+                console.log(res)
             })
             .catch(err=>{
-                console.log(this.state);
-              console.log(err)
+                console.log(err)
             });
           }
         return (
@@ -130,7 +148,6 @@ class SignUpConsultant extends Component {
                         <Material_RTL>
                             <RTL>
                                 <ValidatorForm className={classes.form} noValidate>
-                                <br/>
                                     <Grid container spacing={2} component="h6">
                                         <Grid item xs={12} sm={3}>
                                             <TextValidator
@@ -238,16 +255,16 @@ class SignUpConsultant extends Component {
                                         </Grid>
                                         <Grid item xs={12} sm={3}>
                                             <FormControl variant="outlined" className={classes.formControl}>
-                                                <InputLabel id="consulltant_type"><span style={{fontFamily: 'IRANSansWeb'}}>حوزه مشاوره</span></InputLabel>
+                                                <InputLabel id="consultant_type"><span style={{fontFamily: 'IRANSansWeb'}}>حوزه مشاوره</span></InputLabel>
                                                 <Select
                                                     size="normal"
-                                                    labelId="consulltant_type"
-                                                    id="consulltant_type"
-                                                    name="consulltant_type"
-                                                    value={this.state.consulltant_type}
+                                                    labelId="consultant_type"
+                                                    id="consultant_type"
+                                                    name="consultant_type"
+                                                    value={this.state.consultant_type}
                                                     onChange={this.handleChange}
                                                     required
-                                                    label="consulltant_type"
+                                                    label="consultant_type"
                                                     InputProps={{
                                                         style: {fontFamily: 'IRANSansWeb'},
                                                         endAdornment: (
@@ -257,9 +274,9 @@ class SignUpConsultant extends Component {
                                                         ),
                                                     }}
                                                 >
-                                                    <MenuItem value={"Lawyer"}><span style={{fontFamily: 'IRANSansWeb'}}>۱مشاور</span></MenuItem>
-                                                    <MenuItem value={"Lawyer"}><span style={{fontFamily: 'IRANSansWeb'}}>۲مشاور</span></MenuItem>
-                                                    <MenuItem value={"Lawyer"}><span style={{fontFamily: 'IRANSansWeb'}}>۳مشاور</span></MenuItem>
+                                                    <MenuItem value={"Lawyer"}><span style={{fontFamily: 'IRANSansWeb'}}>وکالت</span></MenuItem>
+                                                    <MenuItem value={"Doctor"}><span style={{fontFamily: 'IRANSansWeb'}}>پزشکی</span></MenuItem>
+                                                    <MenuItem value={"Car"}><span style={{fontFamily: 'IRANSansWeb'}}>ماشین</span></MenuItem>
                                                 </Select>
                                             </FormControl>
                                         </Grid>
@@ -277,8 +294,8 @@ class SignUpConsultant extends Component {
                                                 value={this.state.phone_number}
                                                 onChange={this.handleChange}
                                                 InputLabelProps={{style: {fontFamily: 'IRANSansWeb'},}}
-                                                validators={['required', 'minStringLength:' + 11, 'maxStringLength:' + 11, 'matchRegexp:[0-9]*$']}
-                                                errorMessages={['لطفا تلفن همراه خود را وارد کنید', 'طول شماره تلفن باید ۱۱ عدد باشد','طول شماره تلفن باید ۱۱ عدد باشد', ' برای تلفن همراه از اعداد استفاده کنید']}
+                                                validators={['required', 'minStringLength:' + 11, 'maxStringLength:' + 11, 'matchRegexp:09[0-9]*$']}
+                                                errorMessages={['لطفا تلفن همراه خود را وارد کنید', 'طول شماره تلفن باید ۱۱ عدد باشد','طول شماره تلفن باید ۱۱ عدد باشد', ' شماره تلفن همراه باید عدد باشد و با ۰۹ شروع شود']}
                                                 InputProps={{
                                                     style: {fontFamily: 'IRANSansWeb',color:'#2ab371'},
                                                     endAdornment: (
@@ -348,19 +365,29 @@ class SignUpConsultant extends Component {
                                             />
                                         </Grid>
                                     </Grid>
-                                    <input accept=".pdf,.png,.jpg,.zip,.jpeg"
+                                    <br/>
+                                <span style={{color:'#3f407d'}}>آپلود مدرک</span>
+                                <br/>
+                                <input
                                     style={{display : 'none'}}
-                                    id='file' type="file" onChange={this.onFileChange} />
+                                    id='file' type="file" onChange={onFileChange} />
                                 <div >
                                 <label htmlFor='file'>
-                                    <Tooltip title={<span style={{fontFamily: 'Vazir',fontSize: '12px'}}>افزودن فایل </span>}
+                                    <Tooltip title={<span style={{fontFamily: 'IRANSansWeb',fontSize: '12px'}}>افزودن فایل </span>}
                                     placement="left"
-                                    TransitionComponent={Zoom} style={{fontFamily: 'Vazir'}} >
+                                    TransitionComponent={Zoom} style={{fontFamily: 'IRANSansWeb'}} >
                                         <IconButton aria-label="upload picture" component="span">                        
                                         <FontAwesomeIcon icon={faFileImage} size="1x" style={{color: '#2ab371'}}/>                                 
                                         </IconButton>  
                                     </Tooltip>                                  
                                 </label>
+                                <br/>
+                                {file && typeof(this.state.certificate.name) !== "undefined" ? (<div style={{color:'#3f407d'}}>
+                                    <span>فایل</span>
+                                    <span>&nbsp;{this.state.certificate.name}&nbsp;</span>
+                                    <span>آماده ارسال است</span>
+                                    
+                                </div>):null}
                             </div><br/>
                                     <Grid container>
                                         <Grid item xs={12}>
@@ -379,19 +406,13 @@ class SignUpConsultant extends Component {
                                                 <Link to="/signIn" style={{color: 'white', textDecoration: 'none',}}>
 
                                                     <Button
+                                                        className={classes.bottomButton}
                                                         type="submit"
                                                         fullWidth
                                                         variant="contained"
-                                                        style={{
-                                                            backgroundColor: '#0e918c',
-                                                            color: 'white',
-                                                            fontFamily: 'IRANSansWeb'
-                                                        }}
-                                                        // endIcon={<Icon>login</Icon>}
                                                         startIcon={<FontAwesomeIcon icon={faSignInAlt} size="2x" style={{color: 'white'}}/>}
                                                     >
                                                         {'ورود'}
-
                                                     </Button></Link></Grid>
                                         </Grid>
                                     </Grid>
@@ -410,15 +431,24 @@ const useStyles = makeStyles((theme) => ({
         '.MuiFormHelperText-root.Mui-error': {
             fontFamily: 'IRANSansWeb',
         },
-        
     },
-    root: {},
     topButton: {
-        backgroundColor: '#3aadd9',
+        fontFamily: 'IRANSansWeb',
+        backgroundColor: '#5073ed',
         color: 'white',
-        transition: 'all 0.8s esaeIn',
+        transition: 'all 0.5s ease-in',
         "&:hover": {
-            backgroundColor: '#5073ed' ,
+            backgroundColor: '#3aadd9' ,
+            color: 'white'
+        },
+    },
+    bottomButton:{
+        backgroundColor: '#2ab371',
+        color: 'white',
+        fontFamily: 'IRANSansWeb',
+        transition: 'all 0.5s ease-in',
+        "&:hover": {
+            backgroundColor: '#0e918c' ,
             color: 'white'
         },
     },
@@ -434,33 +464,18 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '10px',
         opacity: '95%',
     },
-    avatar: {
-        margin: theme.spacing(1),
-        // backgroundColor: theme.palette.success.main,
-        color: 'black',
-        fontFamily: 'IRANSansWeb !important',
-    },
     form: {
-        width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(3),
-        color: 'black',
-        font: 'IRANSansWeb',
-    },
-    submit: {
-        margin: theme.spacing(3, 0, 2),
-        color: 'black',
-        fontFamily: 'IRANSansWeb !important',
-        backgroundColor: 'blue',
     },
     formControl: {
-        // margin: theme.spacing(1),
         minWidth: '100%',
     },
 }));
 
 export default () => {
     const classes = useStyles();
+    const isFileLoaded = React.useState(false)
     return (
-        <SignUpConsultant classes={classes}/>
+        <SignUpConsultant classes={classes} isFileLoaded={isFileLoaded}/>
     )
 }

@@ -3,27 +3,24 @@ import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Avatar from "@material-ui/core/Avatar";
-// import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Material_RTL from "../RTL/Material_RTL";
-// import axios from 'axios';
-// import { LightenDarkenColor } from 'lighten-darken-color';
+import axios from 'axios';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import InputAdornment from "@material-ui/core/InputAdornment";
-import { AccountCircle, Visibility, VisibilityOff, login } from "@material-ui/icons";
+import { AccountCircle, Visibility, VisibilityOff, Lock } from "@material-ui/icons";
+import { faUserPlus , } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import IconButton from "@material-ui/core/IconButton";
-import Icon from "@material-ui/core/Icon";
-// import LoadingButton from '@material-ui/lab/LoadingButton';
 import RTL from '../RTL/M_RTL';
+import serverURL from "../../RequestConfig/serverURL";
 class SignIn extends Component {
     constructor() {
         super();
         this.state = {
             password: '',
-            username: '',
+            email_username: '',
         }
     }
     handleChange = e => {
@@ -44,43 +41,48 @@ class SignIn extends Component {
         const classes = this.props.classes;
         const [pending, setPending] = this.props.p;
         const handleClick = e => {
+            e.preventDefault();
+            axios.post(serverURL()+"user/login/", this.state)
+                .then(result => {
+                    console.log(result);                                                           
+                    console.log(this.state);                                                           
+                    const token = "Bearer " + result.data.token;
+                    localStorage.setItem('token', token);
+                }).catch(error => {
+                    console.log(error);
+                    alert(" خطا! نام کاربری یا رمز عبور شما اشتباه می باشد.لطفا تمام موارد * دار را پر کنید.");
+                })
         }
             return(
-            <Container component="main" maxWidth="xs"
-                       className={classes.container}>
-                <CssBaseline />
-                <div className={classes.foo}>
+            <Container component="main" maxWidth="xs"> 
+                <div>
                     <div className={classes.paper}>
-                        {/*<Avatar className={classes.avatar}>*/}
-                        {/*    <LockOutlinedIcon />*/}
-                        {/*</Avatar>*/}
-                        <Typography component="h1" variant="h5" style={{fontFamily: 'IRANSansWeb'}}>
+                        <Typography component="h1" variant="h5" style={{fontFamily: 'IRANSansWeb',}}>
                             {'ورود'}
+                            <br/>
+                            <span ><Lock style={{marginTop: '10px'}} fontSize="large"/></span>
                         </Typography>
                         <Material_RTL>
                             <RTL>
-
-                                <ValidatorForm className={classes.form} noValidate style={{fontFamily: 'IRANSansWeb'}}>
+                                <ValidatorForm noValidate>
                                     <Grid container spacing={2} component="h6">
-                                        <Grid item xs={12} style={{fontFamily: 'IRANSansWeb'}}>
+                                        <Grid item xs={12}>
                                             <TextValidator
-                                                style={{fontFamily: 'IRANSansWeb'}}
                                                 variant="outlined"
                                                 margin="normal"
                                                 required
                                                 fullWidth
-                                                id="username"
-                                                label="نام کاربری"
-                                                name="username"
-                                                autoComplete="username"
-                                                autoFocus
-                                                value={this.state.username}
+                                                id="email_username"
+                                                label="نام کاربری یا ایمیل"
+                                                name="email_username"
+                                                autoComplete="email_username"
+                                                value={this.state.email_username}
                                                 onChange={this.handleChange}
                                                 InputLabelProps={{style:{fontFamily: 'IRANSansWeb'}}}
-                                                validators={['required', 'minStringLength:' + 6, 'matchRegexp:^[a-zA-Z0-9_]*$']}
-                                                errorMessages={['لطفا نام کاربری خود را وارد کنید', 'طول نام کاربری باید بیشتر از ۶ باشد', 'a-z 0-9_ لطفا از حروف مجاز استفاده کنید']}
+                                                validators={['required']}
+                                                errorMessages={['لطفا نام کاربری یا ایمیل خود را وارد کنید']}
                                                 InputProps={{
-                                                    style:{fontFamily: 'IRANSansWeb'},
+                                                    style:{fontFamily: 'IRANSansWeb',color:'#2ab371'},
                                                     endAdornment: (
                                                         <InputAdornment position="start">
                                                             <AccountCircle />
@@ -91,7 +93,6 @@ class SignIn extends Component {
                                         </Grid>
                                         <Grid item xs={12}>
                                             <TextValidator
-                                                style={{fontFamily: 'IRANSansWeb'}}
                                                 variant="outlined"
                                                 margin="normal"
                                                 required
@@ -109,11 +110,11 @@ class SignIn extends Component {
                                                 errorStyle={{style:{color: 'red',fontFamily: 'IRANSansWeb'}}}
                                                 errorText={{style:{color: 'red',fontFamily: 'IRANSansWeb'}}}
                                                 InputProps={{
-                                                    style:{fontFamily: 'IRANSansWeb'},
+                                                    style:{fontFamily: 'IRANSansWeb',color:'#2ab371'},
                                                     endAdornment: (
                                                         <InputAdornment position="start">
                                                             <IconButton
-                                                                style={{ padding: '0px',color:'black' }}
+                                                                style={{ padding: '0px',color:'#2ab371' }}
                                                                 aria-label="toggle password visibility"
                                                                 onClick={this.handleClickShowPassword}
                                                                 onMouseDown={this.handleMouseDownPassword}
@@ -127,8 +128,8 @@ class SignIn extends Component {
                                     <br/>
                                     <Grid container>
                                         <Grid item xs={12}>
-                                            <Grid classes={classes.root} >
-                                                <Button onClick={handleClick }  className={classes.topButton}  variant="contained"  style={{fontFamily: 'IRANSansWeb'}} fullWidth>
+                                            <Grid>
+                                                <Button onClick={handleClick }  className={classes.topButton}  variant="contained" fullWidth>
                                                     ورود
                                                 </Button>
                                             </Grid>
@@ -141,13 +142,12 @@ class SignIn extends Component {
                                             <Grid>
                                                 <Link to="/SignUpUser" style={{color: 'white',textDecoration : 'none',fontFamily: 'IRANSansWeb'}}>
                                                     <Button
+                                                        className={classes.bottomButton}
                                                         type="submit"
                                                         variant="contained"
                                                         fullWidth
-                                                        style={{backgroundColor : '#0e918c',fontFamily: 'IRANSansWeb'}}
-                                                        startIcon={<Icon>person_add</Icon>}
+                                                        startIcon={<FontAwesomeIcon icon={faUserPlus} size="2x" style={{color: 'white'}}/>}
                                                     >
-
                                                         {"ثبت نام"}
                                                     </Button></Link>
                                             </Grid></Grid>
@@ -168,6 +168,37 @@ const useStyles = makeStyles((theme) => ({
             fontFamily: 'IRANSansWeb',
         },
     },
+    paper: {
+        marginTop: theme.spacing(3),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        color: '#3f407d',
+        backgroundColor: '#f3f7fa',
+        fontFamily: 'IRANSansWeb !important',
+        padding: '20px',
+        borderRadius: '10px',
+    },
+    topButton: {
+        fontFamily: 'IRANSansWeb',
+        backgroundColor: '#5073ed',
+        color: 'white',
+        transition: 'all 0.5s ease-in',
+        "&:hover": {
+            backgroundColor: '#3aadd9' ,
+            color: 'white'
+        },
+    },
+    bottomButton:{
+        backgroundColor: '#2ab371',
+        color: 'white',
+        fontFamily: 'IRANSansWeb',
+        transition: 'all 0.5s ease-in',
+        "&:hover": {
+            backgroundColor: '#0e918c' ,
+            color: 'white'
+        },
+    }
 }));
 export default () =>{
     const classes = useStyles();

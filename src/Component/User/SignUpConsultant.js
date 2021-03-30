@@ -125,7 +125,7 @@ class SignUpConsultant extends Component {
                 <CssBaseline/>
                 <div>
                     <div className={classes.paper}>
-                        <Typography component="h1" variant="h5" style={{fontFamily: 'IRANSansWeb',color: '#3f407d'}}>
+                        <Typography component="h1" variant="h5" style={{fontFamily: 'IRANSansWeb',color: '#3f407d',marginBottom:'20px'}}>
                             ثبت نام
                         </Typography>
                         <br/>
@@ -391,7 +391,7 @@ class SignUpConsultant extends Component {
                                             <Tooltip title={<span style={{fontFamily: 'IRANSansWeb',fontSize: '12px'}}>حذف فایل</span>}
                                                      placement="left"
                                                      TransitionComponent={Zoom} style={{fontFamily: 'IRANSansWeb'}} >
-                                                <Button onClick={handleEliminateFileClick} style={{color:'#3f407d'}} varient={"outlined"}>
+                                                <Button onClick={handleEliminateFileClick} style={{color:'#3f407d',fontFamily: 'IRANSansWeb'}} varient={"outlined"}>
                                                     <span>فایل</span>
                                                     <span>&nbsp;{this.state.certificate.name}&nbsp;</span>
                                                     <span>آماده ارسال است</span>
@@ -441,6 +441,9 @@ const useStyles = makeStyles((theme) => ({
     '@global': {
         '.MuiFormHelperText-root.Mui-error': {
             fontFamily: 'IRANSansWeb',
+        },
+        '.MuiMenuItem-root':{
+            direction: 'rtl',
         },
     },
     InputAdornment:{

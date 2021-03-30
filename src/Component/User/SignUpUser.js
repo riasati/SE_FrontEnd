@@ -136,7 +136,7 @@ class SignUpUser extends Component {
                         {/* <Avatar className={classes.avatar}>
                            <PersonAdd/>
                         </Avatar> */}
-                        <Typography component="h1" variant="h5" style={{fontFamily: 'IRANSansWeb',color: '#3f407d'}}>
+                        <Typography component="h1" variant="h5" style={{fontFamily: 'IRANSansWeb',color: '#3f407d',marginBottom:'20px'}}>
                             ثبت نام
                         </Typography>
                         <br/>
@@ -283,8 +283,8 @@ class SignUpUser extends Component {
                                                 value={this.state.phone_number}
                                                 onChange={this.handleChange}
                                                 InputLabelProps={{style: {fontFamily: 'IRANSansWeb'},}}
-                                                validators={['required', 'minStringLength:' + 11, 'maxStringLength:' + 11, 'matchRegexp:[0-9]*$']}
-                                                errorMessages={['لطفا تلفن همراه خود را وارد کنید', 'طول شماره تلفن باید ۱۱ عدد باشد','طول شماره تلفن باید ۱۱ عدد باشد', ' برای تلفن همراه از اعداد استفاده کنید']}
+                                                validators={['required', 'minStringLength:' + 11, 'maxStringLength:' + 11, 'matchRegexp:09[0-9]*$']}
+                                                errorMessages={['لطفا تلفن همراه خود را وارد کنید', 'طول شماره تلفن باید ۱۱ عدد باشد','طول شماره تلفن باید ۱۱ عدد باشد', ' شماره تلفن همراه باید عدد باشد و با ۰۹ شروع شود']}
                                                 InputProps={{
                                                     style: {fontFamily: 'IRANSansWeb'},
                                                     endAdornment: (

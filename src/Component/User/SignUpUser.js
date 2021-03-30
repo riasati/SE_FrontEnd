@@ -31,7 +31,8 @@ class SignUpUser extends Component {
             phone_number: '',
             showPassword: false,
             isLoading: false,
-            setErrorDialog:false
+            setErrorDialog:false,
+            ErrorDialogText:'',
         }
     }
 
@@ -63,23 +64,7 @@ class SignUpUser extends Component {
 
     render() {
         const classes = this.props.classes;
-        var body = {
-            "username": this.state.username,
-            "email": this.state.email,
-            "first_name": this.state.firstname,
-            "last_name": this.state.lastname,
-            "phone_number": this.state.phone,
-            "password": this.state.password,
-            "password_repetition": this.state.repassword
-        };
-        // var body = {
-        //     "username": "string",
-        //     "firstname": "string",
-        //     "lastname": "string",
-        //     "password": "string",
-        //     "email": "user@example.com"
-        // };
-        var header = {
+        const header = {
             mode: 'cors',
             headers:{
                 'Access-Control-Allow-Origin': '*',
@@ -90,24 +75,55 @@ class SignUpUser extends Component {
         var handleClick = e => {
             //setPendign(true);
             e.preventDefault();
-            console.log("salam");
-            //window.location.href = "/signin";
-            // let a = this.state.setErrorDialog;
-            console.log(body);
-            axios.post( serverURL() /*"https://parham-backend.herokuapp.com/"*/+"user/signup/",body,header)
-                .then(result => {
-                    console.log(result);
-                    //const token = result.data.token;
-                    //localStorage.setItem('token',token);
-
-                    //window.location.href = "page";
-                }).catch(error => {
-                console.log(error);
-                this.setState({setErrorDialog:true});
-                //alert();
-                //  setErrorDialog = true;
-                //setPending(false);
-            })
+            axios.post(serverURL() + "user/signup/", this.state)
+                .then(res =>{
+                    console.log(res);
+                    const token = res.data.token;
+                    localStorage.setItem('token', token);
+                    window.location.href = "/signIn";
+                })
+                .catch(err=>{
+                    let errMessage = "";
+                    let resError = err.response.data;
+                    // typeof resError.error.username !== "undefined" ? errMessage += resError.error.username[0] : null;
+                    // typeof(resError.error.email) !== "undefined" ? errMessage += resError.error.email[0] : null;
+                    // typeof(resError.error.phone_number) !== "undefined" ? errMessage += resError.error.phone_number[0] : null;
+                    // typeof(resError.error.password) !== "undefined" ? errMessage += resError.error.password[0] : null;
+                    // typeof(resError.error.password_repetition) !== "undefined" ? errMessage += resError.error.password_repetition[0] : null;
+                    if (typeof (resError.error) !== "undefined")
+                    {
+                        if (typeof(resError.error.username) !== "undefined")
+                        {
+                            errMessage += resError.error.username[0];
+                        }
+                        if (typeof (resError.error.email) !== "undefined")
+                        {
+                            errMessage += resError.error.email[0];
+                        }
+                        if (typeof (resError.error.phone_number) !== "undefined")
+                        {
+                            errMessage += resError.error.phone_number[0];
+                        }
+                        if (typeof (resError.error.password) !== "undefined")
+                        {
+                            errMessage += resError.error.password[0] ;
+                        }
+                        if (typeof (resError.error.password_repetition) !== "undefined")
+                        {
+                            errMessage += resError.error.password_repetition[0] ;
+                        }
+                    }
+                    if (errMessage === "")
+                    {
+                        errMessage = err.message
+                    }
+                    // console.log(err.response.data.error.email[0]);
+                    // console.log(err.response.data.error.phone_number[0]);
+                    // console.log(err.response.data.error.password[0]);
+                    // console.log(err.response.data.error.password_repetition[0]);
+                    //console.log(err.response.data.phone_number);
+                    this.setState({setErrorDialog:true,ErrorDialogText:errMessage});
+                });
         };
 
 
@@ -128,13 +144,13 @@ class SignUpUser extends Component {
                             <Grid  item xs={3}>
                                 {/* empty grid */}
                             </Grid>
-                            <Grid item xs={3} style={{boxShadow: '0px 0px 10px 0px',borderRadius: '10px 0px 0px 10px'}}>
+                            <Grid item xs={3} style={{boxShadow: 'inset 0px 0px 5px 0px',borderRadius: '10px 0px 0px 10px'}}>
                                 <Link to="/SignUpUser" style={{color: '#3f407d', textDecoration: 'none',}}>
                                     <img src="https://img.icons8.com/plasticine/100/000000/gender-neutral-user--v1.png" style={{width:'50%'}}/>
                                     <div>مشاوره می خوام</div>
                                 </Link>
                             </Grid>
-                            <Grid item xs={3} style={{boxShadow: 'inset 0px 0px 5px 0px',borderRadius: '0px 10px 10px 0px'}}>
+                            <Grid item xs={3} style={{boxShadow: '0px 0px 10px 0px',borderRadius: '0px 10px 10px 0px'}}>
                                 <Link to="/SignUpConsultant" style={{color: '#3f407d', textDecoration: 'none',}}>
                                     <img src="https://img.icons8.com/plasticine/100/000000/online-support.png" style={{width:'50%'}}/>
                                     <div>مشاوره میدم</div>
@@ -165,9 +181,9 @@ class SignUpUser extends Component {
                                                 validators={['required']}
                                                 errorMessages={['لطفا  نام خود را وارد کنید']}
                                                 InputProps={{
-                                                    style: {fontFamily: 'IRANSansWeb',color:'#2ab371'},
+                                                    style: {fontFamily: 'IRANSansWeb'},
                                                     endAdornment: (
-                                                        <InputAdornment position="end">
+                                                        <InputAdornment className={classes.InputAdornment} position="end">
                                                             <Person/>
                                                         </InputAdornment>
                                                     ),
@@ -191,9 +207,9 @@ class SignUpUser extends Component {
                                                 validators={['required']}
                                                 errorMessages={['لطفا نام خانوادگی خود را وارد کنید']}
                                                 InputProps={{
-                                                    style: {fontFamily: 'IRANSansWeb',color:'#2ab371'},
+                                                    style: {fontFamily: 'IRANSansWeb'},
                                                     endAdornment: (
-                                                        <InputAdornment position="end">
+                                                        <InputAdornment className={classes.InputAdornment} position="end">
                                                             <PermIdentity/>
                                                         </InputAdornment>
                                                     ),
@@ -217,9 +233,9 @@ class SignUpUser extends Component {
                                                 validators={['required', 'minStringLength:' + 6, 'matchRegexp:^[a-zA-Z0-9_]*$']}
                                                 errorMessages={['لطفا یک نام کاربری مناسب وارد کنید', 'طول نام کاربری باید بیشتر از ۶ باشد', 'a-z 0-9_ لطفا از حروف مجاز استفاده کنید']}
                                                 InputProps={{
-                                                    style: {fontFamily: 'IRANSansWeb',color:'#2ab371'},
+                                                    style: {fontFamily: 'IRANSansWeb'},
                                                     endAdornment: (
-                                                        <InputAdornment position="end">
+                                                        <InputAdornment className={classes.InputAdornment} position="end">
                                                             <AccountCircle/>
                                                         </InputAdornment>
                                                     ),
@@ -243,9 +259,9 @@ class SignUpUser extends Component {
                                                 validators={['required', 'isEmail']}
                                                 errorMessages={['لطفا ایمیل خود را وارد کنید', 'ایمیل شما معتبر نیست']}
                                                 InputProps={{
-                                                    style: {fontFamily: 'IRANSansWeb',color:'#2ab371'},
+                                                    style: {fontFamily: 'IRANSansWeb'},
                                                     endAdornment: (
-                                                        <InputAdornment position="end">
+                                                        <InputAdornment className={classes.InputAdornment} position="end">
                                                             <Email/>
                                                         </InputAdornment>
                                                     ),
@@ -270,9 +286,9 @@ class SignUpUser extends Component {
                                                 validators={['required', 'minStringLength:' + 11, 'maxStringLength:' + 11, 'matchRegexp:[0-9]*$']}
                                                 errorMessages={['لطفا تلفن همراه خود را وارد کنید', 'طول شماره تلفن باید ۱۱ عدد باشد','طول شماره تلفن باید ۱۱ عدد باشد', ' برای تلفن همراه از اعداد استفاده کنید']}
                                                 InputProps={{
-                                                    style: {fontFamily: 'IRANSansWeb',color:'#2ab371'},
+                                                    style: {fontFamily: 'IRANSansWeb'},
                                                     endAdornment: (
-                                                        <InputAdornment position="end">
+                                                        <InputAdornment className={classes.InputAdornment} position="end">
                                                             <PhoneAndroid/>
                                                         </InputAdornment>
                                                     ),
@@ -296,9 +312,9 @@ class SignUpUser extends Component {
                                                 validators={['required', 'minStringLength:' + 6]}
                                                 errorMessages={['لطفا رمز عبور خود را وارد کنید', 'رمز عبور باید بیشتر از ۶ حرف باشد']}
                                                 InputProps={{
-                                                    style: {fontFamily: 'IRANSansWeb',color:'#2ab371'},
+                                                    style: {fontFamily: 'IRANSansWeb'},
                                                     endAdornment: (
-                                                        <InputAdornment position="end">
+                                                        <InputAdornment className={classes.InputAdornment} position="end">
                                                             <IconButton
                                                                 style={{padding: '0px', color: '#2ab371'}}
                                                                 onClick={this.handleClickShowPassword}
@@ -328,9 +344,9 @@ class SignUpUser extends Component {
                                                 validators={[ 'required']}
                                                 errorMessages={[ 'لطفا رمز عبور خود را تکرار کنید']}
                                                 InputProps={{
-                                                    style: {fontFamily: 'IRANSansWeb',color:'#2ab371'},
+                                                    style: {fontFamily: 'IRANSansWeb'},
                                                     endAdornment: (
-                                                        <InputAdornment position="end">
+                                                        <InputAdornment className={classes.InputAdornment} position="end">
                                                             <VpnKey/>
                                                         </InputAdornment>
                                                     ),
@@ -346,7 +362,7 @@ class SignUpUser extends Component {
                                                         variant="contained" style={{fontFamily: 'IRANSansWeb'}}>
                                                     {'ثبت نام'}
                                                 </Button>
-                                                <ErrorDialog open={this.state.setErrorDialog} errorText={"مشکلی به وجود آمده است"} />
+                                                <ErrorDialog open={this.state.setErrorDialog} errorText={this.state.ErrorDialogText} />
                                             </Grid>
                                         </Grid>
                                     </Grid>
@@ -384,6 +400,9 @@ const useStyles = makeStyles((theme) => ({
         '.MuiFormHelperText-root.Mui-error': {
             fontFamily: 'IRANSansWeb',
         },
+    },
+    InputAdornment:{
+        color:"#2ab371",
     },
     topButton: {
         fontFamily: 'IRANSansWeb',

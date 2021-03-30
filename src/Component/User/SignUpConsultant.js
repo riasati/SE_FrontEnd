@@ -70,6 +70,10 @@ class SignUpConsultant extends Component {
             this.setState({ certificate: event.target.files[0] }); 
             setFile(true);
         };
+        const handleEliminateFileClick = e => {
+            this.setState({certificate:null});
+            setFile(false);
+        };
         const handleClick = e => { 
             const formData = new FormData(); 
             formData.append( 
@@ -129,13 +133,13 @@ class SignUpConsultant extends Component {
                             <Grid  item xs={3}>
                                 {/* empty grid */}
                             </Grid>
-                            <Grid item xs={3} style={{boxShadow: 'inset 0px 0px 5px 0px',borderRadius: '10px 0px 0px 10px'}}>
+                            <Grid item xs={3} style={{boxShadow: '0px 0px 10px 0px',borderRadius: '10px 0px 0px 10px'}}>
                                 <Link to="/SignUpUser" style={{color: '#3f407d', textDecoration: 'none',}}>
                                     <img src="https://img.icons8.com/plasticine/100/000000/gender-neutral-user--v1.png" style={{width:'50%'}}/>
                                     <div>مشاوره می خوام</div>
                                 </Link>
                             </Grid>
-                            <Grid item xs={3} style={{boxShadow: '0px 0px 10px 0px',borderRadius: '0px 10px 10px 0px'}}>
+                            <Grid item xs={3} style={{boxShadow: 'inset 0px 0px 5px 0px',borderRadius: '0px 10px 10px 0px'}}>
                                 <Link to="/SignUpConsultant" style={{color: '#3f407d', textDecoration: 'none',}}>
                                     <img src="https://img.icons8.com/plasticine/100/000000/online-support.png" style={{width:'50%'}}/>
                                     <div>مشاوره میدم</div>
@@ -166,9 +170,9 @@ class SignUpConsultant extends Component {
                                                 validators={['required']}
                                                 errorMessages={['لطفا  نام خود را وارد کنید']}
                                                 InputProps={{
-                                                    style: {fontFamily: 'IRANSansWeb',color:'#2ab371'},
+                                                    style: {fontFamily: 'IRANSansWeb'},
                                                     endAdornment: (
-                                                        <InputAdornment position="end">
+                                                        <InputAdornment className={classes.InputAdornment} position="end">
                                                             <Person/>
                                                         </InputAdornment>
                                                     ),
@@ -192,9 +196,9 @@ class SignUpConsultant extends Component {
                                                 validators={['required']}
                                                 errorMessages={['لطفا نام خانوادگی خود را وارد کنید']}
                                                 InputProps={{
-                                                    style: {fontFamily: 'IRANSansWeb',color:'#2ab371'},
+                                                    style: {fontFamily: 'IRANSansWeb'},
                                                     endAdornment: (
-                                                        <InputAdornment position="end">
+                                                        <InputAdornment className={classes.InputAdornment} position="end">
                                                             <PermIdentity/>
                                                         </InputAdornment>
                                                     ),
@@ -218,9 +222,9 @@ class SignUpConsultant extends Component {
                                                 validators={['required', 'minStringLength:' + 6, 'matchRegexp:^[a-zA-Z0-9_]*$']}
                                                 errorMessages={['لطفا یک نام کاربری مناسب وارد کنید', 'طول نام کاربری باید بیشتر از ۶ باشد', 'a-z 0-9_ لطفا از حروف مجاز استفاده کنید']}
                                                 InputProps={{
-                                                    style: {fontFamily: 'IRANSansWeb',color:'#2ab371'},
+                                                    style: {fontFamily: 'IRANSansWeb'},
                                                     endAdornment: (
-                                                        <InputAdornment position="end">
+                                                        <InputAdornment className={classes.InputAdornment} position="end">
                                                             <AccountCircle/>
                                                         </InputAdornment>
                                                     ),
@@ -244,9 +248,9 @@ class SignUpConsultant extends Component {
                                                 validators={['required', 'isEmail']}
                                                 errorMessages={['لطفا ایمیل خود را وارد کنید', 'ایمیل شما معتبر نیست']}
                                                 InputProps={{
-                                                    style: {fontFamily: 'IRANSansWeb',color:'#2ab371'},
+                                                    style: {fontFamily: 'IRANSansWeb'},
                                                     endAdornment: (
-                                                        <InputAdornment position="end">
+                                                        <InputAdornment className={classes.InputAdornment} position="end">
                                                             <Email/>
                                                         </InputAdornment>
                                                     ),
@@ -297,9 +301,9 @@ class SignUpConsultant extends Component {
                                                 validators={['required', 'minStringLength:' + 11, 'maxStringLength:' + 11, 'matchRegexp:09[0-9]*$']}
                                                 errorMessages={['لطفا تلفن همراه خود را وارد کنید', 'طول شماره تلفن باید ۱۱ عدد باشد','طول شماره تلفن باید ۱۱ عدد باشد', ' شماره تلفن همراه باید عدد باشد و با ۰۹ شروع شود']}
                                                 InputProps={{
-                                                    style: {fontFamily: 'IRANSansWeb',color:'#2ab371'},
+                                                    style: {fontFamily: 'IRANSansWeb'},
                                                     endAdornment: (
-                                                        <InputAdornment position="end">
+                                                        <InputAdornment className={classes.InputAdornment} position="end">
                                                             <PhoneAndroid/>
                                                         </InputAdornment>
                                                     ),
@@ -323,9 +327,9 @@ class SignUpConsultant extends Component {
                                                 validators={['required', 'minStringLength:' + 6]}
                                                 errorMessages={['لطفا رمز عبور خود را وارد کنید', 'رمز عبور باید بیشتر از ۶ حرف باشد']}
                                                 InputProps={{
-                                                    style: {fontFamily: 'IRANSansWeb',color:'#2ab371'},
+                                                    style: {fontFamily: 'IRANSansWeb'},
                                                     endAdornment: (
-                                                        <InputAdornment position="end">
+                                                        <InputAdornment className={classes.InputAdornment} position="end">
                                                             <IconButton
                                                                 style={{padding: '0px', color: '#2ab371'}}
                                                                 onClick={this.handleClickShowPassword}
@@ -355,9 +359,9 @@ class SignUpConsultant extends Component {
                                                 validators={[ 'required']}
                                                 errorMessages={[ 'لطفا رمز عبور خود را تکرار کنید']}
                                                 InputProps={{
-                                                    style: {fontFamily: 'IRANSansWeb',color:'#2ab371'},
+                                                    style: {fontFamily: 'IRANSansWeb'},
                                                     endAdornment: (
-                                                        <InputAdornment position="end">
+                                                        <InputAdornment className={classes.InputAdornment} position="end">
                                                             <VpnKey/>
                                                         </InputAdornment>
                                                     ),
@@ -382,12 +386,19 @@ class SignUpConsultant extends Component {
                                     </Tooltip>                                  
                                 </label>
                                 <br/>
-                                {file && typeof(this.state.certificate.name) !== "undefined" ? (<div style={{color:'#3f407d'}}>
-                                    <span>فایل</span>
-                                    <span>&nbsp;{this.state.certificate.name}&nbsp;</span>
-                                    <span>آماده ارسال است</span>
-                                    
-                                </div>):null}
+                                {file && typeof(this.state.certificate.name) !== "undefined" ?
+                                    (
+                                            <Tooltip title={<span style={{fontFamily: 'IRANSansWeb',fontSize: '12px'}}>حذف فایل</span>}
+                                                     placement="left"
+                                                     TransitionComponent={Zoom} style={{fontFamily: 'IRANSansWeb'}} >
+                                                <Button onClick={handleEliminateFileClick} style={{color:'#3f407d'}} varient={"outlined"}>
+                                                    <span>فایل</span>
+                                                    <span>&nbsp;{this.state.certificate.name}&nbsp;</span>
+                                                    <span>آماده ارسال است</span>
+                                                </Button>
+                                            </Tooltip>
+                                    )
+                                    :null}
                             </div><br/>
                                     <Grid container>
                                         <Grid item xs={12}>
@@ -431,6 +442,9 @@ const useStyles = makeStyles((theme) => ({
         '.MuiFormHelperText-root.Mui-error': {
             fontFamily: 'IRANSansWeb',
         },
+    },
+    InputAdornment:{
+        color:"#2ab371",
     },
     topButton: {
         fontFamily: 'IRANSansWeb',

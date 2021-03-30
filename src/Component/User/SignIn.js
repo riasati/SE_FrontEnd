@@ -46,7 +46,7 @@ class SignIn extends Component {
                 .then(result => {
                     console.log(result);                                                           
                     console.log(this.state);                                                           
-                    const token = "Bearer " + result.data.token;
+                    const token = result.data.token;
                     localStorage.setItem('token', token);
                 }).catch(error => {
                     console.log(error);
@@ -82,9 +82,9 @@ class SignIn extends Component {
                                                 validators={['required']}
                                                 errorMessages={['لطفا نام کاربری یا ایمیل خود را وارد کنید']}
                                                 InputProps={{
-                                                    style:{fontFamily: 'IRANSansWeb',color:'#2ab371'},
+                                                    style:{fontFamily: 'IRANSansWeb'},
                                                     endAdornment: (
-                                                        <InputAdornment position="start">
+                                                        <InputAdornment className={classes.InputAdornment} position="start">
                                                             <AccountCircle />
                                                         </InputAdornment>
                                                     ),
@@ -110,9 +110,9 @@ class SignIn extends Component {
                                                 errorStyle={{style:{color: 'red',fontFamily: 'IRANSansWeb'}}}
                                                 errorText={{style:{color: 'red',fontFamily: 'IRANSansWeb'}}}
                                                 InputProps={{
-                                                    style:{fontFamily: 'IRANSansWeb',color:'#2ab371'},
+                                                    style:{fontFamily: 'IRANSansWeb'},
                                                     endAdornment: (
-                                                        <InputAdornment position="start">
+                                                        <InputAdornment className={classes.InputAdornment} position="start">
                                                             <IconButton
                                                                 style={{ padding: '0px',color:'#2ab371' }}
                                                                 aria-label="toggle password visibility"
@@ -167,6 +167,9 @@ const useStyles = makeStyles((theme) => ({
         '.MuiFormHelperText-root.Mui-error' : {
             fontFamily: 'IRANSansWeb',
         },
+    },
+    InputAdornment:{
+        color:"#2ab371",
     },
     paper: {
         marginTop: theme.spacing(3),

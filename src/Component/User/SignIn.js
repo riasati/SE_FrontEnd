@@ -15,15 +15,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import IconButton from "@material-ui/core/IconButton";
 import RTL from '../RTL/M_RTL';
 import serverURL from "../../RequestConfig/serverURL";
+import ErrorDialog from '../../RequestConfig/ErrorDialog';
 class SignIn extends Component {
     constructor() {
         super();
         this.state = {
             password: '',
             email_username: '',
+            setErrorDialog:false,
+            ErrorDialogText:'',
         }
     }
     handleChange = e => {
+        this.setState({setErrorDialog:false});
         this.setState({ [e.target.name]: e.target.value });
     }
 
@@ -50,7 +54,7 @@ class SignIn extends Component {
                     localStorage.setItem('token', token);
                 }).catch(error => {
                     console.log(error);
-                    alert(" خطا! نام کاربری یا رمز عبور شما اشتباه می باشد.لطفا تمام موارد * دار را پر کنید.");
+                    this.setState({setErrorDialog:true,ErrorDialogText:error.message});
                 })
         }
             return(
@@ -132,6 +136,7 @@ class SignIn extends Component {
                                                 <Button onClick={handleClick }  className={classes.topButton}  variant="contained" fullWidth>
                                                     ورود
                                                 </Button>
+                                                <ErrorDialog open={this.state.setErrorDialog} errorText={this.state.ErrorDialogText} />
                                             </Grid>
                                         </Grid>
                                     </Grid>

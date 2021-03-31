@@ -22,6 +22,7 @@ import axios from 'axios';
 import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
 import serverURL from "../../RequestConfig/serverURL";
+import ErrorDialog from '../../RequestConfig/ErrorDialog';
 class SignUpConsultant extends Component {
     constructor() {
         super();
@@ -36,10 +37,13 @@ class SignUpConsultant extends Component {
             consultant_type: '',
             certificate: null,
             showPassword: false,
+            setErrorDialog:false,
+            ErrorDialogText:'',
         }
     }
 
     handleChange = e => {
+        this.setState({setErrorDialog:false});
         this.setState({[e.target.name]: e.target.value});
     }
 
@@ -114,10 +118,14 @@ class SignUpConsultant extends Component {
             );
             axios.post(serverURL()+"consultant/signup/",formData)
             .then(res =>{
-                console.log(res)
+                console.log(res);
+                const token = res.data.token;
+                localStorage.setItem('token', token);
+                window.location.href = "/signIn";
             })
             .catch(err=>{
-                console.log(err)
+                console.log(err);
+                this.setState({setErrorDialog:true,ErrorDialogText:err.message});
             });
           }
         return (
@@ -407,6 +415,7 @@ class SignUpConsultant extends Component {
                                                         variant="contained" style={{fontFamily: 'IRANSansWeb'}}>
                                                     {'ثبت نام'}
                                                 </Button>
+                                                <ErrorDialog open={this.state.setErrorDialog} errorText={this.state.ErrorDialogText} />
                                             </Grid>
                                         </Grid>
                                     </Grid>

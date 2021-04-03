@@ -60,14 +60,25 @@ class SignUpConsultant extends Component {
 
     componentDidMount() {
         // custom rule will have name 'isPasswordMatch'
-        // ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
-        //     if (value !== this.state.password) {
-        //         return false;
-        //     }
-        //     return true;
-        // });
+         ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
+             if (value !== this.state.password) {
+                 return false;
+             }
+             return true;
+         });
     }
     render() {
+        const handleConfirmPassword=()=>{
+            const password= this.state.password;
+            const password_repetition = this.state.password_repetition;
+            console.log("pass",password,password_repetition);
+            if (password !== password_repetition) {
+                console.log("wrong");
+                return (alert("تکرار رمز عبور مطابقت ندارد !!")) //(<Alert severity="error">Password is wrong!</Alert>);
+            } else {
+                handleClick();
+            }
+            };
         const classes = this.props.classes;
         const [file,setFile] = this.props.isFileLoaded;
         const onFileChange = event => { 
@@ -364,8 +375,8 @@ class SignUpConsultant extends Component {
                                                 value={this.state.password_repetition}
                                                 onChange={this.handleChange}
                                                 InputLabelProps={{style: {fontFamily: 'IRANSansWeb'}}}
-                                                validators={[ 'required']}
-                                                errorMessages={[ 'لطفا رمز عبور خود را تکرار کنید']}
+                                                validators={[ 'isPasswordMatch','required']}
+                                                errorMessages={[ 'رمز عبور مطابقت ندارد','لطفا رمز عبور خود را تکرار کنید']}
                                                 InputProps={{
                                                     style: {fontFamily: 'IRANSansWeb'},
                                                     endAdornment: (
@@ -411,7 +422,7 @@ class SignUpConsultant extends Component {
                                     <Grid container>
                                         <Grid item xs={12}>
                                             <Grid>
-                                                <Button onClick={handleClick} className={classes.topButton} fullWidth
+                                                <Button onClick={handleConfirmPassword} className={classes.topButton} fullWidth
                                                         variant="contained" style={{fontFamily: 'IRANSansWeb'}}>
                                                     {'ثبت نام'}
                                                 </Button>

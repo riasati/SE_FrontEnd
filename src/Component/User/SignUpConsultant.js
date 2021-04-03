@@ -23,6 +23,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
 import serverURL from "../../RequestConfig/serverURL";
 import ErrorDialog from '../../RequestConfig/ErrorDialog';
+import LoadingOverlay from 'D:/narm2/2/node_modules/react-loading-overlay'
+
 class SignUpConsultant extends Component {
     constructor() {
         super();
@@ -39,6 +41,7 @@ class SignUpConsultant extends Component {
             showPassword: false,
             setErrorDialog:false,
             ErrorDialogText:'',
+            loading:true
         }
     }
 
@@ -60,12 +63,14 @@ class SignUpConsultant extends Component {
 
     componentDidMount() {
         // custom rule will have name 'isPasswordMatch'
+         this.setState({loading:false});
          ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
              if (value !== this.state.password) {
                  return false;
              }
              return true;
          });
+
     }
     render() {
         const handleConfirmPassword=()=>{
@@ -140,6 +145,7 @@ class SignUpConsultant extends Component {
             });
           }
         return (
+            <LoadingOverlay active={this.state.loading} spinner text="">
             <Container component="main" maxWidth="md">
                 <CssBaseline/>
                 <div>
@@ -453,6 +459,7 @@ class SignUpConsultant extends Component {
                     </div>
                 </div>
             </Container>
+            </LoadingOverlay>
         )
     };
 }

@@ -16,6 +16,8 @@ import IconButton from "@material-ui/core/IconButton";
 import RTL from '../RTL/M_RTL';
 import serverURL from "../../RequestConfig/serverURL";
 import ErrorDialog from '../../RequestConfig/ErrorDialog';
+import LoadingOverlay from 'D:/narm2/2/node_modules/react-loading-overlay'
+
 class SignIn extends Component {
     constructor() {
         super();
@@ -24,6 +26,7 @@ class SignIn extends Component {
             email_username: '',
             setErrorDialog:false,
             ErrorDialogText:'',
+            loading:true
         }
     }
     handleChange = e => {
@@ -41,6 +44,9 @@ class SignIn extends Component {
     handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
+    componentDidMount() {
+        this.setState({loading:false});
+    }
     render(){
         const classes = this.props.classes;
         const [pending, setPending] = this.props.p;
@@ -58,6 +64,7 @@ class SignIn extends Component {
                 })
         }
             return(
+                <LoadingOverlay active={this.state.loading} spinner text="">
             <Container component="main" maxWidth="xs"> 
                 <div>
                     <div className={classes.paper}>
@@ -163,6 +170,7 @@ class SignIn extends Component {
                     </div>
                 </div>
             </Container>
+                </LoadingOverlay>
         )
     }
 

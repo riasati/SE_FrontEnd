@@ -17,6 +17,7 @@ import IconButton from "@material-ui/core/IconButton";
 import RTL from '../RTL/M_RTL';
 import ErrorDialog from '../../RequestConfig/ErrorDialog';
 import serverURL from "../../RequestConfig/serverURL";
+import LoadingOverlay from 'D:/narm2/2/node_modules/react-loading-overlay'
 
 class SignUpUser extends Component {
     constructor() {
@@ -33,6 +34,7 @@ class SignUpUser extends Component {
             isLoading: false,
             setErrorDialog:false,
             ErrorDialogText:'',
+            loading:true
         }
     }
 
@@ -53,6 +55,7 @@ class SignUpUser extends Component {
     };
 
     componentDidMount() {
+        this.setState({loading:false});
         // custom rule will have name 'isPasswordMatch'
          ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
              if (value !== this.state.password) {
@@ -139,7 +142,7 @@ class SignUpUser extends Component {
 
 
         return (
-            
+            <LoadingOverlay active={this.state.loading} spinner text="">
             <Container component="main" maxWidth="md" >
                 <CssBaseline/>
                 <div>
@@ -402,6 +405,7 @@ class SignUpUser extends Component {
                     </div>
                 </div>
             </Container>
+            </LoadingOverlay>
         )
     };
 }

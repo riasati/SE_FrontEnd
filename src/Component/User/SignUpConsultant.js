@@ -23,7 +23,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
 import serverURL from "../../RequestConfig/serverURL";
 import ErrorDialog from '../../RequestConfig/ErrorDialog';
-import LoadingOverlay from '../../../node_modules/react-loading-overlay'
+import LoadingOverlay from 'react-loading-overlay';
 
 class SignUpConsultant extends Component {
     constructor() {

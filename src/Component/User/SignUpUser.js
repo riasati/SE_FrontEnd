@@ -17,7 +17,7 @@ import IconButton from "@material-ui/core/IconButton";
 import RTL from '../RTL/M_RTL';
 import ErrorDialog from '../../RequestConfig/ErrorDialog';
 import serverURL from "../../RequestConfig/serverURL";
-import LoadingOverlay from '../../../node_modules/react-loading-overlay'
+import LoadingOverlay from 'react-loading-overlay';
 
 class SignUpUser extends Component {
     constructor() {

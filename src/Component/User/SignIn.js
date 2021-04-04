@@ -16,7 +16,7 @@ import IconButton from "@material-ui/core/IconButton";
 import RTL from '../RTL/M_RTL';
 import serverURL from "../../RequestConfig/serverURL";
 import ErrorDialog from '../../RequestConfig/ErrorDialog';
-import LoadingOverlay from 'D:/narm2/2/node_modules/react-loading-overlay'
+import LoadingOverlay from 'react-loading-overlay';
 
 class SignIn extends Component {
     constructor() {

@@ -17,7 +17,7 @@ import IconButton from "@material-ui/core/IconButton";
 import RTL from '../RTL/M_RTL';
 import ErrorDialog from '../../RequestConfig/ErrorDialog';
 import serverURL from "../../RequestConfig/serverURL";
-import LoadingOverlay from 'D:/narm2/2/node_modules/react-loading-overlay'
+import LoadingOverlay from 'react-loading-overlay';
 
 class SignUpUser extends Component {
     constructor() {
@@ -66,7 +66,7 @@ class SignUpUser extends Component {
     }
 
     render() {
-        const handleConfirmPassword=()=>{
+        const handleConfirmPassword=(e)=>{
             const password= this.state.password;
             const password_repetition = this.state.password_repetition;
             console.log("pass",password,password_repetition);
@@ -74,7 +74,7 @@ class SignUpUser extends Component {
                 console.log("wrong");
                 return (alert("تکرار رمز عبور مطابقت ندارد !!")) //(<Alert severity="error">Password is wrong!</Alert>);
             } else {
-                handleClick();
+                handleClick(e);
             }
             };
         const classes = this.props.classes;

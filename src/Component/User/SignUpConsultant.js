@@ -23,7 +23,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
 import serverURL from "../../RequestConfig/serverURL";
 import ErrorDialog from '../../RequestConfig/ErrorDialog';
-import LoadingOverlay from 'D:/narm2/2/node_modules/react-loading-overlay'
+import LoadingOverlay from '../../../node_modules/react-loading-overlay'
 
 class SignUpConsultant extends Component {
     constructor() {
@@ -73,7 +73,7 @@ class SignUpConsultant extends Component {
 
     }
     render() {
-        const handleConfirmPassword=()=>{
+        const handleConfirmPassword=(e)=>{
             const password= this.state.password;
             const password_repetition = this.state.password_repetition;
             console.log("pass",password,password_repetition);
@@ -81,7 +81,7 @@ class SignUpConsultant extends Component {
                 console.log("wrong");
                 return (alert("تکرار رمز عبور مطابقت ندارد !!")) //(<Alert severity="error">Password is wrong!</Alert>);
             } else {
-                handleClick();
+                handleClick(e);
             }
             };
         const classes = this.props.classes;

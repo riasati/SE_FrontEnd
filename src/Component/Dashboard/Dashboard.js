@@ -25,7 +25,6 @@ import {BrowserRouter as Router,Switch,Route,Link} from "react-router-dom";
 import Profile from '../User/Profile/Profile';
 import MainPage from '../MainPage/MainPage';
 import Channels from '../MainPage/Channels';
-import TitleDictionary from './TitleDictionary';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -136,7 +135,6 @@ export default function Dashboard(props) {
     const classes = useStyles();
     const [open, setOpen] = useState(true);
     const [title, setTitle] = useState('');
-    const item = TitleDictionary();
    
     const handleDrawerOpen = () => {
       setOpen(true);

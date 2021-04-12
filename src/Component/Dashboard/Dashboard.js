@@ -25,6 +25,8 @@ import {BrowserRouter as Router,Switch,Route,Link} from "react-router-dom";
 import Profile from '../User/Profile/Profile';
 import MainPage from '../MainPage/MainPage';
 import Channels from '../MainPage/Channels';
+import GroupingChannel from '../GroupingChannel/GroupingChannel';
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -42,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: '30%',
       },
       '.fa-bullhorn':{
+        marginLeft: '30%',
+      },
+      '.fa-layer-group':{
         marginLeft: '30%',
       },
       '.MuiToolbar-root':{
@@ -201,9 +206,9 @@ export default function Dashboard(props) {
               <Route path="/Channels">
                 <Channels title={'کانال ها'}/>
               </Route>
-              {/* <Route path="/Settings" onClick={()=>{setTitle('کانال ها')}}>
-                <Channels title={'Settings'}/>
-              </Route> */}
+              <Route path="/GroupingChannel">
+                <GroupingChannel title={'Settings'}/>
+              </Route>
             </Switch>
           </Container>
       </main>

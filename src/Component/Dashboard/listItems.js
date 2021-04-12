@@ -10,7 +10,7 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser,faBullhorn,faThLarge } from '@fortawesome/free-solid-svg-icons';
+import { faUser,faBullhorn,faThLarge,faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 import {Link} from 'react-router-dom';
 
 export const mainListItems = (
@@ -39,14 +39,14 @@ export const mainListItems = (
       <ListItemText primary="کانال ها" />
     </ListItem>
     </Link>
-    {/* <Link to="/Settings" style={{color: '#3f407d', textDecoration: 'none',}}>
+    <Link to="/GroupingChannel" style={{color: '#3f407d', textDecoration: 'none',}}>
     <ListItem button>
       <ListItemIcon>
-      <FontAwesomeIcon icon={faBullhorn}  style={{color: '#3f407d',fontSize:'25px',}}/>
+      <FontAwesomeIcon icon={faLayerGroup}  style={{color: '#3f407d',fontSize:'25px',}}/>
       </ListItemIcon>
-      <ListItemText primary="Settings" />
+      <ListItemText primary="دسته بندی" />
     </ListItem>
-    </Link> */}
+    </Link>
   </div>
 );
 export const secondaryListItems = (

@@ -21,98 +21,32 @@ import Material_RTL from "../RTL/Material_RTL";
 import RTL from '../RTL/M_RTL';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle,faChevronRight} from '@fortawesome/free-solid-svg-icons';
+import SuggestionChannelCard from '../GroupingChannel/SuggestionChannelCard';
 
-
-import Dashboard from '../Dashboard/Dashboard';
+import Carousel from 'react-elastic-carousel';
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
-      '.MuiTypography-displayBlock': {
-          fontFamily: 'IRANSansWeb',
-      },
-      '.MuiListItemIcon-root':{
-          justifyContent: 'center',
-      },
-      // '.svg-inline--fa.fa-w-16':{
-      //   marginLeft: '30%',
-      // },
-      // '.svg-inline--fa.fa-w-14':{
-      //   marginLeft: '30%',
-      // },
-      // '.svg-inline--fa.fa-w-18':{
-      //   marginLeft: '30%',
-      // },
-      // '.MuiToolbar-root':{
-      //   backgroundColor:'#3aadd9',
-      // },
+    '.bSWeAW:hover:enabled.bSWeAW:focus:enabled':{
+      backgroundColor: '#27bda0 !important',
+      color: '#ffffff !important',
+    },
+    '.bSWeAW':{
+      backgroundColor: '#3aadd9 !important',
+      color: '#ffffff !important',
+    },
+    '.cetQhm' :{
+      backgroundColor: 'rgb(58 173 217) !important',
+      boxShadow: '0 0 1px 3px rgb(63 64 125) !important', 
+    },
   },
   root: {
     display: 'flex',
     fontFamily: 'IRANSansWeb',
   },
-  toolbar: {
-    paddingLeft: 24, // keep right padding when drawer closed
-  },
-  toolbarIcon: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
-    ...theme.mixins.toolbar,
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginRight: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginLeft: 36,
-  },
-  menuButtonHidden: {
-    display: 'none',
-  },
-  title: {
-    flexGrow: 1,
-  },
-  drawerPaper: {
-    position: 'relative',
-    whiteSpace: 'nowrap',
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerPaperClose: {
-    overflowX: 'hidden',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    width: theme.spacing(9),
-    [theme.breakpoints.down('xs')]: {
-      width: theme.spacing(9),
-      display: 'none',
-    },
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    height: '100vh',
-    overflow: 'auto',
-  },
+  
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
@@ -126,7 +60,14 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'IRANSansWeb',
   },
   fixedHeight: {
-    height: 240,
+    height: '300px',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '10px',
+  },
+  title:{
+    textAlign: 'left',
+    color: '#3f407d',
   },
 }));
 
@@ -140,11 +81,18 @@ export default function MainPage() {
     setOpen(false);
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
+  const breakPoints = [
+    { width: 1, itemsToShow: 1 },
+    { width: 400, itemsToShow: 2 },
+    { width: 550, itemsToShow: 3},
+    { width: 768, itemsToShow: 5 },
+    { width: 1200, itemsToShow: 7 }
+  ];
   return (
     <div>
       <CssBaseline/>
       
+
     <Material_RTL>
     <RTL>
     <div >
@@ -152,9 +100,98 @@ export default function MainPage() {
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
+            <Grid item xs={12} md={12} lg={12}>
+              <div className={classes.title}><h3>مهاجرت</h3></div>
               <Paper className={fixedHeightPaper}>
-                
+                <Carousel breakPoints={breakPoints} isRTL={'true'} style={{color:'#27bda0'}}>
+                  <SuggestionChannelCard ChannelName={'مهاجرت'} ConsultantName={''} image={'../../image/migrationgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/migrationgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/migrationgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/migrationgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/migrationgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/migrationgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/migrationgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/migrationgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/migrationgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/migrationgroup.jpg'}></SuggestionChannelCard>
+                  
+                </Carousel>
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={12} lg={12}>
+            <div className={classes.title}><h3>رشته تحصیلی</h3></div>
+              <Paper className={fixedHeightPaper}>
+                <Carousel breakPoints={breakPoints} isRTL={'true'}>
+                  <SuggestionChannelCard ChannelName={'رشته تحصیلی'} ConsultantName={''} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
+                  
+                </Carousel>
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={12} lg={12}>
+            <div className={classes.title}><h3>روانشناسی</h3></div>
+              <Paper className={fixedHeightPaper}>
+                <Carousel breakPoints={breakPoints} isRTL={'true'}>
+                  <SuggestionChannelCard ChannelName={'روانشناسی'} ConsultantName={''} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
+                  
+                </Carousel>
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={12} lg={12}>
+            <div className={classes.title}><h3>وکالت</h3></div>
+              <Paper className={fixedHeightPaper}>
+                <Carousel breakPoints={breakPoints} isRTL={'true'}>
+                  <SuggestionChannelCard ChannelName={'وکالت'} ConsultantName={''} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
+                  
+                </Carousel>
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={12} lg={12}>
+            <div className={classes.title}><h3>پزشکی</h3></div>
+              <Paper className={fixedHeightPaper}>
+                <Carousel breakPoints={breakPoints} isRTL={'true'}>
+                  <SuggestionChannelCard ChannelName={'پزشکی'} ConsultantName={''} image={'../../image/medicalgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/medicalgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/medicalgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/medicalgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/medicalgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/medicalgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/medicalgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/medicalgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/medicalgroup.jpg'}></SuggestionChannelCard>
+                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/medicalgroup.jpg'}></SuggestionChannelCard>
+                  
+                </Carousel>
               </Paper>
             </Grid>
             {/* Recent Deposits */}

@@ -15,7 +15,7 @@ class App extends Component {
                     <Route path="/signIn" component={SignIn}/>
                     <Route path="/SignUpConsultant" component={SignUpConsultant}/>
                     <Route path="/SignUpUser" component={SignUpUser}/>
-                    <Route path="/ChannelPage" component={Channel}/>
+                    <Route path="/Channel/:channelId" component={Channel}/>
                 </Router>
             </div>
         );

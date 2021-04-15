@@ -56,7 +56,7 @@ class SignIn extends Component {
                 .then(result => {
                     console.log(result);                                                           
                     console.log(this.state);                                                           
-                    const token = result.data.token;
+                    const token = "Token " + result.data.token;
                     localStorage.setItem('token', token);
                 }).catch(error => {
                     console.log(error);

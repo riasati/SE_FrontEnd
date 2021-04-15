@@ -30,20 +30,27 @@ import {Person,Search} from "@material-ui/icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch , } from '@fortawesome/free-solid-svg-icons';
 import Carousel from 'react-elastic-carousel';
+import axios from 'axios';
+import serverURL from "../../RequestConfig/serverURL";
+import TokenConfig from '../../RequestConfig/TokenConfig';
+import Select from '@material-ui/core/Select';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 class GroupingChannel extends Component{
     constructor(){
       super();
       this.state = {
         searchword: '',
         searchgroup: '',
+        request: '',
       }
     }
+    
     handleChange = e => {
       this.setState({[e.target.name]: e.target.value});
+      
     }
-    handelClickGroup(value){
-      this.setState({searchgroup: value})
-    }
+    
     render(){
         const classes = this.props.classes;
         const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
@@ -54,6 +61,69 @@ class GroupingChannel extends Component{
           { width: 768, itemsToShow: 6,itemsToScroll: 2 },
           { width: 1200, itemsToShow: 6,itemsToScroll: 2 }
         ];
+        const [list, setList] = this.props.list;
+        const [request, setRequest] = this.props.request;
+        const [pending, setPending] = this.props.pending;
+        var res = [];
+        const handelClickGroup = e =>{
+          
+        }
+        const handleClick = e =>{
+          setPending(true)
+          setList([])
+          if(this.state.searchword === '' && this.state.searchgroup === ''){
+            axios.get(serverURL()+'channel/search-for-channel/'+'?query= ',TokenConfig())
+              .then(result=>{
+                console.log(result);
+                res.push(...result.data.data);
+                var ll = res.map((q) => q);
+                setList([...ll]);
+                setPending(false)
+              })
+              .catch(err=>{
+                console.log(err)
+              })
+          }
+          else if(this.state.searchword === '' && this.state.searchgroup !== ''){
+            axios.get(serverURL()+'channel/search-for-channel/'+'?query= '+'&search_category='+ this.state.searchgroup,TokenConfig())
+              .then(result=>{
+                console.log(result);
+                res.push(...result.data.data);
+                var ll = res.map((q) => q);
+                setList([...ll]);
+                setPending(false)
+              })
+              .catch(err=>{
+                console.log(err)
+              })
+          }
+          else if(this.state.searchword !== '' && this.state.searchgroup === ''){
+            axios.get(serverURL()+'channel/search-for-channel/'+'?query='+this.state.searchword,TokenConfig())
+              .then(result=>{
+                console.log(result);
+                res.push(...result.data.data);
+                var ll = res.map((q) => q);
+                setList([...ll]);
+                setPending(false)
+              })
+              .catch(err=>{
+                console.log(err)
+              })
+          }
+          else if(this.state.searchword !== '' && this.state.searchgroup !== ''){
+            axios.get(serverURL()+'channel/search-for-channel/'+'?query='+this.state.searchword+'&search_category='+ this.state.searchgroup,TokenConfig())
+              .then(result=>{
+                console.log(result);
+                res.push(...result.data.data);
+                var ll = res.map((q) => q);
+                setList([...ll]);
+                setPending(false)
+              })
+              .catch(err=>{
+                console.log(err)
+              })
+          }
+        }
         return(
             <div>
               <CssBaseline/>
@@ -64,11 +134,42 @@ class GroupingChannel extends Component{
                   <Grid item xs={12} md={12} lg={12}>
                     <Paper className={fixedHeightPaper}>
                     <ValidatorForm className={classes.form} noValidate>
-                      <Grid container spacing={2} component="h6">
-                        <Grid item xs={0} sm={2}>
-
+                      <Grid container spacing={3} component="h6">
+                      <Grid item xs={0} sm={0} md={2}>
+                                  
+                          </Grid>
+                        <Grid item xs={12} sm={12} md={2}>
+                        <FormControl variant="outlined" className={classes.formControl}>
+                              <InputLabel id="searchgroup"><span style={{fontFamily: 'IRANSansWeb'}}>حوزه مشاوره</span></InputLabel>
+                              <Select
+                                  size="normal"
+                                  labelId="searchgroup"
+                                  id="searchgroup"
+                                  name="searchgroup"
+                                  value={this.state.searchgroup}
+                                  onChange={this.handleChange}
+                                  required
+                                  label="searchgroup"
+                                  InputProps={{
+                                      style: {fontFamily: 'IRANSansWeb'},
+                                      // endAdornment: (
+                                      //     <InputAdornment position="end">
+                                      //         <Email/>
+                                      //     </InputAdornment>
+                                      // ),
+                                  }}
+                              >
+                                  <MenuItem value={"Lawyer"}>                 <span className={classes.spanList} >وکالت</span></MenuItem>
+                                  <MenuItem value={"Educational_immigration"}><span className={classes.spanList}>مهاجرت تحصیلی</span></MenuItem>
+                                  <MenuItem value={"medical"}>                <span className={classes.spanList}>پزشکی</span></MenuItem>
+                                  <MenuItem value={"Psychology"}>             <span className={classes.spanList}>روانشناسی</span></MenuItem>
+                                  <MenuItem value={"Entrance_Exam"}>          <span className={classes.spanList}>کنکور</span></MenuItem>
+                                  <MenuItem value={"Academic_advice"}>        <span className={classes.spanList}>تحصیلی</span></MenuItem>
+                              </Select>
+                          </FormControl>
                         </Grid>
-                          <Grid item xs={12} sm={8}>
+                          <Grid item xs={12} sm={12} md={6}>
+                          
                               <TextValidator
                                   size="normal"
                                   fullWidth
@@ -85,7 +186,7 @@ class GroupingChannel extends Component{
                                       style: {fontFamily: 'IRANSansWeb'},
                                       endAdornment: (
                                         <Button
-                                        onClick={this.handleClick}
+                                        onClick={handleClick}
                                         className={classes.bottomButton}
                                         type="submit"
                                         fullWidth
@@ -97,36 +198,31 @@ class GroupingChannel extends Component{
                                   }}
                               />
                           </Grid>
-                          <Grid item xs={0} sm={2}>
-
+                          <Grid item xs={0} sm={0} md={2}>
+                                  
                           </Grid>
                         </Grid>
                       </ValidatorForm>
                       <br/>
-                      <Grid container spacing={2} component="h6">
-                      <Grid item xs={0} sm={2}>
-
+                      
+                      <Grid container spacing={3}>
+                        {pending ? (<CircularProgress className={classes.CircularProgress} style={{color: '#0e918c'}}/>):
+                        list.size !== 0 ? (list.map((data)=>{
+                          console.log(data)
+                          console.log(data.name)
+                                return(
+                                <ChannelCard name={data.name} consultant_full_name={data.consultant_full_name}/>
+                              )
+                            })) : (<div>
+                              چیزی برای نمایش نیست!
+                            </div>)
+                        }
                       </Grid>
-                      <Grid item xs={12} sm={8} lg={8}>
-                        <Carousel breakPoints={breakPoints} isRTL={'true'} pagination="false" style={{color:'#27bda0'}}>
-                          <Button onClick={()=>this.handelClickGroup('Educational_immigration' )} className={classes.btn}>مهاجرت تحصیلی </Button>
-                          <Button onClick={()=>this.handelClickGroup('Academic_advice'     )} className={classes.btn}>تحصیلی</Button>
-                          <Button onClick={()=>this.handelClickGroup('medical'   )} className={classes.btn}>پزشکی</Button>
-                          <Button onClick={()=>this.handelClickGroup('Lawyer'    )} className={classes.btn}>وکالت</Button>
-                          <Button onClick={()=>this.handelClickGroup('Psychology')} className={classes.btn}>روانشناسی</Button>
-                          <Button onClick={()=>this.handelClickGroup('Entrance_Exam')} className={classes.btn}>کنکور</Button>
-                        </Carousel>
-                      </Grid>
-                      <Grid item xs={0} sm={2}>
-                                              {/*  */}
-                      </Grid>
-                      </Grid>
+                      {/* <ChannelCard nameChannel={}/> */}
                       <br/>
-                      <ChannelCard/>
-                      <br/>
-                      <ChannelCard/>
-                      <br/>
-                      <ChannelCard/>
+                      {/* <ChannelCard/> */}
+                      {/* <br/> */}
+                      {/* <ChannelCard/> */}
                     </Paper>
                   </Grid>
                 </Grid>
@@ -158,6 +254,21 @@ const useStyles = makeStyles((theme) => ({
           backgroundColor: 'rgb(58 173 217) !important',
           boxShadow: '0 0 1px 3px rgb(63 64 125) !important', 
         },
+        '.MuiMenuItem-root':{
+          direction: 'rtl !important',
+      },
+    },
+    CircularProgress:{
+      color: '#0e918c',
+      width: '100px',
+      height: '100px',
+      marginLeft: '45%',
+      marginTop: '5%',
+    },
+    spanList:{
+      fontFamily: 'IRANSansWeb',
+      direction:'rtl',
+      width:'100%'
     },
     container: {
       paddingTop: theme.spacing(4),
@@ -167,7 +278,6 @@ const useStyles = makeStyles((theme) => ({
     paper: {
       padding: theme.spacing(2),
       display: 'flex',
-      overflow: 'auto',
       flexDirection: 'column',
       fontFamily: 'IRANSansWeb',
     },
@@ -198,11 +308,17 @@ const useStyles = makeStyles((theme) => ({
           color: 'white'
       },
     },
-  }));
+    formControl: {
+      minWidth: '100%',
+    },
+}));
 
 export default () => {
     const classes = useStyles();
+    const list = React.useState([]);
+    const request = React.useState('');
+    const pending = React.useState(false);
     return (
-        <GroupingChannel classes={classes}/>
+        <GroupingChannel classes={classes} list={list} request={request} pending={pending}/>
     )
 }

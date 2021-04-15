@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import CssBaseline from "@material-ui/core/CssBaseline";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -21,51 +21,17 @@ import Material_RTL from "../RTL/Material_RTL";
 import RTL from '../RTL/M_RTL';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle,faChevronRight} from '@fortawesome/free-solid-svg-icons';
+import { SpeakerNotesOff } from '@material-ui/icons';
 class ChannelCard extends Component{
     render(){
         const classes = this.props.classes;
         const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
         return(
-            <div>
-              <CssBaseline/>
-              {/* <Container maxWidth="lg" className={classes.container}>
-                <Grid container spacing={3}>
-                  <Grid item xs={12} md={12} lg={12}>
-                    <Paper className={fixedHeightPaper}> */}
-                    <Grid container spacing={3}>
-                      <Grid item xs={12} md={4} lg={4} style={{border: '1px solid #ccc'}}>
-                      <img src={'../../image/medicalgroup.jpg'} style={{width:'100px',height:'100px',borderRadius: '100%',marginTop:'10%'}}/>
-                        {/* <img src={"/image/lawyergroup.png"} /> */}
-
-                        <div><h3>{'نام کانال'}</h3></div>
-                        <div>{'نام مشاور'}</div>
-                      </Grid>
-                      <Grid item xs={12} md={4} lg={4} style={{border: '1px solid #ccc'}}>
-                      <img src={'../../image/medicalgroup.jpg'} style={{width:'100px',height:'100px',borderRadius: '100%',marginTop:'10%'}}/>
-                        {/* <img src={"/image/lawyergroup.png"} /> */}
-
-                        <div><h3>{'نام کانال'}</h3></div>
-                        <div>{'نام مشاور'}</div>
-                      </Grid>
-                      <Grid item xs={12} md={4} lg={4} style={{border: '1px solid #ccc'}}>
-                      <img src={'../../image/medicalgroup.jpg'} style={{width:'100px',height:'100px',borderRadius: '100%',marginTop:'10%'}}/>
-                        {/* <img src={"/image/lawyergroup.png"} /> */}
-
-                        <div><h3>{'نام کانال'}</h3></div>
-                        <div>{'نام مشاور'}</div>
-                      </Grid>
-                    </Grid>
-                      {/* <Grid item xs={12} md={4} lg={6} style={{border: '1px solid #ccc'}}>
-                        44444444
-                      </Grid>
-                      <Grid item xs={12} md={4} lg={6} style={{border: '1px solid #ccc'}}>
-                        5555555
-                      </Grid> */}
-                    {/* </Paper>
-                  </Grid>
-                </Grid>
-              </Container>  */}
-            </div>
+          <Grid item xs={12} md={4} lg={3} style={{border: '1px solid #ccc'}}>
+            <img src={'../../image/medicalgroup.jpg'} style={{width:'100px',height:'100px',borderRadius: '100%',marginTop:'10%'}}/>
+            <div><h3>{this.props.name}</h3></div>
+            <div>{this.props.consultant_full_name}</div>
+          </Grid>
         )
     }
 }
@@ -91,9 +57,11 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export default () => {
+export default (props) => {
     const classes = useStyles();
+    const name = props.name;
+    const consultant_full_name = props.consultant_full_name
     return (
-        <ChannelCard classes={classes}/>
+        <ChannelCard classes={classes} name={name} consultant_full_name={consultant_full_name}/>
     )
 }

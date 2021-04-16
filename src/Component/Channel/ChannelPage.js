@@ -21,14 +21,10 @@ import {Done} from "@material-ui/icons";
 import IconButton from "@material-ui/core/IconButton";
 import Avatar from "@material-ui/core/Avatar";
 import Collapse from '@material-ui/core/Collapse';
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListSubheader from "@material-ui/core/ListSubheader";
 import ChannelCard from "./ChannelCard";
 import ChannelCardList from "./ChannelCardList";
 import ChannelMessages from "./ChannelMessages";
+import ChannelMemberCard from "./ChannelMemberCard";
 
 
 class Channel extends Component {
@@ -115,11 +111,11 @@ class Channel extends Component {
                                                 </Paper>
                                             </Grid>
                                             <Grid item sm={3} xs={12} className={classes.leftSection}>
-                                                <Paper className={classes.paper} style={{display: "flex",flexDirection:"column", }} >
+                                                <Paper className={classes.paper}  >
                                                     <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" className={classes.channelInfoAvatar} />
                                                     <Typography component={"h2"} variant={"body1"} align={"left"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d',alignSelf: "baseline",marginBottom: "10px"}}>توضیحات </Typography>
                                                     <Typography component={"h2"} variant={"body1"} align={"left"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d',textAlign:"right",alignSelf: "baseline",marginBottom: "10px"}}>channelID</Typography>
-                                                    <div style={{ width: "100%",display: "flex",flexDirection:"row", justifyContent: "space-evenly",alignItems: "center"}}  >
+                                                    <div style={{ width: "100%",display: "flex",flexDirection:"row", justifyContent: "space-evenly",alignItems: "center",marginBottom:"10px"}}  >
                                                         <Button variant="contained" color={'primary'} onClick={handleEditChannel}>ویرایش کانال</Button>
                                                         <Button variant="contained" color={'secondary'}  onClick={handleConsultantApplySubscribe}>درخواست عضویت</Button>
                                                     </div>
@@ -142,6 +138,13 @@ class Channel extends Component {
                                                                    }}
                                                         />
                                                     </Collapse>
+                                                    <ChannelCardList title={"اعضای کانال"}  >
+                                                        <ChannelMemberCard name={"آیدی عضو"} imageSource={""} />
+                                                        <ChannelMemberCard name={"آیدی عضو"} imageSource={""} />
+                                                        <ChannelMemberCard name={"آیدی عضو"} imageSource={""} />
+                                                        <ChannelMemberCard name={"آیدی عضو"} imageSource={""} />
+                                                        <ChannelMemberCard name={"آیدی عضو"} imageSource={""} />
+                                                    </ChannelCardList>
                                                     <Button style={{color:"#3f407d",alignSelf:"baseline",marginTop:"5px"}}>
                                                         <Typography component={"h2"} variant={"body1"} align={"left"} style={{fontFamily: 'IRANSansWeb',color: '#3f407d',alignSelf: "baseline"}}>ترک کانال</Typography>
                                                     </Button>

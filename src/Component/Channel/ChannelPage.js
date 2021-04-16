@@ -13,7 +13,6 @@ import ErrorDialog from '../../RequestConfig/ErrorDialog';
 import LoadingOverlay from 'react-loading-overlay';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
-import { Scrollbars } from 'rc-scrollbars';
 import TextField from "@material-ui/core/TextField";
 import Divider from "@material-ui/core/Divider";
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -25,7 +24,19 @@ import ChannelCard from "./ChannelCard";
 import ChannelCardList from "./ChannelCardList";
 import ChannelMessages from "./ChannelMessages";
 import ChannelMemberCard from "./ChannelMemberCard";
-
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardMedia from '@material-ui/core/CardMedia';
+import { BsCardText } from "react-icons/bs";
+import { MdPeople } from "react-icons/md";
+import DeleteIcon from '@material-ui/icons/Delete';
 
 class Channel extends Component {
     constructor(){
@@ -50,7 +61,29 @@ class Channel extends Component {
                 this.setState({editChannel:true})
             }
             else{
-
+                this.setState({editChannel:true})
+            }
+        };
+        const handleShowMembers=()=>{
+            if (this.state.editChannel === true){
+                this.setState({editChannel:false})
+            }
+            if (this.state.showMembers === true){
+                this.setState({showMembers:false})
+            }
+            else{
+                this.setState({showMembers:true})
+            }
+        };
+        const handleShowInfo=()=>{
+            if (this.state.editChannel === true){
+                this.setState({editChannel:false})
+            }
+            if (this.state.showInfo === true){
+                this.setState({showInfo:false})
+            }
+            else{
+                this.setState({showInfo:true})
             }
         };
         const handleConsultantApplySubscribe = (event) => {
@@ -74,6 +107,133 @@ class Channel extends Component {
                                             Up
                                         </Paper>
                                     </Grid>
+                                    <Dialog onBackdropClick={handleEditChannel}  open={this.state.editChannel} style={{fontFamily: 'IRANSansWeb',color: "#494949",justifyContent:'right'}}>
+                                                <Grid container className={classes.rootShowMembers} spacing={2} style={{padding:30,justifyContent: 'center'}}>
+                                                    <Grid  item xs={16}>
+                                                        <Grid container justify="center" spacing={1}>
+                                                            <Grid xs={6}  item>
+                                                                <Button onClick={handleShowMembers}  color="primary" variant="contained" style={{ width:'190px',height:'35px',backgroundColor:'#2c2d22',fontFamily: 'IRANSansWeb'}}>
+                                                                    {'ویرایش اعضا'}
+                                                                </Button>
+                                                            </Grid>
+                                                        <Grid xs={6} item>
+                                                            <Button onClick={handleShowInfo}  color="primary" variant="contained" style={{ width:'190px',height:'35px',backgroundColor:'#2c2d22',fontFamily: 'IRANSansWeb'}}>
+                                                                {'ویرایش وضعیت کانال'}
+                                                            </Button>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Grid>
+                                                </Grid>
+                                            </Dialog>
+
+                                            <Dialog
+                                                open={this.state.showInfo}
+                                                aria-labelledby="alert-dialog-slide-title1"
+                                                 aria-describedby="alert-dialog-slide-description"
+                                            >
+                                                <DialogTitle id="alert-dialog-slide-title"  component="h1" variant="h5" style={{color: "#494949",justifyContent:'right'}}>
+                                                    <text style={{fontFamily: 'IRANSansWeb',color: "#494949",justifyContent:'right'}}>{'تغیر مشخصات کانال'}</text>
+                                                    <br/>
+                                                    <span><BsCardText color="#494949" style={{marginTop: '10px',justifyContent: 'center'}} fontSize="large"/></span>
+                                                </DialogTitle>
+                                                <DialogContent>
+                                                    <DialogContentText id="alert-dialog-slide-description" style={{fontFamily: 'IRANSansWeb'}}>
+                                                        <Grid  className={classes.rootShowMembers} spacing={2} container
+                                                            alignItems="stretch"
+                                                            justify="flex-end"
+                                                            alignItems="stretch">
+                                                                <Grid xs={3}  >
+                                                                    <TextField
+                                                                        InputLabelProps={{style:{fontFamily: 'IRANSansWeb'}}}
+                                                                        id="name"
+                                                                        value={this.state.channelName}
+                                                                        placeholder="نام قبلی"
+                                                                        label="نام جدید کانال"
+                                                                        type="text"
+                                                                        onChange={''}
+                                                                    />
+                                                                </Grid>
+                                                                <Grid xs={12}  >
+                                                                    <TextField
+                                                                        InputLabelProps={{style:{fontFamily: 'IRANSansWeb'}}}
+                                                                        id="explain"
+                                                                        label="توضیحات"
+                                                                        type="text"
+                                                                        placeholder="توضیحات قبلی"
+                                                                        rows={3}
+                                                                        fullWidth
+                                                                        multiline
+                                                                        onChange={''}
+                                                                    />
+                                                                </Grid>
+                                                                <Grid xs={5}  item>
+                                                                    <Button onClick={handleShowInfo}  color="primary" variant="contained" style={{ width:'190px',height:'35px',backgroundColor:'#2c2d22',fontFamily: 'IRANSansWeb'}}>
+                                                                        {'بستن'}
+                                                                    </Button>
+                                                                </Grid>
+                                                                <Grid xs={5}  item>
+                                                                    <Button onClick={''}  color="primary" variant="contained" style={{ width:'190px',height:'35px',backgroundColor:'#2c2d22',fontFamily: 'IRANSansWeb'}}>
+                                                                        {'اعمال تغیرات'}
+                                                                    </Button>
+                                                                </Grid>
+                                                        </Grid>
+                                                    </DialogContentText>
+                                                </DialogContent>
+
+                                            </Dialog>
+
+                                            <Dialog
+                                                    open={this.state.showMembers}
+                                                    aria-labelledby="alert-dialog-slide-title"
+                                                    aria-describedby="alert-dialog-slide-description"
+                                                >
+                                                     <DialogTitle id="alert-dialog-slide-title"  component="h1" variant="h5" style={{fontFamily: 'IRANSansWeb',color: "#494949",justifyContent:'right'}}>
+                                                         <text style={{fontFamily: 'IRANSansWeb',color: "#494949",justifyContent:'right'}}>{'لیست اعضای گروه'}</text>
+                                                        <br/>
+                                                        <span><MdPeople color="#494949" style={{marginTop: '10px',justifyContent: 'center'}} fontSize="large"/></span>
+                                                        </DialogTitle>
+                                                        <DialogContent>
+                                                            <Grid  item xs={12} containerdirection="row-reverse" justify="flex-start" alignItems= "flex-start">
+                                                                <Grid container xs={12} justify="center" >
+                                                                <button onClick={handleShowMembers}   style={{width:'auto',height:'auto',backgroundColor:'#d33d38',fontFamily: 'IRANSansWeb',fontsize:'10px'}}>
+                                                                    {"حذف گروهی اعضا"}
+                                                                </button>
+                                                                </Grid>
+                                                            </Grid>
+                                                        <DialogContentText id="alert-dialog-slide-description">
+                                                        <Grid container className={classes.rootShowMembers} spacing={2} style={{padding:30,justifyContent: 'center'}}>
+                                                            <Grid  item xs={12}>
+                                                                <Grid container justify="center" spacing={3}>
+                                                                    {[0, 1, 2, 3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29].map((value) => (
+                                                                        <Grid xs={4} key={value} item  direction="row-reverse" justify="flex-start" alignItems="flex-start">
+                                                                            <Card  className={classes.paperShowMembers} >
+                                                                                <CardActionArea>
+                                                                                    <CardMedia
+                                                                                        component="img"
+                                                                                        className={classes.mediaMembers}
+                                                                                        image="./11.jpg"
+                                                                                    />
+                                                                                <CardContent>
+                                                                                    <text color="#725b53">username</text>
+                                                                                </CardContent>
+                                                                                </CardActionArea>
+                                                                                <CardActionArea >
+                                                                                    <Grid container justify="center" backgroundColor="#ff7063">
+                                                                                            <DeleteIcon justify="right" fontSize="small"/>
+                                                                                    </Grid>
+                                                                                </CardActionArea>
+                                                                            </Card>
+                                                                        </Grid>
+                                                                    ))}
+                                                                </Grid>
+                                                            </Grid>
+                                                        </Grid>
+                                                        </DialogContentText>
+                                                        </DialogContent>
+                                                        <Button onClick={handleShowMembers}  color="primary" variant="contained" style={{ width:'auto',height:'35px',backgroundColor:'#2c2d22',fontFamily: 'IRANSansWeb'}}>
+                                                        {'بستن'}
+                                                        </Button>
+                                                </Dialog>
                                     <Grid container item sm={12}>
                                         <Grid container direction={"row"} spacing={2} justify="space-evenly">
                                             <Grid item sm={3} xs={12} className={classes.rightSection}>
@@ -176,6 +336,36 @@ const useStyles = makeStyles((theme) => ({
     rootDiv:{
         padding:theme.spacing(2),
         flexGrow: 1,
+    },
+    pageEdit :{
+    width: "300px",
+    height: "100%",
+    min_height : "5em",
+    margin_right: "auto",
+    margin_left: "auto",
+    margin_top: "5em",
+    padding: "2em",
+    z_index: 15000,
+    },
+    rootShowMembers: {
+    flexGrow: 1,
+    },
+    mediaMembers: {
+        maxWidth: 150,
+        maxHeight: 80,
+        height: "auto",
+
+    },
+    paperShowMembers: {
+        backgroundColor:'#cccfc4',
+        maxWidth: 150,
+        maxHeight: 160,
+        height: "auto",
+        width: "auto",
+        variant:"outlined",
+    },
+    button: {
+    margin: theme.spacing(1),
     },
     paper: {
         padding: theme.spacing(2),

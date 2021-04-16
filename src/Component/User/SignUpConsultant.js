@@ -137,7 +137,7 @@ class SignUpConsultant extends Component {
                 console.log(res);
                 const token = "Token " + res.data.token;
                 localStorage.setItem('token', token);
-                window.location.href = "/signIn";
+                window.location.href = "/CreateChannel";
             })
             .catch(err=>{
                 console.log(err);

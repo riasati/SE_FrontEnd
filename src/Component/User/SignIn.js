@@ -58,6 +58,7 @@ class SignIn extends Component {
                     console.log(this.state);                                                           
                     const token = "Token " + result.data.token;
                     localStorage.setItem('token', token);
+                    window.location.href = "/Dashboard";
                 }).catch(error => {
                     console.log(error);
                     this.setState({setErrorDialog:true,ErrorDialogText:error.message});

@@ -135,7 +135,7 @@ class SignUpConsultant extends Component {
             axios.post(serverURL()+"consultant/signup/",formData)
             .then(res =>{
                 console.log(res);
-                const token = res.data.token;
+                const token ="Token "+ res.data.token;
                 localStorage.setItem('token', token);
                 window.location.href = "/signIn";
             })

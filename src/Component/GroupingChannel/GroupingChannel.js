@@ -205,24 +205,20 @@ class GroupingChannel extends Component{
                       </ValidatorForm>
                       <br/>
                       
-                      <Grid container spacing={3}>
+                      <Grid container spacing={3} className={classes.container}>
                         {pending ? (<CircularProgress className={classes.CircularProgress} style={{color: '#0e918c'}}/>):
                         list.size !== 0 ? (list.map((data)=>{
                           console.log(data)
                           console.log(data.name)
                                 return(
-                                <ChannelCard name={data.name} consultant_full_name={data.consultant_full_name}/>
+                                <ChannelCard name={data.name} consultant_full_name={data.consultant_full_name} invite_link={data.invite_link}/>
                               )
                             })) : (<div>
                               چیزی برای نمایش نیست!
                             </div>)
                         }
                       </Grid>
-                      {/* <ChannelCard nameChannel={}/> */}
                       <br/>
-                      {/* <ChannelCard/> */}
-                      {/* <br/> */}
-                      {/* <ChannelCard/> */}
                     </Paper>
                   </Grid>
                 </Grid>
@@ -271,6 +267,7 @@ const useStyles = makeStyles((theme) => ({
       width:'100%'
     },
     container: {
+      padding: theme.spacing(4),
       paddingTop: theme.spacing(4),
       paddingBottom: theme.spacing(4),
       fontFamily: 'IRANSansWeb',

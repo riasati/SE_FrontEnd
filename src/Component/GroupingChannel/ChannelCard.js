@@ -25,12 +25,16 @@ import { SpeakerNotesOff } from '@material-ui/icons';
 class ChannelCard extends Component{
     render(){
         const classes = this.props.classes;
-        const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
         return(
-          <Grid item xs={12} md={4} lg={3} style={{border: '1px solid #ccc'}}>
-            <img src={'../../image/medicalgroup.jpg'} style={{width:'100px',height:'100px',borderRadius: '100%',marginTop:'10%'}}/>
-            <div><h3>{this.props.name}</h3></div>
-            <div>{this.props.consultant_full_name}</div>
+          <Grid item xs={12} md={4} lg={3} className={classes.container}>
+            <div className={classes.div}>
+              <a href={"/Channel/"+ this.props.invite_link} className={classes.a}>
+                <img src={'../../image/medicalgroup.jpg'} className={classes.img}/>
+                <div><h3>{this.props.name}</h3></div>
+                <div>{this.props.consultant_full_name}</div>
+                <br/>
+              </a>
+            </div>
           </Grid>
         )
     }
@@ -40,10 +44,22 @@ const useStyles = makeStyles((theme) => ({
     '@global': {
         
     },
+    div:{
+      borderRadius: '10px',
+      border: '1px solid #ccc'
+    },
+    a:{
+      color: '#3f407d',
+       textDecoration: 'none',
+    },
+    img:{
+      width:'100px',
+      height:'100px',
+      borderRadius: '100%',
+      marginTop:'10%'
+    },
     container: {
-      paddingTop: theme.spacing(4),
-      paddingBottom: theme.spacing(4),
-      fontFamily: 'IRANSansWeb',
+      padding: '5%',
     },
     paper: {
       padding: theme.spacing(2),
@@ -52,16 +68,14 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: 'column',
       fontFamily: 'IRANSansWeb',
     },
-    fixedHeight: {
-      // height: 240,
-    },
   }));
 
 export default (props) => {
     const classes = useStyles();
     const name = props.name;
-    const consultant_full_name = props.consultant_full_name
+    const consultant_full_name = props.consultant_full_name;
+    const invite_link = props.invite_link;
     return (
-        <ChannelCard classes={classes} name={name} consultant_full_name={consultant_full_name}/>
+        <ChannelCard classes={classes} name={name} consultant_full_name={consultant_full_name} invite_link={invite_link}/>
     )
 }

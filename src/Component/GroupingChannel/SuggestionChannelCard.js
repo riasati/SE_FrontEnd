@@ -1,16 +1,17 @@
 import React, {Component} from 'react'
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import Link from '@material-ui/core/Link';
 class SuggestionChannelCard extends Component{
     render(){
         const classes = this.props.classes;
         return(
             <Grid className={classes.div1}>
-                <img src={this.props.imagesrc} style={{width:'100px',height:'100px',borderRadius: '100%',marginTop:'10%'}}/>
-                {/* <img src={"/image/lawyergroup.png"} /> */}
-                
+                <a href={"/Channel/"+ this.props.invite_link} style={{color: '#3f407d', textDecoration: 'none',}}>
+                    <img src={this.props.imagesrc} style={{width:'100px',height:'100px',borderRadius: '100%',marginTop:'10%'}}/>
                 <div><h3>{this.props.channelName}</h3></div>
                 <div>{this.props.consultantName}</div>
+                </a>
             </Grid>
         )
     }
@@ -22,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
     div1:{
         width: '100%',
         height: '230px',
-        // boxShadow: '1px 1px 10px 0px',
         border: '1px solid #ccc',
         borderRadius:' 5px 5px 5px 5px',
         marginLeft: '15px',
@@ -38,7 +38,8 @@ export default (props) => {
     const imagesrc = props.image;
     const channelName = props.ChannelName;
     const consultantName = props.ConsultantName;
+    const invite_link = props.invite_link;
     return (
-        <SuggestionChannelCard classes={classes} imagesrc={imagesrc} channelName={channelName} consultantName={consultantName}/>
+        <SuggestionChannelCard classes={classes} imagesrc={imagesrc} channelName={channelName} consultantName={consultantName} invite_link={invite_link}/>
     )
 }

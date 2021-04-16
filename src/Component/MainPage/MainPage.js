@@ -1,31 +1,18 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
-import Box from '@material-ui/core/Box';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
-import MenuIcon from '@material-ui/icons/Menu';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import Material_RTL from "../RTL/Material_RTL";
 import RTL from '../RTL/M_RTL';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserCircle,faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import SuggestionChannelCard from '../GroupingChannel/SuggestionChannelCard';
-
 import Carousel from 'react-elastic-carousel';
-
-const drawerWidth = 240;
+import axios from 'axios';
+import serverURL from "../../RequestConfig/serverURL";
+import TokenConfig from '../../RequestConfig/TokenConfig';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -46,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     fontFamily: 'IRANSansWeb',
   },
-  
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
@@ -69,17 +55,102 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'left',
     color: '#3f407d',
   },
+  CircularProgress:{
+    color: '#0e918c !important',
+    width: '100px !important',
+    height: '100px !important',
+  },
 }));
 
 export default function MainPage() {
+  const [list1, setList1] = React.useState([]);
+  const [list2, setList2] = React.useState([]);
+  const [list3, setList3] = React.useState([]);
+  const [list4, setList4] = React.useState([]);
+  const [list5, setList5] = React.useState([]);
+  const [list6, setList6] = React.useState([]);
+  const [pending, setPending] = React.useState(true);
+  var res1 = [];
+  var res2 = [];
+  var res3 = [];
+  var res4 = [];
+  var res5 = [];
+  var res6 = [];
+  useEffect(()=>{
+    axios.get(serverURL()+'channel/search-for-channel/'+'?query= '+'&search_category=Lawyer',TokenConfig())
+      .then(result=>{
+        console.log(result);
+        res1.push(...result.data.data);
+        var ll = res1.map((q) => q);
+        setList1([...ll]);
+        setPending(false)
+      })
+      .catch(err=>{
+        console.log(err)
+        setPending(false)
+      })
+      axios.get(serverURL()+'channel/search-for-channel/'+'?query= '+'&search_category=Academic_advice',TokenConfig())
+      .then(result=>{
+        console.log(result);
+        res2.push(...result.data.data);
+        var ll = res2.map((q) => q);
+        setList2([...ll]);
+        setPending(false)
+      })
+      .catch(err=>{
+        console.log(err)
+        setPending(false)
+      })
+      axios.get(serverURL()+'channel/search-for-channel/'+'?query= '+'&search_category=Psychology',TokenConfig())
+      .then(result=>{
+        console.log(result);
+        res3.push(...result.data.data);
+        var ll = res3.map((q) => q);
+        setList3([...ll]);
+        setPending(false)
+      })
+      .catch(err=>{
+        console.log(err)
+        setPending(false)
+      })
+      axios.get(serverURL()+'channel/search-for-channel/'+'?query= '+'&search_category=Educational_immigration',TokenConfig())
+      .then(result=>{
+        console.log(result);
+        res4.push(...result.data.data);
+        var ll = res4.map((q) => q);
+        setList4([...ll]);
+        setPending(false)
+      })
+      .catch(err=>{
+        console.log(err)
+        setPending(false)
+      })
+      axios.get(serverURL()+'channel/search-for-channel/'+'?query= '+'&search_category=medical',TokenConfig())
+      .then(result=>{
+        console.log(result);
+        res5.push(...result.data.data);
+        var ll = res5.map((q) => q);
+        setList5([...ll]);
+        setPending(false)
+      })
+      .catch(err=>{
+        console.log(err)
+        setPending(false)
+      })
+      axios.get(serverURL()+'channel/search-for-channel/'+'?query= '+'&search_category=Entrance_Exam',TokenConfig())
+      .then(result=>{
+        console.log(result);
+        res6.push(...result.data.data);
+        var ll = res6.map((q) => q);
+        setList6([...ll]);
+        setPending(false)
+      })
+      .catch(err=>{
+        console.log(err)
+        setPending(false)
+      })
+  },[])
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const breakPoints = [
     { width: 1, itemsToShow: 1 },
@@ -91,8 +162,6 @@ export default function MainPage() {
   return (
     <div>
       <CssBaseline/>
-      
-
     <Material_RTL>
     <RTL>
     <div >
@@ -101,39 +170,32 @@ export default function MainPage() {
           <Grid container spacing={3}>
             {/* Chart */}
             <Grid item xs={12} md={12} lg={12}>
-              <div className={classes.title}><h3>مهاجرت</h3></div>
+              <div className={classes.title}><h3>وکالت</h3></div>
               <Paper className={fixedHeightPaper}>
                 <Carousel breakPoints={breakPoints} isRTL={'true'} style={{color:'#27bda0'}}>
-                  <SuggestionChannelCard ChannelName={'مهاجرت'} ConsultantName={''} image={'../../image/migrationgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/migrationgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/migrationgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/migrationgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/migrationgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/migrationgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/migrationgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/migrationgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/migrationgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/migrationgroup.jpg'}></SuggestionChannelCard>
-                  
+                  {pending ? (<CircularProgress className={classes.CircularProgress} style={{color: '#0e918c'}}/>):
+                  list1.size !== 0 ?  (list1.map((data)=>{
+                    console.log(data)
+                    return(
+                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
+                    )
+                    })): null
+                  }
                 </Carousel>
               </Paper>
             </Grid>
             <Grid item xs={12} md={12} lg={12}>
-            <div className={classes.title}><h3>رشته تحصیلی</h3></div>
+            <div className={classes.title}><h3>تحصیلی</h3></div>
               <Paper className={fixedHeightPaper}>
                 <Carousel breakPoints={breakPoints} isRTL={'true'}>
-                  <SuggestionChannelCard ChannelName={'رشته تحصیلی'} ConsultantName={''} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
-                  
+                {pending ? (<CircularProgress className={classes.CircularProgress} style={{color: '#0e918c'}}/>):
+                  list2.size !== 0 ?  (list2.map((data)=>{
+                    console.log(data)
+                    return(
+                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
+                    )
+                    })): null
+                  }
                 </Carousel>
               </Paper>
             </Grid>
@@ -141,38 +203,29 @@ export default function MainPage() {
             <div className={classes.title}><h3>روانشناسی</h3></div>
               <Paper className={fixedHeightPaper}>
                 <Carousel breakPoints={breakPoints} isRTL={'true'}>
-                  <SuggestionChannelCard ChannelName={'روانشناسی'} ConsultantName={''} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
-                  
+                {pending ? (<CircularProgress className={classes.CircularProgress} style={{color: '#0e918c'}}/>):
+                  list3.size !== 0 ?  (list3.map((data)=>{
+                    console.log(data)
+                    return(
+                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
+                    )
+                    })): null
+                  }
                 </Carousel>
               </Paper>
             </Grid>
             <Grid item xs={12} md={12} lg={12}>
-            <div className={classes.title}><h3>وکالت</h3></div>
+            <div className={classes.title}><h3>مهاجرت تحصیلی</h3></div>
               <Paper className={fixedHeightPaper}>
                 <Carousel breakPoints={breakPoints} isRTL={'true'}>
-                  <SuggestionChannelCard ChannelName={'وکالت'} ConsultantName={''} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
-                  
+                {pending ? (<CircularProgress className={classes.CircularProgress} style={{color: '#0e918c'}}/>):
+                  list4.size !== 0 ?  (list4.map((data)=>{
+                    console.log(data)
+                    return(
+                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} image={'../../image/migrationgroup.jpg'}></SuggestionChannelCard>
+                    )
+                    })): null
+                  }
                 </Carousel>
               </Paper>
             </Grid>
@@ -180,113 +233,30 @@ export default function MainPage() {
             <div className={classes.title}><h3>پزشکی</h3></div>
               <Paper className={fixedHeightPaper}>
                 <Carousel breakPoints={breakPoints} isRTL={'true'}>
-                  <SuggestionChannelCard ChannelName={'پزشکی'} ConsultantName={''} image={'../../image/medicalgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/medicalgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/medicalgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/medicalgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/medicalgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/medicalgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/medicalgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/medicalgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/medicalgroup.jpg'}></SuggestionChannelCard>
-                  <SuggestionChannelCard ChannelName={'نام کانال'} ConsultantName={'نام مشاور'} image={'../../image/medicalgroup.jpg'}></SuggestionChannelCard>
-                  
+                {pending ? (<CircularProgress className={classes.CircularProgress} style={{color: '#0e918c'}}/>):
+                  list5.size !== 0 ?  (list5.map((data)=>{
+                    console.log(data)
+                    return(
+                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} image={'../../image/medicalgroup.jpg'}></SuggestionChannelCard>
+                    )
+                    })): null
+                  }
                 </Carousel>
               </Paper>
             </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
+            <Grid item xs={12} md={12} lg={12}>
+            <div className={classes.title}><h3>کنکور</h3></div>
               <Paper className={fixedHeightPaper}>
-                
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                
-              </Paper>
-            </Grid>
-          </Grid>
-          <Box pt={4}>
-            
-          </Box>
-          <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                
-              </Paper>
-            </Grid>
-          </Grid>
-          <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                
-              </Paper>
-            </Grid>
-          </Grid>
-          <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                
-              </Paper>
-            </Grid>
-          </Grid>
-          <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                
+                <Carousel breakPoints={breakPoints} isRTL={'true'}>
+                {pending ? (<CircularProgress className={classes.CircularProgress} style={{color: '#0e918c'}}/>):
+                  list6.size !== 0 ?  (list6.map((data)=>{
+                    console.log(data)
+                    return(
+                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} image={'../../image/konkorgroup.jpg'}></SuggestionChannelCard>
+                    )
+                    })): null
+                  }
+                </Carousel>
               </Paper>
             </Grid>
           </Grid>

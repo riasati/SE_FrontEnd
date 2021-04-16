@@ -36,7 +36,7 @@ class SignUpConsultant extends Component {
             email: '',
             password_repetition: '',
             phone_number: '',
-            consultant_type: '',
+            user_type: '',
             certificate: null,
             showPassword: false,
             setErrorDialog:false,
@@ -117,8 +117,8 @@ class SignUpConsultant extends Component {
               this.state.email
             );   
             formData.append( 
-              "consultant_type", 
-              this.state.consultant_type
+              "user_type",
+              this.state.user_type
             );
             formData.append( 
               "phone_number", 
@@ -135,7 +135,7 @@ class SignUpConsultant extends Component {
             axios.post(serverURL()+"consultant/signup/",formData)
             .then(res =>{
                 console.log(res);
-                const token ="Token "+ res.data.token;
+                const token = "Token " + res.data.token;
                 localStorage.setItem('token', token);
                 window.location.href = "/signIn";
             })
@@ -284,16 +284,16 @@ class SignUpConsultant extends Component {
                                         </Grid>
                                         <Grid item xs={12} sm={3}>
                                             <FormControl variant="outlined" className={classes.formControl}>
-                                                <InputLabel id="consultant_type"><span style={{fontFamily: 'IRANSansWeb'}}>حوزه مشاوره</span></InputLabel>
+                                                <InputLabel id="user_type"><span style={{fontFamily: 'IRANSansWeb'}}>حوزه مشاوره</span></InputLabel>
                                                 <Select
                                                     size="normal"
-                                                    labelId="consultant_type"
-                                                    id="consultant_type"
-                                                    name="consultant_type"
-                                                    value={this.state.consultant_type}
+                                                    labelId="user_type"
+                                                    id="user_type"
+                                                    name="user_type"
+                                                    value={this.state.user_type}
                                                     onChange={this.handleChange}
                                                     required
-                                                    label="consultant_type"
+                                                    label="user_type"
                                                     InputProps={{
                                                         style: {fontFamily: 'IRANSansWeb'},
                                                         endAdornment: (
@@ -304,8 +304,11 @@ class SignUpConsultant extends Component {
                                                     }}
                                                 >
                                                     <MenuItem value={"Lawyer"}><span style={{fontFamily: 'IRANSansWeb'}}>وکالت</span></MenuItem>
-                                                    <MenuItem value={"Doctor"}><span style={{fontFamily: 'IRANSansWeb'}}>پزشکی</span></MenuItem>
-                                                    <MenuItem value={"Car"}><span style={{fontFamily: 'IRANSansWeb'}}>ماشین</span></MenuItem>
+                                                    <MenuItem value={"Educational_immigration"}><span style={{fontFamily: 'IRANSansWeb'}}>مهاجرت تحصیلی</span></MenuItem>
+                                                    <MenuItem value={"medical"}><span style={{fontFamily: 'IRANSansWeb'}}>پزشکی</span></MenuItem>
+                                                    <MenuItem value={"Psychology"}><span style={{fontFamily: 'IRANSansWeb'}}>روانشناسی</span></MenuItem>
+                                                    <MenuItem value={"Entrance_Exam"}><span style={{fontFamily: 'IRANSansWeb'}}>کنکور</span></MenuItem>
+                                                    <MenuItem value={"Academic_advice"}><span style={{fontFamily: 'IRANSansWeb'}}>تحصیلی</span></MenuItem>
                                                 </Select>
                                             </FormControl>
                                         </Grid>

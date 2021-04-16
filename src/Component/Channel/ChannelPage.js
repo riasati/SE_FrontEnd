@@ -62,7 +62,7 @@ class Channel extends Component {
                 this.setState({editChannel:true})
             }
             else{
-                this.setState({editChannel:true})
+                this.setState({editChannel:false})
             }
         };
         const handleShowMembers=()=>{

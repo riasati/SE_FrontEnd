@@ -118,6 +118,7 @@ class GroupingChannel extends Component{
                 var ll = res.map((q) => q);
                 setList([...ll]);
                 setPending(false)
+                console.log(list);
               })
               .catch(err=>{
                 console.log(err)
@@ -207,14 +208,16 @@ class GroupingChannel extends Component{
                       
                       <Grid container spacing={3} className={classes.container}>
                         {pending ? (<CircularProgress className={classes.CircularProgress} style={{color: '#0e918c'}}/>):
-                        list.size !== 0 ? (list.map((data)=>{
+                        list.length !== 0 ? (list.map((data)=>{
                           console.log(data)
                           console.log(data.name)
                                 return(
                                 <ChannelCard name={data.name} consultant_full_name={data.consultant_full_name} invite_link={data.invite_link}/>
                               )
-                            })) : (<div>
+                            })) : (<div style={{color:'#3f407d',width: '100%',textAlign: 'center'}}>
+                              <h2>
                               چیزی برای نمایش نیست!
+                              </h2>
                             </div>)
                         }
                       </Grid>

@@ -10,16 +10,18 @@ import Settings from './Component/MainPage/Settings';
 import Dashboard from './Component/Dashboard/Dashboard';
 import GroupingChannel from './Component/GroupingChannel/GroupingChannel';
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
+import Channel from "./Component/Channel/ChannelPage";
 
 class App extends Component {
     render() {
         return (
             <div className="App">
                 <Router>
-                    <Route path="/" exact component={SignIn}/>
+                    <Route path="/" exact component={Channel}/>
                     <Route path="/signIn" component={SignIn}/>
                     <Route path="/SignUpConsultant" component={SignUpConsultant}/>
                     <Route path="/SignUpUser" component={SignUpUser}/>
+                    <Route path="/Channel/:channelId" component={Channel}/>
                     <Route path="/Dashboard" children={<Dashboard title={'داشبورد'} />} component={MainPage}/>
                     <Route path="/Profile" children={<Dashboard title={'پروفایل'}/>} component={Profile}/>
                     <Route path="/Channels" children={<Dashboard title={'کانال ها'}/>} component={Channels}/>

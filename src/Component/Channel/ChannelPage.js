@@ -37,6 +37,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import { BsCardText } from "react-icons/bs";
 import { MdPeople } from "react-icons/md";
 import DeleteIcon from '@material-ui/icons/Delete';
+import photo from '../../../src/Resource/11.jpg';
 
 class Channel extends Component {
     constructor(){
@@ -211,7 +212,7 @@ class Channel extends Component {
                                                                                     <CardMedia
                                                                                         component="img"
                                                                                         className={classes.mediaMembers}
-                                                                                        image="./11.jpg"
+                                                                                        image={photo}
                                                                                     />
                                                                                 <CardContent>
                                                                                     <text color="#725b53">username</text>

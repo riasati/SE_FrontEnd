@@ -1,6 +1,6 @@
 import React,{Component} from "react";
 import {makeStyles} from "@material-ui/core";
-import LoadingOverlay from 'D:/narm2/2/node_modules/react-loading-overlay';
+import LoadingOverlay from 'react-loading-overlay';
 import {TextValidator, ValidatorForm} from "react-material-ui-form-validator";
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline/CssBaseline";
@@ -84,7 +84,7 @@ class CreateChannel extends Component{
                 console.log(res);
                 const token ="Token "+ res.data.token;
                 localStorage.setItem('token', token);
-                window.location.href = "/";
+                window.location.href = "channel/"+ this.state.channelLink;
             })
             .catch(err=>{
                 console.log(err);

@@ -18,7 +18,7 @@ import RTL from '../RTL/M_RTL';
 import ErrorDialog from '../../RequestConfig/ErrorDialog';
 import serverURL from "../../RequestConfig/serverURL";
 import LoadingOverlay from 'react-loading-overlay';
-
+import LoadingButton from '@material-ui/lab/LoadingButton';
 class SignUpUser extends Component {
     constructor() {
         super();
@@ -78,16 +78,9 @@ class SignUpUser extends Component {
             }
             };
         const classes = this.props.classes;
-        const header = {
-            mode: 'cors',
-            headers:{
-                'Access-Control-Allow-Origin': '*',
-                'Content-Type': 'application/json',
-                mode: 'cors',
-            }
-        };
+        const [pending, setPending] = this.props.pending;
         var handleClick = e => {
-            //setPendign(true);
+            setPending(true);
             e.preventDefault();
             axios.post(serverURL() + "user/signup/", this.state)
                 .then(res =>{
@@ -97,6 +90,7 @@ class SignUpUser extends Component {
                     window.location.href = "/Dashboard";
                 })
                 .catch(err=>{
+                    setPending(false);
                     let errMessage = "";
                     let resError = err.response.data;
                     // typeof resError.error.username !== "undefined" ? errMessage += resError.error.username[0] : null;
@@ -372,10 +366,9 @@ class SignUpUser extends Component {
                                     <Grid container>
                                         <Grid item xs={12}>
                                             <Grid>
-                                                <Button onClick={handleConfirmPassword} className={classes.topButton} fullWidth
-                                                        variant="contained" style={{fontFamily: 'IRANSansWeb'}}>
+                                                <LoadingButton onClick={handleClick } pendingPosition="center" className={classes.topButton} pending={pending}  fullWidth>
                                                     {'ثبت نام'}
-                                                </Button>
+                                                </LoadingButton>
                                                 <ErrorDialog open={this.state.setErrorDialog} errorText={this.state.ErrorDialogText} />
                                             </Grid>
                                         </Grid>
@@ -461,7 +454,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default () => {
     const classes = useStyles();
+    const pending = React.useState(false);
     return (
-        <SignUpUser classes={classes}/>
+        <SignUpUser classes={classes} pending={pending}/>
     )
 }

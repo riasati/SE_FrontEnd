@@ -38,6 +38,9 @@ import { BsCardText } from "react-icons/bs";
 import { MdPeople } from "react-icons/md";
 import DeleteIcon from '@material-ui/icons/Delete';
 import photo from '../../../src/Resource/11.jpg';
+import {ChevronLeft} from "@material-ui/icons";
+import {ChevronRight} from "@material-ui/icons";
+import Slide from "@material-ui/core/Slide";
 
 class Channel extends Component {
     constructor(){
@@ -48,12 +51,52 @@ class Channel extends Component {
             consultantSubscribe:false,
             admin:true,
             isJoined:false,
+            openDrawerRight:false,
+            openDrawerLeft:false,
         }
     }
     componentDidMount() {
         this.setState({loading:false});
     }
     filesArray = [];
+    handleRightDrawer = e => {
+        this.state.openDrawerRight = !this.state.openDrawerRight;
+        this.handleSms();
+        this.setState({});
+    };
+    handleLeftDrawer = e => {
+        this.state.openDrawerLeft = !this.state.openDrawerLeft;
+        this.handleSms();
+        this.setState({});
+    };
+    handleSms = () => {
+        if (this.state.openDrawerRight && this.state.openDrawerLeft){
+            this.smOfRight=3;
+            this.smOfCenter=6;
+            this.smOfLeft=3;
+        }
+        else if (this.state.openDrawerRight && !this.state.openDrawerLeft){
+            this.smOfRight=4;
+            this.smOfCenter=8;
+            this.smOfLeft=0;
+        }
+        else if (!this.state.openDrawerRight && this.state.openDrawerLeft){
+            this.smOfRight=0;
+            this.smOfCenter=8;
+            this.smOfLeft=4;
+        }
+        else if (!this.state.openDrawerRight && !this.state.openDrawerLeft){
+            this.smOfRight=0;
+            this.smOfCenter=8;
+            this.smOfLeft=0;
+        }
+
+    };
+
+    smOfRight=0;
+    smOfCenter=8;
+    smOfLeft=0;
+
     render() {
         const classes = this.props.classes;
 
@@ -103,11 +146,11 @@ class Channel extends Component {
                         <RTL>
                             <div className={classes.rootDiv} >
                                 <Grid container direction={"column"} spacing={2} justify="space-evenly" >
-                                    <Grid item xs={12}>
-                                        <Paper className={classes.paper}>
-                                            Up
-                                        </Paper>
-                                    </Grid>
+                                    {/*<Grid item xs={12}>*/}
+                                        {/*<Paper className={classes.paper}>*/}
+                                            {/*Up*/}
+                                        {/*</Paper>*/}
+                                    {/*</Grid>*/}
                                     <Dialog onBackdropClick={handleEditChannel}  open={this.state.editChannel} style={{fontFamily: 'IRANSansWeb',color: "#494949",justifyContent:'right'}}>
                                                 <Grid container className={classes.rootShowMembers} spacing={2} style={{padding:30,justifyContent: 'center'}}>
                                                     <Grid  item xs={16}>
@@ -237,7 +280,8 @@ class Channel extends Component {
                                                 </Dialog>
                                     <Grid container item sm={12}>
                                         <Grid container direction={"row"} spacing={2} justify="space-evenly">
-                                            <Grid item sm={3} xs={12} className={classes.rightSection}>
+                                            <Grid item sm={this.smOfRight} xs={12} className={classes.rightSection}>
+                                                <Slide direction="right" in={this.state.openDrawerRight} mountOnEnter unmountOnExit>
                                                 <Paper className={classes.paper}>
                                                     <Grid container direction={"column"} spacing={2} justify={"space-evenly"}>
                                                         <Grid item xs={12}>
@@ -255,11 +299,25 @@ class Channel extends Component {
                                                         </Grid>
                                                     </Grid>
                                                 </Paper>
+                                                </Slide>
                                                 {/*<Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '20vh',width:'50vh' }} />*/}
                                             </Grid>
-                                            <Grid item sm={6} className={classes.centerSection}>
+                                            <Grid item sm={this.smOfCenter} xs={12} className={classes.centerSection}>
                                                 <Paper className={classes.paper}>
-                                                    <Typography component={"h2"} variant={"body1"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d'}}>عنوان کانال</Typography>
+                                                    <div style={{display:"flex",flexDirection:"row-reverse",justifyContent:"space-between",alignItems: "stretch",alignContent:"center"}}>
+                                                    <IconButton style={{padding:"0", color: '#3f407d'}} onClick={this.handleLeftDrawer}>
+                                                        {
+                                                            this.state.openDrawerLeft ? <ChevronRight style={{fontSize:35}} /> : <ChevronLeft style={{fontSize:35}} />
+                                                        }
+                                                        {/*<ChevronLeft style={{fontSize:35}} />*/}
+                                                    </IconButton>
+                                                    <Typography component={"h2"} variant={"body1"} style={{fontFamily: 'IRANSansWeb',color: '#3f407d',alignSelf:"center"}}>عنوان کانال</Typography>
+                                                    <IconButton style={{padding:"0", color: '#3f407d'}} onClick={this.handleRightDrawer}>
+                                                        {
+                                                            this.state.openDrawerRight ? <ChevronLeft style={{fontSize:35}} /> : <ChevronRight style={{fontSize:35}} />
+                                                        }
+                                                    </IconButton>
+                                                    </div>
                                                     <Divider className={classes.divider} />
                                                     <ChannelMessages admin={this.state.admin} isJoined={this.state.isJoined}>
 
@@ -271,7 +329,8 @@ class Channel extends Component {
                                                     </ChannelMessages>
                                                 </Paper>
                                             </Grid>
-                                            <Grid item sm={3} xs={12} className={classes.leftSection}>
+                                            <Grid item sm={this.smOfLeft} xs={12} className={classes.leftSection}>
+                                                <Slide direction="left" in={this.state.openDrawerLeft} mountOnEnter unmountOnExit>
                                                 <Paper className={classes.paper}  >
                                                     <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" className={classes.channelInfoAvatar} />
                                                     <Typography component={"h2"} variant={"body1"} align={"left"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d',alignSelf: "baseline",marginBottom: "10px"}}>توضیحات </Typography>
@@ -313,6 +372,7 @@ class Channel extends Component {
                                                         <Typography component={"h2"} variant={"body1"} align={"left"} style={{fontFamily: 'IRANSansWeb',color: '#3f407d',alignSelf: "baseline"}}>گزارش تخلف کانال</Typography>
                                                     </Button>
                                                 </Paper>
+                                                </Slide>
                                                 {/*<Typography component="div" style={{ backgroundColor: '#2f18fc', height: '20vh',width:'50vh' }} />*/}
                                             </Grid>
                                         </Grid>

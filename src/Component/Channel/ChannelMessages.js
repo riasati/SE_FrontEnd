@@ -14,6 +14,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import {Done} from "@material-ui/icons";
 import {AssignmentSharp} from "@material-ui/icons";
+import {CloudUpload} from "@material-ui/icons";
 
 const MenuItem = withStyles({
     root: {
@@ -51,6 +52,7 @@ class ChannelMessages extends Component{
             }
             else if (files[i].type.split("/")[0] === "image"){
                 this.newMessageFile.push(
+                    //style={{maxHeight:"500px"}}
                         <img src={uri} height={"100%"} width={"100%"} />
                 );
             }
@@ -139,9 +141,14 @@ class ChannelMessages extends Component{
     }
 
     link = "";
+    file;
     render() {
         const classes = this.props.classes;
-
+        const onFileChange = event => {
+            this.handleDrop(event.target.files);
+            // this.file = event.target.files[0];
+            //this.setState({ certificate: event.target.files[0] });
+        };
         const handleTextOptions = async(event,index) => {
             if (index === 0)
             {
@@ -241,7 +248,9 @@ class ChannelMessages extends Component{
                     null :
                     <Divider className={classes.divider} />
                 }
-
+                <input
+                    style={{display : 'none'}}
+                    id='file' type="file" onChange={onFileChange} multiple/>
                 {this.props.admin ?
                     <TextField id="standard-basic" multiline fullWidth
                                placeholder={"پیام خود را وارد کنید"}
@@ -251,6 +260,17 @@ class ChannelMessages extends Component{
                                    style: {fontFamily: 'IRANSansWeb'},
                                    endAdornment: (
                                        <InputAdornment position="end">
+                                           <label htmlFor='file'>
+                                           <IconButton
+                                               aria-label="upload picture"
+                                               component="span"
+                                               style={{padding: '0px', color: '#3f407d'}}
+                                              // onClick={handleSendIcon}
+                                               // onMouseDown={this.handleMouseDownPassword}
+                                           >
+                                               <CloudUpload style={{ fontSize: 35 }} />
+                                           </IconButton>
+                                           </label>
                                            <IconButton
                                                style={{padding: '0px', color: '#3f407d'}}
                                                onClick={handleSendIcon}

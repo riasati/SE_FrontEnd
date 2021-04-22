@@ -26,6 +26,7 @@ import Profile from '../User/Profile/Profile';
 import MainPage from '../MainPage/MainPage';
 import Channels from '../MainPage/Channels';
 import GroupingChannel from '../GroupingChannel/GroupingChannel';
+import Channel from "../Channel/ChannelPage";
 
 const drawerWidth = 240;
 
@@ -208,6 +209,9 @@ export default function Dashboard(props) {
               </Route>
               <Route path="/GroupingChannel">
                 <GroupingChannel title={'Settings'}/>
+              </Route>
+              <Route path="/Channel/:channelId">
+                <Channel />
               </Route>
             </Switch>
           </Container>

@@ -21,12 +21,12 @@ const useStyles = makeStyles((theme) => ({
       color: '#ffffff !important',
     },
     '.bSWeAW':{
-      backgroundColor: '#3aadd9 !important',
+      backgroundColor: '#27bda0 !important',
       color: '#ffffff !important',
     },
     '.cetQhm' :{
-      backgroundColor: 'rgb(58 173 217) !important',
-      boxShadow: '0 0 1px 3px rgb(63 64 125) !important', 
+      backgroundColor: '#27bda0 !important',
+      boxShadow: '0 0 1px 3px #27bda0 !important',
     },
   },
   root: {
@@ -215,7 +215,7 @@ export default function MainPage() {
               </Paper>
             </Grid>
             <Grid item xs={12} md={12} lg={12}>
-            <div className={classes.title}><h2><i class="fas fa-globe-stand"></i> مهاجرت تحصیلی </h2></div>
+            <div className={classes.title}><h2><i class="fas fa-globe-stand"></i> مهاجرت </h2></div>
               <Paper className={fixedHeightPaper}>
                 <Carousel breakPoints={breakPoints} isRTL={'true'}>
                 {pending ? (<CircularProgress className={classes.CircularProgress} style={{color: '#0e918c'}}/>):

@@ -49,16 +49,24 @@ const useStyles = makeStyles((theme) => ({
       border: '3px solid #27bda0',
       backgroundColor:'#f3f7fa',
       transition:'all ease 0.5s',
+      "&:hover": {
+          boxShadow: '1px 1px 10px 0px #2ab371',
+      },
     },
     a:{
       color: '#3f407d',
        textDecoration: 'none',
     },
     img:{
-      width:'100px',
-      height:'100px',
-      borderRadius: '100%',
-      marginTop:'10%',
+        width:'100px',
+        height:'100px',
+        borderRadius: '100%',
+        marginTop:'10%',
+        border: '2px solid #27bda0',
+        transition:'all ease 0.5s',
+        "&:hover": {
+            filter: 'drop-shadow(0px 0px 10px #27bda0)',
+        },
     },
     container: {
       padding: '5%',

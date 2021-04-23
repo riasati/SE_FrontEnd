@@ -16,7 +16,8 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
+import { SecondaryListItems } from './listItems';
+import MainListItems from './listItems';
 import Material_RTL from "../RTL/Material_RTL";
 import RTL from '../RTL/M_RTL';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -100,6 +101,9 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    [theme.breakpoints.down('xs')]: {
+      position: 'absolute',
+    },
   },
   drawerPaperClose: {
     overflowX: 'hidden',
@@ -189,9 +193,9 @@ export default function Dashboard(props) {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        <List>{<MainListItems/>}</List>
         <Divider />
-        <List>{secondaryListItems}</List>
+        <List>{SecondaryListItems}</List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />

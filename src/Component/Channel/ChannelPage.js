@@ -51,7 +51,7 @@ class Channel extends Component {
             loading:true,
             editChannel:false,
             consultantSubscribe:false,
-            role: "consultant",
+            role: null,
             openDrawerRight:false,
             openDrawerLeft:false,
             smOfRight:0,
@@ -65,23 +65,34 @@ class Channel extends Component {
             .then(result => {
                 //console.log(result);
                 this.state.role = result.data.role;
-                console.log(this.state.role);
+                //console.log(this.state.role);
                 this.inviteLink = result.data.invite_link;
-                this.setState({role:result.data.role});
+                this.setState({});
             })
             .catch(error => {
                 console.log(error);
                 //this.setState({setErrorDialog:true,ErrorDialogText:error.message});
+            });
+        axios.get(serverURL() + "channel/" + this.props.match.params.channelId + "/",TokenConfig())
+            .then(result => {
+                console.log(result);
+                this.channelName = result.data.name;
+                this.channelDescription = result.data.description;
+               // this.inviteLink = result.data.invite_link;
+                this.setState({});
+            })
+            .catch(error => {
+                console.log(error);
             });
         axios.get(serverURL() + "user/channels/",TokenConfig())
             .then(result =>{
                // console.log(result);
                 this.channelsList = result.data;
                 for (let i in this.channelsList){
-                    if (this.channelsList[i].user_role ==="consultant"){
-                        this.channelName = this.channelsList[i].name;
-                        this.channelDescription = this.channelsList[i].description;
-                    }
+                    // if (this.channelsList[i].user_role ==="consultant"){
+                    //     this.channelName = this.channelsList[i].name;
+                    //     this.channelDescription = this.channelsList[i].description;
+                    // }
                     if (this.channelsList[i].user_role === "subscriber"){
                         this.seeSubscriberChannels = true;
                     }
@@ -91,14 +102,14 @@ class Channel extends Component {
             .catch(error => {
                 console.log(error);
             });
-        axios.get(serverURL() + "channel/channel-subscriber/" + '?query='+'&channel-url=' + "hello",TokenConfig())
+        axios.get(serverURL() + "channel/channel-subscriber/"+ this.props.match.params.channelId + "/",TokenConfig())
             .then(result =>{
                 this.subscribersList = result.data?.data;
             })
             .catch(error => {
                 console.log(error);
             });
-        axios.get(serverURL() + "channel/channel-admins/" + '?query='+'&channel-url=' + "hello",TokenConfig())
+        axios.get(serverURL() + "channel/channel-admins/" + this.props.match.params.channelId + "/",TokenConfig())
             .then(result =>{
                 this.adminsList.push(result.data?.consultant);
                 for (let i in result.data?.admin){

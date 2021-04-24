@@ -38,13 +38,17 @@ class ChannelMessages extends Component{
             needEndMessages:false,
             loading:true,
             role:this.props.role,
+            textOptions:[],
+            fileOptions:[],
+            enableDragAndDrop:false,
         };
+       // console.log(this.state.role);
         this.myRef = [];
         this.initialization();
     }
     newMessageFile = [];
-    textOptions = [];
-    fileOptions = [];
+    // textOptions = [];
+    // fileOptions = [];
     indexSelected = -1;
     messageText = "";
     classes = this.props.classes;
@@ -305,31 +309,57 @@ class ChannelMessages extends Component{
         this.setState({mouseX: null, mouseY: null,})
     };
     componentDidMount() {
-        if (this.props.role === "consultant"){
-            this.textOptions.push('رونوشت');
-            this.textOptions.push('ویرایش');
-            this.textOptions.push('حذف');
-
-            this.fileOptions.push('دانلود');
-            this.fileOptions.push('حذف');
-        }
-        else{
-            this.textOptions.push('رونوشت');
-            this.fileOptions.push('دانلود');
-        }
+        // if (this.state.role === "consultant"){
+        //     this.textOptions.push('رونوشت');
+        //     this.textOptions.push('ویرایش');
+        //     this.textOptions.push('حذف');
+        //
+        //     this.fileOptions.push('دانلود');
+        //     this.fileOptions.push('حذف');
+        // }
+        // else{
+        //     this.textOptions.push('رونوشت');
+        //     this.fileOptions.push('دانلود');
+        // }
         // for (let i in this.props.children){
         //     this.newMessageFile.push(this.props.children[i]);
         // }
         //this.initialization();
-        this.setState({});
+   //     this.setState({});
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
-        this.state.role = this.props.role;
         if (prevState.needEndMessages === true){
              this.messagesEnd.scrollIntoView({ behavior: "smooth" });
             this.state.needEndMessages = false;
         }
-    }
+    };
+    componentWillReceiveProps(nextProps, nextContext) {
+        if (this.props.role !== nextProps.role){
+            this.state.role = nextProps.role;
+           // console.log(this.props.role);
+            if (this.state.role === "consultant") {
+              //  console.info("here");
+                this.state.enableDragAndDrop = true;
+            }
+            else{
+                this.state.enableDragAndDrop = false;
+            }
+            this.setState({});
+            if (nextProps.role === "consultant"){
+                this.state.textOptions.push('رونوشت');
+                this.state.textOptions.push('ویرایش');
+                this.state.textOptions.push('حذف');
+
+                this.state.fileOptions.push('دانلود');
+                this.state.fileOptions.push('حذف');
+            }
+            else{
+               // console.log("here");
+                this.state.textOptions.push('رونوشت');
+                this.state.fileOptions.push('دانلود');
+            }
+        }
+        }
 
     render() {
         const classes = this.props.classes;
@@ -355,7 +385,7 @@ class ChannelMessages extends Component{
                 // console.log("here i have to delete");
                 axios.delete(serverURL() + "channel-message/" + this.props.channelId + "/" + this.newMessageFile[this.indexSelected].key +"/",TokenConfig())
                     .then(result => {
-                        console.log(result);
+                        //console.log(result);
                         this.newMessageFile.splice(this.indexSelected, 1);
                         this.indexSelected = -1;
                         this.setState({});
@@ -439,7 +469,7 @@ class ChannelMessages extends Component{
         };
         return(
             <div>
-            <DragAndDrop handleDrop={this.handleDrop} enable={this.state.role === "consultant"}>
+            <DragAndDrop handleDrop={this.handleDrop} enable={this.state.enableDragAndDrop}>
                 <LoadingOverlay active={this.state.loading} spinner text={""}>
                 <ScrollArea className={classes.mainDiv} speed={0.5} horizontal={false} onScroll={this.handleGetNewMessages}>
                     {this.newMessageFile.map((value,index) =>(
@@ -461,7 +491,7 @@ class ChannelMessages extends Component{
                         MenuListProps={{textAlign:"center"}}
                     >
                         {this.state.isTextSelected ?
-                            this.textOptions.map((textOption, index) => (
+                            this.state.textOptions.map((textOption, index) => (
                                 <MenuItem
                                     key={index}
                                     className={classes.blueFontStyle}
@@ -472,7 +502,7 @@ class ChannelMessages extends Component{
                                 </MenuItem>
                             ))
                             :
-                            this.fileOptions.map((fileOption, index) => (
+                            this.state.fileOptions.map((fileOption, index) => (
                                 <MenuItem
                                     key={index}
                                     className={classes.blueFontStyle}

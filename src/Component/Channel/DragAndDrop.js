@@ -8,6 +8,7 @@ class DragAndDrop extends Component {
         }
     }
     dropRef = React.createRef();
+ //   enableTruth = false;
     handleDrag = (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -39,7 +40,7 @@ class DragAndDrop extends Component {
         }
     };
     componentDidMount() {
-        if (this.props.enable === true){
+        if (this.props.enable){
             let div = this.dropRef.current;
             div.addEventListener('dragenter', this.handleDragIn);
             div.addEventListener('dragleave', this.handleDragOut);
@@ -47,15 +48,40 @@ class DragAndDrop extends Component {
             div.addEventListener('drop', this.handleDrop);
         }
     }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        // console.log("DidUpdate");
+        // console.log(prevProps);
+        // if (this.props.enable !== prevProps.enable && this.props.enable === false){
+        //     let div = this.dropRef.current;
+        //     div.removeEventListener('dragenter', this.handleDragIn);
+        //     div.removeEventListener('dragleave', this.handleDragOut);
+        //     div.removeEventListener('dragover', this.handleDrag);
+        //     div.removeEventListener('drop', this.handleDrop);
+        // }
+    }
+
     componentWillUnmount() {
-        if (this.props.enable === true){
+        if (this.props.enable){
             let div = this.dropRef.current;
             div.removeEventListener('dragenter', this.handleDragIn);
             div.removeEventListener('dragleave', this.handleDragOut);
             div.removeEventListener('dragover', this.handleDrag);
             div.removeEventListener('drop', this.handleDrop);
         }
-
+    }
+    componentWillReceiveProps(nextProps, nextContext) {
+        console.log("RecieveProp");
+        console.log(nextProps);
+        if (this.props.enable !== nextProps.enable){
+            console.info("here");
+            if (nextProps.enable === true){
+                let div = this.dropRef.current;
+                div.addEventListener('dragenter', this.handleDragIn);
+                div.addEventListener('dragleave', this.handleDragOut);
+                div.addEventListener('dragover', this.handleDrag);
+                div.addEventListener('drop', this.handleDrop);
+            }
+        }
     }
     render() {
         return(

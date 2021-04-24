@@ -41,24 +41,86 @@ import photo from '../../../src/Resource/11.jpg';
 import {ChevronLeft} from "@material-ui/icons";
 import {ChevronRight} from "@material-ui/icons";
 import Slide from "@material-ui/core/Slide";
+import TokenConfig from "../../RequestConfig/TokenConfig";
+import { withRouter } from "react-router";
 
 class Channel extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state={
             loading:true,
             editChannel:false,
             consultantSubscribe:false,
-            admin:true,
-            isJoined:false,
+            role: "consultant",
             openDrawerRight:false,
             openDrawerLeft:false,
-        }
+            smOfRight:0,
+            smOfCenter:8,
+            smOfLeft:0,
+        };
+        this.initialization();
     }
+    initialization = () => {
+        axios.get(serverURL() +"user/channel-role/" + this.props.match.params.channelId +"/",TokenConfig())
+            .then(result => {
+                //console.log(result);
+                this.state.role = result.data.role;
+                console.log(this.state.role);
+                this.inviteLink = result.data.invite_link;
+                this.setState({role:result.data.role});
+            })
+            .catch(error => {
+                console.log(error);
+                //this.setState({setErrorDialog:true,ErrorDialogText:error.message});
+            });
+        axios.get(serverURL() + "user/channels/",TokenConfig())
+            .then(result =>{
+               // console.log(result);
+                this.channelsList = result.data;
+                for (let i in this.channelsList){
+                    if (this.channelsList[i].user_role ==="consultant"){
+                        this.channelName = this.channelsList[i].name;
+                        this.channelDescription = this.channelsList[i].description;
+                    }
+                    if (this.channelsList[i].user_role === "subscriber"){
+                        this.seeSubscriberChannels = true;
+                    }
+                }
+                this.setState({});
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        axios.get(serverURL() + "channel/channel-subscriber/" + '?query='+'&channel-url=' + "hello",TokenConfig())
+            .then(result =>{
+                this.subscribersList = result.data?.data;
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        axios.get(serverURL() + "channel/channel-admins/" + '?query='+'&channel-url=' + "hello",TokenConfig())
+            .then(result =>{
+                this.adminsList.push(result.data?.consultant);
+                for (let i in result.data?.admin){
+                    this.adminsList.push(result.data?.admin[i]);
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    };
     componentDidMount() {
         this.setState({loading:false});
     }
-    filesArray = [];
+
+    channelName= null;
+    channelDescription = null;
+    channelsList = [];
+    subscribersList = [];
+    adminsList = [];
+    seeSubscriberChannels = false;
+    inviteLink = null;
+
     handleRightDrawer = e => {
         this.state.openDrawerRight = !this.state.openDrawerRight;
         this.handleSms();
@@ -71,31 +133,27 @@ class Channel extends Component {
     };
     handleSms = () => {
         if (this.state.openDrawerRight && this.state.openDrawerLeft){
-            this.smOfRight=3;
-            this.smOfCenter=6;
-            this.smOfLeft=3;
+            this.state.smOfRight=3;
+            this.state.smOfCenter=6;
+            this.state.smOfLeft=3;
         }
         else if (this.state.openDrawerRight && !this.state.openDrawerLeft){
-            this.smOfRight=4;
-            this.smOfCenter=8;
-            this.smOfLeft=0;
+            this.state.smOfRight=4;
+            this.state.smOfCenter=8;
+            this.state.smOfLeft=0;
         }
         else if (!this.state.openDrawerRight && this.state.openDrawerLeft){
-            this.smOfRight=0;
-            this.smOfCenter=8;
-            this.smOfLeft=4;
+            this.state.smOfRight=0;
+            this.state.smOfCenter=8;
+            this.state.smOfLeft=4;
         }
         else if (!this.state.openDrawerRight && !this.state.openDrawerLeft){
-            this.smOfRight=0;
-            this.smOfCenter=8;
-            this.smOfLeft=0;
+            this.state.smOfRight=0;
+            this.state.smOfCenter=8;
+            this.state.smOfLeft=0;
         }
 
     };
-
-    smOfRight=0;
-    smOfCenter=8;
-    smOfLeft=0;
 
     render() {
         const classes = this.props.classes;
@@ -146,11 +204,6 @@ class Channel extends Component {
                         <RTL>
                             <div className={classes.rootDiv} >
                                 <Grid container direction={"column"} spacing={2} justify="space-evenly" >
-                                    {/*<Grid item xs={12}>*/}
-                                        {/*<Paper className={classes.paper}>*/}
-                                            {/*Up*/}
-                                        {/*</Paper>*/}
-                                    {/*</Grid>*/}
                                     <Dialog onBackdropClick={handleEditChannel}  open={this.state.editChannel} style={{fontFamily: 'IRANSansWeb',color: "#494949",justifyContent:'right'}}>
                                                 <Grid container className={classes.rootShowMembers} spacing={2} style={{padding:30,justifyContent: 'center'}}>
                                                     <Grid  item xs={16}>
@@ -280,29 +333,50 @@ class Channel extends Component {
                                                 </Dialog>
                                     <Grid container item sm={12}>
                                         <Grid container direction={"row"} spacing={2} justify="space-evenly">
-                                            <Grid item sm={this.smOfRight} xs={12} className={classes.rightSection}>
+                                            <Grid item sm={this.state.smOfRight} xs={12} className={classes.rightSection}>
                                                 <Slide direction="right" in={this.state.openDrawerRight} mountOnEnter unmountOnExit>
                                                 <Paper className={classes.paper}>
                                                     <Grid container direction={"column"} spacing={2} justify={"space-evenly"}>
                                                         <Grid item xs={12}>
                                                             <ChannelCardList title={"كانال هاي من"}>
-                                                                <ChannelCard name={"عنوان کانال من"} imageSource={""} description={"من تو او ما شما ایشان حتی اگر اما"} number={200} />
-                                                                <ChannelCard name={"عنوان کانال من"} imageSource={""} description={"من تو او ما شما ایشان حتی اگر اما"} number={200} />
+                                                                {
+                                                                    this.channelsList.map((value,index) =>
+                                                                    {
+                                                                        if (value?.user_role === "consultant" || value?.user_role === "secretary"){
+                                                                            return <ChannelCard key={index} name={value?.name} imageSource={""} description={value?.description} />
+                                                                        }
+                                                                    })
+                                                                }
+                                                                {/*<ChannelCard name={"عنوان کانال من"} imageSource={""} description={"من تو او ما شما ایشان حتی اگر اما"} number={200} />*/}
+                                                                {/*<ChannelCard name={"عنوان کانال من"} imageSource={""} description={"من تو او ما شما ایشان حتی اگر اما"} number={200} />*/}
                                                             </ChannelCardList>
                                                         </Grid>
-                                                        <Grid item xs={12}>
-                                                            <ChannelCardList title={"کانال های عضوشده"}>
-                                                                <ChannelCard name={"عنوان کانال"} imageSource={""} description={"شمسین شیسنشبم شنمیسش یسبنمشسینمبتمنش شسیمنب"} number={200} />
-                                                                <ChannelCard name={"عنوان کانال"} imageSource={""} description={"سشینمتب شیمسنبتش یسبنمیشسنم بتشیسنمش بمسی"} number={200} />
-                                                                <ChannelCard name={"عنوان کانال"} imageSource={""} description={"یمنشبت شیسنمبتش یسمنبتمنشیس بتمنیشست میتمس"} number={200} />
-                                                            </ChannelCardList>
-                                                        </Grid>
+                                                        {this.seeSubscriberChannels ?
+                                                            <Grid item xs={12}>
+                                                                <ChannelCardList title={"کانال های عضوشده"}>
+                                                                    {
+                                                                        this.channelsList.map((value, index) => {
+                                                                            if (value?.user_role === "subscriber") {
+                                                                                return <ChannelCard name={value?.name}
+                                                                                                    imageSource={""}
+                                                                                                    key={index}
+                                                                                                    description={value?.description}/>
+                                                                            }
+                                                                        })
+                                                                    }
+                                                                    {/*<ChannelCard name={this.inviteLink} imageSource={""} description={"شمسین شیسنشبم شنمیسش یسبنمشسینمبتمنش شسیمنب"} number={200} />*/}
+                                                                    {/*<ChannelCard name={"عنوان کانال"} imageSource={""} description={"سشینمتب شیمسنبتش یسبنمیشسنم بتشیسنمش بمسی"} number={200} />*/}
+                                                                    {/*<ChannelCard name={"عنوان کانال"} imageSource={""} description={"یمنشبت شیسنمبتش یسمنبتمنشیس بتمنیشست میتمس"} number={200} />*/}
+                                                                </ChannelCardList>
+                                                            </Grid>
+                                                                : null
+                                                        }
                                                     </Grid>
                                                 </Paper>
                                                 </Slide>
                                                 {/*<Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '20vh',width:'50vh' }} />*/}
                                             </Grid>
-                                            <Grid item sm={this.smOfCenter} xs={12} className={classes.centerSection}>
+                                            <Grid item sm={this.state.smOfCenter} xs={12} className={classes.centerSection}>
                                                 <Paper className={classes.paper}>
                                                     <div style={{display:"flex",flexDirection:"row-reverse",justifyContent:"space-between",alignItems: "stretch",alignContent:"center"}}>
                                                     <IconButton style={{padding:"0", color: '#3f407d'}} onClick={this.handleLeftDrawer}>
@@ -311,7 +385,7 @@ class Channel extends Component {
                                                         }
                                                         {/*<ChevronLeft style={{fontSize:35}} />*/}
                                                     </IconButton>
-                                                    <Typography component={"h2"} variant={"body1"} style={{fontFamily: 'IRANSansWeb',color: '#3f407d',alignSelf:"center"}}>عنوان کانال</Typography>
+                                                    <Typography component={"h2"} variant={"body1"} style={{fontFamily: 'IRANSansWeb',color: '#3f407d',alignSelf:"center"}}>{this.channelName}</Typography>
                                                     <IconButton style={{padding:"0", color: '#3f407d'}} onClick={this.handleRightDrawer}>
                                                         {
                                                             this.state.openDrawerRight ? <ChevronLeft style={{fontSize:35}} /> : <ChevronRight style={{fontSize:35}} />
@@ -319,22 +393,26 @@ class Channel extends Component {
                                                     </IconButton>
                                                     </div>
                                                     <Divider className={classes.divider} />
-                                                    <ChannelMessages admin={this.state.admin} isJoined={this.state.isJoined}>
+                                                    <ChannelMessages role={this.state.role} inviteLink={this.inviteLink} channelId={this.props.match.params.channelId} />
+                                                        {/*{*/}
+                                                            {/*this.state.messageLables.map((value,index) => (*/}
+                                                                {/*<Typography component={"h2"} variant={"body1"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d'}}>عنوان کانال</Typography>*/}
+                                                            {/*))*/}
+                                                        {/*}*/}
+                                                        {/*<Typography component={"h2"} variant={"body1"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d'}}>عنوان کانال</Typography>*/}
+                                                        {/*<Typography component={"h2"} variant={"body1"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d'}}>عنوان کانال من</Typography>*/}
+                                                        {/*<Typography component={"h2"} variant={"body1"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d'}}>عنوان کانال تو</Typography>*/}
+                                                        {/*<Typography component={"h2"} variant={"body1"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d'}}>عنوان کانال او</Typography>*/}
 
-                                                        <Typography component={"h2"} variant={"body1"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d'}}>عنوان کانال</Typography>
-                                                        <Typography component={"h2"} variant={"body1"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d'}}>عنوان کانال من</Typography>
-                                                        <Typography component={"h2"} variant={"body1"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d'}}>عنوان کانال تو</Typography>
-                                                        <Typography component={"h2"} variant={"body1"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d'}}>عنوان کانال او</Typography>
-
-                                                    </ChannelMessages>
+                                                    {/*</ChannelMessages>*/}
                                                 </Paper>
                                             </Grid>
-                                            <Grid item sm={this.smOfLeft} xs={12} className={classes.leftSection}>
+                                            <Grid item sm={this.state.smOfLeft} xs={12} className={classes.leftSection}>
                                                 <Slide direction="left" in={this.state.openDrawerLeft} mountOnEnter unmountOnExit>
                                                 <Paper className={classes.paper}  >
                                                     <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" className={classes.channelInfoAvatar} />
-                                                    <Typography component={"h2"} variant={"body1"} align={"left"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d',alignSelf: "baseline",marginBottom: "10px"}}>توضیحات </Typography>
-                                                    <Typography component={"h2"} variant={"body1"} align={"left"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d',textAlign:"right",alignSelf: "baseline",marginBottom: "10px"}}>channelID</Typography>
+                                                    <Typography component={"h2"} variant={"body1"} align={"left"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d',alignSelf: "baseline",marginBottom: "10px"}}>{this.channelDescription}</Typography>
+                                                    <Typography component={"h2"} variant={"body1"} align={"left"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d',textAlign:"right",alignSelf: "baseline",marginBottom: "10px"}}>{this.inviteLink}</Typography>
                                                     <div style={{ width: "100%",display: "flex",flexDirection:"row", justifyContent: "space-evenly",alignItems: "center",marginBottom:"10px"}}  >
                                                         <Button variant="contained" color={'primary'} onClick={handleEditChannel}>ویرایش کانال</Button>
                                                         <Button variant="contained" color={'secondary'}  onClick={handleConsultantApplySubscribe}>درخواست عضویت</Button>
@@ -476,10 +554,11 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(1),
     }
 }));
-export default () =>{
+function Auxiliary(props){
     const classes = useStyles();
     const p = React.useState(false);
     return(
-        <Channel classes={classes} p={p}/>
+        <Channel classes={classes} p={p} match={props.match}/>
     )
 }
+export default withRouter(Auxiliary);

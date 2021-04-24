@@ -15,6 +15,11 @@ import IconButton from "@material-ui/core/IconButton";
 import {Done} from "@material-ui/icons";
 import {AssignmentSharp} from "@material-ui/icons";
 import {CloudUpload} from "@material-ui/icons";
+import axios from "axios";
+import serverURL from "../../RequestConfig/serverURL";
+import TokenConfig from "../../RequestConfig/TokenConfig";
+import ScrollArea from  'react-scrollbar';
+import LoadingOverlay from 'react-loading-overlay';
 
 const MenuItem = withStyles({
     root: {
@@ -28,11 +33,14 @@ class ChannelMessages extends Component{
         this.state = {
             mouseX: null,
             mouseY: null,
-            fileState:false,
             isTextSelected:false,
             editing:false,
+            needEndMessages:false,
+            loading:true,
+            role:this.props.role,
         };
         this.myRef = [];
+        this.initialization();
     }
     newMessageFile = [];
     textOptions = [];
@@ -40,41 +48,206 @@ class ChannelMessages extends Component{
     indexSelected = -1;
     messageText = "";
     classes = this.props.classes;
+    newMessagesList = [];
+    //messageCount = 0;
+    //previousLink = "";
+    nextLink= "";
+    counter = 0;
+    link = "";
+    //messagesEnd2 = null;
+    initialization = () => {
+        axios.get(serverURL() + "channel-message/" + this.props.channelId + "/?query=" + "&page=" + 1,TokenConfig())
+            .then(result => {
+                console.log(result);
+               // this.messageCount = result.data.count;
+                //this.previousLink = result.data.previous;
+                this.nextLink = result.data.next;
+                this.newMessagesList = result.data.results;
+                this.newMessagesList = [...this.newMessagesList].reverse();
+                this.newMessageFile = this.newMessagesList.map((value,index) => {
+                    if (value?.message_type === "t") {
+                        return <Typography component={"h2"}
+                                           key={value?.id}
+                                           variant={"body1"} gutterBottom
+                                           className={this.classes.blueFontStyle} >{value?.text}</Typography>
+                    } else if (value?.message_type === "i") {
+                        return <img key={value?.id} src={value?.message_file}
+                                    height={"100%"} width={"100%"}/>
+                    } else if (value?.message_type === "a") {
+                        return <audio key={value?.id} src={value?.message_file} controls
+                                      style={{
+                                          height: "100%",
+                                          width: "100%"
+                                      }}/>
+                    } else if (value?.message_type === "v") {
+                        return <video key={value?.id} src={value?.message_file}
+                                      height={"100%"} width={"100%"}
+                                      controls/>
+                    }
+                });
+                this.state.needEndMessages = true;
+                this.setState({loading:false});
+            })
+            .catch(error => {
+                console.log(error);
+                this.setState({loading:false});
+            })
+    };
+    handleGetNewMessages = (value) => {
+        if (value.topPosition === 0){
+            if (this.counter === 0){
+                this.counter++;
+                console.log("one time");
+            }
+            else {
+                if (this.counter === 1){
+                    this.counter++;
+                    console.log("two time");
+                    this.setState({loading:true});
+                    axios.get(this.nextLink,TokenConfig())
+                        .then(result => {
+                           // console.log(result);
+                           // this.messageCount = result.data.count;
+                           // this.previousLink = result.data.previous;
+                            this.nextLink = result.data.next;
+                            if (this.nextLink === null){
+                                this.counter = -1;
+                            }
+                            let newMessagesList2 = result.data.results;
+                            this.newMessagesList = [...newMessagesList2].reverse();
+                            let newMessageFile2 = this.newMessagesList.map((value,index) => {
+                                if (value?.message_type === "t") {
+                                    return <Typography component={"h2"}
+                                                       key={value?.id}
+                                                       variant={"body1"} gutterBottom
+                                                       className={this.classes.blueFontStyle}>{value?.text}</Typography>
+                                } else if (value?.message_type === "i") {
+                                    return <img key={value?.id} src={value?.message_file}
+                                                height={"100%"} width={"100%"}/>
+                                } else if (value?.message_type === "a") {
+                                    return <audio key={value?.id} src={value?.message_file} controls
+                                                  style={{
+                                                      height: "100%",
+                                                      width: "100%"
+                                                  }}/>
+                                } else if (value?.message_type === "v") {
+                                    return <video key={value?.id} src={value?.message_file}
+                                                  height={"100%"} width={"100%"}
+                                                  controls/>
+                                }
+                            });
+                            this.newMessageFile = newMessageFile2.concat(this.newMessageFile);
+                            if (this.counter !== -1){
+                                this.counter = 0;
+                            }
+                         //   this.messagesEnd2.scrollArea.refresh();
+                            this.setState({loading:false});
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            if (this.counter !== -1){
+                                this.counter = 0;
+                            }
+                            this.setState({loading:false});
+                        })
+                }
+            }
+        }
+    };
     handleDrop = (files) => {
         for (let i = 0; i < files.length; i++) {
             if (!files[i].name) return;
-            console.log(files[i].type);
+            //console.log(files[i].type);
             let uri = URL.createObjectURL(files[i]);
+            const formData = new FormData();
+            formData.append(
+                "message_file",
+                files[i]
+            );
+            this.setState({loading:true});
             if (files[i].type.split("/")[0] === "audio"){
-                this.newMessageFile.push(
-                        <audio src={uri} controls style={{height:"100%",width:"100%"}} />
+                formData.append(
+                    "message_type",
+                    "a"
                 );
+                axios.post(serverURL() + "channel-message/" +this.props.channelId + "/",formData,TokenConfig())
+                    .then(result => {
+                        //console.log(result);
+                        this.newMessageFile.push(
+                            <audio key={result.data.id} src={uri} controls style={{height:"100%",width:"100%"}} />
+                        );
+                        this.setState({loading:false});
+                    })
+                    .catch(error =>{
+                        console.log(error);
+                        this.setState({loading:false});
+                    });
             }
             else if (files[i].type.split("/")[0] === "image"){
-                this.newMessageFile.push(
-                    //style={{maxHeight:"500px"}}
-                        <img src={uri} height={"100%"} width={"100%"} />
+                formData.append(
+                    "message_type",
+                    "i"
                 );
+                axios.post(serverURL() + "channel-message/" +this.props.channelId + "/",formData,TokenConfig())
+                    .then(result => {
+                        //console.log(result);
+                        this.newMessageFile.push(
+                            //style={{maxHeight:"500px"}}
+                            <img key={result.data.id} src={uri} height={"100%"} width={"100%"} />
+                        );
+                        this.setState({loading:false});
+                    })
+                    .catch(error =>{
+                        console.log(error);
+                        this.setState({loading:false});
+                    });
             }
             else if (files[i].type.split("/")[0] === "video"){
-                this.newMessageFile.push(
-                        <video src={uri} height={"100%"} width={"100%"} controls />
+                formData.append(
+                    "message_type",
+                    "v"
                 );
+                axios.post(serverURL() + "channel-message/" +this.props.channelId + "/",formData,TokenConfig())
+                    .then(result => {
+                        //console.log(result);
+                        this.newMessageFile.push(
+                            <video key={result.data.id} src={uri} height={"100%"} width={"100%"} controls />
+                        );
+                        this.setState({loading:false});
+                    })
+                    .catch(error =>{
+                        console.log(error);
+                        this.setState({loading:false});
+                    });
             }
             else if (files[i].type.split("/")[0] === "application" || files[i].type.split("/")[0] === "text"){
-                this.newMessageFile.push(
-                    <div aria-label={uri}>
-                        <IconButton disabled
-                            style={{padding: '0px', color: '#3f407d',display: "block", margin: "auto",}}
-                        >
-                            <AssignmentSharp style={{ fontSize: 35 }} />
-                        </IconButton>
-                        <Typography component={"h2"} variant={"body1"} dir={"ltr"} className={this.classes.blueFontStyle}>{files[i].name}</Typography>
-                    </div>
+                formData.append(
+                    "message_type",
+                    "t"
                 );
+                axios.post(serverURL() + "channel-message/" +this.props.channelId + "/",formData,TokenConfig())
+                    .then(result => {
+                        //console.log(result);
+                        this.newMessageFile.push(
+                            <div key={result.data.id} aria-label={uri}>
+                                <IconButton disabled
+                                            style={{padding: '0px', color: '#3f407d',display: "block", margin: "auto",}}
+                                >
+                                    <AssignmentSharp style={{ fontSize: 35 }} />
+                                </IconButton>
+                                <Typography component={"h2"} variant={"body1"} dir={"ltr"} className={this.classes.blueFontStyle}>{files[i].name}</Typography>
+                            </div>
+                        );
+                        this.setState({loading:false});
+                    })
+                    .catch(error =>{
+                        console.log(error);
+                        this.setState({loading:false});
+                    });
+
             }
         }
-        this.setState({fileState: true})
+     //   this.setState({});
     };
     handleRightClick = (event,isText,index) => {
         event.preventDefault();
@@ -97,7 +270,7 @@ class ChannelMessages extends Component{
     };
     handleFileOptions = (event,index) => {
         if (index === 0){
-            console.log("here i have to download");
+            ///console.log("here i have to download");
             if (typeof this.newMessageFile[this.indexSelected].props.src === "undefined"){
                 this.link = this.newMessageFile[this.indexSelected].props["aria-label"];
             }
@@ -114,16 +287,25 @@ class ChannelMessages extends Component{
             //console.log()
         }
         else if (index === 1){
-            console.log("here i have to delete");
+            //console.log("here i have to delete");
+            axios.delete(serverURL() + "channel-message/" + this.props.channelId + "/" + this.newMessageFile[this.indexSelected].key +"/",TokenConfig())
+                .then(result => {
+                    console.log(result);
+                    this.newMessageFile.splice(this.indexSelected, 1);
+                    this.indexSelected = -1;
+                    this.setState({});
+                })
+                .catch(error =>{
+                    console.log(error);
+                    this.indexSelected = -1;
+                });
 
-            this.newMessageFile.splice(this.indexSelected, 1);
-            this.indexSelected = -1;
             this.setState({});
         }
         this.setState({mouseX: null, mouseY: null,})
     };
     componentDidMount() {
-        if (this.props.admin){
+        if (this.props.role === "consultant"){
             this.textOptions.push('رونوشت');
             this.textOptions.push('ویرایش');
             this.textOptions.push('حذف');
@@ -135,42 +317,58 @@ class ChannelMessages extends Component{
             this.textOptions.push('رونوشت');
             this.fileOptions.push('دانلود');
         }
-        for (let i in this.props.children){
-            this.newMessageFile.push(this.props.children[i]);
+        // for (let i in this.props.children){
+        //     this.newMessageFile.push(this.props.children[i]);
+        // }
+        //this.initialization();
+        this.setState({});
+    }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        this.state.role = this.props.role;
+        if (prevState.needEndMessages === true){
+             this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+            this.state.needEndMessages = false;
         }
     }
 
-    link = "";
-    file;
     render() {
         const classes = this.props.classes;
         const onFileChange = event => {
             this.handleDrop(event.target.files);
-            // this.file = event.target.files[0];
-            //this.setState({ certificate: event.target.files[0] });
         };
         const handleTextOptions = async(event,index) => {
             if (index === 0)
             {
-                console.log("here i have to copy");
+               // console.log("here i have to copy");
                 await this.copyToClipboard(event);
                 this.indexSelected = -1;
             }
             if (index === 1)
             {
-                console.log("here i have to edit");
+               // console.log("here i have to edit");
                 this.state.editing = true;
                 this.messageText = this.newMessageFile[this.indexSelected].props.children;
                 this.setState({});
             }
             if (index === 2)
             {
-                console.log("here i have to delete");
+                // console.log("here i have to delete");
+                axios.delete(serverURL() + "channel-message/" + this.props.channelId + "/" + this.newMessageFile[this.indexSelected].key +"/",TokenConfig())
+                    .then(result => {
+                        console.log(result);
+                        this.newMessageFile.splice(this.indexSelected, 1);
+                        this.indexSelected = -1;
+                        this.setState({});
+                    })
+                    .catch(error =>{
+                        console.log(error);
+                        this.indexSelected = -1;
+                    });
+
                 // let findingElement = this.newMessageFile.find((jsx) => jsx.props.children === "salam");
                 // let index = this.newMessageFile.indexOf(findingElement);
                 //const reducedArr = [...this.state.tasks];
-                this.newMessageFile.splice(this.indexSelected, 1);
-                this.indexSelected = -1;
+
                 this.setState({});
             }
             this.setState({mouseX: null, mouseY: null,})
@@ -180,26 +378,70 @@ class ChannelMessages extends Component{
         };
         const handleSendIcon = (event) => {
             if (this.state.editing){
-                const newElement = <Typography component={"h2"} variant={"body1"} className={classes.blueFontStyle}>{this.messageText}</Typography>
-                this.newMessageFile.splice(this.indexSelected, 1, newElement);
+                const formData = new FormData();
+                formData.append(
+                    "text",
+                    this.messageText
+                );
+                formData.append(
+                    "message_type",
+                    "t"
+                );
+                let text = this.messageText;
+                axios.put(serverURL() + "channel-message/" + this.props.channelId + "/" + this.newMessageFile[this.indexSelected].key + "/",formData,TokenConfig())
+                    .then(result => {
+                        //console.log(result);
+                        const newElement = <Typography key={result.data.id} component={"h2"} variant={"body1"} className={classes.blueFontStyle}>{text}</Typography>;
+                        this.newMessageFile.splice(this.indexSelected, 1, newElement);
+                        this.setState({});
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
                 this.state.editing = false;
             }
             else{
-                this.newMessageFile.push(
-                    <Typography component={"h2"} variant={"body1"} className={classes.blueFontStyle}>{this.messageText}</Typography>
+                const formData = new FormData();
+                formData.append(
+                    "text",
+                    this.messageText
                 );
+                formData.append(
+                    "message_type",
+                    "t"
+                );
+                let text = this.messageText;
+                axios.post(serverURL() + "channel-message/" +this.props.channelId + "/",formData,TokenConfig())
+                    .then(result => {
+                       // console.log(result);
+                        this.newMessageFile.push(
+                            <Typography key={result.data.id} component={"h2"} variant={"body1"} className={classes.blueFontStyle}>{text}</Typography>
+                        );
+                        this.state.needEndMessages = true;
+                        this.setState({});
+                    })
+                    .catch(error =>{
+                        console.log(error);
+                    });
             }
             this.messageText = "";
-            console.log(this.newMessageFile[4]);
             this.setState({});
         };
         const handleJoinChannel = (event) => {
-
+            axios.post(serverURL() + "channel/subscription/",{"invite_link":this.props.inviteLink},TokenConfig())
+                .then(result => {
+                   // console.log(result);
+                })
+                .catch(error => {
+                    console.log(error);
+                    console.log(error.response.data.error);
+                })
         };
         return(
             <div>
-            <DragAndDrop handleDrop={this.handleDrop}>
-                <div className={classes.mainDiv}>
+            <DragAndDrop handleDrop={this.handleDrop} enable={this.state.role === "consultant"}>
+                <LoadingOverlay active={this.state.loading} spinner text={""}>
+                <ScrollArea className={classes.mainDiv} speed={0.5} horizontal={false} onScroll={this.handleGetNewMessages}>
                     {this.newMessageFile.map((value,index) =>(
                         <Paper ref={(ref) => { this.myRef[index] = ref;}} className={value.type.displayName === "WithStyles(ForwardRef(Typography))" ? classes.textPaper : classes.filePaper} onContextMenu={(e) => this.handleRightClick(e, value.type.displayName === "WithStyles(ForwardRef(Typography))",index)} >
                             {value}
@@ -242,16 +484,20 @@ class ChannelMessages extends Component{
                             ))
                         }
                     </Menu>
-                </div>
+                    <div style={{ clear: "both" }}
+                         ref={(el) => { this.messagesEnd = el; }}>
+                    </div>
+                </ScrollArea>
+                </LoadingOverlay>
             </DragAndDrop>
-                {this.props.admin === false && this.props.isJoined === false ?
+                {this.props.role === "nothing" ?
                     null :
                     <Divider className={classes.divider} />
                 }
                 <input
                     style={{display : 'none'}}
                     id='file' type="file" onChange={onFileChange} multiple/>
-                {this.props.admin ?
+                {this.props.role === "consultant" ?
                     <TextField id="standard-basic" multiline fullWidth
                                placeholder={"پیام خود را وارد کنید"}
                                value={this.messageText}
@@ -265,8 +511,6 @@ class ChannelMessages extends Component{
                                                aria-label="upload picture"
                                                component="span"
                                                style={{padding: '0px', color: '#3f407d'}}
-                                              // onClick={handleSendIcon}
-                                               // onMouseDown={this.handleMouseDownPassword}
                                            >
                                                <CloudUpload style={{ fontSize: 35 }} />
                                            </IconButton>
@@ -274,17 +518,16 @@ class ChannelMessages extends Component{
                                            <IconButton
                                                style={{padding: '0px', color: '#3f407d'}}
                                                onClick={handleSendIcon}
-                                               // onMouseDown={this.handleMouseDownPassword}
                                            >
                                                <Done style={{ fontSize: 35 }} />
                                            </IconButton>
                                        </InputAdornment>)
                                }}
                     /> :
-                    this.props.isJoined ? null :
+                    this.props.role === "subscriber" ? null :
                         <Button variant="contained" fullWidth color={'primary'} onClick={handleJoinChannel}>پیوستن به کانال</Button>
                 }
-            </div>
+              </div>
         )
     }
 }
@@ -298,7 +541,7 @@ const useStyles = makeStyles((theme) => ({
         width: "100%",
         overflowY:"auto",
         overflowX:"hidden",
-        scrollBehavior: "smooth",
+       // scrollBehavior: "smooth",
         height: "570px",
         backgroundPosition: 'center',
         backgroundAttachment: "fixed",
@@ -337,6 +580,6 @@ export default (props) =>{
     const classes = useStyles();
     const p = React.useState(false);
     return(
-        <ChannelMessages classes={classes} p={p} children={props.children} admin={props.admin} isJoined={props.isJoined} />
+        <ChannelMessages classes={classes} p={p} children={props.children} role={props.role} inviteLink={props.inviteLink} channelId={props.channelId}/>
     )
 }

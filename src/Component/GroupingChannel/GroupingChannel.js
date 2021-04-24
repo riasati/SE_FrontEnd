@@ -2,34 +2,19 @@ import React, {Component} from 'react'
 import CssBaseline from "@material-ui/core/CssBaseline";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
-import Box from '@material-ui/core/Box';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
-import MenuIcon from '@material-ui/icons/Menu';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import Material_RTL from "../RTL/Material_RTL";
 import RTL from '../RTL/M_RTL';
 import ChannelCard from './ChannelCard';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import IconButton from "@material-ui/core/IconButton";
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import {Person,Search} from "@material-ui/icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch , } from '@fortawesome/free-solid-svg-icons';
-import Carousel from 'react-elastic-carousel';
 import axios from 'axios';
 import serverURL from "../../RequestConfig/serverURL";
 import TokenConfig from '../../RequestConfig/TokenConfig';
@@ -45,33 +30,35 @@ class GroupingChannel extends Component{
         request: '',
       }
     }
-    
     handleChange = e => {
-      this.setState({[e.target.name]: e.target.value});
-      
+        this.setState({[e.target.name]: e.target.value});
     }
-    
+    componentWillMount() {
+        var res = [];
+        const [list, setList] = this.props.list;
+        const [pending, setPending] = this.props.pending;
+        axios.get(serverURL()+'channel/search-for-channel/'+'?query= ',TokenConfig())
+            .then(result=>{
+                console.log(result);
+                res.push(...result.data.data);
+                var ll = res.map((q) => q);
+                setList([...ll]);
+                setPending(false)
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+    }
     render(){
         const classes = this.props.classes;
         const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-        const breakPoints = [
-          { width: 1, itemsToShow: 2 ,itemsToScroll: 1},
-          { width: 360, itemsToShow: 4,itemsToScroll: 2 },
-          { width: 550, itemsToShow: 6,itemsToScroll: 2},
-          { width: 768, itemsToShow: 6,itemsToScroll: 2 },
-          { width: 1200, itemsToShow: 6,itemsToScroll: 2 }
-        ];
         const [list, setList] = this.props.list;
-        const [request, setRequest] = this.props.request;
         const [pending, setPending] = this.props.pending;
         var res = [];
-        const handelClickGroup = e =>{
-          
-        }
         const handleClick = e =>{
           setPending(true)
           setList([])
-          if(this.state.searchword === '' && this.state.searchgroup === ''){
+          if(this.state.searchword === '' && (this.state.searchgroup === '' || this.state.searchgroup === 'all') ){
             axios.get(serverURL()+'channel/search-for-channel/'+'?query= ',TokenConfig())
               .then(result=>{
                 console.log(result);
@@ -153,19 +140,15 @@ class GroupingChannel extends Component{
                                   label="searchgroup"
                                   InputProps={{
                                       style: {fontFamily: 'IRANSansWeb'},
-                                      // endAdornment: (
-                                      //     <InputAdornment position="end">
-                                      //         <Email/>
-                                      //     </InputAdornment>
-                                      // ),
                                   }}
                               >
                                   <MenuItem value={"Lawyer"}>                 <span className={classes.spanList} >وکالت</span></MenuItem>
-                                  <MenuItem value={"Educational_immigration"}><span className={classes.spanList}>مهاجرت تحصیلی</span></MenuItem>
+                                  <MenuItem value={"Immigration"}><span className={classes.spanList}>مهاجرت تحصیلی</span></MenuItem>
                                   <MenuItem value={"medical"}>                <span className={classes.spanList}>پزشکی</span></MenuItem>
                                   <MenuItem value={"Psychology"}>             <span className={classes.spanList}>روانشناسی</span></MenuItem>
-                                  <MenuItem value={"Entrance_Exam"}>          <span className={classes.spanList}>کنکور</span></MenuItem>
-                                  <MenuItem value={"Academic_advice"}>        <span className={classes.spanList}>تحصیلی</span></MenuItem>
+                                  <MenuItem value={"EntranceExam"}>          <span className={classes.spanList}>کنکور</span></MenuItem>
+                                  <MenuItem value={"AcademicAdvice"}>        <span className={classes.spanList}>تحصیلی</span></MenuItem>
+                                  <MenuItem value={"all"}>        <span className={classes.spanList}>همه</span></MenuItem>
                               </Select>
                           </FormControl>
                         </Grid>
@@ -207,7 +190,7 @@ class GroupingChannel extends Component{
                       <br/>
                       
                       <Grid container spacing={3} className={classes.container}>
-                        {pending ? (<CircularProgress className={classes.CircularProgress} style={{color: '#0e918c'}}/>):
+                        {pending ? (<CircularProgress className={classes.CircularProgress}/>):
                         list.length !== 0 ? (list.map((data)=>{
                           console.log(data)
                           console.log(data.name)
@@ -259,10 +242,8 @@ const useStyles = makeStyles((theme) => ({
     },
     CircularProgress:{
       color: '#0e918c',
-      width: '100px',
-      height: '100px',
-      marginLeft: '45%',
-      marginTop: '5%',
+      width: '100px  !important',
+      height: '100px !important',
     },
     spanList:{
       fontFamily: 'IRANSansWeb',
@@ -274,6 +255,8 @@ const useStyles = makeStyles((theme) => ({
       paddingTop: theme.spacing(4),
       paddingBottom: theme.spacing(4),
       fontFamily: 'IRANSansWeb',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     paper: {
       padding: theme.spacing(2),

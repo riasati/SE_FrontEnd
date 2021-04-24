@@ -17,7 +17,7 @@ import RTL from '../RTL/M_RTL';
 import serverURL from "../../RequestConfig/serverURL";
 import ErrorDialog from '../../RequestConfig/ErrorDialog';
 import LoadingOverlay from 'react-loading-overlay';
-
+import LoadingButton from '@material-ui/lab/LoadingButton';
 class SignIn extends Component {
     constructor() {
         super();
@@ -49,8 +49,9 @@ class SignIn extends Component {
     }
     render(){
         const classes = this.props.classes;
-        const [pending, setPending] = this.props.p;
+        const [pending, setPending] = this.props.pending;
         const handleClick = e => {
+            setPending(true);
             e.preventDefault();
             axios.post(serverURL()+"user/login/", this.state)
                 .then(result => {
@@ -60,6 +61,7 @@ class SignIn extends Component {
                     localStorage.setItem('token', token);
                     window.location.href = "/Dashboard";
                 }).catch(error => {
+                    setPending(false);
                     console.log(error);
                     this.setState({setErrorDialog:true,ErrorDialogText:error.message});
                 })
@@ -141,9 +143,9 @@ class SignIn extends Component {
                                     <Grid container>
                                         <Grid item xs={12}>
                                             <Grid>
-                                                <Button onClick={handleClick }  className={classes.topButton}  variant="contained" fullWidth>
+                                                <LoadingButton onClick={handleClick } pendingPosition="center" className={classes.topButton} pending={pending}  fullWidth>
                                                     ورود
-                                                </Button>
+                                                </LoadingButton>
                                                 <ErrorDialog open={this.state.setErrorDialog} errorText={this.state.ErrorDialogText} />
                                             </Grid>
                                         </Grid>
@@ -219,8 +221,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default () =>{
     const classes = useStyles();
-    const p = React.useState(false);
+    const pending = React.useState(false);
     return(
-        <SignIn classes={classes} p={p}/>
+        <SignIn classes={classes} pending={pending}/>
     )
 }

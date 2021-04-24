@@ -8,7 +8,7 @@ class SuggestionChannelCard extends Component{
         return(
             <Grid className={classes.div1}>
                 <a href={"/Channel/"+ this.props.invite_link} style={{color: '#3f407d', textDecoration: 'none',}}>
-                    <img src={this.props.imagesrc} style={{width:'100px',height:'100px',borderRadius: '100%',marginTop:'10%'}}/>
+                    <img src={this.props.imagesrc} className={classes.img1} style={{}}/>
                 <div><h3>{this.props.channelName}</h3></div>
                 <div>{this.props.consultantName}</div>
                 </a>
@@ -20,16 +20,31 @@ const useStyles = makeStyles((theme) => ({
     '@global': {
         
     },
+    img1:{
+        width:'100px',
+        height:'100px',
+        borderRadius: '100%',
+        marginTop:'10%',
+        border: '2px solid #27bda0',
+        transition:'all ease 0.5s',
+        "&:hover": {
+            filter: 'drop-shadow(0px 0px 10px #27bda0)',
+        },
+    },
     div1:{
         width: '100%',
         height: '230px',
-        border: '1px solid #ccc',
-        borderRadius:' 5px 5px 5px 5px',
-        marginLeft: '15px',
+        borderRadius:' 10px',
         marginLeft: '15px',
         marginTop: '5px',
         marginBottom: '5px',
         color: '#3f407d',
+        border: '3px solid #27bda0',
+        backgroundColor:'#f3f7fa',
+        transition:'all ease 0.5s',
+        "&:hover": {
+            boxShadow: '1px 1px 10px 0px #2ab371',
+        },
     }
   }));
 

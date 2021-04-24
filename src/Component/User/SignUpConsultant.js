@@ -24,7 +24,7 @@ import Zoom from '@material-ui/core/Zoom';
 import serverURL from "../../RequestConfig/serverURL";
 import ErrorDialog from '../../RequestConfig/ErrorDialog';
 import LoadingOverlay from 'react-loading-overlay';
-
+import LoadingButton from '@material-ui/lab/LoadingButton';
 class SignUpConsultant extends Component {
     constructor() {
         super();
@@ -85,6 +85,7 @@ class SignUpConsultant extends Component {
             }
             };
         const classes = this.props.classes;
+        const [pending, setPending] = this.props.pending;
         const [file,setFile] = this.props.isFileLoaded;
         const onFileChange = event => { 
             this.setState({ certificate: event.target.files[0] }); 
@@ -94,7 +95,8 @@ class SignUpConsultant extends Component {
             this.setState({certificate:null});
             setFile(false);
         };
-        const handleClick = e => { 
+        const handleClick = e => {
+            setPending(true);
             const formData = new FormData(); 
             formData.append( 
               "certificate", 
@@ -140,6 +142,7 @@ class SignUpConsultant extends Component {
                 window.location.href = "/CreateChannel";
             })
             .catch(err=>{
+                setPending(false);
                 console.log(err);
                 this.setState({setErrorDialog:true,ErrorDialogText:err.message});
             });
@@ -431,10 +434,9 @@ class SignUpConsultant extends Component {
                                     <Grid container>
                                         <Grid item xs={12}>
                                             <Grid>
-                                                <Button onClick={handleConfirmPassword} className={classes.topButton} fullWidth
-                                                        variant="contained" style={{fontFamily: 'IRANSansWeb'}}>
+                                                <LoadingButton onClick={handleClick } pendingPosition="center" className={classes.topButton} pending={pending}  fullWidth>
                                                     {'ثبت نام'}
-                                                </Button>
+                                                </LoadingButton>
                                                 <ErrorDialog open={this.state.setErrorDialog} errorText={this.state.ErrorDialogText} />
                                             </Grid>
                                         </Grid>
@@ -521,8 +523,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default () => {
     const classes = useStyles();
-    const isFileLoaded = React.useState(false)
+    const isFileLoaded = React.useState(false);
+    const pending = React.useState(false);
     return (
-        <SignUpConsultant classes={classes} isFileLoaded={isFileLoaded}/>
+        <SignUpConsultant classes={classes} isFileLoaded={isFileLoaded} pending={pending}/>
     )
 }

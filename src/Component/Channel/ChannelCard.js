@@ -22,8 +22,8 @@ class ChannelCard extends Component{
                     <Avatar alt={this.props.name} src={this.props.imageSource} className={classes.channelsAvatar}>
                     </Avatar>
                 </ListItemAvatar>
-                <ListItemText disableTypography primary={<Typography component={"h3"} display={"inline-block"} variant={"body1"} noWrap align={"left"} gutterBottom className={classes.blueFontStyle} >{this.props.name}</Typography>}
-                              secondary={<Typography display={"inline-block"} component={"h4"} noWrap variant={"body2"} align={"left"} gutterBottom className={classes.blueFontStyle} >{this.props.description}</Typography>} />
+                <ListItemText disableTypography primary={<Typography component={"h3"} display={"inline"} variant={"body1"} noWrap align={"left"} gutterBottom className={classes.blueFontStyle} >{this.props.name}</Typography>}
+                              secondary={<Typography display={"inline"} component={"h4"} noWrap variant={"body2"} align={"left"} gutterBottom className={classes.blueFontStyle} >{this.props.description}</Typography>} />
 
                 {/*<Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" className={classes.channelNumberMessage}>{this.props.number}</Avatar>*/}
             </ListItem>

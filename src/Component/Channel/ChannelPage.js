@@ -43,6 +43,7 @@ import {ChevronRight} from "@material-ui/icons";
 import Slide from "@material-ui/core/Slide";
 import TokenConfig from "../../RequestConfig/TokenConfig";
 import { withRouter } from "react-router";
+import Theme from "../Theme";
 
 class Channel extends Component {
     constructor(props){
@@ -211,8 +212,9 @@ class Channel extends Component {
             <LoadingOverlay active={this.state.loading} spinner text={""}>
                 <Container maxWidth="lg">
                     <CssBaseline/>
-                    <Material_RTL>
-                        <RTL>
+                    <Theme>
+                    {/*<Material_RTL>*/}
+                        {/*<RTL>*/}
                             <div className={classes.rootDiv} >
                                 <Grid container direction={"column"} spacing={2} justify="space-evenly" >
                                     <Dialog onBackdropClick={handleEditChannel}  open={this.state.editChannel} style={{fontFamily: 'IRANSansWeb',color: "#494949",justifyContent:'right'}}>
@@ -469,8 +471,9 @@ class Channel extends Component {
                                 </Grid>
                             </div>
                             {/*<Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '30vh' }} />*/}
-                        </RTL>
-                    </Material_RTL>
+                        {/*</RTL>*/}
+                    {/*</Material_RTL>*/}
+                    </Theme>
                 </Container>
             </LoadingOverlay>
         )

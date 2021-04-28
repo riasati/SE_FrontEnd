@@ -23,12 +23,12 @@ class App extends Component {
                     <Route path="/SignUpConsultant" component={SignUpConsultant}/>
                     <Route path="/SignUpUser" component={SignUpUser}/>
                     <Route path="/CreateChannel" exact component={CreateChannel}/>
-                    <Route path="/Channel/:channelId" component={Channel}/>
+                    <Route path="/Channel/:channelId" children={<Dashboard title={'داشبورد'} />} component={Channel}/>
                     <Route path="/Dashboard" children={<Dashboard title={'داشبورد'} />} component={MainPage}/>
                     <Route path="/Profile" children={<Dashboard title={'پروفایل'}/>} component={Profile}/>
                     <Route path="/Channels" children={<Dashboard title={'کانال ها'}/>} component={Channels}/>
                     <Route path="/GroupingChannel" children={<Dashboard title={'دسته بندی'}/>} component={GroupingChannel}/>
-                    {/* <Route path="/Dashboard"  component={Dashboard}/> */}
+                     {/*<Route path="/Dashboard"  component={Dashboard}/>*/}
                 </Router>
             </div>
         );

@@ -96,7 +96,7 @@ class ConsultantProfile extends Component {
             setFile(true);
         };
         const handleEliminateFileClick = e => {
-            this.setState({certificate: null});
+            this.setState({avatar: null});
             setFile(false);
         };
         const handleClick = e => {
@@ -116,16 +116,18 @@ class ConsultantProfile extends Component {
                                     <Grid>
                                         <Paper style={{backgroundColor: '#f3f7fa',}}>
                                             <Grid>
-                                                {file ? (<div><img src={image} className={classes.avatar}/></div>):
+                                                {file ? (<div><img src={image} alt="avatar" title="avatar"
+                                                                   className={classes.avatar}/></div>):
                                                 (this.state.avatar !== null ?
                                                     (
                                                         <div>
                                                             <img src={this.state.avatar}
-                                                                 className={classes.avatar}/>
+                                                                 className={classes.avatar} alt="avatar" title="avatar"/>
                                                         </div>
                                                     ) : (
                                                         <div>
-                                                            <img src="#"/>
+                                                            <img src="https://www.vecteezy.com/free-vector/user"
+                                                                 alt="avatar"  title="avatar"/>
                                                         </div>
                                                     ))
                                                     }

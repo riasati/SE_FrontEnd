@@ -49,7 +49,9 @@ class ConsultantProfile extends Component {
             certificate: '',
             avatar: '',
             buttonDisable:true,
-            requests:[]
+            requests:[],
+            imageFile:'',
+            changeAvatarFlag:false,
         }
     }
 
@@ -109,6 +111,7 @@ class ConsultantProfile extends Component {
                 setFile(true);
             }
             this.setState({avatar: event.target.files[0]});
+            this.setState({changeAvatarFlag:true})
             console.log(event.target.files)
             console.log(event.target.files[0])
             setFile(true);
@@ -152,10 +155,13 @@ class ConsultantProfile extends Component {
                 "password", 
                 "123456"
               );
-              formData.append( 
-                "avatar",
-                this.state.avatar
-              );
+              if(this.state.changeAvatarFlag){
+                formData.append( 
+                    "avatar",
+                    this.state.avatar
+                  );
+              }
+              
               console.log("hi")
             axios.put(serverURL() + "profile/",formData,TokenConfig())
             .then(res => {

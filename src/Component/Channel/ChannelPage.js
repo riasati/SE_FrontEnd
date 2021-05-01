@@ -83,10 +83,14 @@ class Channel extends Component {
             uploadImage:null,
             buttonDisabled:true,
             inviteUser:'',
-
+            setErrorDialog:false,
         };
         this.initialization();
     }
+    ErrorDialogText = "";
+    handleStateErrorDialog = () =>{
+        this.setState({setErrorDialog:!this.state.setErrorDialog})
+    };
     initialization = () => {
         axios.get(serverURL() +"user/channel-role/" + this.props.match.params.channelId +"/",TokenConfig())
             .then(result => {
@@ -98,7 +102,8 @@ class Channel extends Component {
             })
             .catch(error => {
                 console.log(error);
-                //this.setState({setErrorDialog:true,ErrorDialogText:error.message});
+                this.ErrorDialogText = error.response.data?.error;
+                this.setState({setErrorDialog:true});
             });
         axios.get(serverURL() + "channel/" + this.props.match.params.channelId + "/",TokenConfig())
             .then(result => {
@@ -111,6 +116,8 @@ class Channel extends Component {
             })
             .catch(error => {
                 console.log(error);
+                this.ErrorDialogText = error.response.data?.error;
+                this.setState({setErrorDialog:true});
             });
         axios.get(serverURL() + "user/channels/",TokenConfig())
             .then(result =>{
@@ -129,6 +136,8 @@ class Channel extends Component {
             })
             .catch(error => {
                 console.log(error);
+                this.ErrorDialogText = error.response.data?.error;
+                this.setState({setErrorDialog:true});
             });
         axios.get(serverURL() + "channel/channel-subscriber/"+ this.props.match.params.channelId + "/",TokenConfig())
             .then(result =>{
@@ -136,6 +145,8 @@ class Channel extends Component {
             })
             .catch(error => {
                 console.log(error);
+                this.ErrorDialogText = error.response.data?.error;
+                this.setState({setErrorDialog:true});
             });
         axios.get(serverURL() + "channel/channel-admins/" + this.props.match.params.channelId + "/",TokenConfig())
             .then(result =>{
@@ -146,6 +157,8 @@ class Channel extends Component {
             })
             .catch(error => {
                 console.log(error);
+                this.ErrorDialogText = error.response.data?.error;
+                this.setState({setErrorDialog:true});
             });
     };
     componentDidMount() {
@@ -276,7 +289,8 @@ class Channel extends Component {
             })
             .catch(err=>{
                 console.log(err);
-                this.setState({setErrorDialog:true,ErrorDialogText:err.message});
+                this.ErrorDialogText = err.response.data?.error;
+                this.setState({setErrorDialog:true});
             });
             this.setState({buttonDisabled:true})
         }
@@ -352,7 +366,8 @@ class Channel extends Component {
             })
             .catch(err=>{
                 console.log(err);
-                this.setState({setErrorDialog:true,ErrorDialogText:err.message});
+                this.ErrorDialogText = err.response.data?.error;
+                this.setState({setErrorDialog:true});
             });
 
         }
@@ -368,7 +383,8 @@ class Channel extends Component {
             })
             .catch(err=>{
                 console.log(err);
-                this.setState({setErrorDialog:true,ErrorDialogText:err.message});
+                this.ErrorDialogText = err.response.data?.error;
+                this.setState({setErrorDialog:true});
             });
             const newMembers=this.state.countries.filter(element => element.username !== e.target.username);
             this.setState({showMembers: newMembers})
@@ -536,6 +552,7 @@ class Channel extends Component {
                                                         <IoExitOutline fontSize="large"  /><text style={{margin:'1%'}}>{"بستن"}</text>
                                                         </Button>
                                                 </Dialog>
+                                    <ErrorDialog open={this.state.setErrorDialog} errorText={this.ErrorDialogText} handleParentState={this.handleStateErrorDialog} />
                                     <Grid container item sm={12}>
                                         <Grid container direction={"row"} spacing={2} justify="space-evenly">
                                             <Grid item sm={this.state.smOfRight} xs={12} className={classes.rightSection}>
@@ -590,7 +607,7 @@ class Channel extends Component {
                                                         }
                                                         {/*<ChevronLeft style={{fontSize:35}} />*/}
                                                     </IconButton>
-                                                    <Typography component={"h2"} variant={"body1"} style={{fontFamily: 'IRANSansWeb',color: '#3f407d',alignSelf:"center"}}>{this.channelName}</Typography>
+                                                    <Typography variant={"h6"} style={{alignSelf:"center"}}>{this.channelName}</Typography>
                                                     <IconButton style={{padding:"0", color: '#3f407d'}} onClick={this.handleRightDrawer}>
                                                         {
                                                             this.state.openDrawerRight ? <ChevronLeft style={{fontSize:35}} /> : <ChevronRight style={{fontSize:35}} />
@@ -634,7 +651,7 @@ class Channel extends Component {
                                                         <Button width= "100%" variant="contained" color={'primary'}  onClick={handleShowInfo} endIcon={<FiEdit/>} style={{fontFamily: 'IRANSansWeb',fontSize:"small"}}>ویرایش  کانال</Button>
                                                         </Grid>
                                                     </div>
-                                                    <div style={{ width: "100%",display: "flex",flexDirection:"row", justifyContent: "space-evenly",alignItems: "center",marginBottom:"5%"}}  >
+                                                    <div style={{ width: "100%",display: "flex",flexDirection:"row", justifyContent: "space-evenly",alignItems: "center",marginBottom:"5px"}}  >
                                                         <Button variant="contained" color={'primary'}  onClick={handleShowMembers} endIcon={<BsFillPeopleFill />} style={{fontFamily: 'IRANSansWeb',fontSize:"small",margin:"1%"}}>ویرایش اعضا</Button>
                                                         <Button variant="contained" color={'primary'}  onClick={handleConsultantApplySubscribe} style={{fontFamily: 'IRANSansWeb',fontSize:"small",margin:"1%"}}  endIcon={<FcInvite/>}>{"دعوت عضو"}</Button>
                                                     </div>
@@ -644,7 +661,7 @@ class Channel extends Component {
                                                                    value={this.state.inviteUser}
                                                                    name="inviteUser"
                                                                    onChange={this.handleChange}
-                                                                   style={{marginTop:"10px"}}
+                                                                   style={{marginTop:"5px",marginBottom:"5px"}}
                                                                    InputProps={{
                                                                        style: {fontFamily: 'IRANSansWeb',textAlign:"right"},
                                                                        endAdornment: (
@@ -661,10 +678,10 @@ class Channel extends Component {
                                                         />
                                                     </Collapse>
                                                     <Button style={{color:"#3f407d",alignSelf:"baseline",marginTop:"5px"}}>
-                                                        <Typography component={"h2"} variant={"body1"} align={"left"} style={{fontFamily: 'IRANSansWeb',color: '#3f407d',alignSelf: "baseline"}}>ترک کانال</Typography>
+                                                        <Typography variant={"body2"} align={"left"} style={{alignSelf: "baseline"}}>ترک کانال</Typography>
                                                     </Button>
                                                     <Button style={{color:"#3f407d",alignSelf:"baseline",marginTop:"5px"}}>
-                                                        <Typography component={"h2"} variant={"body1"} align={"left"} style={{fontFamily: 'IRANSansWeb',color: '#3f407d',alignSelf: "baseline"}}>گزارش تخلف کانال</Typography>
+                                                        <Typography variant={"body2"} align={"left"} style={{alignSelf: "baseline"}}>گزارش تخلف کانال</Typography>
                                                     </Button>
                                                 </Paper>
                                                 </Slide>

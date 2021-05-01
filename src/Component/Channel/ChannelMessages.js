@@ -12,7 +12,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
-import {Done} from "@material-ui/icons";
+import {Add, Done, Send} from "@material-ui/icons";
 import {AssignmentSharp} from "@material-ui/icons";
 import {CloudUpload} from "@material-ui/icons";
 import axios from "axios";
@@ -20,6 +20,8 @@ import serverURL from "../../RequestConfig/serverURL";
 import TokenConfig from "../../RequestConfig/TokenConfig";
 import ScrollArea from  'react-scrollbar';
 import LoadingOverlay from 'react-loading-overlay';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faFileUpload} from "@fortawesome/free-solid-svg-icons";
 
 const MenuItem = withStyles({
     root: {
@@ -70,10 +72,10 @@ class ChannelMessages extends Component{
                 this.newMessagesList = [...this.newMessagesList].reverse();
                 this.newMessageFile = this.newMessagesList.map((value,index) => {
                     if (value?.message_type === "t") {
-                        return <Typography component={"h2"}
+                        return <Typography
                                            key={value?.id}
-                                           variant={"body1"} gutterBottom
-                                           className={this.classes.blueFontStyle} >{value?.text}</Typography>
+                                           variant={"body1"}
+                                            >{value?.text}</Typography>
                     } else if (value?.message_type === "i") {
                         return <img key={value?.id} src={value?.message_file}
                                     height={"100%"} width={"100%"}/>
@@ -101,12 +103,12 @@ class ChannelMessages extends Component{
         if (value.topPosition === 0){
             if (this.counter === 0){
                 this.counter++;
-                console.log("one time");
+               // console.log("one time");
             }
             else {
                 if (this.counter === 1){
                     this.counter++;
-                    console.log("two time");
+                   // console.log("two time");
                     this.setState({loading:true});
                     axios.get(this.nextLink,TokenConfig())
                         .then(result => {
@@ -121,10 +123,10 @@ class ChannelMessages extends Component{
                             this.newMessagesList = [...newMessagesList2].reverse();
                             let newMessageFile2 = this.newMessagesList.map((value,index) => {
                                 if (value?.message_type === "t") {
-                                    return <Typography component={"h2"}
+                                    return <Typography
                                                        key={value?.id}
-                                                       variant={"body1"} gutterBottom
-                                                       className={this.classes.blueFontStyle}>{value?.text}</Typography>
+                                                       variant={"body1"}
+                                                       >{value?.text}</Typography>
                                 } else if (value?.message_type === "i") {
                                     return <img key={value?.id} src={value?.message_file}
                                                 height={"100%"} width={"100%"}/>
@@ -239,7 +241,7 @@ class ChannelMessages extends Component{
                                 >
                                     <AssignmentSharp style={{ fontSize: 35 }} />
                                 </IconButton>
-                                <Typography component={"h2"} variant={"body1"} dir={"ltr"} className={this.classes.blueFontStyle}>{files[i].name}</Typography>
+                                <Typography variant={"body1"} dir={"ltr"} className={this.classes.blueFontStyle}>{files[i].name}</Typography>
                             </div>
                         );
                         this.setState({loading:false});
@@ -421,7 +423,7 @@ class ChannelMessages extends Component{
                 axios.put(serverURL() + "channel-message/" + this.props.channelId + "/" + this.newMessageFile[this.indexSelected].key + "/",formData,TokenConfig())
                     .then(result => {
                         //console.log(result);
-                        const newElement = <Typography key={result.data.id} component={"h2"} variant={"body1"} className={classes.blueFontStyle}>{text}</Typography>;
+                        const newElement = <Typography key={result.data.id} variant={"body1"}>{text}</Typography>;
                         this.newMessageFile.splice(this.indexSelected, 1, newElement);
                         this.setState({});
                     })
@@ -445,7 +447,7 @@ class ChannelMessages extends Component{
                     .then(result => {
                        // console.log(result);
                         this.newMessageFile.push(
-                            <Typography key={result.data.id} component={"h2"} variant={"body1"} className={classes.blueFontStyle}>{text}</Typography>
+                            <Typography key={result.data.id} variant={"body1"} >{text}</Typography>
                         );
                         this.state.needEndMessages = true;
                         this.setState({});
@@ -540,22 +542,24 @@ class ChannelMessages extends Component{
                                            <IconButton
                                                aria-label="upload picture"
                                                component="span"
-                                               style={{padding: '0px', color: '#3f407d'}}
+                                               style={{margin:"2px",padding: '0px', color: '#3f407d'}}
                                            >
-                                               <CloudUpload style={{ fontSize: 35 }} />
+                                               {/*<CloudUpload style={{ fontSize: 35 }} />*/}
+                                               <FontAwesomeIcon icon={faFileUpload} style={{color: '#3f407d'}}/>
                                            </IconButton>
                                            </label>
                                            <IconButton
-                                               style={{padding: '0px', color: '#3f407d'}}
+                                               style={{margin:"2px",padding: '0px', color: '#3f407d'}}
                                                onClick={handleSendIcon}
                                            >
-                                               <Done style={{ fontSize: 35 }} />
+                                               {/*<Done style={{ fontSize: 35}} />*/}
+                                               <Send style={{ fontSize: 30 ,transform: "rotate(-180deg)"}} />
                                            </IconButton>
                                        </InputAdornment>)
                                }}
                     /> :
                     this.props.role === "subscriber" ? null :
-                        <Button variant="contained" fullWidth color={'primary'} onClick={handleJoinChannel}>پیوستن به کانال</Button>
+                        <Button variant="contained" endIcon={<Add />} fullWidth color={'primary'} onClick={handleJoinChannel}>پیوستن به کانال</Button>
                 }
               </div>
         )

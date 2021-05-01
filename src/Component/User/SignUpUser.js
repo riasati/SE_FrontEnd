@@ -39,7 +39,7 @@ class SignUpUser extends Component {
     }
 
     handleChange = e => {
-        this.setState({setErrorDialog:false});
+       // this.setState({setErrorDialog:false});
         this.setState({[e.target.name]: e.target.value});
     }
 
@@ -52,6 +52,9 @@ class SignUpUser extends Component {
 
     handleMouseDownPassword = (event) => {
         event.preventDefault();
+    };
+    handleStateErrorDialog = () =>{
+        this.setState({setErrorDialog:!this.state.setErrorDialog})
     };
 
     componentDidMount() {
@@ -369,7 +372,7 @@ class SignUpUser extends Component {
                                                 <LoadingButton onClick={handleClick } pendingPosition="center" className={classes.topButton} pending={pending}  fullWidth>
                                                     {'ثبت نام'}
                                                 </LoadingButton>
-                                                <ErrorDialog open={this.state.setErrorDialog} errorText={this.state.ErrorDialogText} />
+                                                <ErrorDialog open={this.state.setErrorDialog} errorText={this.state.ErrorDialogText} handleParentState={this.handleStateErrorDialog} />
                                             </Grid>
                                         </Grid>
                                     </Grid>

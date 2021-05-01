@@ -42,6 +42,7 @@ class UserProfile extends Component {
             email: '',
             password: '',
             avatar: '',
+            buttonDisable:true,
         }
     }
 
@@ -98,11 +99,46 @@ class UserProfile extends Component {
             setFile(false);
         };
         const handleClick = e => {
+            const formData = new FormData(); 
+            formData.append( 
+              "username", 
+              this.state.userName
+            ); 
+            formData.append( 
+                "email ", 
+                this.state.email
+              ); 
+            formData.append( 
+                "phone_number ", 
+                this.state.username
+              ); 
+            formData.append( 
+                "first_name ", 
+                this.state.firstName
+              ); 
+            formData.append( 
+                "last_name", 
+                this.state.lastName
+              ); 
+              formData.append( 
+                "password", 
+                this.state.password
+              );
+              formData.append( 
+                "avatar",
+                this.state.avatar
+              );
+              console.log("hi")
+            axios.put(serverURL() + "profile/",formData,TokenConfig())
+            .then(res => {
+                console.log(res)
+            })
+            .catch(err => {
+                console.log(err)
+            })
 
         }
         return (
-
-
             <Container component="main" maxWidth="lg" className={classes.container}>
                 <CssBaseline/>
                 <div>
@@ -124,7 +160,7 @@ class UserProfile extends Component {
                                                                 </div>
                                                             ) : (
                                                                 <div>
-                                                                    <img src="https://www.vecteezy.com/free-vector/user"
+                                                                    <img src={'../../image/defaultavatar.jpg'}
                                                                          alt="avatar" title="avatar"
                                                                          className={classes.avatar}/>
                                                                 </div>
@@ -367,15 +403,15 @@ class UserProfile extends Component {
 
                                                             </Grid>
                                                             <Grid item xs={12}>
-                                                                <LoadingButton onClick={handleClick}
+                                                                <loadingButton  onClick={handleClick}
                                                                                pendingPosition="center"
                                                                                className={classes.topButton}
                                                                                pending={pending}
                                                                                startIcon={<i
                                                                                    className="fas fa-edit"></i>}
                                                                                fullWidth>
-                                                                    {'اعمال تغییرات'}
-                                                                </LoadingButton>
+                                                                    {'اعمال رات'}
+                                                                </loadingButton>
                                                             </Grid>
                                                         </Grid>
                                                     </ValidatorForm>

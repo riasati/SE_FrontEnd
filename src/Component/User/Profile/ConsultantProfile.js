@@ -11,6 +11,11 @@ import Container from '@material-ui/core/Container';
 import {Link} from 'react-router-dom';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import Material_RTL from "../../RTL/Material_RTL";
+import DeleteIcon from '@material-ui/icons/Delete';
+import { FaCheck } from 'react-icons/fa';
+
+
+
 import {
     AccountCircle,
     Email,
@@ -43,11 +48,18 @@ class ConsultantProfile extends Component {
             password: '',
             certificate: '',
             avatar: '',
+            buttonDisable:true,
+            requests:[],
+            imageFile:'',
+            changeAvatarFlag:false,
         }
     }
 
     handleChange = e => {
         this.setState({[e.target.name]: e.target.value});
+        if(this.state.buttonDisable){
+            this.setState({buttonDisable: false})
+        }
     }
     handleClickShowPassword = () => {
         this.setState({
@@ -74,6 +86,14 @@ class ConsultantProfile extends Component {
             .catch(err => {
                 console.log(err)
             })
+            axios.get(serverURL() + "request/responder/", TokenConfig())
+            .then(res => {
+                this.setState({requests: res.data})
+            })
+            .catch(err => {
+                console.log(err)
+            })
+            
 
     }
 
@@ -91,6 +111,7 @@ class ConsultantProfile extends Component {
                 setFile(true);
             }
             this.setState({avatar: event.target.files[0]});
+            this.setState({changeAvatarFlag:true})
             console.log(event.target.files)
             console.log(event.target.files[0])
             setFile(true);
@@ -99,7 +120,56 @@ class ConsultantProfile extends Component {
             this.setState({avatar: null});
             setFile(false);
         };
+        const handleRequest=e=>{
+            
+        }
+        const handelAccept=e=>{
+            
+        }
+        const handelReject =e=>{
+
+        }
         const handleClick = e => {
+            const formData = new FormData(); 
+            formData.append( 
+              "username", 
+              this.state.userName
+            ); 
+            formData.append( 
+                "email ", 
+                this.state.email
+              ); 
+            formData.append( 
+                "phone_number ", 
+                this.state.phoneNumber
+              ); 
+            formData.append( 
+                "first_name ", 
+                this.state.firstName
+              ); 
+            formData.append( 
+                "last_name", 
+                this.state.lastName
+              ); 
+              formData.append( 
+                "password", 
+                "123456"
+              );
+              if(this.state.changeAvatarFlag){
+                formData.append( 
+                    "avatar",
+                    this.state.avatar
+                  );
+              }
+              
+              console.log("hi")
+            axios.put(serverURL() + "profile/",formData,TokenConfig())
+            .then(res => {
+                console.log(res)
+            })
+            .catch(err => {
+                console.log(err)
+            })
 
         }
         return (
@@ -126,8 +196,8 @@ class ConsultantProfile extends Component {
                                                         </div>
                                                     ) : (
                                                         <div>
-                                                            <img src="https://www.vecteezy.com/free-vector/user"
-                                                                 alt="avatar"  title="avatar"/>
+                                                            <img src={'../../image/defaultavatar.jpg'}
+                                                                 alt="avatar" title="avatar" className={classes.avatar}/>
                                                         </div>
                                                     ))
                                                     }
@@ -326,49 +396,12 @@ class ConsultantProfile extends Component {
                                                         <Grid item xs={12} sm={3}>
 
                                                         </Grid>
-                                                        <Grid item xs={12} sm={6}>
-                                                            <TextValidator
-                                                                size="normal"
-                                                                variant="outlined"
-                                                                required
-                                                                fullWidth
-                                                                name="password"
-                                                                label={"رمز عبور"}
-                                                                id="password"
-                                                                autoComplete="current-password"
-                                                                type={this.state.showPassword ? 'text' : 'password'}
-                                                                value={this.state.password}
-                                                                onChange={this.handleChange}
-                                                                InputLabelProps={{style: {fontFamily: 'IRANSansWeb'},}}
-                                                                validators={['required', 'minStringLength:' + 6]}
-                                                                errorMessages={['لطفا رمز عبور خود را وارد کنید', 'رمز عبور باید بیشتر از ۶ حرف باشد']}
-                                                                InputProps={{
-                                                                    style: {fontFamily: 'IRANSansWeb'},
-                                                                    endAdornment: (
-                                                                        <InputAdornment
-                                                                            className={classes.InputAdornment}
-                                                                            position="end">
-                                                                            <IconButton
-                                                                                style={{
-                                                                                    padding: '0px',
-                                                                                    color: '#2ab371'
-                                                                                }}
-                                                                                onClick={this.handleClickShowPassword}
-                                                                                onMouseDown={this.handleMouseDownPassword}
-                                                                            >
-                                                                                {this.state.showPassword ?
-                                                                                    <Visibility/> :
-                                                                                    <VisibilityOff/>}
-                                                                            </IconButton>
-                                                                        </InputAdornment>)
-                                                                }}
-                                                            />
-                                                        </Grid>
+                                                        
                                                         <Grid item xs={12} sm={3}>
 
                                                         </Grid>
                                                         <Grid item xs={12}>
-                                                            <LoadingButton onClick={handleClick}
+                                                            <LoadingButton disabled={this.state.buttonDisable} onClick={handleClick}
                                                                            pendingPosition="center"
                                                                            className={classes.topButton}
                                                                            pending={pending}
@@ -385,9 +418,39 @@ class ConsultantProfile extends Component {
                                     </Grid>
                                 </Grid>
                                 <Grid item xs={12} sm={12} md={6} lg={6}>
-                                    <Paper style={{backgroundColor: '#f3f7fa',}}>
-                                        request
+                                    <Grid xs={12} item>
+                                    <Paper  style={{fontFamily: 'IRANSansWeb',backgroundColor: '#9999fa',}}>
+                                        <text style={{fontFamily: 'IRANSansWeb',color:'#f3f7fa'}}>
+                                        {"درخواست ها"}                                      
+                                        </text>
                                     </Paper>
+                                    </Grid>
+                                    {this.state.requests.map((request) => (
+                                        
+                                        <Grid xs={12}  key={request} item container  justify="flex-end" alignItems="flex-start">
+                                            <Grid xs={9}  item container justify="flex-start">
+                                            <text style={{fontFamily: 'IRANSansWeb',color:'#f3333a'}}>
+                                                {"در خواست عضویت در کانال"+ this.state.requests.channel.name}                                      
+                                            </text>
+                                            </Grid>
+                                                <Grid xs={1} item   justify="flex-end">
+                                                    <Button onClick={handelAccept}
+                                                        color="primary"
+                                                        style={{marginLeft:"25px"}}
+                                                        >
+                                                        <FaCheck fontSize="150%" className={classes.InputAdornment}/>
+                                                        </Button>
+                                                </Grid>
+                                                <Grid xs={2} item  justify="flex-start" >
+                                                <Button onClick={handelReject}
+                                                    style={{color:"secondary",marginRight:"25px"}}
+                                                    >
+                                                    <DeleteIcon fontSize="100%" className={classes.InputAdornment}/>
+                                                    </Button>
+                                                </Grid>
+                                        </Grid>
+                                        
+                                    ))}
                                 </Grid>
                             </Grid>
                         </RTL>
@@ -452,6 +515,7 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: '#3aadd9',
             color: 'white'
         },
+
     },
 }));
 export default (props) => {

@@ -23,8 +23,8 @@ import RTL from '../RTL/M_RTL';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faUserCircle, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import EditProfile from '../User/Profile/EditProfile';
 import Profile from '../User/Profile/Profile';
-import Profile1 from '../User/Profile/Profile1';
 import MainPage from '../MainPage/MainPage';
 import Channels from '../MainPage/Channels';
 import GroupingChannel from '../GroupingChannel/GroupingChannel';
@@ -182,6 +182,7 @@ const useStyles = makeStyles((theme) => ({
     },
     link: {
         textDecoration: 'none',
+        color: '#3f407d',
     }
 }));
 
@@ -287,7 +288,7 @@ export default function Dashboard(props) {
                                                             <hr/>
                                                             <br/>
                                                             <div>
-                                                                <Link to="/Profile"
+                                                                <Link to={"/Profile/" + username}
                                                                       className={classes.link}>
                                                                     {'پروفایل'}&nbsp;&nbsp;&nbsp;
                                                                     <i className="fas fa-user"
@@ -336,14 +337,14 @@ export default function Dashboard(props) {
                             <div className={classes.appBarSpacer}/>
                             <Container maxWidth="lg" className={classes.container}>
                                 <Switch>
-                                    <Route path="/Profile">
-                                        <Profile title={'داشبورد'}/>
+                                    <Route path="/EditProfile">
+                                        <EditProfile title={'داشبورد'}/>
                                     </Route>
                                     <Route path="/Dashboard">
                                         <MainPage title={'پروفایل'}/>
                                     </Route>
-                                    <Route path="/Profile1">
-                                        <Profile1 title={'پروفایل'}/>
+                                    <Route path="/Profile/:username">
+                                        <Profile title={'پروفایل'}/>
                                     </Route>
                                     <Route path="/Channels">
                                         <Channels title={'کانال ها'}/>

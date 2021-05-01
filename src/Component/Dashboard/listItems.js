@@ -20,15 +20,15 @@ export default function MainListItems(props){
       <ListItemText primary="داشبورد" />
     </ListItem>
     </Link>
-    <Link to="/Profile" style={{color: '#3f407d', textDecoration: 'none',}}>
+    <Link to="/EditProfile" style={{color: '#3f407d', textDecoration: 'none',}}>
     <ListItem button className={classes.ListItem}>
       <ListItemIcon>
       <FontAwesomeIcon icon={faUser}  className={classes.FontIcon}/>
       </ListItemIcon>
-      <ListItemText primary="پروفایل" />
+      <ListItemText primary=" ویرایش پروفایل" />
     </ListItem>
     </Link>
-      <Link to="/Profile1" style={{color: '#3f407d', textDecoration: 'none',}}>
+      <Link to="/Profile" style={{color: '#3f407d', textDecoration: 'none',}}>
           <ListItem button className={classes.ListItem}>
               <ListItemIcon>
                   <FontAwesomeIcon icon={faUser}  className={classes.FontIcon}/>

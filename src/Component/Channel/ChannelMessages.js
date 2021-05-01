@@ -22,6 +22,7 @@ import ScrollArea from  'react-scrollbar';
 import LoadingOverlay from 'react-loading-overlay';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileUpload} from "@fortawesome/free-solid-svg-icons";
+import ErrorDialog from "./ChannelPage";
 
 const MenuItem = withStyles({
     root: {
@@ -43,6 +44,7 @@ class ChannelMessages extends Component{
             textOptions:[],
             fileOptions:[],
             enableDragAndDrop:false,
+            setErrorDialog:false,
         };
        // console.log(this.state.role);
         this.myRef = [];
@@ -61,6 +63,7 @@ class ChannelMessages extends Component{
     counter = 0;
     link = "";
     //messagesEnd2 = null;
+    ErrorDialogText = "";
     initialization = () => {
         axios.get(serverURL() + "channel-message/" + this.props.channelId + "/?query=" + "&page=" + 1,TokenConfig())
             .then(result => {
@@ -97,6 +100,8 @@ class ChannelMessages extends Component{
             .catch(error => {
                 console.log(error);
                 this.setState({loading:false});
+                this.ErrorDialogText = error.response.data?.error;
+                this.setState({setErrorDialog:true});
             })
     };
     handleGetNewMessages = (value) => {
@@ -155,6 +160,8 @@ class ChannelMessages extends Component{
                                 this.counter = 0;
                             }
                             this.setState({loading:false});
+                            // this.ErrorDialogText = error?.response?.data?.error;
+                            // this.setState({setErrorDialog:true});
                         })
                 }
             }
@@ -187,6 +194,8 @@ class ChannelMessages extends Component{
                     .catch(error =>{
                         console.log(error);
                         this.setState({loading:false});
+                        this.ErrorDialogText = error.response.data?.error;
+                        this.setState({setErrorDialog:true});
                     });
             }
             else if (files[i].type.split("/")[0] === "image"){
@@ -206,6 +215,8 @@ class ChannelMessages extends Component{
                     .catch(error =>{
                         console.log(error);
                         this.setState({loading:false});
+                        this.ErrorDialogText = error.response.data?.error;
+                        this.setState({setErrorDialog:true});
                     });
             }
             else if (files[i].type.split("/")[0] === "video"){
@@ -224,6 +235,8 @@ class ChannelMessages extends Component{
                     .catch(error =>{
                         console.log(error);
                         this.setState({loading:false});
+                        this.ErrorDialogText = error.response.data?.error;
+                        this.setState({setErrorDialog:true});
                     });
             }
             else if (files[i].type.split("/")[0] === "application" || files[i].type.split("/")[0] === "text"){
@@ -249,6 +262,8 @@ class ChannelMessages extends Component{
                     .catch(error =>{
                         console.log(error);
                         this.setState({loading:false});
+                        this.ErrorDialogText = error.response.data?.error;
+                        this.setState({setErrorDialog:true});
                     });
 
             }
@@ -304,6 +319,8 @@ class ChannelMessages extends Component{
                 .catch(error =>{
                     console.log(error);
                     this.indexSelected = -1;
+                    this.ErrorDialogText = error.response.data?.error;
+                    this.setState({setErrorDialog:true});
                 });
 
             this.setState({});
@@ -362,7 +379,9 @@ class ChannelMessages extends Component{
             }
         }
         }
-
+    handleStateErrorDialog = () =>{
+        this.setState({setErrorDialog:!this.state.setErrorDialog})
+    };
     render() {
         const classes = this.props.classes;
         const onFileChange = event => {
@@ -395,6 +414,8 @@ class ChannelMessages extends Component{
                     .catch(error =>{
                         console.log(error);
                         this.indexSelected = -1;
+                        this.ErrorDialogText = error.response.data?.error;
+                        this.setState({setErrorDialog:true});
                     });
 
                 // let findingElement = this.newMessageFile.find((jsx) => jsx.props.children === "salam");
@@ -429,6 +450,8 @@ class ChannelMessages extends Component{
                     })
                     .catch(error => {
                         console.log(error);
+                        this.ErrorDialogText = error.response.data?.error;
+                        this.setState({setErrorDialog:true});
                     });
                 this.state.editing = false;
             }
@@ -454,6 +477,8 @@ class ChannelMessages extends Component{
                     })
                     .catch(error =>{
                         console.log(error);
+                        this.ErrorDialogText = error.response.data?.error;
+                        this.setState({setErrorDialog:true});
                     });
             }
             this.messageText = "";
@@ -466,11 +491,14 @@ class ChannelMessages extends Component{
                 })
                 .catch(error => {
                     console.log(error);
-                    console.log(error.response.data.error);
+                    this.ErrorDialogText = error.response.data?.error;
+                    this.setState({setErrorDialog:true});
+                    //console.log(error.response.data.error);
                 })
         };
         return(
             <div>
+                {/*<ErrorDialog open={this.state.setErrorDialog} errorText={this.ErrorDialogText} handleParentState={this.handleStateErrorDialog} />*/}
             <DragAndDrop handleDrop={this.handleDrop} enable={this.state.enableDragAndDrop}>
                 <LoadingOverlay active={this.state.loading} spinner text={""}>
                 <ScrollArea className={classes.mainDiv} speed={0.5} horizontal={false} onScroll={this.handleGetNewMessages}>

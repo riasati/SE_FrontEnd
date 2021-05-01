@@ -12,10 +12,12 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from '@material-ui/icons/Close';
 import Grid from '@material-ui/core/Grid';
 import Theme from "../Component/Theme";
+import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
+const theme = createMuiTheme({});
 export default class ErrorDialog extends Component{
     constructor(props){
         super(props);
@@ -39,6 +41,8 @@ export default class ErrorDialog extends Component{
     render(){
 
         const errorText = this.props.errorText;
+        const errorColor = theme.palette.error.main;
+      //  console.log(errorColor);
         return(
             <div>
                 <Theme>
@@ -51,7 +55,7 @@ export default class ErrorDialog extends Component{
                     aria-describedby="alert-dialog-description"
                     scroll={"body"}
                 >
-                    <AppBar position={"relative"} dir={"rtl"}>
+                    <AppBar position={"relative"} dir={"rtl"} style={{backgroundColor:errorColor}}>
                         <div style={{ width: "100%",display: "flex",flexDirection:"row", justifyContent: "space-between",alignItems: "baseline"}}>
                             <div>
                                 <DialogTitle dir={"rtl"}  id="alert-dialog-title" ><Typography variant={"h6"} style={{color:"white"}}> خطا </Typography></DialogTitle>
@@ -82,7 +86,7 @@ export default class ErrorDialog extends Component{
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions dir={"rtl"}>
-                        <Button onClick={this.handleClose} variant="contained" color="primary" autoFocus>
+                        <Button onClick={this.handleClose} variant="contained" style={{backgroundColor:errorColor}} autoFocus>
                             باشه
                         </Button>
                     </DialogActions>

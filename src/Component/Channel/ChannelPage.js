@@ -402,6 +402,7 @@ class Channel extends Component {
                                                 open={this.state.showInfo}
                                                 aria-labelledby="alert-dialog-slide-title1"
                                                 aria-describedby="alert-dialog-slide-description"
+                                                onClose={handleShowInfo}
                                             >
                                                 <CardContent id="alert-dialog-slide-title"  component="h1" variant="h5" style={{color: "#494949",justifyContent:'right'}}>
                                                     <Grid xs={12} container spacing={1}  direction="column" justify="flex-start" alignItems="center">
@@ -502,6 +503,7 @@ class Channel extends Component {
                                                     open={this.state.showMembers}
                                                     aria-labelledby="alert-dialog-slide-title"
                                                     aria-describedby="alert-dialog-slide-description"
+                                                    onClose={handleShowMembers}
                                                 >
                                                     
                                                      <CardContent id="alert-dialog-slide-title"  component="h1" variant="h5" style={{fontFamily: 'IRANSansWeb',color: "#494949",justifyContent:'right'}}>

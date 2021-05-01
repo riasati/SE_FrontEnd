@@ -124,7 +124,7 @@ class UserProfile extends Component {
                                                                 </div>
                                                             ) : (
                                                                 <div>
-                                                                    <img src="https://www.vecteezy.com/free-vector/user"
+                                                                    <img src={'../../image/defaultavatar.jpg'}
                                                                          alt="avatar" title="avatar"
                                                                          className={classes.avatar}/>
                                                                 </div>

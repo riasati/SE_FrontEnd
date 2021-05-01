@@ -28,6 +28,14 @@ export default function MainListItems(props){
       <ListItemText primary="پروفایل" />
     </ListItem>
     </Link>
+      <Link to="/Profile1" style={{color: '#3f407d', textDecoration: 'none',}}>
+          <ListItem button className={classes.ListItem}>
+              <ListItemIcon>
+                  <FontAwesomeIcon icon={faUser}  className={classes.FontIcon}/>
+              </ListItemIcon>
+              <ListItemText primary="پروفایل" />
+          </ListItem>
+      </Link>
     <Link to="/Channels" style={{color: '#3f407d', textDecoration: 'none',}}>
     <ListItem button className={classes.ListItem}>
       <ListItemIcon>

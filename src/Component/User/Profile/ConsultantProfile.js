@@ -49,9 +49,10 @@ class ConsultantProfile extends Component {
             certificate: '',
             avatar: '',
             buttonDisable:true,
-            requests:[],
+            requests:'',
             imageFile:'',
             changeAvatarFlag:false,
+            getRequestFlag:false,
         }
     }
 
@@ -86,9 +87,12 @@ class ConsultantProfile extends Component {
             .catch(err => {
                 console.log(err)
             })
-            axios.get(serverURL() + "request/responder/", TokenConfig())
+        axios.get(serverURL() + "request/responder/", TokenConfig())
             .then(res => {
+                console.log(res.data);
                 this.setState({requests: res.data})
+                console.log(this.state.requests)
+                this.setState({getRequestFlag:true})
             })
             .catch(err => {
                 console.log(err)
@@ -96,13 +100,49 @@ class ConsultantProfile extends Component {
             
 
     }
+    handelAccept=e=>{
+        const body={
+            id : e.target.id,
+            accept : true,
+            request_type : "join_channel",
+        }
+        axios.post(serverURL() +"request/responder/",body,TokenConfig()).
+        then(res=>{
+            console.log(res)
+        }
 
+        )
+        .catch(err=>{
+            console.log(err)
+        }
+        )
+    }
+    handelReject =e=>{
+        console.log(e.target.id)
+        const body={
+            id : e.target.id,
+            accept : false,
+            request_type : "join_channel",
+        }
+        axios.post(serverURL() +"request/responder/",body,TokenConfig()).
+        then(res=>{
+            console.log(res)
+        }
+
+        )
+        .catch(err=>{
+            console.log(err)
+        }
+
+        )
+    }
     render() {
         const classes = this.props.classes;
         const [pending, setPending] = this.props.pending;
         const [file, setFile] = this.props.isFileLoaded;
         const [ image , setImage] = this.props.image;
         const onFileChange = event => {
+            this.setState({buttonDisable: false})
             setFile(true);
             let reader = new FileReader();
             reader.readAsDataURL(event.target.files[0]);
@@ -123,12 +163,7 @@ class ConsultantProfile extends Component {
         const handleRequest=e=>{
             
         }
-        const handelAccept=e=>{
-            
-        }
-        const handelReject =e=>{
-
-        }
+        
         const handleClick = e => {
             const formData = new FormData(); 
             formData.append( 
@@ -425,27 +460,64 @@ class ConsultantProfile extends Component {
                                         </text>
                                     </Paper>
                                     </Grid>
-                                    {this.state.requests.map((request) => (
-                                        
-                                        <Grid xs={12}  key={request} item container  justify="flex-end" alignItems="flex-start">
-                                            <Grid xs={9}  item container justify="flex-start">
-                                            <text style={{fontFamily: 'IRANSansWeb',color:'#f3333a'}}>
-                                                {"در خواست عضویت در کانال"+ this.state.requests.channel.name}                                      
+                                    {!this.state.getRequestFlag ? null: this.state.requests.map((request) => (
+                                        <Grid xs={12}   key={request.id} item container  justify="flex-end" alignItems="flex-start">
+                                            <Grid xs={9}  item container justify="flex-start" >
+                                            <text style={{fontFamily: 'IRANSansWeb',fontSize:"120%",color:'#f3333a'}}>
+                                                {"در خواست عضویت در کانال "+ request.channel.name}                                      
                                             </text>
                                             </Grid>
-                                                <Grid xs={1} item   justify="flex-end">
-                                                    <Button onClick={handelAccept}
+                                                <Grid xs={1} item   justify="flex-end" >
+                                                    <Button id={request.id} onClick={()=>{
+                                                        const body={
+                                                            id : request.id,
+                                                            accept : true,
+                                                            request_type : "join_channel",
+                                                        }
+                                                        axios.post(serverURL() +"request/responder/",body,TokenConfig()).
+                                                        then(res=>{
+                                                            console.log(res)
+                                                            window.location.reload()
+                                                        }
+
+                                                        )
+                                                        .catch(err=>{
+                                                            console.log(err)
+                                                        }
+                                                        )
+                                                    }} 
                                                         color="primary"
                                                         style={{marginLeft:"25px"}}
+                                                        
                                                         >
-                                                        <FaCheck fontSize="150%" className={classes.InputAdornment}/>
+                                                        {console.log("ID is: ",request.id)}
+                                                        <FaCheck  fontSize="150%" className={classes.InputAdornment}/>
                                                         </Button>
                                                 </Grid>
                                                 <Grid xs={2} item  justify="flex-start" >
-                                                <Button onClick={handelReject}
+                                                <Button id={request.id} onClick={() => {
+                                                    const body={
+                                                                id : request.id,
+                                                                accept : false,
+                                                                request_type : "join_channel",
+                                                            }
+                                                            axios.post(serverURL() +"request/responder/",body,TokenConfig()).
+                                                            then(res=>{
+                                                                console.log(res)
+                                                                window.location.reload()
+                                                            }
+
+                                                            )
+                                                            .catch(err=>{
+                                                                console.log(err)
+                                                            }
+
+                                                            )
+                                                    }} 
                                                     style={{color:"secondary",marginRight:"25px"}}
+                                                    
                                                     >
-                                                    <DeleteIcon fontSize="100%" className={classes.InputAdornment}/>
+                                                    <DeleteIcon  fontSize="100%" className={classes.InputAdornment}/>
                                                     </Button>
                                                 </Grid>
                                         </Grid>

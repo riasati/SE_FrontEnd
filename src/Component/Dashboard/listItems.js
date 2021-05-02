@@ -20,30 +20,6 @@ export default function MainListItems(props){
       <ListItemText primary="داشبورد" />
     </ListItem>
     </Link>
-    <Link to="/EditProfile" style={{color: '#3f407d', textDecoration: 'none',}}>
-    <ListItem button className={classes.ListItem}>
-      <ListItemIcon>
-      <FontAwesomeIcon icon={faUser}  className={classes.FontIcon}/>
-      </ListItemIcon>
-      <ListItemText primary=" ویرایش پروفایل" />
-    </ListItem>
-    </Link>
-      <Link to="/Profile" style={{color: '#3f407d', textDecoration: 'none',}}>
-          <ListItem button className={classes.ListItem}>
-              <ListItemIcon>
-                  <FontAwesomeIcon icon={faUser}  className={classes.FontIcon}/>
-              </ListItemIcon>
-              <ListItemText primary="پروفایل" />
-          </ListItem>
-      </Link>
-    <Link to="/Channels" style={{color: '#3f407d', textDecoration: 'none',}}>
-    <ListItem button className={classes.ListItem}>
-      <ListItemIcon>
-      <FontAwesomeIcon icon={faBullhorn}  className={classes.FontIcon}/>
-      </ListItemIcon>
-      <ListItemText primary="کانال ها" />
-    </ListItem>
-    </Link>
     <Link to="/GroupingChannel" style={{ textDecoration: 'none',}}>
     <ListItem button className={classes.ListItem}>
       <ListItemIcon>
@@ -52,12 +28,29 @@ export default function MainListItems(props){
       <ListItemText primary="دسته بندی" />
     </ListItem>
     </Link>
+    <Link to="/EditProfile" style={{color: '#3f407d', textDecoration: 'none',}}>
+    <ListItem button className={classes.ListItem}>
+      <ListItemIcon>
+      <FontAwesomeIcon icon={faUser}  className={classes.FontIcon}/>
+      </ListItemIcon>
+      <ListItemText primary=" ویرایش اطلاعات" />
+    </ListItem>
+    </Link>
+    <Link to="/Channels" style={{color: '#3f407d', textDecoration: 'none',}}>
+    <ListItem button className={classes.ListItem}>
+      <ListItemIcon>
+      <FontAwesomeIcon icon={faBullhorn}  className={classes.FontIcon}/>
+      </ListItemIcon>
+      <ListItemText primary="کانال ها" />
+    </ListItem>
+    </Link>
+    
   </div>
 )};
 const useStyles = makeStyles((theme) => ({
     ListItem:{
         color: '#3f407d',
-        transition: 'all 0.5s ease',
+        transition: 'all 0.5s ease-in',
         "&:hover": {
             backgroundColor: '#3aacd8' ,
             color: 'white'

@@ -188,7 +188,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard(props) {
     const classes = useStyles();
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [username, setUsername] = useState('');
@@ -247,7 +247,7 @@ export default function Dashboard(props) {
                                 <div>
                                     {avatar !== null ?
                                         <div>
-                                            <Button variant="outlined" onClick={handleClickOpen}>
+                                            <Button onClick={handleClickOpen}>
                                                 <img src={avatar} className={classes.avatar}/>
                                             </Button>
                                             <Dialog
@@ -288,20 +288,24 @@ export default function Dashboard(props) {
                                                             <hr/>
                                                             <br/>
                                                             <div>
+                                                            <Button onClick={handleClose} style={{fontFamily: 'IRANSansWeb'}}>
                                                                 <Link to={"/Profile/" + username}
                                                                       className={classes.link}>
                                                                     {'پروفایل'}&nbsp;&nbsp;&nbsp;
                                                                     <i className="fas fa-user"
                                                                        style={{color: '#3f407d', margin: '0'}}></i>
                                                                 </Link>
+                                                            </Button>
                                                             </div>
                                                             <br/>
                                                             <div>
-                                                                <Link to="/signIn" className={classes.link}>
+                                                            <Button onClick={handleClose} style={{fontFamily: 'IRANSansWeb'}}>
+                                                                <Link to="/signIn" className={classes.link} onClick={handleClickOpen}>
                                                                     {'خروج'}&nbsp;&nbsp;&nbsp;
                                                                     <i className="fas fa-sign-out-alt"
                                                                        style={{color: '#3f407d'}}></i>
                                                                 </Link>
+                                                            </Button>
                                                             </div>
                                                         </div>
                                                     </DialogContentText>

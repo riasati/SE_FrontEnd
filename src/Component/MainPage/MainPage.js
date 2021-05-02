@@ -89,7 +89,7 @@ export default function MainPage() {
         console.log(err)
         setPending(false)
       })
-      axios.get(serverURL()+'channel/search-for-channel/'+'?query= '+'&search_category=Academic_advice',TokenConfig())
+      axios.get(serverURL()+'channel/search-for-channel/'+'?query= '+'&search_category=AcademicAdvice',TokenConfig())
       .then(result=>{
         console.log(result);
         res2.push(...result.data.data);
@@ -113,7 +113,7 @@ export default function MainPage() {
         console.log(err)
         setPending(false)
       })
-      axios.get(serverURL()+'channel/search-for-channel/'+'?query= '+'&search_category=Educational_immigration',TokenConfig())
+      axios.get(serverURL()+'channel/search-for-channel/'+'?query= '+'&search_category=Immigration',TokenConfig())
       .then(result=>{
         console.log(result);
         res4.push(...result.data.data);
@@ -137,7 +137,7 @@ export default function MainPage() {
         console.log(err)
         setPending(false)
       })
-      axios.get(serverURL()+'channel/search-for-channel/'+'?query= '+'&search_category=Entrance_Exam',TokenConfig())
+      axios.get(serverURL()+'channel/search-for-channel/'+'?query= '+'&search_category=EntranceExam',TokenConfig())
       .then(result=>{
         console.log(result);
         res6.push(...result.data.data);
@@ -177,7 +177,7 @@ export default function MainPage() {
                   list1.size !== 0 ?  (list1.map((data)=>{
                     console.log(data)
                     return(
-                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
+                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} avatar={data.avatar} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
                     )
                     })): null
                   }
@@ -192,7 +192,7 @@ export default function MainPage() {
                   list2.size !== 0 ?  (list2.map((data)=>{
                     console.log(data)
                     return(
-                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
+                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} avatar={data.avatar} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
                     )
                     })): null
                   }
@@ -207,7 +207,7 @@ export default function MainPage() {
                   list3.size !== 0 ?  (list3.map((data)=>{
                     console.log(data)
                     return(
-                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
+                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} avatar={data.avatar} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
                     )
                     })): null
                   }
@@ -222,7 +222,7 @@ export default function MainPage() {
                   list4.size !== 0 ?  (list4.map((data)=>{
                     console.log(data)
                     return(
-                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} image={'../../image/migrationgroup.jpg'}></SuggestionChannelCard>
+                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} avatar={data.avatar} image={'../../image/migrationgroup.jpg'}></SuggestionChannelCard>
                     )
                     })): null
                   }
@@ -237,7 +237,7 @@ export default function MainPage() {
                   list5.size !== 0 ?  (list5.map((data)=>{
                     console.log(data)
                     return(
-                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} image={'../../image/medicalgroup.jpg'}></SuggestionChannelCard>
+                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} avatar={data.avatar} image={'../../image/medicalgroup.jpg'}></SuggestionChannelCard>
                     )
                     })): null
                   }
@@ -252,7 +252,7 @@ export default function MainPage() {
                   list6.size !== 0 ?  (list6.map((data)=>{
                     console.log(data)
                     return(
-                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} image={'../../image/konkorgroup.jpg'}></SuggestionChannelCard>
+                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} avatar={data.avatar} image={'../../image/konkorgroup.jpg'}></SuggestionChannelCard>
                     )
                     })): null
                   }

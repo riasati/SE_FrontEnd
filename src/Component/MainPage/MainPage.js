@@ -177,7 +177,7 @@ export default function MainPage() {
                   list1.size !== 0 ?  (list1.map((data)=>{
                     console.log(data)
                     return(
-                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} avatar={data.avatar} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
+                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} avatar={data.avatar} channelId={data.channelID} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
                     )
                     })): null
                   }
@@ -192,7 +192,7 @@ export default function MainPage() {
                   list2.size !== 0 ?  (list2.map((data)=>{
                     console.log(data)
                     return(
-                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} avatar={data.avatar} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
+                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} avatar={data.avatar} channelId={data.channelID} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
                     )
                     })): null
                   }
@@ -207,7 +207,7 @@ export default function MainPage() {
                   list3.size !== 0 ?  (list3.map((data)=>{
                     console.log(data)
                     return(
-                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} avatar={data.avatar} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
+                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} avatar={data.avatar} channelId={data.channelID} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
                     )
                     })): null
                   }
@@ -222,7 +222,7 @@ export default function MainPage() {
                   list4.size !== 0 ?  (list4.map((data)=>{
                     console.log(data)
                     return(
-                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} avatar={data.avatar} image={'../../image/migrationgroup.jpg'}></SuggestionChannelCard>
+                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} avatar={data.avatar} channelId={data.channelID} image={'../../image/migrationgroup.jpg'}></SuggestionChannelCard>
                     )
                     })): null
                   }
@@ -237,7 +237,7 @@ export default function MainPage() {
                   list5.size !== 0 ?  (list5.map((data)=>{
                     console.log(data)
                     return(
-                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} avatar={data.avatar} image={'../../image/medicalgroup.jpg'}></SuggestionChannelCard>
+                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} avatar={data.avatar} channelId={data.channelID} image={'../../image/medicalgroup.jpg'}></SuggestionChannelCard>
                     )
                     })): null
                   }
@@ -252,7 +252,7 @@ export default function MainPage() {
                   list6.size !== 0 ?  (list6.map((data)=>{
                     console.log(data)
                     return(
-                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} avatar={data.avatar} image={'../../image/konkorgroup.jpg'}></SuggestionChannelCard>
+                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} avatar={data.avatar} channelId={data.channelID} image={'../../image/konkorgroup.jpg'}></SuggestionChannelCard>
                     )
                     })): null
                   }

@@ -33,16 +33,16 @@ class SignUpUser extends Component {
             showPassword: false,
             isLoading: false,
             setErrorDialog:false,
-            ErrorDialogText:'',
+        //    ErrorDialogText:'',
             loading:true
         }
     }
 
     handleChange = e => {
-        this.setState({setErrorDialog:false});
+       // this.setState({setErrorDialog:false});
         this.setState({[e.target.name]: e.target.value});
     }
-
+    ErrorDialogText = '';
     handleClickShowPassword = () => {
         this.setState({
             ...this.state,
@@ -52,6 +52,9 @@ class SignUpUser extends Component {
 
     handleMouseDownPassword = (event) => {
         event.preventDefault();
+    };
+    handleStateErrorDialog = () =>{
+        this.setState({setErrorDialog:!this.state.setErrorDialog})
     };
 
     componentDidMount() {
@@ -130,7 +133,9 @@ class SignUpUser extends Component {
                     // console.log(err.response.data.error.password[0]);
                     // console.log(err.response.data.error.password_repetition[0]);
                     //console.log(err.response.data.phone_number);
-                    this.setState({setErrorDialog:true,ErrorDialogText:errMessage});
+                    this.ErrorDialogText = errMessage;
+                    this.setState({setErrorDialog:true});
+                    //this.setState({setErrorDialog:true,ErrorDialogText:errMessage});
                 });
         };
 
@@ -369,7 +374,7 @@ class SignUpUser extends Component {
                                                 <LoadingButton onClick={handleClick } pendingPosition="center" className={classes.topButton} pending={pending}  fullWidth>
                                                     {'ثبت نام'}
                                                 </LoadingButton>
-                                                <ErrorDialog open={this.state.setErrorDialog} errorText={this.state.ErrorDialogText} />
+                                                <ErrorDialog open={this.state.setErrorDialog} errorText={this.ErrorDialogText} handleParentState={this.handleStateErrorDialog} />
                                             </Grid>
                                         </Grid>
                                     </Grid>

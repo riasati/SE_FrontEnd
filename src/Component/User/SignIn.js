@@ -44,6 +44,9 @@ class SignIn extends Component {
     handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
+    handleStateErrorDialog = () =>{
+        this.setState({setErrorDialog:!this.state.setErrorDialog})
+    };
     componentDidMount() {
         this.setState({loading:false});
     }
@@ -146,7 +149,7 @@ class SignIn extends Component {
                                                 <LoadingButton onClick={handleClick } pendingPosition="center" className={classes.topButton} pending={pending}  fullWidth>
                                                     ورود
                                                 </LoadingButton>
-                                                <ErrorDialog open={this.state.setErrorDialog} errorText={this.state.ErrorDialogText} />
+                                                <ErrorDialog open={this.state.setErrorDialog} errorText={this.state.ErrorDialogText} handleParentState={this.handleStateErrorDialog} />
                                             </Grid>
                                         </Grid>
                                     </Grid>

@@ -7,7 +7,7 @@ class SuggestionChannelCard extends Component{
         const classes = this.props.classes;
         return(
             <Grid className={classes.div1}>
-                <a href={"/Channel/"+ this.props.invite_link} style={{color: '#3f407d', textDecoration: 'none',}}>
+                <a href={"/Channel/"+ this.props.channelId} style={{color: '#3f407d', textDecoration: 'none',}}>
                     {this.props.avatar !== null ? <img src={this.props.avatar} className={classes.img1} style={{}}/>
                     :
                         <img src={this.props.imagesrc} className={classes.img1} style={{}}/>
@@ -57,8 +57,9 @@ export default (props) => {
     const channelName = props.ChannelName;
     const consultantName = props.ConsultantName;
     const invite_link = props.invite_link;
+    const channelId = props.channelId;
     const avatar = props.avatar;
     return (
-        <SuggestionChannelCard classes={classes} imagesrc={imagesrc} channelName={channelName} avatar={avatar} consultantName={consultantName} invite_link={invite_link}/>
+        <SuggestionChannelCard classes={classes} imagesrc={imagesrc} channelName={channelName} consultantName={consultantName} invite_link={invite_link} avatar={avatar} channelId={channelId}/>
     )
 }

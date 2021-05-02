@@ -60,6 +60,9 @@ class SignUpConsultant extends Component {
     handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
+    handleStateErrorDialog = () =>{
+        this.setState({setErrorDialog:!this.state.setErrorDialog})
+    };
 
     componentDidMount() {
         // custom rule will have name 'isPasswordMatch'
@@ -437,7 +440,7 @@ class SignUpConsultant extends Component {
                                                 <LoadingButton onClick={handleClick } pendingPosition="center" className={classes.topButton} pending={pending}  fullWidth>
                                                     {'ثبت نام'}
                                                 </LoadingButton>
-                                                <ErrorDialog open={this.state.setErrorDialog} errorText={this.state.ErrorDialogText} />
+                                                <ErrorDialog open={this.state.setErrorDialog} errorText={this.state.ErrorDialogText} handleParentState={this.handleStateErrorDialog} />
                                             </Grid>
                                         </Grid>
                                     </Grid>

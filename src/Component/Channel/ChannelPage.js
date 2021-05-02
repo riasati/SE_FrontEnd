@@ -84,6 +84,10 @@ class Channel extends Component {
             buttonDisabled:true,
             inviteUser:'',
             setErrorDialog:false,
+            channelMemberFlag:false,
+            changeNameFlag:false,
+            changeDescriptionFlag:false,
+            changeImageFlag:false,
         };
         this.initialization();
     }
@@ -111,8 +115,6 @@ class Channel extends Component {
                 this.channelName = result.data.name;
                 this.channelDescription = result.data.description;
                 this.inviteLink = result.data.invite_link;
-                this.setState({channelName:this.channelName});
-                this.setState({channelDescription:this.channelDescription});
             })
             .catch(error => {
                 console.log(error);
@@ -163,6 +165,23 @@ class Channel extends Component {
     };
     componentDidMount() {
         this.setState({loading:false});
+        axios.get(serverURL() + "channel/" + this.props.match.params.channelId + "/",TokenConfig())
+            .then(result => {
+                console.log(result);
+                this.setState({channelName:result.data.name});
+                this.setState({uploadChannelName:result.data.name});
+                this.setState({channelDescription:result.data.description});
+                this.setState({uploadChannelDescription:result.data.description});
+                this.setState({inviteLink:result.data.invite_link});
+                this.setState({image:result.data.avatar});
+                this.setState({uploadImage:result.data.avatar});
+            })
+            .catch(error => {
+                console.log(error);
+                this.ErrorDialogText = error.response.data?.error;
+                this.setState({setErrorDialog:true});
+            });
+
     }
 
     channelName= null;
@@ -211,27 +230,42 @@ class Channel extends Component {
     }
     handleChange = e => {
         this.setState({[e.target.name]: e.target.value});
-        console.log(this.state.inviteUser)
-        if(e.target.name!=="inviteUser") {
-            if (this.state.uploadChannelDescription === '') {
-
-                if (this.state.uploadChannelName === '' && e.target.value === '') {
-                    this.setState({buttonDisabled: true});
-                } else {
-                    this.setState({buttonDisabled: false});
-                }
-            }
+        console.log(e.target.name," :",e.target.value)
+        if(e.target.name ==="uploadChannelName")
+        {
+            this.setState({changeNameFlag: true});
+            this.setState({buttonDisabled: false});
+        }
+        if(e.target.name ==="uploadChannelDescription")
+        {
+            this.setState({changeDescriptionFlag: true});
+            this.setState({buttonDisabled: false});
+        }
+        if(e.target.name !== "inviteUser") {
             if (e.target.value === '') {
-                if (this.state.uploadChannelName.length === 1 && e.target.name === "uploadChannelName" && e.target.value === '') {
-                    this.setState({buttonDisabled: true});
+                if (this.state.uploadChannelName)
+                {
+                    if (this.state.uploadChannelName.length === 1 && e.target.name === "uploadChannelName" && e.target.value === '') {
+                        this.setState({changeNameFlag: false});
+                        if (!this.state.changeDescriptionFlag && !this.state.changeImageFlag) {
+                            this.setState({buttonDisabled: true});
+                        }
+                    }
                 }
-                if (this.state.uploadChannelDescription.length === 1 && e.target.name === "uploadChannelDescription" && e.target.value === '') {
-                    this.setState({buttonDisabled: true});
+                if (this.state.changeDescriptionFlag)
+                {
+                    if (this.state.uploadChannelDescription.length === 1 && e.target.name === "uploadChannelDescription" && e.target.value === '') {
+                        this.setState({changeDescriptionFlag: false});
+                        if (!this.state.changeNameFlag && !this.state.changeImageFlag) {
+                            this.setState({buttonDisabled: true});
+                        }
+                    }
                 }
             }
         }
+        
+        
     }
-
     render() {
         const classes = this.props.classes;
         const handelGetMembers=e=>{
@@ -244,57 +278,41 @@ class Channel extends Component {
         const handelUploadData = e =>{
             const formData = new FormData();
             console.log(this.state.channelName,this.state.channelDescription)
-            if (this.state.uploadChannelName==='') {
+            if (this.state.uploadChannelName!=="") {
                 formData.append(
-                    "channelName",
-                    this.state.channelName
-                )
-            }
-            else {
-                formData.append(
-                    "channelName",
+                    "name",
                     this.state.uploadChannelName
                 )
                 this.setState({channelName:this.state.uploadChannelName})
             }
-            if (this.state.uploadChannelDescription ==='') {
+        
+            if (this.state.uploadChannelDescription !=="") {
                 formData.append(
-                    "channelDescription",
-                    this.state.channelDescription
-                )
-            }
-            else {
-                formData.append(
-                    "channelDescription",
+                    "description",
                     this.state.uploadChannelDescription
                 )
                 this.setState({channelDescription:this.state.uploadChannelDescription})
             }
-            if (this.state.selectFile ===null) {
+            if (this.state.selectFile !==null) {
                 formData.append(
-                    "image",
-                    this.state.image
-                )
-            }
-            else {
-                formData.append(
-                    "image",
+                    "avatar",
                     this.state.selectFile
                 )
                 this.setState({image:this.state.uploadImage})
             }
+            console.log(formData);
             axios.put(serverURL()+"channel/update-channel-inf/"+ this.props.match.params.channelId + "/", formData,TokenConfig())
             .then(res =>{
                 console.log(res);
+                window.location.reload();
             })
             .catch(err=>{
                 console.log(err);
-                this.ErrorDialogText = err.response.data?.error;
-                this.setState({setErrorDialog:true});
             });
             this.setState({buttonDisabled:true})
         }
         const handleImageUpload= event=>{
+            this.setState({changeImageFlag:true})
             this.setState({selectFile:event.target.files[0]})
             let reader = new FileReader();
         reader.onload = (event) => {
@@ -322,6 +340,7 @@ class Channel extends Component {
             .then(res =>{
                 console.log(res);
                 this.setState({channelMember:res.data?.data})
+                this.setState({channelMemberFlag:true})
             })
                 .catch(error => {
                     console.log(error);
@@ -329,6 +348,13 @@ class Channel extends Component {
         };
 
         const handleShowInfo=()=>{
+            this.setState({uploadChannelDescription:this.state.channelDescription})
+            this.setState({uploadChannelName:this.state.channelName})
+            this.setState({uploadImage:this.state.image})
+            this.setState({changeImageFlag:false})
+            this.setState({changeDescriptionFlag:false})
+            this.setState({changeNameFlag:false})
+            this.setState({buttonDisabled: true});
             if (this.state.showInfo === true){
                 this.setState({showInfo:false})
             }
@@ -345,25 +371,14 @@ class Channel extends Component {
             }
         };
         const handelInviteMember= e=>{
-            const formData = new FormData();
-                formData.append(
-                    "target_user",
-                    this.state.inviteUser
-                )
-                formData.append(
-                    "request_text",
-                    "درخواست عضویت در کانال" + this.state.channelName
-                )
-                formData.append(
-                    "request_type",
-                    "join_channel"
-                )
-                formData.append(
-                    "channel",
-                    this.props.match.params.channelId
-                )
-                    console.log("url is:",this.props.match.params.channelId);
-            axios.post(serverURL()+"channel/channel-subscriber/"+this.props.match.params.channelId + "/", formData,TokenConfig())
+
+            const data={
+                target_user : this.state.inviteUser,
+                request_text : "درخواست عضویت در کانال" + this.state.channelName,
+                request_type : "join_channel",
+                channel : this.props.match.params.channelId
+            };
+            axios.post(serverURL()+"request/applicant/", data,TokenConfig())
             .then(res =>{
                 console.log(res);
             })
@@ -375,12 +390,10 @@ class Channel extends Component {
 
         }
         const handelDeleteMember =e=>{
-            const formData = new FormData();
-                formData.append(
-                    "username",
-                    e.target.username
-                )
-            axios.delete(serverURL()+"channel/channel-subscriber/"+this.props.match.params.channelId+ "/", formData,TokenConfig())
+                const body={
+                    username : e.target.username,
+                }
+            axios.delete(serverURL()+"channel/channel-subscriber/"+this.props.match.params.channelId+ "/", {data:{body}},TokenConfig())
             .then(res =>{
                 console.log(res);
             })
@@ -453,7 +466,7 @@ class Channel extends Component {
                                                                         InputLabelProps={{style: {fontFamily: 'IRANSansWeb'}}}
                                                                         InputProps={{style:{fontFamily: 'IRANSansWeb'}}}
                                                                         id="name"
-                                                                        placeholder={this.state.uploadChannelName}
+                                                                        placeholder={this.state.channelName}
                                                                         label="نام جدید کانال"
                                                                         type="text"
                                                                         fullWidth
@@ -472,7 +485,7 @@ class Channel extends Component {
                                                                         id="explain"
                                                                         label="توضیحات"
                                                                         type="text"
-                                                                        placeholder={this.state.uploadChannelDescription}
+                                                                        placeholder={this.state.channelDescription}
                                                                         rows={3}
                                                                         fullWidth
                                                                         multiline
@@ -523,26 +536,26 @@ class Channel extends Component {
                                                         <DialogContentText id="alert-dialog-slide-description">
                                                         <Grid container className={classes.rootShowMembers} spacing={2} style={{padding:30,justifyContent: 'center'}}>
                                                             <Grid  item xs={12}>
-                                                                <Grid container justify="center" spacing={3}>
-                                                                    {this.state.channelMember.map((member) => (
-                                                                        <Grid xs={4} key={member.id} item  direction="row-reverse" justify="flex-start" alignItems="flex-start">
+                                                                <Grid container justify="center" spacing={2}>
+                                                                    {!this.state.channelMemberFlag ? null:this.state.channelMember.map((member) => (
+                                                                        <Grid xs={4} key={member.id} item container   spacing={2} direction="row-reverse" justify="flex-start" alignItems="flex-start">
                                                                             <Card  className={classes.paperShowMembers} >
                                                                                 <CardActionArea>
                                                                                     <CardMedia
                                                                                         component="img"
                                                                                         className={classes.mediaMembers}
-                                                                                         image={photo}
+                                                                                         src={member.avatar}
                                                                                     />
                                                                                 <CardContent>
-                                                                                    <text color="#725b53">{member.name}</text>
+                                                                                    <text color="#725b53">{member.username}</text>
                                                                                 </CardContent>
                                                                                 </CardActionArea>
                                                                                 <CardContent>
-                                                                                    <text color="#725b53">{member.user_role}</text>
+                                                                                    <text color="#725b53">{member.user_type}</text>
                                                                                 </CardContent>
                                                                                 <CardActionArea >
                                                                                     <Grid container justify="center" backgroundColor="#ff7063">
-                                                                                            <DeleteIcon onClick={handelDeleteMember} username={member.name} justify="right" fontSize="small"/>
+                                                                                            <DeleteIcon onClick={handelDeleteMember} username={member.username} justify="right" fontSize="small"/>
                                                                                     </Grid>
                                                                                 </CardActionArea>
                                                                             </Card>
@@ -644,10 +657,15 @@ class Channel extends Component {
                                                                 src={this.state.image}
                                                     />
                                                         <CardContent>
-                                                            <text color="#725b53">{this.state.channelDescription}</text>
-                                                        </CardContent>
-                                                        <CardContent>
-                                                            <text color="#725b53">{this.state.channelLink}</text>
+                                                        <Grid xs={12}>
+                                                                <text color="#725b53">{this.state.channelName}</text>
+                                                            <Grid xs={12}>
+                                                                <text color="#725b53">{this.state.channelDescription}</text>
+                                                            </Grid>
+                                                            <Grid xs={12}>
+                                                                <text color="#725b53">{this.state.channelLink}</text>
+                                                            </Grid>
+                                                        </Grid>
                                                         </CardContent>
                                                     </Card>
                                                     <ul/>
@@ -751,10 +769,12 @@ const useStyles = makeStyles((theme) => ({
     paperShowMembers: {
         backgroundColor:'#cccfc4',
         maxWidth: 150,
-        maxHeight: 200,
-        height: "auto",
-        width: "auto",
+        maxHeight: 250,
+        minWidth:150,
+        minHeight: 150,
         variant:"outlined",
+        margin:"10px",
+        spacing:"10px",
     },
     button: {
     margin: theme.spacing(1),

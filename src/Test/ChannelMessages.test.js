@@ -14,13 +14,13 @@ beforeEach(() => {
   container = document.createElement("div");
   document.body.appendChild(container);
 
-    global.console = {
-        log: jest.fn(),
-        error: jest.fn(),
-        warn: jest.fn(),
-        info: jest.fn(),
-        debug: jest.fn(),
-    };
+  global.console = {
+    log: jest.fn(),
+    error: jest.fn(),
+    warn: jest.fn(),
+    info: jest.fn(),
+    debug: jest.fn(),
+  };
 });
 
 afterEach(() => {
@@ -30,7 +30,7 @@ afterEach(() => {
   container = null;
 
   console = global.console;
-    global.console = console;
+  global.console = console;
 });
 
 it("ChannelMessages Test", () => {
@@ -58,7 +58,7 @@ it("ChannelMessages Test", () => {
       <hr class=\\"MuiDivider-root makeStyles-divider-5\\"><input style=\\"display: none;\\" id=\\"file\\" type=\\"file\\" multiple=\\"\\">
       <div class=\\"MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth\\">
         <div class=\\"MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl MuiInputBase-multiline MuiInput-multiline MuiInputBase-adornedEnd\\" style=\\"font-family: IRANSansWeb;\\"><textarea rows=\\"1\\" aria-invalid=\\"false\\" id=\\"standard-basic\\" placeholder=\\"پیام خود را وارد کنید\\" class=\\"MuiInputBase-input MuiInput-input MuiInputBase-inputMultiline MuiInput-inputMultiline MuiInputBase-inputAdornedEnd\\" style=\\"height: 0px; overflow: hidden;\\"></textarea><textarea aria-hidden=\\"true\\" class=\\"MuiInputBase-input MuiInput-input MuiInputBase-inputMultiline MuiInput-inputMultiline MuiInputBase-inputAdornedEnd\\" readonly=\\"\\" tabindex=\\"-1\\" style=\\"visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); width: 100%;\\"></textarea>
-          <div class=\\"MuiInputAdornment-root MuiInputAdornment-positionEnd\\"><label for=\\"file\\"><span class=\\"MuiButtonBase-root MuiIconButton-root\\" tabindex=\\"0\\" role=\\"button\\" aria-disabled=\\"false\\" aria-label=\\"upload picture\\" style=\\"padding: 0px; color: rgb(63, 64, 125);\\"><span class=\\"MuiIconButton-label\\"><svg class=\\"MuiSvgIcon-root\\" focusable=\\"false\\" viewBox=\\"0 0 24 24\\" aria-hidden=\\"true\\" style=\\"font-size: 35px;\\"><path d=\\"M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z\\"></path></svg></span><span class=\\"MuiTouchRipple-root\\"></span></span></label><button class=\\"MuiButtonBase-root MuiIconButton-root\\" tabindex=\\"0\\" type=\\"button\\" style=\\"padding: 0px; color: rgb(63, 64, 125);\\"><span class=\\"MuiIconButton-label\\"><svg class=\\"MuiSvgIcon-root\\" focusable=\\"false\\" viewBox=\\"0 0 24 24\\" aria-hidden=\\"true\\" style=\\"font-size: 35px;\\"><path d=\\"M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z\\"></path></svg></span><span class=\\"MuiTouchRipple-root\\"></span></button></div>
+          <div class=\\"MuiInputAdornment-root MuiInputAdornment-positionEnd\\"><label for=\\"file\\"><span class=\\"MuiButtonBase-root MuiIconButton-root\\" tabindex=\\"0\\" role=\\"button\\" aria-disabled=\\"false\\" aria-label=\\"upload picture\\" style=\\"margin: 2px; padding: 0px; color: rgb(63, 64, 125);\\"><span class=\\"MuiIconButton-label\\"><svg aria-hidden=\\"true\\" focusable=\\"false\\" data-prefix=\\"fas\\" data-icon=\\"file-upload\\" class=\\"svg-inline--fa fa-file-upload fa-w-12 \\" role=\\"img\\" xmlns=\\"http://www.w3.org/2000/svg\\" viewBox=\\"0 0 384 512\\" style=\\"color: rgb(63, 64, 125);\\"><path fill=\\"currentColor\\" d=\\"M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm65.18 216.01H224v80c0 8.84-7.16 16-16 16h-32c-8.84 0-16-7.16-16-16v-80H94.82c-14.28 0-21.41-17.29-11.27-27.36l96.42-95.7c6.65-6.61 17.39-6.61 24.04 0l96.42 95.7c10.15 10.07 3.03 27.36-11.25 27.36zM377 105L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1c0-6.3-2.5-12.4-7-16.9z\\"></path></svg></span><span class=\\"MuiTouchRipple-root\\"></span></span></label><button class=\\"MuiButtonBase-root MuiIconButton-root\\" tabindex=\\"0\\" type=\\"button\\" style=\\"margin: 2px; padding: 0px; color: rgb(63, 64, 125);\\"><span class=\\"MuiIconButton-label\\"><svg class=\\"MuiSvgIcon-root\\" focusable=\\"false\\" viewBox=\\"0 0 24 24\\" aria-hidden=\\"true\\" style=\\"font-size: 30px; transform: rotate(-180deg);\\"><path d=\\"M2.01 21L23 12 2.01 3 2 10l15 2-15 2z\\"></path></svg></span><span class=\\"MuiTouchRipple-root\\"></span></button></div>
         </div>
       </div>
     </div>"
@@ -84,7 +84,7 @@ it("ChannelMessages Test", () => {
             </div>
           </div>
         </div>
-      </div><input style=\\"display: none;\\" id=\\"file\\" type=\\"file\\" multiple=\\"\\"><button class=\\"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-fullWidth\\" tabindex=\\"0\\" type=\\"button\\"><span class=\\"MuiButton-label\\">پیوستن به کانال</span><span class=\\"MuiTouchRipple-root\\"></span></button>
+      </div><input style=\\"display: none;\\" id=\\"file\\" type=\\"file\\" multiple=\\"\\"><button class=\\"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-fullWidth\\" tabindex=\\"0\\" type=\\"button\\"><span class=\\"MuiButton-label\\">پیوستن به کانال<span class=\\"MuiButton-endIcon MuiButton-iconSizeMedium\\"><svg class=\\"MuiSvgIcon-root\\" focusable=\\"false\\" viewBox=\\"0 0 24 24\\" aria-hidden=\\"true\\"><path d=\\"M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z\\"></path></svg></span></span><span class=\\"MuiTouchRipple-root\\"></span></button>
     </div>"
   `);
 });

@@ -83,8 +83,8 @@ it("SignUpUser Test", () => {
                           <div class=\\"MuiInputAdornment-root makeStyles-InputAdornment-1 MuiInputAdornment-positionEnd\\"><svg class=\\"MuiSvgIcon-root\\" focusable=\\"false\\" viewBox=\\"0 0 24 24\\" aria-hidden=\\"true\\">
                               <path d=\\"M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z\\"></path>
                             </svg></div>
-                          <fieldset aria-hidden=\\"true\\" class=\\"PrivateNotchedOutline-root-11 MuiOutlinedInput-notchedOutline\\">
-                            <legend class=\\"PrivateNotchedOutline-legendLabelled-13\\"><span>نام&nbsp;*</span></legend>
+                          <fieldset aria-hidden=\\"true\\" class=\\"PrivateNotchedOutline-root-26 MuiOutlinedInput-notchedOutline\\">
+                            <legend class=\\"PrivateNotchedOutline-legendLabelled-28\\"><span>نام&nbsp;*</span></legend>
                           </fieldset>
                         </div>
                       </div>
@@ -97,8 +97,8 @@ it("SignUpUser Test", () => {
                           <div class=\\"MuiInputAdornment-root makeStyles-InputAdornment-1 MuiInputAdornment-positionEnd\\"><svg class=\\"MuiSvgIcon-root\\" focusable=\\"false\\" viewBox=\\"0 0 24 24\\" aria-hidden=\\"true\\">
                               <path d=\\"M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z\\"></path>
                             </svg></div>
-                          <fieldset aria-hidden=\\"true\\" class=\\"PrivateNotchedOutline-root-11 MuiOutlinedInput-notchedOutline\\">
-                            <legend class=\\"PrivateNotchedOutline-legendLabelled-13\\"><span>نام خانوادگی&nbsp;*</span></legend>
+                          <fieldset aria-hidden=\\"true\\" class=\\"PrivateNotchedOutline-root-26 MuiOutlinedInput-notchedOutline\\">
+                            <legend class=\\"PrivateNotchedOutline-legendLabelled-28\\"><span>نام خانوادگی&nbsp;*</span></legend>
                           </fieldset>
                         </div>
                       </div>
@@ -111,8 +111,8 @@ it("SignUpUser Test", () => {
                           <div class=\\"MuiInputAdornment-root makeStyles-InputAdornment-1 MuiInputAdornment-positionEnd\\"><svg class=\\"MuiSvgIcon-root\\" focusable=\\"false\\" viewBox=\\"0 0 24 24\\" aria-hidden=\\"true\\">
                               <path d=\\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z\\"></path>
                             </svg></div>
-                          <fieldset aria-hidden=\\"true\\" class=\\"PrivateNotchedOutline-root-11 MuiOutlinedInput-notchedOutline\\">
-                            <legend class=\\"PrivateNotchedOutline-legendLabelled-13\\"><span>نام کاربری&nbsp;*</span></legend>
+                          <fieldset aria-hidden=\\"true\\" class=\\"PrivateNotchedOutline-root-26 MuiOutlinedInput-notchedOutline\\">
+                            <legend class=\\"PrivateNotchedOutline-legendLabelled-28\\"><span>نام کاربری&nbsp;*</span></legend>
                           </fieldset>
                         </div>
                       </div>
@@ -125,8 +125,8 @@ it("SignUpUser Test", () => {
                           <div class=\\"MuiInputAdornment-root makeStyles-InputAdornment-1 MuiInputAdornment-positionEnd\\"><svg class=\\"MuiSvgIcon-root\\" focusable=\\"false\\" viewBox=\\"0 0 24 24\\" aria-hidden=\\"true\\">
                               <path d=\\"M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z\\"></path>
                             </svg></div>
-                          <fieldset aria-hidden=\\"true\\" class=\\"PrivateNotchedOutline-root-11 MuiOutlinedInput-notchedOutline\\">
-                            <legend class=\\"PrivateNotchedOutline-legendLabelled-13\\"><span>ایمیل&nbsp;*</span></legend>
+                          <fieldset aria-hidden=\\"true\\" class=\\"PrivateNotchedOutline-root-26 MuiOutlinedInput-notchedOutline\\">
+                            <legend class=\\"PrivateNotchedOutline-legendLabelled-28\\"><span>ایمیل&nbsp;*</span></legend>
                           </fieldset>
                         </div>
                       </div>
@@ -139,8 +139,8 @@ it("SignUpUser Test", () => {
                           <div class=\\"MuiInputAdornment-root makeStyles-InputAdornment-1 MuiInputAdornment-positionEnd\\"><svg class=\\"MuiSvgIcon-root\\" focusable=\\"false\\" viewBox=\\"0 0 24 24\\" aria-hidden=\\"true\\">
                               <path d=\\"M16 1H8C6.34 1 5 2.34 5 4v16c0 1.66 1.34 3 3 3h8c1.66 0 3-1.34 3-3V4c0-1.66-1.34-3-3-3zm-2 20h-4v-1h4v1zm3.25-3H6.75V4h10.5v14z\\"></path>
                             </svg></div>
-                          <fieldset aria-hidden=\\"true\\" class=\\"PrivateNotchedOutline-root-11 MuiOutlinedInput-notchedOutline\\">
-                            <legend class=\\"PrivateNotchedOutline-legendLabelled-13\\"><span>شماره تلفن&nbsp;*</span></legend>
+                          <fieldset aria-hidden=\\"true\\" class=\\"PrivateNotchedOutline-root-26 MuiOutlinedInput-notchedOutline\\">
+                            <legend class=\\"PrivateNotchedOutline-legendLabelled-28\\"><span>شماره تلفن&nbsp;*</span></legend>
                           </fieldset>
                         </div>
                       </div>
@@ -151,8 +151,8 @@ it("SignUpUser Test", () => {
                       <div class=\\"MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth\\"><label class=\\"MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined Mui-required Mui-required\\" data-shrink=\\"false\\" for=\\"password\\" id=\\"password-label\\" style=\\"font-family: IRANSansWeb;\\">رمز عبور<span aria-hidden=\\"true\\" class=\\"MuiFormLabel-asterisk MuiInputLabel-asterisk\\"> *</span></label>
                         <div class=\\"MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd\\" style=\\"font-family: IRANSansWeb;\\"><input aria-invalid=\\"false\\" autocomplete=\\"current-password\\" id=\\"password\\" name=\\"password\\" required=\\"\\" type=\\"password\\" class=\\"MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd\\" value=\\"\\">
                           <div class=\\"MuiInputAdornment-root makeStyles-InputAdornment-1 MuiInputAdornment-positionEnd\\"><button class=\\"MuiButtonBase-root MuiIconButton-root\\" tabindex=\\"0\\" type=\\"button\\" style=\\"padding: 0px; color: rgb(42, 179, 113);\\"><span class=\\"MuiIconButton-label\\"><svg class=\\"MuiSvgIcon-root\\" focusable=\\"false\\" viewBox=\\"0 0 24 24\\" aria-hidden=\\"true\\"><path d=\\"M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z\\"></path></svg></span><span class=\\"MuiTouchRipple-root\\"></span></button></div>
-                          <fieldset aria-hidden=\\"true\\" class=\\"PrivateNotchedOutline-root-11 MuiOutlinedInput-notchedOutline\\">
-                            <legend class=\\"PrivateNotchedOutline-legendLabelled-13\\"><span>رمز عبور&nbsp;*</span></legend>
+                          <fieldset aria-hidden=\\"true\\" class=\\"PrivateNotchedOutline-root-26 MuiOutlinedInput-notchedOutline\\">
+                            <legend class=\\"PrivateNotchedOutline-legendLabelled-28\\"><span>رمز عبور&nbsp;*</span></legend>
                           </fieldset>
                         </div>
                       </div>
@@ -165,8 +165,8 @@ it("SignUpUser Test", () => {
                           <div class=\\"MuiInputAdornment-root makeStyles-InputAdornment-1 MuiInputAdornment-positionEnd\\"><svg class=\\"MuiSvgIcon-root\\" focusable=\\"false\\" viewBox=\\"0 0 24 24\\" aria-hidden=\\"true\\">
                               <path d=\\"M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z\\"></path>
                             </svg></div>
-                          <fieldset aria-hidden=\\"true\\" class=\\"PrivateNotchedOutline-root-11 MuiOutlinedInput-notchedOutline\\">
-                            <legend class=\\"PrivateNotchedOutline-legendLabelled-13\\"><span>تایید رمز عبور&nbsp;*</span></legend>
+                          <fieldset aria-hidden=\\"true\\" class=\\"PrivateNotchedOutline-root-26 MuiOutlinedInput-notchedOutline\\">
+                            <legend class=\\"PrivateNotchedOutline-legendLabelled-28\\"><span>تایید رمز عبور&nbsp;*</span></legend>
                           </fieldset>
                         </div>
                       </div>

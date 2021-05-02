@@ -177,7 +177,7 @@ export default function MainPage() {
                   list1.size !== 0 ?  (list1.map((data)=>{
                     console.log(data)
                     return(
-                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
+                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} channelId={data.channelID} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
                     )
                     })): null
                   }

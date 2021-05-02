@@ -195,7 +195,7 @@ class GroupingChannel extends Component{
                           console.log(data)
                           console.log(data.name)
                                 return(
-                                <ChannelCard name={data.name} consultant_full_name={data.consultant_full_name} invite_link={data.invite_link}/>
+                                <ChannelCard name={data.name} consultant_full_name={data.consultant_full_name} invite_link={data.invite_link} channelID={data.channelID}/>
                               )
                             })) : (<div style={{color:'#3f407d',width: '100%',textAlign: 'center'}}>
                               <h2>

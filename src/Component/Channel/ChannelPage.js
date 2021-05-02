@@ -97,7 +97,7 @@ class Channel extends Component {
                 //console.log(result);
                 this.state.role = result.data.role;
                 //console.log(this.state.role);
-                this.inviteLink = result.data.invite_link;
+                //this.inviteLink = result.data.invite_link;
                 this.setState({});
             })
             .catch(error => {
@@ -110,7 +110,7 @@ class Channel extends Component {
                 console.log(result);
                 this.channelName = result.data.name;
                 this.channelDescription = result.data.description;
-               // this.inviteLink = result.data.invite_link;
+                this.inviteLink = result.data.invite_link;
                 this.setState({channelName:this.channelName});
                 this.setState({channelDescription:this.channelDescription});
             })
@@ -283,7 +283,7 @@ class Channel extends Component {
                 )
                 this.setState({image:this.state.uploadImage})
             }
-            axios.put(serverURL()+"/update-channel-inf/"+ this.props.match.params.channelId + "/", formData,TokenConfig())
+            axios.put(serverURL()+"channel/update-channel-inf/"+ this.props.match.params.channelId + "/", formData,TokenConfig())
             .then(res =>{
                 console.log(res);
             })
@@ -318,11 +318,14 @@ class Channel extends Component {
             else{
                 this.setState({showMembers:true})
             }
-            axios.get(serverURL() + "/channel/channel-subscriber/"+ this.props.match.params.channelId + "/",TokenConfig())
+            axios.get(serverURL() + "channel/channel-subscriber/"+ this.props.match.params.channelId + "/",TokenConfig())
             .then(res =>{
                 console.log(res);
                 this.setState({channelMember:res.data?.data})
             })
+                .catch(error => {
+                    console.log(error);
+                })
         };
 
         const handleShowInfo=()=>{
@@ -360,7 +363,7 @@ class Channel extends Component {
                     this.props.match.params.channelId
                 )
                     console.log("url is:",this.props.match.params.channelId);
-            axios.post(serverURL()+"/channel/channel-subscriber/"+this.props.match.params.channelId + "/", formData,TokenConfig())
+            axios.post(serverURL()+"channel/channel-subscriber/"+this.props.match.params.channelId + "/", formData,TokenConfig())
             .then(res =>{
                 console.log(res);
             })
@@ -377,7 +380,7 @@ class Channel extends Component {
                     "username",
                     e.target.username
                 )
-            axios.delete(serverURL()+"/channel/channel-subscriber/"+this.props.match.params.channelId+ "/", formData,TokenConfig())
+            axios.delete(serverURL()+"channel/channel-subscriber/"+this.props.match.params.channelId+ "/", formData,TokenConfig())
             .then(res =>{
                 console.log(res);
             })

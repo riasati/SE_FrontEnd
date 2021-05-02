@@ -73,8 +73,8 @@ it("SignIn Test", () => {
                           <div class=\\"MuiInputAdornment-root makeStyles-InputAdornment-1 MuiInputAdornment-positionStart\\"><svg class=\\"MuiSvgIcon-root\\" focusable=\\"false\\" viewBox=\\"0 0 24 24\\" aria-hidden=\\"true\\">
                               <path d=\\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z\\"></path>
                             </svg></div>
-                          <fieldset aria-hidden=\\"true\\" class=\\"PrivateNotchedOutline-root-9 MuiOutlinedInput-notchedOutline\\">
-                            <legend class=\\"PrivateNotchedOutline-legendLabelled-11\\"><span>نام کاربری یا ایمیل&nbsp;*</span></legend>
+                          <fieldset aria-hidden=\\"true\\" class=\\"PrivateNotchedOutline-root-24 MuiOutlinedInput-notchedOutline\\">
+                            <legend class=\\"PrivateNotchedOutline-legendLabelled-26\\"><span>نام کاربری یا ایمیل&nbsp;*</span></legend>
                           </fieldset>
                         </div>
                       </div>
@@ -85,8 +85,8 @@ it("SignIn Test", () => {
                       <div class=\\"MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal MuiFormControl-fullWidth\\" errorstyle=\\"[object Object]\\" errortext=\\"[object Object]\\"><label class=\\"MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined Mui-required Mui-required\\" data-shrink=\\"false\\" for=\\"password\\" id=\\"password-label\\" style=\\"font-family: IRANSansWeb;\\">رمز عبور<span aria-hidden=\\"true\\" class=\\"MuiFormLabel-asterisk MuiInputLabel-asterisk\\"> *</span></label>
                         <div class=\\"MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd\\" style=\\"font-family: IRANSansWeb;\\"><input aria-invalid=\\"false\\" autocomplete=\\"current-password\\" id=\\"password\\" name=\\"password\\" required=\\"\\" type=\\"password\\" class=\\"MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd\\" value=\\"\\">
                           <div class=\\"MuiInputAdornment-root makeStyles-InputAdornment-1 MuiInputAdornment-positionStart\\"><button class=\\"MuiButtonBase-root MuiIconButton-root\\" tabindex=\\"0\\" type=\\"button\\" style=\\"padding: 0px; color: rgb(42, 179, 113);\\" aria-label=\\"toggle password visibility\\"><span class=\\"MuiIconButton-label\\"><svg class=\\"MuiSvgIcon-root\\" focusable=\\"false\\" viewBox=\\"0 0 24 24\\" aria-hidden=\\"true\\"><path d=\\"M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z\\"></path></svg></span><span class=\\"MuiTouchRipple-root\\"></span></button></div>
-                          <fieldset aria-hidden=\\"true\\" class=\\"PrivateNotchedOutline-root-9 MuiOutlinedInput-notchedOutline\\">
-                            <legend class=\\"PrivateNotchedOutline-legendLabelled-11\\"><span>رمز عبور&nbsp;*</span></legend>
+                          <fieldset aria-hidden=\\"true\\" class=\\"PrivateNotchedOutline-root-24 MuiOutlinedInput-notchedOutline\\">
+                            <legend class=\\"PrivateNotchedOutline-legendLabelled-26\\"><span>رمز عبور&nbsp;*</span></legend>
                           </fieldset>
                         </div>
                       </div>

@@ -28,7 +28,7 @@ it("ChannelCardList Test", () => {
   expect(pretty(container.innerHTML)).toMatchInlineSnapshot(`
     "<ul class=\\"MuiList-root MuiList-dense MuiList-padding MuiList-subheader\\">
       <li class=\\"MuiListSubheader-root MuiListSubheader-sticky\\">
-        <h2 class=\\"MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom MuiTypography-alignLeft\\" style=\\"font-family: IRANSansWeb; color: rgb(63, 64, 125);\\">Hello</h2>
+        <h6 class=\\"MuiTypography-root MuiTypography-h6 MuiTypography-gutterBottom MuiTypography-alignLeft\\">Hello</h6>
       </li>
     </ul>"
   `);

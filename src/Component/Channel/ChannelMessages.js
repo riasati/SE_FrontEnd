@@ -488,6 +488,7 @@ class ChannelMessages extends Component{
             axios.post(serverURL() + "channel/subscription/",{"invite_link":this.props.inviteLink},TokenConfig())
                 .then(result => {
                    // console.log(result);
+                    window.location.reload();
                 })
                 .catch(error => {
                     console.log(error);

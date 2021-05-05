@@ -13,7 +13,8 @@ import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import Material_RTL from "../../RTL/Material_RTL";
 import DeleteIcon from '@material-ui/icons/Delete';
 import { FaCheck } from 'react-icons/fa';
-
+import { IoHourglassOutline } from 'react-icons/io5';
+import LoadingOverlay from 'react-loading-overlay';
 
 
 import {
@@ -53,6 +54,10 @@ class ConsultantProfile extends Component {
             imageFile:'',
             changeAvatarFlag:false,
             getRequestFlag:false,
+            deleteRequestInviteIcon:false,
+            acceptRequestInviteIcon:false,
+            editing:false,
+            uploadFileFlag:false,
         }
     }
 
@@ -100,6 +105,18 @@ class ConsultantProfile extends Component {
             
 
     }
+    handelRequest=e=>{
+        axios.get(serverURL() + "request/responder/", TokenConfig())
+            .then(res => {
+                console.log(res.data);
+                this.setState({requests: res.data})
+                console.log(this.state.requests)
+                this.setState({getRequestFlag:true})
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
     handelAccept=e=>{
         const body={
             id : e.target.id,
@@ -142,6 +159,7 @@ class ConsultantProfile extends Component {
         const [file, setFile] = this.props.isFileLoaded;
         const [ image , setImage] = this.props.image;
         const onFileChange = event => {
+            this.setState({uploadFileFlag:false})
             this.setState({buttonDisable: false})
             setFile(true);
             let reader = new FileReader();
@@ -156,15 +174,36 @@ class ConsultantProfile extends Component {
             console.log(event.target.files[0])
             setFile(true);
         };
+        const handelRequest=e=>{
+            axios.get(serverURL() + "request/responder/", TokenConfig())
+                .then(res => {
+                    console.log(res.data);
+                    this.setState({requests: res.data})
+                    console.log(this.state.requests)
+                    this.setState({getRequestFlag:true})
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        }
         const handleEliminateFileClick = e => {
             this.setState({avatar: null});
             setFile(false);
         };
         const handleRequest=e=>{
-            
+            axios.get(serverURL() + "request/responder/", TokenConfig())
+            .then(res => {
+                console.log(res.data);
+                this.setState({requests: res.data})
+            })
+            .catch(err => {
+                console.log(err)
+            })
         }
         
         const handleClick = e => {
+            this.setState({editing:true});
+            this.setState({uploadFileFlag:true})
             const formData = new FormData(); 
             formData.append( 
               "username", 
@@ -201,6 +240,9 @@ class ConsultantProfile extends Component {
             axios.put(serverURL() + "profile/",formData,TokenConfig())
             .then(res => {
                 console.log(res)
+                setTimeout(()=>{
+                    this.setState({editing:false});
+                    },1000)
             })
             .catch(err => {
                 console.log(err)
@@ -213,10 +255,12 @@ class ConsultantProfile extends Component {
             <Container component="main" maxWidth="lg" className={classes.container}>
                 <CssBaseline/>
                 <div>
+                <LoadingOverlay active={this.state.editing} spinner text={""}>
                     <div className={classes.paper}>
                     <Material_RTL>
                         <RTL>
                             <Grid container spacing={1}>
+                            
                                 <Grid item xs={12} sm={12} md={6} lg={6}>
                                     <Grid>
                                         <Paper style={{backgroundColor: '#f3f7fa',}}>
@@ -255,7 +299,7 @@ class ConsultantProfile extends Component {
                                                         </IconButton>
                                                     </Tooltip>
                                                 </label>
-                                                {file && typeof (this.state.avatar.name) !== "undefined" ?
+                                                {file && typeof (this.state.avatar.name) !== "undefined" && !this.state.uploadFileFlag ?
                                                     (
                                                         <Tooltip title={<span style={{
                                                             fontFamily: 'IRANSansWeb',
@@ -469,6 +513,7 @@ class ConsultantProfile extends Component {
                                             </Grid>
                                                 <Grid xs={1} item   justify="flex-end" >
                                                     <Button id={request.id} onClick={()=>{
+                                                        this.setState({acceptRequestInviteIcon:true});
                                                         const body={
                                                             id : request.id,
                                                             accept : true,
@@ -477,9 +522,11 @@ class ConsultantProfile extends Component {
                                                         axios.post(serverURL() +"request/responder/",body,TokenConfig()).
                                                         then(res=>{
                                                             console.log(res)
-                                                            window.location.reload()
+                                                            setTimeout(()=>{
+                                                                this.setState({acceptRequestInviteIcon:false});
+                                                                },1000)
+                                                            {handelRequest()}
                                                         }
-
                                                         )
                                                         .catch(err=>{
                                                             console.log(err)
@@ -491,11 +538,12 @@ class ConsultantProfile extends Component {
                                                         
                                                         >
                                                         {console.log("ID is: ",request.id)}
-                                                        <FaCheck  fontSize="150%" className={classes.InputAdornment}/>
+                                                        {this.state.acceptRequestInviteIcon ? <IoHourglassOutline  fontSize="150%" className={classes.InputAdornment}/> :<FaCheck  fontSize="150%" className={classes.InputAdornment}/>}
                                                         </Button>
                                                 </Grid>
                                                 <Grid xs={2} item  justify="flex-start" >
                                                 <Button id={request.id} onClick={() => {
+                                                    this.setState({deleteRequestInviteIcon:true});
                                                     const body={
                                                                 id : request.id,
                                                                 accept : false,
@@ -504,30 +552,33 @@ class ConsultantProfile extends Component {
                                                             axios.post(serverURL() +"request/responder/",body,TokenConfig()).
                                                             then(res=>{
                                                                 console.log(res)
-                                                                window.location.reload()
+                                                                setTimeout(()=>{
+                                                                this.setState({deleteRequestInviteIcon:false});
+                                                                },1000)
+                                                                {handelRequest()}
                                                             }
-
                                                             )
                                                             .catch(err=>{
                                                                 console.log(err)
                                                             }
-
                                                             )
                                                     }} 
                                                     style={{color:"secondary",marginRight:"25px"}}
                                                     
                                                     >
-                                                    <DeleteIcon  fontSize="100%" className={classes.InputAdornment}/>
+                                                    {this.state.deleteRequestInviteIcon ? <IoHourglassOutline  fontSize="150%" className={classes.InputAdornment}/> :<DeleteIcon  fontSize="100%" className={classes.InputAdornment}/>}
                                                     </Button>
                                                 </Grid>
                                         </Grid>
                                         
                                     ))}
                                 </Grid>
+                                
                             </Grid>
                         </RTL>
                     </Material_RTL>
                     </div>
+                    </LoadingOverlay>
                 </div>
             </Container>
         )

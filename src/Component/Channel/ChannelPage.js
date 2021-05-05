@@ -44,9 +44,10 @@ import { MdPhoto } from "react-icons/md";
 import { FcInvite } from "react-icons/fc";
 import { IoExitOutline } from "react-icons/io5";
 import { RiMailSendLine } from "react-icons/ri";
+import { FiMail } from "react-icons/fi";
 
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 import DeleteIcon from '@material-ui/icons/Delete';
 import photo from '../../../src/Resource/11.jpg';
 import {ChevronLeft} from "@material-ui/icons";
@@ -88,6 +89,9 @@ class Channel extends Component {
             changeNameFlag:false,
             changeDescriptionFlag:false,
             changeImageFlag:false,
+            sendInviteIcon:false,
+            deleting:false,
+            editing:false,
         };
         this.initialization();
     }
@@ -269,15 +273,22 @@ class Channel extends Component {
     render() {
         const classes = this.props.classes;
         const handelGetMembers=e=>{
-            axios.get(serverURL() + "/channel/channel-subscriber/"+ this.props.match.params.channelId + "/",TokenConfig())
+            this.setState({deleting:true})
+            axios.get(serverURL() + "channel/channel-subscriber/"+ this.props.match.params.channelId + "/",TokenConfig())
             .then(res =>{
                 console.log(res);
+                setTimeout(()=>{
+                    this.setState({deleting:false});
+                    },200)
                 this.setState({channelMember:res.data?.data})
+            })
+            .catch(error=>{
+                console.log(error);
             })
         }
         const handelUploadData = e =>{
+            this.setState({editing:true});
             const formData = new FormData();
-            console.log(this.state.channelName,this.state.channelDescription)
             if (this.state.uploadChannelName!=="") {
                 formData.append(
                     "name",
@@ -304,12 +315,16 @@ class Channel extends Component {
             axios.put(serverURL()+"channel/update-channel-inf/"+ this.props.match.params.channelId + "/", formData,TokenConfig())
             .then(res =>{
                 console.log(res);
-                window.location.reload();
+                setTimeout(()=>{
+                    this.setState({editing:false});
+                    handleShowInfo()
+                    },200)
             })
             .catch(err=>{
                 console.log(err);
             });
             this.setState({buttonDisabled:true})
+            
         }
         const handleImageUpload= event=>{
             this.setState({changeImageFlag:true})
@@ -329,7 +344,7 @@ class Channel extends Component {
                 this.setState({editChannel:false})
             }
         };
-        const handleShowMembers=()=>{
+        const handleShowMembers =()=>{
             if (this.state.showMembers === true){
                 this.setState({showMembers:false})
             }
@@ -370,8 +385,8 @@ class Channel extends Component {
                 this.setState({consultantSubscribe:false})
             }
         };
-        const handelInviteMember= e=>{
-
+        const handelInviteMember = e=>{
+            this.setState({sendInviteIcon:true});
             const data={
                 target_user : this.state.inviteUser,
                 request_text : "درخواست عضویت در کانال" + this.state.channelName,
@@ -381,29 +396,18 @@ class Channel extends Component {
             axios.post(serverURL()+"request/applicant/", data,TokenConfig())
             .then(res =>{
                 console.log(res);
+                setTimeout(()=>{
+                    this.setState({sendInviteIcon:false});
+                    },1000)
             })
             .catch(err=>{
                 console.log(err);
                 this.ErrorDialogText = err.response.data?.error;
                 this.setState({setErrorDialog:true});
+                this.setState({sendInviteIcon:false});
             });
 
-        }
-        const handelDeleteMember =e=>{
-                const body={
-                    username : e.target.username,
-                }
-            axios.delete(serverURL()+"channel/channel-subscriber/"+this.props.match.params.channelId+ "/", {data:{body}},TokenConfig())
-            .then(res =>{
-                console.log(res);
-            })
-            .catch(err=>{
-                console.log(err);
-                this.ErrorDialogText = err.response.data?.error;
-                this.setState({setErrorDialog:true});
-            });
-            const newMembers=this.state.countries.filter(element => element.username !== e.target.username);
-            this.setState({showMembers: newMembers})
+            
         }
         return(
             <LoadingOverlay active={this.state.loading} spinner text={""}>
@@ -420,6 +424,7 @@ class Channel extends Component {
                                                 aria-describedby="alert-dialog-slide-description"
                                                 onClose={handleShowInfo}
                                             >
+                                            <LoadingOverlay active={this.state.editing} spinner text={""}>
                                                 <CardContent id="alert-dialog-slide-title"  component="h1" variant="h5" style={{color: "#494949",justifyContent:'right'}}>
                                                     <Grid xs={12} container spacing={1}  direction="column" justify="flex-start" alignItems="center">
                                                      <Grid xs={9} item  justify="center">
@@ -512,7 +517,7 @@ class Channel extends Component {
                                                     </Card>
                                                     </DialogContentText>
                                                 </DialogContent>
-
+                                                </LoadingOverlay>
                                             </Dialog>
 
                                             <Dialog
@@ -521,7 +526,7 @@ class Channel extends Component {
                                                     aria-describedby="alert-dialog-slide-description"
                                                     onClose={handleShowMembers}
                                                 >
-                                                    
+                                                    <LoadingOverlay active={this.state.deleting} spinner text={""}>
                                                      <CardContent id="alert-dialog-slide-title"  component="h1" variant="h5" style={{fontFamily: 'IRANSansWeb',color: "#494949",justifyContent:'right'}}>
                                                          <Grid xs={12} container spacing={1}  direction="column" justify="flex-start" alignItems="center">
                                                             <Grid xs={9} item  justify="center">
@@ -534,6 +539,7 @@ class Channel extends Component {
                                                         </CardContent>
                                                         <DialogContent>
                                                         <DialogContentText id="alert-dialog-slide-description">
+                                                        <div style={{minHeight:'360px',minWidth:"550px"}}>
                                                         <Grid container className={classes.rootShowMembers} spacing={2} style={{padding:30,justifyContent: 'center'}}>
                                                             <Grid  item xs={12}>
                                                                 <Grid container justify="center" spacing={2}>
@@ -544,19 +550,36 @@ class Channel extends Component {
                                                                                     <CardMedia
                                                                                         component="img"
                                                                                         className={classes.mediaMembers}
-                                                                                         src={member.avatar}
+                                                                                        src={member.avatar !== null ? member.avatar : photo}
                                                                                     />
                                                                                 <CardContent>
                                                                                     <text color="#725b53">{member.username}</text>
                                                                                 </CardContent>
                                                                                 </CardActionArea>
                                                                                 <CardContent>
-                                                                                    <text color="#725b53">{member.user_type}</text>
+                                                                                    <text color="#725b53">{member.user_role}</text>
                                                                                 </CardContent>
                                                                                 <CardActionArea >
-                                                                                    <Grid container justify="center" backgroundColor="#ff7063">
-                                                                                            <DeleteIcon onClick={handelDeleteMember} username={member.username} justify="right" fontSize="small"/>
-                                                                                    </Grid>
+                                                                                <button style={{width:"100%",height:"100%",backgroundColor:'#cccfc4'}} onClick={()=>{
+                                                                                                console.log("hello")
+                                                                                                const body={
+                                                                                                        username : member.username,
+                                                                                                    }
+                                                                                                console.log(TokenConfig())
+                                                                                                axios.delete(serverURL()+"channel/channel-subscriber/"+this.props.match.params.channelId+ "/",{headers:{Authorization : TokenConfig().headers.Authorization} ,data:{username : member.username}})
+                                                                                                .then(res =>{
+                                                                                                    console.log(res);
+                                                                                                    handelGetMembers()
+                                                                                                })
+                                                                                                .catch(err=>{
+                                                                                                    console.log(err);
+                                                                                                    this.ErrorDialogText = err.response.data?.error;
+                                                                                                    this.setState({setErrorDialog:true});
+                                                                                                });
+                                                                                            }
+                                                                                            }>
+                                                                                            <DeleteIcon   justify="right" fontSize="small"/>
+                                                                                            </button>
                                                                                 </CardActionArea>
                                                                             </Card>
                                                                         </Grid>
@@ -564,11 +587,13 @@ class Channel extends Component {
                                                                 </Grid>
                                                             </Grid>
                                                         </Grid>
+                                                        </div>
                                                         </DialogContentText>
                                                         </DialogContent>
                                                         <Button onClick={handleShowMembers}  color="primary" variant="contained" style={{ width:'100%',height:'35px',backgroundColor:'#2c2d22',fontFamily: 'IRANSansWeb'}}>
                                                         <IoExitOutline fontSize="large"  /><text style={{margin:'1%'}}>{"بستن"}</text>
                                                         </Button>
+                                                    </LoadingOverlay>
                                                 </Dialog>
                                     <ErrorDialog open={this.state.setErrorDialog} errorText={this.ErrorDialogText} handleParentState={this.handleStateErrorDialog} />
                                     <Grid container item sm={12}>
@@ -647,6 +672,7 @@ class Channel extends Component {
                                                     {/*</ChannelMessages>*/}
                                                 </Paper>
                                             </Grid>
+                                            
                                             <Grid item sm={this.state.smOfLeft} xs={12} className={classes.leftSection}>
                                                 <Slide direction="left" in={this.state.openDrawerLeft} mountOnEnter unmountOnExit>
                                                 <Paper className={classes.paper}  >
@@ -658,7 +684,7 @@ class Channel extends Component {
                                                     />
                                                         <CardContent>
                                                         <Grid xs={12}>
-                                                                <text color="#725b53">{this.state.channelName}</text>
+                                                                <text color="#725b53">{this.state.channelName}{console.log("this.props.role :",this.state.role)}</text>
                                                             <Grid xs={12}>
                                                                 <text color="#725b53">{this.state.channelDescription}</text>
                                                             </Grid>
@@ -669,14 +695,16 @@ class Channel extends Component {
                                                         </CardContent>
                                                     </Card>
                                                     <ul/>
+                                                    {(this.state.role === "consultant") && !(this.state.role === "subscriber") ? 
+                                                    <Grid item >
                                                     <div style={{ width: "100%",display: "flex",flexDirection:"row", justifyContent: "space-evenly",alignItems: "center",marginBottom:"5px"}}  >
                                                         <Grid item xs={17}>
-                                                        <Button width= "100%" variant="contained" color={'primary'}  onClick={handleShowInfo} endIcon={<FiEdit/>} style={{fontFamily: 'IRANSansWeb',fontSize:"small"}}>ویرایش  کانال</Button>
+                                                        <Button width= "100%" variant="contained" color={'primary'}  onClick={handleShowInfo} endIcon={<FiEdit/>} style={{fontFamily: 'IRANSansWeb',fontSize:"10px"}}>ویرایش  کانال</Button>
                                                         </Grid>
                                                     </div>
                                                     <div style={{ width: "100%",display: "flex",flexDirection:"row", justifyContent: "space-evenly",alignItems: "center",marginBottom:"5px"}}  >
-                                                        <Button variant="contained" color={'primary'}  onClick={handleShowMembers} endIcon={<BsFillPeopleFill />} style={{fontFamily: 'IRANSansWeb',fontSize:"small",margin:"1%"}}>ویرایش اعضا</Button>
-                                                        <Button variant="contained" color={'primary'}  onClick={handleConsultantApplySubscribe} style={{fontFamily: 'IRANSansWeb',fontSize:"small",margin:"1%"}}  endIcon={<FcInvite/>}>{"دعوت عضو"}</Button>
+                                                        <Button variant="contained" color={'primary'}  onClick={handleShowMembers} endIcon={<BsFillPeopleFill />} style={{fontFamily: 'IRANSansWeb',fontSize:"10px",margin:"1%"}}>ویرایش اعضا</Button>
+                                                        <Button variant="contained" color={'primary'}  onClick={handleConsultantApplySubscribe} style={{fontFamily: 'IRANSansWeb',fontSize:"10px",margin:"1%"}}  endIcon={<FcInvite/>}>{"دعوت عضو"}</Button>
                                                     </div>
                                                     <Collapse in={this.state.consultantSubscribe} timeout="auto" unmountOnExit>
                                                         <TextField fullWidth
@@ -694,12 +722,14 @@ class Channel extends Component {
                                                                                //    onClick={handleSendIcon}
                                                                                    // onMouseDown={this.handleMouseDownPassword}
                                                                                >
-                                                                                   <RiMailSendLine onClick={handelInviteMember} style={{ fontSize: 25 }} />
+                                                                                   {this.state.sendInviteIcon ? <RiMailSendLine style={{ fontSize: 25 }}/> : <FiMail onClick={handelInviteMember} style={{ fontSize: 25 }} />}
                                                                                </IconButton>
                                                                            </InputAdornment>)
                                                                    }}
                                                         />
                                                     </Collapse>
+                                                    </Grid>
+                                                    :  null }
                                                     <Button style={{color:"#3f407d",alignSelf:"baseline",marginTop:"5px"}}>
                                                         <Typography variant={"body2"} align={"left"} style={{alignSelf: "baseline"}}>ترک کانال</Typography>
                                                     </Button>

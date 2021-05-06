@@ -11,8 +11,8 @@ import {Link} from 'react-router-dom';
 export default function MainListItems(props){
     const classes = useStyles();
   return(
-  <div style={{color: '#3f407d',}}>
-      <Link to="/Dashboard" style={{color: '#3f407d', textDecoration: 'none',}}>
+  <div>
+      <Link to="/Dashboard" style={{textDecoration: 'none',}}>
     <ListItem button className={classes.ListItem}>
       <ListItemIcon>
       <FontAwesomeIcon icon={faThLarge}  className={classes.FontIcon}/>
@@ -28,7 +28,7 @@ export default function MainListItems(props){
       <ListItemText primary="دسته بندی" />
     </ListItem>
     </Link>
-    <Link to="/EditProfile" style={{color: '#3f407d', textDecoration: 'none',}}>
+    <Link to="/EditProfile" style={{textDecoration: 'none',}}>
     <ListItem button className={classes.ListItem}>
       <ListItemIcon>
       <FontAwesomeIcon icon={faUser}  className={classes.FontIcon}/>
@@ -36,7 +36,7 @@ export default function MainListItems(props){
       <ListItemText primary=" ویرایش اطلاعات" />
     </ListItem>
     </Link>
-    <Link to="/Channels" style={{color: '#3f407d', textDecoration: 'none',}}>
+    <Link to="/Channels" style={{textDecoration: 'none',}}>
     <ListItem button className={classes.ListItem}>
       <ListItemIcon>
       <FontAwesomeIcon icon={faBullhorn}  className={classes.FontIcon}/>
@@ -49,19 +49,16 @@ export default function MainListItems(props){
 )};
 const useStyles = makeStyles((theme) => ({
     ListItem:{
-        color: '#3f407d',
+        color: '#3f407d !important',
         transition: 'all 0.5s ease-in',
         "&:hover": {
             backgroundColor: '#3aacd8' ,
-            color: 'white'
+            color: '#fff !important',
         },
     },
     FontIcon:{
-        color: '#002b36',
+        color: 'inherit',
         fontSize:'25px',
-        "&:hover": {
-            color: 'white'
-        },
     },
 }))
 export const SecondaryListItems = (

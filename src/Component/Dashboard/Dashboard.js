@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import Box from '@material-ui/core/Box';
@@ -16,13 +16,13 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import {SecondaryListItems} from './listItems';
+import { SecondaryListItems } from './listItems';
 import MainListItems from './listItems';
 import Material_RTL from "../RTL/Material_RTL";
 import RTL from '../RTL/M_RTL';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faUserCircle, faChevronRight} from '@fortawesome/free-solid-svg-icons';
-import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUserCircle, faChevronRight, faUser, faSignOutAlt,faTimesCircle,faPowerOff } from '@fortawesome/free-solid-svg-icons';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import EditProfile from '../User/Profile/EditProfile';
 import Profile from '../User/Profile/Profile';
 import MainPage from '../MainPage/MainPage';
@@ -39,7 +39,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
-
+import {signOut} from '../User/SignOut';
+import { FaDivide } from 'react-icons/fa';
+import Collapse from '@material-ui/core/Collapse';
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="down" ref={ref} {...props} />;
 });
@@ -52,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
         },
         '.MuiListItemIcon-root': {
             justifyContent: 'center',
+            color: 'inherit',
         },
         '.fa-th-large': {
             marginLeft: '30%',
@@ -68,12 +71,12 @@ const useStyles = makeStyles((theme) => ({
         '.MuiToolbar-root': {
             backgroundColor: '#3aadd9',
         },
-        '.MuiDialog-paperWidthSm': {
-            top: '35px !important',
-            borderRadius: '7px !important',
-            position: 'absolute',
-            left: '1%',
-        },
+        // '.MuiDialog-paperWidthSm': {
+        //     top: '35px !important',
+        //     borderRadius: '7px !important',
+        //     position: 'absolute',
+        //     left: '1%',
+        // },
     },
     root: {
         display: 'flex',
@@ -179,11 +182,33 @@ const useStyles = makeStyles((theme) => ({
     dialog: {
         textAlign: 'right',
         fontFamily: 'IRANSansWeb',
+        position: 'absolute',
+        left: '0%',
+        top: '33px',
+        width: '290px',
+        height: '290px',
+        overflow: 'hidden',
+        borderRadius: '30px',
     },
     link: {
         textDecoration: 'none',
         color: '#3f407d',
-    }
+    },
+    divInDialog: {
+        fontFamily: 'IRANSansWeb',
+        display: 'grid',
+        gridTemplateColumns: '80% 20%',
+        padding: '20px 0px',
+        transition: 'all 0.5s ease-in',
+        "&:hover": {
+            backgroundColor: 'rgba(58,173,217,1)',
+            color: '#fff',
+        },
+    },
+    buttonSignout: {
+        fontFamily: 'IRANSansWeb',
+        justifyContent: 'center',
+    },
 }));
 
 export default function Dashboard(props) {
@@ -193,9 +218,11 @@ export default function Dashboard(props) {
     const [lastname, setLastname] = useState('');
     const [username, setUsername] = useState('');
     const [avatar, setAvatar] = useState('');
+    const [userType, setUserType] = useState('');
 
     const [title, setTitle] = useState('');
     const [openDialog, setOpenDialog] = React.useState(false);
+    const [openSignOutDialog, setOpenSignOutDialog] = React.useState(false);
 
     const handleClickOpen = () => {
         setOpenDialog(true);
@@ -204,12 +231,22 @@ export default function Dashboard(props) {
     const handleClose = () => {
         setOpenDialog(false);
     };
+
+    const handleClickOpenSignOutDialog = () => {
+        setOpenSignOutDialog(true);
+        setOpenDialog(false);
+    };
+
+    const handleCloseOpenSignOutDialog = () => {
+        setOpenSignOutDialog(false);
+    };
     const handleDrawerOpen = () => {
         setOpen(true);
     };
     const handleDrawerClose = () => {
         setOpen(false);
     };
+    
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
     useEffect(() => {
         axios.get(serverURL() + "profile/", TokenConfig())
@@ -218,6 +255,7 @@ export default function Dashboard(props) {
                 setLastname(res.data.last_name);
                 setUsername(res.data.username);
                 setAvatar(res.data.avatar)
+                setUserType(res.data.user_type)
             })
             .catch(err => {
                 console.log(err)
@@ -227,7 +265,7 @@ export default function Dashboard(props) {
         <Material_RTL>
             <RTL>
                 <div className={classes.root}>
-                    <CssBaseline/>
+                    <CssBaseline />
                     <Router>
                         <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
                             <Toolbar className={classes.toolbar}>
@@ -238,84 +276,120 @@ export default function Dashboard(props) {
                                     onClick={handleDrawerOpen}
                                     className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
                                 >
-                                    <MenuIcon/>
+                                    <MenuIcon />
                                 </IconButton>
                                 <Typography component="h1" variant="h6" noWrap className={classes.title}>
 
                                     {/* {props.title} */}
                                 </Typography>
-                                <div>
+                                <div >
                                     {avatar !== null ?
                                         <div>
                                             <Button onClick={handleClickOpen}>
-                                                <img src={avatar} className={classes.avatar}/>
+                                                <img src={avatar} className={classes.avatar} />
                                             </Button>
-                                            <Dialog
-                                                open={openDialog}
-                                                TransitionComponent={Transition}
-                                                keepMounted
-                                                onClose={handleClose}
-                                                aria-labelledby="alert-dialog-slide-title"
-                                                aria-describedby="alert-dialog-slide-description"
-                                                className={classes.dialog}
-
-                                            >
-                                                <DialogContent>
-                                                    <DialogContentText id="alert-dialog-slide-description">
-                                                        <div className={classes.dialog}>
-                                                            <div style={{
-                                                                display: 'grid',
-                                                                gridTemplateColumns: '75% 25%',
-                                                                justifyContent: 'center',
-                                                                alignItems: 'center',
-                                                                width: '250px',
-                                                            }}>
-                                                                <div>
-                                                                    <span
-                                                                        style={{fontSize: '20px'}}>{firstname}</span>&nbsp;
-                                                                    <span
-                                                                        style={{fontSize: '20px'}}>{lastname}</span><br/>
-                                                                    <span>@{username}</span>
-                                                                </div>
-                                                                <div style={{
-                                                                    justifyContent: 'end',
-                                                                    alignItems: 'center',
-                                                                    display: 'grid',
-                                                                }}>
-                                                                    <img src={avatar} className={classes.avatar}/>
-                                                                </div>
-                                                            </div>
-                                                            <hr/>
-                                                            <br/>
-                                                            <div>
-                                                            <Button onClick={handleClose} style={{fontFamily: 'IRANSansWeb'}}>
-                                                                <Link to={"/Profile/" + username}
-                                                                      className={classes.link}>
-                                                                    {'پروفایل'}&nbsp;&nbsp;&nbsp;
-                                                                    <i className="fas fa-user"
-                                                                       style={{color: '#3f407d', margin: '0'}}></i>
-                                                                </Link>
-                                                            </Button>
-                                                            </div>
-                                                            <br/>
-                                                            <div>
-                                                            <Button onClick={handleClose} style={{fontFamily: 'IRANSansWeb'}}>
-                                                                <Link to="/signIn" className={classes.link} onClick={handleClickOpen}>
-                                                                    {'خروج'}&nbsp;&nbsp;&nbsp;
-                                                                    <i className="fas fa-sign-out-alt"
-                                                                       style={{color: '#3f407d'}}></i>
-                                                                </Link>
-                                                            </Button>
-                                                            </div>
-                                                        </div>
-                                                    </DialogContentText>
-                                                </DialogContent>
-                                            </Dialog>
-
                                         </div> :
-                                        <IconButton color="inherit">
-                                            <FontAwesomeIcon icon={faUserCircle} size="2x" style={{color: '#fff'}}/>
+                                        <IconButton color="inherit" onClick={handleClickOpen}>
+                                            <FontAwesomeIcon icon={faUserCircle} size="2x" style={{ color: '#fff' }} />
                                         </IconButton>}
+                                    <Dialog
+                                        open={openDialog}
+                                        TransitionComponent={Transition}
+                                        keepMounted
+                                        onClose={handleClose}
+                                        aria-labelledby="alert-dialog-slide-title"
+                                        aria-describedby="alert-dialog-slide-description"
+                                        classes={{
+                                            paper: classes.dialog
+                                        }}
+                                    // className={classes.dialog}
+
+                                    >
+                                        <DialogTitle>
+                                            <div style={{
+                                                display: 'grid',
+                                                gridTemplateColumns: '75% 25%',
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                                width: '250px',
+                                            }}>
+                                                <div>
+                                                    <span
+                                                        style={{ fontSize: '20px', fontFamily: 'IRANSansWeb' }}>{firstname}</span>&nbsp;
+                                                            <span
+                                                        style={{ fontSize: '20px', fontFamily: 'IRANSansWeb' }}>{lastname}</span><br />
+                                                    <span style={{ fontSize: '14px', fontFamily: 'IRANSansWeb' }}>@{username}</span>
+                                                </div>
+                                                <div style={{
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center',
+                                                    display: 'grid',
+                                                }}>
+                                                    {avatar !== null ?
+                                                        <img src={avatar} className={classes.avatar} />
+                                                        :
+                                                        <FontAwesomeIcon icon={faUserCircle} size="3x" />
+                                                    }
+                                                </div>
+                                            </div>
+                                            <hr />
+                                        </DialogTitle>
+                                        <DialogContent>
+                                            <DialogContentText id="alert-dialog-slide-description">
+                                                <div >
+                                                    <div >
+                                                        <Link to={"/Profile/" + username} className={classes.link}>
+                                                            <div onClick={handleClose} className={classes.divInDialog}>
+                                                                <div style={{ alignItems: 'center', display: 'grid' }}>{'پروفایل'}</div>
+                                                                <div style={{ alignItems: 'center', display: 'grid', justifyContent: 'center' }}><FontAwesomeIcon icon={faUserCircle} style={{ color: 'inherit', margin: '0', fontSize: '25px' }} size="2x" /></div>
+                                                            </div>
+                                                        </Link>
+                                                    </div>
+                                                    <div>
+                                                        <div className={classes.link}
+                                                        // onClick={handleClickOpen}
+                                                        >
+                                                            <div onClick={handleClickOpenSignOutDialog} className={classes.divInDialog} style={{ cursor: 'pointer' }}>
+                                                                <div style={{ alignItems: 'center', display: 'grid' }}>{'خروج'}</div>
+                                                                <div style={{ alignItems: 'center', display: 'grid', justifyContent: 'center' }}><FontAwesomeIcon icon={faSignOutAlt} style={{ color: 'inherit', fontSize: '25px' }} size="2x" /></div>                                                               </div>
+                                                            <Dialog
+                                                                open={openSignOutDialog}
+                                                                onClose={handleCloseOpenSignOutDialog}
+                                                                aria-labelledby="alert-dialog-title2"
+                                                                aria-describedby="alert-dialog-description2"
+                                                            >
+                                                                <DialogTitle id="alert-dialog-title2" >
+                                                                    <div className={classes.buttonSignout}>{'خروج از حساب کاربری'}</div>
+                                                                </DialogTitle>
+                                                                <DialogActions>
+                                                                    <div style={{justifyContent: 'center',width: '100%',display: 'flex'}}>
+                                                                    <Button className={classes.buttonSignout}
+                                                                        onClick={()=>{
+                                                                            {userType === "normal_user" ? 
+                                                                            signOut("user")
+                                                                            :
+                                                                            signOut("consultant")
+                                                                        }}}>
+                                                                        <div style={{color: 'red'}}>
+                                                                        <div><FontAwesomeIcon icon={faPowerOff} style={{ color: 'inherit', margin: '0', fontSize: '25px' }} size="2x" /></div>
+                                                                        <div>بله</div>
+                                                                        </div>
+                                                                    </Button>
+                                                                    <Button className={classes.buttonSignout} onClick={handleCloseOpenSignOutDialog} >
+                                                                    <div style={{color: 'green'}}>
+                                                                        <div><FontAwesomeIcon icon={faTimesCircle} style={{ color: 'inherit', margin: '0', fontSize: '25px' }} size="2x" /></div>
+                                                                        <div>خیر</div>
+                                                                        </div>
+                                                                             </Button></div>
+                                                                </DialogActions>
+                                                            </Dialog>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </DialogContentText>
+                                        </DialogContent>
+                                    </Dialog>
                                 </div>
                             </Toolbar>
                         </AppBar>
@@ -329,35 +403,35 @@ export default function Dashboard(props) {
                             <div className={classes.toolbarIcon}>
                                 <IconButton onClick={handleDrawerClose}>
                                     <FontAwesomeIcon icon={faChevronRight}
-                                                     style={{color: '#3f407d', fontSize: '25px',}}/>
+                                        style={{ color: '#3f407d', fontSize: '25px', }} />
                                 </IconButton>
                             </div>
-                            <Divider/>
-                            <List>{<MainListItems/>}</List>
-                            <Divider/>
+                            <Divider />
+                            <List>{<MainListItems />}</List>
+                            <Divider />
                             <List>{SecondaryListItems}</List>
                         </Drawer>
                         <main className={classes.content}>
-                            <div className={classes.appBarSpacer}/>
+                            <div className={classes.appBarSpacer} />
                             <Container maxWidth="lg" className={classes.container}>
                                 <Switch>
                                     <Route path="/EditProfile">
-                                        <EditProfile title={'داشبورد'}/>
+                                        <EditProfile title={'داشبورد'} />
                                     </Route>
                                     <Route path="/Dashboard">
-                                        <MainPage title={'پروفایل'}/>
+                                        <MainPage title={'پروفایل'} />
                                     </Route>
                                     <Route path="/Profile/:username">
-                                        <Profile title={'پروفایل'}/>
+                                        <Profile title={'پروفایل'} />
                                     </Route>
                                     <Route path="/Channels">
-                                        <Channels title={'کانال ها'}/>
+                                        <Channels title={'کانال ها'} />
                                     </Route>
                                     <Route path="/GroupingChannel">
-                                        <GroupingChannel title={'Settings'}/>
+                                        <GroupingChannel title={'Settings'} />
                                     </Route>
                                     <Route path="/Channel/:channelId">
-                                        <Channel/>
+                                        <Channel />
                                     </Route>
                                 </Switch>
                             </Container>

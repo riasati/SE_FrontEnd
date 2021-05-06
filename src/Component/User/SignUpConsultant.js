@@ -310,11 +310,11 @@ class SignUpConsultant extends Component {
                                                     }}
                                                 >
                                                     <MenuItem value={"Lawyer"}><span style={{fontFamily: 'IRANSansWeb'}}>وکالت</span></MenuItem>
-                                                    <MenuItem value={"Educational_immigration"}><span style={{fontFamily: 'IRANSansWeb'}}>مهاجرت تحصیلی</span></MenuItem>
                                                     <MenuItem value={"medical"}><span style={{fontFamily: 'IRANSansWeb'}}>پزشکی</span></MenuItem>
                                                     <MenuItem value={"Psychology"}><span style={{fontFamily: 'IRANSansWeb'}}>روانشناسی</span></MenuItem>
-                                                    <MenuItem value={"Entrance_Exam"}><span style={{fontFamily: 'IRANSansWeb'}}>کنکور</span></MenuItem>
-                                                    <MenuItem value={"Academic_advice"}><span style={{fontFamily: 'IRANSansWeb'}}>تحصیلی</span></MenuItem>
+                                                    <MenuItem value={"EntranceExam"}><span style={{fontFamily: 'IRANSansWeb'}}>کنکور</span></MenuItem>
+                                                    <MenuItem value={"AcademicAdvice"}><span style={{fontFamily: 'IRANSansWeb'}}>تحصیلی</span></MenuItem>
+                                                    <MenuItem value={"Immigration"}><span style={{fontFamily: 'IRANSansWeb'}}>مهاجرت</span></MenuItem>
                                                 </Select>
                                             </FormControl>
                                         </Grid>

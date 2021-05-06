@@ -29,7 +29,7 @@ import {
 } from "@material-ui/icons"
 import InputAdornment from '@material-ui/core/InputAdornment';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faFileImage, faSignInAlt, faCommentAlt, faUser, faBullhorn, faInfoCircle,faThumbsUp,faChartLine,faHistory} from '@fortawesome/free-solid-svg-icons';
+import {faFileImage, faSignInAlt, faCommentAlt, faUser, faBullhorn, faInfoCircle,faThumbsUp,faChartLine,faHistory,faStar} from '@fortawesome/free-solid-svg-icons';
 import IconButton from "@material-ui/core/IconButton";
 import RTL from '../../RTL/M_RTL';
 import LoadingButton from '@material-ui/lab/LoadingButton';
@@ -49,6 +49,7 @@ class Profile extends Component {
             password: '',
             certificate: '',
             avatar: '',
+            userType: '',
         }
     }
 
@@ -62,6 +63,7 @@ class Profile extends Component {
                 this.setState({email: res.data.email})
                 this.setState({certificate: res.data.certificate})
                 this.setState({avatar: res.data.avatar})
+                this.setState({userType: res.data.user_type})
             })
             .catch(err => {
                 console.log(err)
@@ -75,6 +77,7 @@ class Profile extends Component {
             <Container component="main" maxWidth="lg" className={classes.container}>
                 <Material_RTL>
                     <RTL>
+                        {this.state.userType !== "normal_user" ? 
                         <Grid container spacing={3}>
                             <Grid item xs={12}>
                                 {/*1*/}
@@ -96,7 +99,7 @@ class Profile extends Component {
                                         <Grid item xs={12} md={2} lg={2} className={classes.centerItem}>
                                             <div>
                                                 <span>
-                                                    <span style={{color: '#fff'}}><i class="fas fa-star"/></span>
+                                                    <span style={{color: '#fff'}}><FontAwesomeIcon icon={faStar}/></span>
                                                     {'۹۹٪ رضایت از ۵۰ نظر'}
                                                 </span><br/>
                                                 <span>۱۳ سال تجربه کار</span></div>
@@ -114,7 +117,7 @@ class Profile extends Component {
                                         </span>
                                         <hr/><br/>
                                         <span style={{color: '#636363', textAlign: 'right'}}>
-                                            {'قابلیت ارسال صدا، تصویر و فایل برای پزشک'}
+                                            {'قابلیت ارسال صدا، تصویر و فایل برای مشاور'}
                                         </span>
                                         <br/>
                                         <br/>
@@ -226,7 +229,131 @@ class Profile extends Component {
                                 </Grid>
                             </Grid>
                             </Grid>
+                        </Grid> : 
+                        // normal user profile
+                        <Grid container spacing={3}>
+                        <Grid item xs={12}>
+                            {/*1*/}
+                            <Grid item xs={12} className={classes.info}>
+                                <Grid container spacing={3}>
+                                    <Grid item xs={12} md={2} lg={2} className={classes.centerItem}>
+                                        <img src={this.state.avatar} className={classes.avatar}/>
+                                    </Grid>
+                                    <Grid item xs={12} md={3} lg={3} className={classes.centerItem}>
+                                        <div>
+                                            <h2><span>{this.state.firstName}</span>&nbsp;
+                                                <span>{this.state.lastName}</span></h2>
+                                        </div>
+                                    </Grid>
+                                    <Grid item xs={0} md={5} lg={5} className={classes.centerItem}>
+                                        {/*    empty grid*/}
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                            <br/>
+                            {/*    2*/}
+                            <Grid container spacing={3}>
+                                <Grid item xs={12} lg={6} >
+                                    <Item>
+                                    <span style={{color: '#3f407d', textAlign: 'ceter'}}>
+                                        <h3><FontAwesomeIcon icon={faCommentAlt}/>&nbsp;
+                                        {'ارسال پیام'}</h3>
+                                    </span>
+                                    <hr/><br/>
+                                    <span style={{color: '#636363', textAlign: 'right'}}>
+                                        {'قابلیت ارسال صدا، تصویر و فایل برای مشاور'}
+                                    </span>
+                                    <br/>
+                                    <br/>
+                                    <span>
+                                        <Button style={{
+                                            backgroundColor: '#27bda0',
+                                            fontFamily: 'IRANSansWeb',
+                                            color: '#fff'
+                                        }}>{'ارسال پیام'}</Button>
+                                    </span>
+                                    </Item>
+                                </Grid>
+                            </Grid>
+                        {/*    3*/}
+                        <Grid container spacing={3}>
+                            <Grid item xs={12}>
+                                <Item>
+                                    <div style={{textAlign: 'right',color: '#3f407d'}}><h3>{'اطلاعات مشاور'}</h3></div>
+                                    <hr/>
+                                    <div>
+                                        <Accordion defaultExpanded={true} className={classes.colorfont}>
+                                            <AccordionSummary
+                                                expandIcon={<ExpandMoreIcon />}
+                                                aria-controls="panel1a-content"
+                                                id="panel1a-header"
+                                            >
+                                                <Typography><span style={{fontFamily: 'IRANSansWeb',fontWeight:'700'}}>
+                                                <FontAwesomeIcon icon={faInfoCircle} style={{margin: '0'}}/>&nbsp;
+                                                    {'بیوگرافی'}</span></Typography>
+                                            </AccordionSummary>
+                                            <AccordionDetails>
+                                                <Typography>
+                                                    <span style={{fontFamily: 'IRANSansWeb'}}>{'اطلاعات به زودی وارد خواهد شد'}</span>
+                                                </Typography>
+                                            </AccordionDetails>
+                                        </Accordion>
+                                        <Accordion defaultExpanded={true} className={classes.colorfont}>
+                                            <AccordionSummary
+                                                expandIcon={<ExpandMoreIcon />}
+                                                aria-controls="panel2a-content"
+                                                id="panel2a-header"
+                                            >
+                                                <Typography><span style={{fontFamily: 'IRANSansWeb',fontWeight:'700'}}>
+                                                <FontAwesomeIcon icon={faHistory} style={{margin: '0'}}/>&nbsp;
+                                                    {'سوابق'}</span></Typography>
+                                            </AccordionSummary>
+                                            <AccordionDetails>
+                                                <Typography>
+                                                    <span style={{fontFamily: 'IRANSansWeb'}}>{'اطلاعات به زودی وارد خواهد شد'}</span>
+                                                </Typography>
+                                            </AccordionDetails>
+                                        </Accordion>
+                                        <Accordion defaultExpanded={true} className={classes.colorfont}>
+                                            <AccordionSummary
+                                                expandIcon={<ExpandMoreIcon />}
+                                                aria-controls="panel2a-content"
+                                                id="panel2a-header"
+                                            >
+                                                <Typography><span style={{fontFamily: 'IRANSansWeb',fontWeight:'700'}}>
+                                                <FontAwesomeIcon icon={faThumbsUp} style={{margin: '0'}}/>&nbsp;
+                                                    {'شبکه های اجتماعی'}</span></Typography>
+                                            </AccordionSummary>
+                                            <AccordionDetails>
+                                                <Typography>
+                                                    <span style={{fontFamily: 'IRANSansWeb'}}>
+                                                        {'اطلاعات به زودی وارد خواهد شد'}</span>
+                                                </Typography>
+                                            </AccordionDetails>
+                                        </Accordion>
+                                        <Accordion defaultExpanded={true} className={classes.colorfont}>
+                                            <AccordionSummary
+                                                expandIcon={<ExpandMoreIcon />}
+                                                aria-controls="panel2a-content"
+                                                id="panel2a-header"
+                                            >
+                                                <Typography><span style={{fontFamily: 'IRANSansWeb',fontWeight:'700'}}>
+                                                <FontAwesomeIcon icon={faChartLine} style={{margin: '0'}}/>&nbsp;
+                                                    {'فعالیت ها'}</span></Typography>
+                                            </AccordionSummary>
+                                            <AccordionDetails>
+                                                <Typography>
+                                                    <span style={{fontFamily: 'IRANSansWeb'}}>{'اطلاعات به زودی وارد خواهد شد'}</span>
+                                                </Typography>
+                                            </AccordionDetails>
+                                        </Accordion>
+                                    </div>
+                                </Item>
+                            </Grid>
                         </Grid>
+                        </Grid>
+                    </Grid>
+                                        }
                     </RTL>
                 </Material_RTL>
             </Container>

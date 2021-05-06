@@ -13,7 +13,8 @@ import axios from 'axios';
 import serverURL from "../../RequestConfig/serverURL";
 import TokenConfig from '../../RequestConfig/TokenConfig';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBalanceScale,faUniversity,faBrain,faUserMd, } from '@fortawesome/free-solid-svg-icons';
 const useStyles = makeStyles((theme) => ({
   '@global': {
     '.bSWeAW:hover:enabled.bSWeAW:focus:enabled':{
@@ -63,92 +64,64 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MainPage() {
-  const [list1, setList1] = React.useState([]);
-  const [list2, setList2] = React.useState([]);
-  const [list3, setList3] = React.useState([]);
-  const [list4, setList4] = React.useState([]);
-  const [list5, setList5] = React.useState([]);
-  const [list6, setList6] = React.useState([]);
+  const [lawyerList, setLawyerList] = React.useState([]);
+  const [academicAdviceList, setAcademicAdviceList] = React.useState([]);
+  const [psychologyList, setPsychologyList] = React.useState([]);
+  const [medicalList, setMedicalList] = React.useState([]);
+  const [entranceExamList, setEntranceExamList] = React.useState([]);
+  const [immigrationList, setImmigrationList] = React.useState([]);
   const [pending, setPending] = React.useState(true);
-  var res1 = [];
-  var res2 = [];
-  var res3 = [];
-  var res4 = [];
-  var res5 = [];
-  var res6 = [];
+  var tmpList = [];
   useEffect(()=>{
-    axios.get(serverURL()+'channel/search-for-channel/'+'?query= '+'&search_category=Lawyer',TokenConfig())
+    axios.get(serverURL()+'channel/suggestion-channel/',TokenConfig())
       .then(result=>{
         console.log(result);
-        res1.push(...result.data.data);
-        var ll = res1.map((q) => q);
-        setList1([...ll]);
+
+        // Lawyer
+        tmpList.push(...result.data.Lawyer);
+        console.log(tmpList);
+        var tmp = tmpList.map((q) => q);
+        setLawyerList([...tmp]);
+        tmpList = []
+
+        // AcademicAdvice
+        tmpList.push(...result.data.AcademicAdvice);
+        var tmp = tmpList.map((q) => q);
+        setAcademicAdviceList([...tmp]);
+        tmpList = []
+
+        // Psychology
+        tmpList.push(...result.data.Psychology);
+        var tmp = tmpList.map((q) => q);
+        setPsychologyList([...tmp]);
+        tmpList = []
+
+        // medical
+        tmpList.push(...result.data.medical);
+        var tmp = tmpList.map((q) => q);
+        setMedicalList([...tmp]);
+        tmpList = []
+
+        // EntranceExam
+        tmpList.push(...result.data.EntranceExam);
+        var tmp = tmpList.map((q) => q);
+        setEntranceExamList([...tmp]);
+        tmpList = []
+
+        // Immigration
+        tmpList.push(...result.data.Immigration);
+        var tmp = tmpList.map((q) => q);
+        setImmigrationList([...tmp]);
+        tmpList = []
+
+
         setPending(false)
       })
       .catch(err=>{
         console.log(err)
         setPending(false)
       })
-      axios.get(serverURL()+'channel/search-for-channel/'+'?query= '+'&search_category=AcademicAdvice',TokenConfig())
-      .then(result=>{
-        console.log(result);
-        res2.push(...result.data.data);
-        var ll = res2.map((q) => q);
-        setList2([...ll]);
-        setPending(false)
-      })
-      .catch(err=>{
-        console.log(err)
-        setPending(false)
-      })
-      axios.get(serverURL()+'channel/search-for-channel/'+'?query= '+'&search_category=Psychology',TokenConfig())
-      .then(result=>{
-        console.log(result);
-        res3.push(...result.data.data);
-        var ll = res3.map((q) => q);
-        setList3([...ll]);
-        setPending(false)
-      })
-      .catch(err=>{
-        console.log(err)
-        setPending(false)
-      })
-      axios.get(serverURL()+'channel/search-for-channel/'+'?query= '+'&search_category=Immigration',TokenConfig())
-      .then(result=>{
-        console.log(result);
-        res4.push(...result.data.data);
-        var ll = res4.map((q) => q);
-        setList4([...ll]);
-        setPending(false)
-      })
-      .catch(err=>{
-        console.log(err)
-        setPending(false)
-      })
-      axios.get(serverURL()+'channel/search-for-channel/'+'?query= '+'&search_category=medical',TokenConfig())
-      .then(result=>{
-        console.log(result);
-        res5.push(...result.data.data);
-        var ll = res5.map((q) => q);
-        setList5([...ll]);
-        setPending(false)
-      })
-      .catch(err=>{
-        console.log(err)
-        setPending(false)
-      })
-      axios.get(serverURL()+'channel/search-for-channel/'+'?query= '+'&search_category=EntranceExam',TokenConfig())
-      .then(result=>{
-        console.log(result);
-        res6.push(...result.data.data);
-        var ll = res6.map((q) => q);
-        setList6([...ll]);
-        setPending(false)
-      })
-      .catch(err=>{
-        console.log(err)
-        setPending(false)
-      })
+
   },[])
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
@@ -170,12 +143,12 @@ export default function MainPage() {
           <Grid container spacing={3}>
             {/* Chart */}
             <Grid item xs={12} md={12} lg={12}>
-              <div className={classes.title}><h2><i class="fas fa-balance-scale"></i> وکالت </h2></div>
+              <div className={classes.title}><h2><FontAwesomeIcon icon={faBalanceScale}/> وکالت </h2></div>
               <Paper className={fixedHeightPaper}>
                 <Carousel breakPoints={breakPoints} isRTL={'true'} style={{color:'#27bda0'}}>
                   {pending ? (<CircularProgress className={classes.CircularProgress} style={{color: '#0e918c'}}/>):
-                  list1.size !== 0 ?  (list1.map((data)=>{
-                    console.log(data)
+                  lawyerList.size !== 0 ?  (lawyerList.map((data)=>{
+                    // console.log(data)
                     return(
                       <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} avatar={data.avatar} channelId={data.channelID} image={'../../image/lawyergroup.png'}></SuggestionChannelCard>
                     )
@@ -185,12 +158,12 @@ export default function MainPage() {
               </Paper>
             </Grid>
             <Grid item xs={12} md={12} lg={12}>
-            <div className={classes.title}><h2><i class="fas fa-university"></i> تحصیلی </h2></div>
+            <div className={classes.title}><h2><FontAwesomeIcon icon={faUniversity}/> تحصیلی </h2></div>
               <Paper className={fixedHeightPaper}>
                 <Carousel breakPoints={breakPoints} isRTL={'true'}>
                 {pending ? (<CircularProgress className={classes.CircularProgress} style={{color: '#0e918c'}}/>):
-                  list2.size !== 0 ?  (list2.map((data)=>{
-                    console.log(data)
+                  academicAdviceList.size !== 0 ?  (academicAdviceList.map((data)=>{
+                    // console.log(data)
                     return(
                       <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} avatar={data.avatar} channelId={data.channelID} image={'../../image/majorgroup.jpg'}></SuggestionChannelCard>
                     )
@@ -204,8 +177,8 @@ export default function MainPage() {
               <Paper className={fixedHeightPaper}>
                 <Carousel breakPoints={breakPoints} isRTL={'true'}>
                 {pending ? (<CircularProgress className={classes.CircularProgress} style={{color: '#0e918c'}}/>):
-                  list3.size !== 0 ?  (list3.map((data)=>{
-                    console.log(data)
+                  psychologyList.size !== 0 ?  (psychologyList.map((data)=>{
+                    // console.log(data)
                     return(
                       <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} avatar={data.avatar} channelId={data.channelID} image={'../../image/psychologygroup.jpg'}></SuggestionChannelCard>
                     )
@@ -215,27 +188,12 @@ export default function MainPage() {
               </Paper>
             </Grid>
             <Grid item xs={12} md={12} lg={12}>
-            <div className={classes.title}><h2><i class="fas fa-globe-stand"></i> مهاجرت </h2></div>
+            <div className={classes.title}><h2><FontAwesomeIcon icon={faUserMd}/> پزشکی </h2></div>
               <Paper className={fixedHeightPaper}>
                 <Carousel breakPoints={breakPoints} isRTL={'true'}>
                 {pending ? (<CircularProgress className={classes.CircularProgress} style={{color: '#0e918c'}}/>):
-                  list4.size !== 0 ?  (list4.map((data)=>{
-                    console.log(data)
-                    return(
-                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} avatar={data.avatar} channelId={data.channelID} image={'../../image/migrationgroup.jpg'}></SuggestionChannelCard>
-                    )
-                    })): null
-                  }
-                </Carousel>
-              </Paper>
-            </Grid>
-            <Grid item xs={12} md={12} lg={12}>
-            <div className={classes.title}><h2><i class="fas fa-user-md"></i> پزشکی </h2></div>
-              <Paper className={fixedHeightPaper}>
-                <Carousel breakPoints={breakPoints} isRTL={'true'}>
-                {pending ? (<CircularProgress className={classes.CircularProgress} style={{color: '#0e918c'}}/>):
-                  list5.size !== 0 ?  (list5.map((data)=>{
-                    console.log(data)
+                  medicalList.size !== 0 ?  (medicalList.map((data)=>{
+                    // console.log(data)
                     return(
                       <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} avatar={data.avatar} channelId={data.channelID} image={'../../image/medicalgroup.jpg'}></SuggestionChannelCard>
                     )
@@ -249,10 +207,25 @@ export default function MainPage() {
               <Paper className={fixedHeightPaper}>
                 <Carousel breakPoints={breakPoints} isRTL={'true'}>
                 {pending ? (<CircularProgress className={classes.CircularProgress} style={{color: '#0e918c'}}/>):
-                  list6.size !== 0 ?  (list6.map((data)=>{
-                    console.log(data)
+                  entranceExamList.size !== 0 ?  (entranceExamList.map((data)=>{
+                    // console.log(data)
                     return(
                       <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} avatar={data.avatar} channelId={data.channelID} image={'../../image/konkorgroup.jpg'}></SuggestionChannelCard>
+                    )
+                    })): null
+                  }
+                </Carousel>
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={12} lg={12}>
+            <div className={classes.title}><h2><i class="fas fa-globe-stand"></i> مهاجرت </h2></div>
+              <Paper className={fixedHeightPaper}>
+                <Carousel breakPoints={breakPoints} isRTL={'true'}>
+                {pending ? (<CircularProgress className={classes.CircularProgress} style={{color: '#0e918c'}}/>):
+                  immigrationList.size !== 0 ?  (immigrationList.map((data)=>{
+                    // console.log(data)
+                    return(
+                      <SuggestionChannelCard ChannelName={data.name} ConsultantName={data.consultant_full_name} invite_link={data.invite_link} avatar={data.avatar} channelId={data.channelID} image={'../../image/migrationgroup.jpg'}></SuggestionChannelCard>
                     )
                     })): null
                   }

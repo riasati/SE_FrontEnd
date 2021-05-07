@@ -551,45 +551,80 @@ class ChannelMessages extends Component{
                 </ScrollArea>
                 </LoadingOverlay>
             </DragAndDrop>
-                {this.props.role === "nothing" ?
-                    null :
-                    <Divider className={classes.divider} />
-                }
                 <input
                     style={{display : 'none'}}
                     id='file' type="file" onChange={onFileChange} multiple/>
-                {this.props.role === "consultant" ?
-                    <TextField id="standard-basic" multiline fullWidth
-                               placeholder={"پیام خود را وارد کنید"}
-                               value={this.messageText}
-                               onChange={this.handleTextFieldChange}
-                               InputProps={{
-                                   style: {fontFamily: 'IRANSansWeb'},
-                                   endAdornment: (
-                                       <InputAdornment position="end">
-                                           <label htmlFor='file'>
-                                           <IconButton
-                                               aria-label="upload picture"
-                                               component="span"
-                                               style={{margin:"2px",padding: '0px', color: '#3f407d'}}
-                                           >
-                                               {/*<CloudUpload style={{ fontSize: 35 }} />*/}
-                                               <FontAwesomeIcon icon={faFileUpload} style={{color: '#3f407d'}}/>
-                                           </IconButton>
-                                           </label>
-                                           <IconButton
-                                               style={{margin:"2px",padding: '0px', color: '#3f407d'}}
-                                               onClick={handleSendIcon}
-                                           >
-                                               {/*<Done style={{ fontSize: 35}} />*/}
-                                               <Send style={{ fontSize: 30 ,transform: "rotate(-180deg)"}} />
-                                           </IconButton>
-                                       </InputAdornment>)
-                               }}
-                    /> :
-                    this.props.role === "subscriber" ? null :
-                        <Button variant="contained" endIcon={<Add />} fullWidth color={'primary'} onClick={handleJoinChannel}>پیوستن به کانال</Button>
+                {this.props.role === null ? null :
+                    this.props.role === "consultant" ? <div>
+                        <Divider className={classes.divider} />
+                        <TextField id="standard-basic" multiline fullWidth
+                                   placeholder={"پیام خود را وارد کنید"}
+                                   value={this.messageText}
+                                   onChange={this.handleTextFieldChange}
+                                   InputProps={{
+                                       style: {fontFamily: 'IRANSansWeb'},
+                                       endAdornment: (
+                                           <InputAdornment position="end">
+                                               <label htmlFor='file'>
+                                                   <IconButton
+                                                       aria-label="upload picture"
+                                                       component="span"
+                                                       style={{margin:"2px",padding: '0px', color: '#3f407d'}}
+                                                   >
+                                                       {/*<CloudUpload style={{ fontSize: 35 }} />*/}
+                                                       <FontAwesomeIcon icon={faFileUpload} style={{color: '#3f407d'}}/>
+                                                   </IconButton>
+                                               </label>
+                                               <IconButton
+                                                   style={{margin:"2px",padding: '0px', color: '#3f407d'}}
+                                                   onClick={handleSendIcon}
+                                               >
+                                                   {/*<Done style={{ fontSize: 35}} />*/}
+                                                   <Send style={{ fontSize: 30 ,transform: "rotate(-180deg)"}} />
+                                               </IconButton>
+                                           </InputAdornment>)
+                                   }}
+                        />
+                </div> : this.props.role === "nothing" ? <Button variant="contained" endIcon={<Add />} fullWidth color={'primary'} onClick={handleJoinChannel}>پیوستن به کانال</Button>
+                        : null
                 }
+                {/*{this.props.role === "nothing" ?*/}
+                    {/*null :*/}
+                    {/*<Divider className={classes.divider} />*/}
+                {/*}*/}
+
+                {/*{this.props.role === "consultant" ?*/}
+                    {/*<TextField id="standard-basic" multiline fullWidth*/}
+                               {/*placeholder={"پیام خود را وارد کنید"}*/}
+                               {/*value={this.messageText}*/}
+                               {/*onChange={this.handleTextFieldChange}*/}
+                               {/*InputProps={{*/}
+                                   {/*style: {fontFamily: 'IRANSansWeb'},*/}
+                                   {/*endAdornment: (*/}
+                                       {/*<InputAdornment position="end">*/}
+                                           {/*<label htmlFor='file'>*/}
+                                           {/*<IconButton*/}
+                                               {/*aria-label="upload picture"*/}
+                                               {/*component="span"*/}
+                                               {/*style={{margin:"2px",padding: '0px', color: '#3f407d'}}*/}
+                                           {/*>*/}
+                                               {/*/!*<CloudUpload style={{ fontSize: 35 }} />*!/*/}
+                                               {/*<FontAwesomeIcon icon={faFileUpload} style={{color: '#3f407d'}}/>*/}
+                                           {/*</IconButton>*/}
+                                           {/*</label>*/}
+                                           {/*<IconButton*/}
+                                               {/*style={{margin:"2px",padding: '0px', color: '#3f407d'}}*/}
+                                               {/*onClick={handleSendIcon}*/}
+                                           {/*>*/}
+                                               {/*/!*<Done style={{ fontSize: 35}} />*!/*/}
+                                               {/*<Send style={{ fontSize: 30 ,transform: "rotate(-180deg)"}} />*/}
+                                           {/*</IconButton>*/}
+                                       {/*</InputAdornment>)*/}
+                               {/*}}*/}
+                    {/*/> :*/}
+                    {/*this.props.role === "subscriber" ? null :*/}
+                        {/*<Button variant="contained" endIcon={<Add />} fullWidth color={'primary'} onClick={handleJoinChannel}>پیوستن به کانال</Button>*/}
+                {/*}*/}
               </div>
         )
     }

@@ -13,6 +13,7 @@ import GroupingChannel from './Component/GroupingChannel/GroupingChannel';
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 import CreateChannel from "./Component/Channel/CreateChannel";
 import Channel from "./Component/Channel/ChannelPage";
+import ConsultantReservation from "./Component/Reservation/ConsultantReservationPage";
 
 class App extends Component {
     render() {
@@ -30,6 +31,7 @@ class App extends Component {
                     <Route path="/Profile/:username" children={<Dashboard title={'پروفایل'}/>} component={Profile}/>
                     <Route path="/Channels" children={<Dashboard title={'کانال ها'}/>} component={Channels}/>
                     <Route path="/GroupingChannel" children={<Dashboard title={'دسته بندی'}/>} component={GroupingChannel}/>
+                    <Route path="/Reservation" children={<Dashboard title={'داشبورد'} />} component={ConsultantReservation} />
                      {/*<Route path="/Dashboard"  component={Dashboard}/>*/}
                 </Router>
             </div>

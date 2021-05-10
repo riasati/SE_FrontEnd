@@ -761,10 +761,10 @@ const useStyles = makeStyles((theme) => ({
             fontFamily: 'IRANSansWeb',
         },
     },
-    rootDiv:{
-        padding:theme.spacing(2),
-        flexGrow: 1,
-    },
+    // rootDiv:{
+    //     padding:theme.spacing(2),
+    //     flexGrow: 1,
+    // },
     pageEdit :{
     width: "300px",
     height: "100%",

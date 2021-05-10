@@ -28,6 +28,7 @@ class Reservation extends Component{
             CalendarValue:momentJalaali(),
             loading:true,
             isGregorian : false,
+            loading2:false,
         };
     }
     componentDidMount() {
@@ -48,7 +49,7 @@ class Reservation extends Component{
     };
     handleOnSelectCalendar = (date) => {
         this.reservation.scrollIntoView({ behavior: "smooth" });
-        // console.log(date);
+        this.setState({loading2:!this.state.loading2});
     };
 
     getCustomFormat(inputValue, isGregorian) {
@@ -76,6 +77,7 @@ class Reservation extends Component{
                             }
                             <Grid container direction={"row"} spacing={2} justify="space-evenly">
                                 <Grid item sm={6} xs={12} className={classes.rightSection}>
+                                    <LoadingOverlay active={this.state.loading2} spinner text={""}>
                                     <div className={classes.rowOfSelectedDay}>
                                     <Typography variant={"h6"} align={"left"}> رزرو های روز {this.getCustomFormat(this.state.CalendarValue,this.state.isGregorian)} </Typography>
                                         {this.userType !== "normal_user" && this.props.isInlineClass === undefined ?
@@ -112,10 +114,12 @@ class Reservation extends Component{
                                                             display: "flex",
                                                             flexDirection:"row",
                                                             justifyContent: "flex-start",
+                                                            alignItems: "baseline"
                                                         }}>
+                                                            <Typography variant={"body1"} component={"span"} align={"left"} style={{marginLeft:"8px"}}>ساعت</Typography>
                                                             <div className={classes.customizeButton} style={{marginLeft:"8px"}}> 8:00 </div>
                                                             {/*<Button variant="contained" onMouseDown={this.handleMouseDown} color={"primary"}> 8:00 </Button>*/}
-                                                            <Typography variant={"h6"} align={"left"}>-</Typography>
+                                                            <Typography variant={"body1"} component={"span"} align={"left"}>-</Typography>
                                                             <div className={classes.customizeButton} style={{marginRight:"8px",marginLeft:"8px"}}> 10:00 </div>
                                                             {/*<Button variant="contained" onMouseDown={this.handleMouseDown} color={"primary"}> 9:30 </Button>*/}
                                                         </div>
@@ -171,9 +175,11 @@ class Reservation extends Component{
                                                             display: "flex",
                                                             flexDirection:"row",
                                                             justifyContent: "flex-start",
+                                                            alignItems: "baseline"
                                                         }}>
+                                                            <Typography variant={"body1"} component={"span"} align={"left"} style={{marginLeft:"8px"}}>ساعت</Typography>
                                                             <div className={classes.customizeButton} style={{marginLeft:"8px"}}> 8:00 </div>
-                                                            <Typography variant={"h6"} align={"left"}>-</Typography>
+                                                            <Typography variant={"body1"} component={"span"} align={"left"}>-</Typography>
                                                             <div className={classes.customizeButton} style={{marginRight:"8px",marginLeft:"8px"}}> 10:00 </div>
                                                         </div>
                                                         <div>
@@ -261,6 +267,7 @@ class Reservation extends Component{
                                             {/*</Typography>*/}
                                         </AccordionDetails>
                                     </Accordion>
+                                    </LoadingOverlay>
                                 </Grid>
                                 <Grid item sm={6} xs={12} className={classes.leftSection}>
                                     <Calendar

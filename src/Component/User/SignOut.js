@@ -7,6 +7,7 @@ export const signOut = (props) =>{
           .then(res =>{
               console.log(res);
             localStorage.removeItem('token');
+            localStorage.removeItem('userType');
             window.location.href = "/signIn" ;
           })
           .catch(err =>{

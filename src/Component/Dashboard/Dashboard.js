@@ -40,7 +40,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import {signOut} from '../User/SignOut';
-import ConsultantReservation from "../Reservation/ConsultantReservationPage";
+import Reservation from "../Reservation/ReservationPage";
 import { FaDivide } from 'react-icons/fa';
 import Collapse from '@material-ui/core/Collapse';
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -435,7 +435,7 @@ export default function Dashboard(props) {
                                         <Channel />
                                     </Route>
                                     <Route path="/Reservation">
-                                        <ConsultantReservation />
+                                        <Reservation />
                                     </Route>
                                 </Switch>
                             </Container>

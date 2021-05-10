@@ -23,8 +23,8 @@ import RTL from '../RTL/M_RTL';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faUserCircle, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import EditProfile from '../User/Profile/EditProfile';
 import Profile from '../User/Profile/Profile';
-import Profile1 from '../User/Profile/Profile1';
 import MainPage from '../MainPage/MainPage';
 import Channels from '../MainPage/Channels';
 import GroupingChannel from '../GroupingChannel/GroupingChannel';
@@ -182,12 +182,13 @@ const useStyles = makeStyles((theme) => ({
     },
     link: {
         textDecoration: 'none',
+        color: '#3f407d',
     }
 }));
 
 export default function Dashboard(props) {
     const classes = useStyles();
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [username, setUsername] = useState('');
@@ -246,7 +247,7 @@ export default function Dashboard(props) {
                                 <div>
                                     {avatar !== null ?
                                         <div>
-                                            <Button variant="outlined" onClick={handleClickOpen}>
+                                            <Button onClick={handleClickOpen}>
                                                 <img src={avatar} className={classes.avatar}/>
                                             </Button>
                                             <Dialog
@@ -287,20 +288,24 @@ export default function Dashboard(props) {
                                                             <hr/>
                                                             <br/>
                                                             <div>
-                                                                <Link to="/Profile"
+                                                            <Button onClick={handleClose} style={{fontFamily: 'IRANSansWeb'}}>
+                                                                <Link to={"/Profile/" + username}
                                                                       className={classes.link}>
                                                                     {'پروفایل'}&nbsp;&nbsp;&nbsp;
                                                                     <i className="fas fa-user"
                                                                        style={{color: '#3f407d', margin: '0'}}></i>
                                                                 </Link>
+                                                            </Button>
                                                             </div>
                                                             <br/>
                                                             <div>
-                                                                <Link to="/signIn" className={classes.link}>
+                                                            <Button onClick={handleClose} style={{fontFamily: 'IRANSansWeb'}}>
+                                                                <Link to="/signIn" className={classes.link} onClick={handleClickOpen}>
                                                                     {'خروج'}&nbsp;&nbsp;&nbsp;
                                                                     <i className="fas fa-sign-out-alt"
                                                                        style={{color: '#3f407d'}}></i>
                                                                 </Link>
+                                                            </Button>
                                                             </div>
                                                         </div>
                                                     </DialogContentText>
@@ -336,14 +341,14 @@ export default function Dashboard(props) {
                             <div className={classes.appBarSpacer}/>
                             <Container maxWidth="lg" className={classes.container}>
                                 <Switch>
-                                    <Route path="/Profile">
-                                        <Profile title={'داشبورد'}/>
+                                    <Route path="/EditProfile">
+                                        <EditProfile title={'داشبورد'}/>
                                     </Route>
                                     <Route path="/Dashboard">
                                         <MainPage title={'پروفایل'}/>
                                     </Route>
-                                    <Route path="/Profile1">
-                                        <Profile1 title={'پروفایل'}/>
+                                    <Route path="/Profile/:username">
+                                        <Profile title={'پروفایل'}/>
                                     </Route>
                                     <Route path="/Channels">
                                         <Channels title={'کانال ها'}/>

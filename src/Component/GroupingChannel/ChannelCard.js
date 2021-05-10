@@ -29,7 +29,12 @@ class ChannelCard extends Component{
           <Grid item xs={12} md={4} lg={3} className={classes.container}>
             <div className={classes.div}>
               <a href={"/Channel/"+ this.props.channelID} className={classes.a}>
-                <img src={'../../image/medicalgroup.jpg'} className={classes.img}/>
+                { 
+                  this.props.avatar !== null ? 
+                    <img src={this.props.avatar} className={classes.img}/>
+                    : 
+                    <img src={'../../image/medicalgroup.jpg'} className={classes.img}/>
+                }
                 <div><h3>{this.props.name}</h3></div>
                 <div>{this.props.consultant_full_name}</div>
                 <br/>
@@ -86,7 +91,8 @@ export default (props) => {
     const consultant_full_name = props.consultant_full_name;
     const invite_link = props.invite_link;
     const channelID = props.channelID;
+    const avatar = props.avatar;
     return (
-        <ChannelCard classes={classes} name={name} consultant_full_name={consultant_full_name} invite_link={invite_link} channelID={channelID}/>
+        <ChannelCard classes={classes} name={name} consultant_full_name={consultant_full_name} avatar={avatar} channelID={channelID} invite_link={invite_link}/>
     )
 }

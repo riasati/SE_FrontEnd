@@ -142,8 +142,8 @@ class Channel extends Component {
             })
             .catch(error => {
                 console.log(error);
-                this.ErrorDialogText = error.response.data?.error;
-                this.setState({setErrorDialog:true});
+                // this.ErrorDialogText = error.response.data?.error;
+                // this.setState({setErrorDialog:true});
             });
         axios.get(serverURL() + "channel/channel-subscriber/"+ this.props.match.params.channelId + "/",TokenConfig())
             .then(result =>{
@@ -151,8 +151,8 @@ class Channel extends Component {
             })
             .catch(error => {
                 console.log(error);
-                this.ErrorDialogText = error.response.data?.error;
-                this.setState({setErrorDialog:true});
+                // this.ErrorDialogText = error.response.data?.error;
+                // this.setState({setErrorDialog:true});
             });
         axios.get(serverURL() + "channel/channel-admins/" + this.props.match.params.channelId + "/",TokenConfig())
             .then(result =>{
@@ -163,8 +163,8 @@ class Channel extends Component {
             })
             .catch(error => {
                 console.log(error);
-                this.ErrorDialogText = error.response.data?.error;
-                this.setState({setErrorDialog:true});
+                // this.ErrorDialogText = error.response.data?.error;
+                // this.setState({setErrorDialog:true});
             });
     };
     componentDidMount() {
@@ -608,7 +608,7 @@ class Channel extends Component {
                                                                     this.channelsList.map((value,index) =>
                                                                     {
                                                                         if (value?.user_role === "consultant" || value?.user_role === "secretary"){
-                                                                            return <ChannelCard key={index} name={value?.name} imageSource={""} description={value?.description} />
+                                                                            return <ChannelCard key={index} name={value?.name} imageSource={value?.avatar} description={value?.description} />
                                                                         }
                                                                     })
                                                                 }
@@ -623,7 +623,7 @@ class Channel extends Component {
                                                                         this.channelsList.map((value, index) => {
                                                                             if (value?.user_role === "subscriber") {
                                                                                 return <ChannelCard name={value?.name}
-                                                                                                    imageSource={""}
+                                                                                                    imageSource={value?.avatar}
                                                                                                     key={index}
                                                                                                     description={value?.description}/>
                                                                             }

@@ -23,7 +23,7 @@ import axios from "axios";
 import serverURL from "../../RequestConfig/serverURL";
 import TokenConfig from "../../RequestConfig/TokenConfig";
 import {CalendarTodayRounded} from "@material-ui/icons";
-
+import {TimeDialog} from '../Reservation/setTimeDialog';
 class Reservation extends Component{
     constructor(props) {
         super(props);
@@ -32,6 +32,7 @@ class Reservation extends Component{
             loading:true,
             isGregorian : false,
             loading2:true,
+            timeDialog: false,
         };
         this.getReserveOfDay(this.state.CalendarValue);
     }
@@ -123,9 +124,17 @@ class Reservation extends Component{
         const time = date.getHours() + ":" + date.getMinutes();
         return time;
     }
+    handleStateTimeDialog = () =>{
+        this.setState({timeDialog:!this.state.timeDialog})
+    };
     userType = localStorage.getItem('userType');
     render() {
         const classes = this.props.classes;
+        const [timeDialogIsOpen,setTimeDialogIsOpen] = this.props.timeDialogIsOpen;
+        const openTimeDialog = () => {
+            this.setState({timeDialog:true});
+        }
+        const closeTimeDialog = () => setTimeDialogIsOpen(false);
         return (
             <LoadingOverlay active={this.state.loading} spinner text={""}>
                 <Container maxWidth="lg" style={{paddingLeft:"0px",paddingRight:"0px"}}>
@@ -166,7 +175,7 @@ class Reservation extends Component{
                                                      placement="left"
                                                      TransitionComponent={Zoom} >
                                                 <IconButton className={classes.iconButtonAddStyle}
-                                                            onClick={this.handleNewReserve}
+                                                            onClick={this.handleStateTimeDialog}
                                                 >
                                                     <Add style={{ fontSize: 30}} />
                                                 </IconButton>
@@ -174,6 +183,7 @@ class Reservation extends Component{
                                             : null
                                         }
                                     </div>
+                                    <TimeDialog open={this.state.timeDialog} handleParentState={this.handleStateTimeDialog} date={this.state.CalendarValue}/>
                                     <div style={{ clear: "both" }}
                                          ref={(el) => { this.reservation = el; }}>
                                     </div>
@@ -617,7 +627,8 @@ const useStyles = makeStyles((theme) => ({
 export default (props) =>{
     const classes = useStyles();
     const p = React.useState(false);
+    const timeDialogIsOpen = React.useState(false);
     return(
-        <Reservation classes={classes} p={p} consultantID={props.consultantID} isInlineClass={props.isInlineClass} />
+        <Reservation classes={classes} p={p} consultantID={props.consultantID} isInlineClass={props.isInlineClass} timeDialogIsOpen={timeDialogIsOpen}/>
     )
 }

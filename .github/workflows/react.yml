@@ -26,10 +26,11 @@ jobs:
     - name: build and push Docker Image
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
+        tags: latest
         image: pargar/docker101tutorial
         registry: docker.io
-        username:  hojat.nikjoo@gmail.com  
+        username:  pargar  
         password:  hojat12345
-        tags: latest
+        
     
 

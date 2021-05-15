@@ -23,13 +23,13 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm i
     - run: npm test
-     - name: build and push Docker Image
+    - name: build and push Docker Image
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
         image: pargar/docker101tutorial
         registry: docker.io
-        username:  hojat.nikjoo@gmail.com
-        password:  hojat12345 
+        username:  hojat.nikjoo@gmail.com  
+        password:  hojat12345
         tags: latest
     
 

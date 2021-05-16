@@ -26,7 +26,7 @@ jobs:
       - run: npm i
 
       - run: npm test
-
+      - run: npm run build -prod
       - name: build and push Docker Image
         uses: mr-smithers-excellent/docker-build-push@v5
         with:
@@ -39,7 +39,7 @@ jobs:
         with:
           name: build
           path: build
-        
+      - run: ls 
   deploy:
     name: Deploy
     needs: docker

@@ -26,6 +26,9 @@ import {CalendarTodayRounded} from "@material-ui/icons";
 import {TimeDialog} from '../Reservation/setTimeDialog';
 import {EditTimeDialog} from '../Reservation/editTime';
 import TextField from "@material-ui/core/TextField";
+import { faClock } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Avatar from "@material-ui/core/Avatar";
 
 
 class Reservation extends Component{
@@ -55,7 +58,7 @@ class Reservation extends Component{
     handleDeleteReserve = (event,user,ReserveId) => {
         event.stopPropagation();
         if (user === null){
-            axios.delete(serverURL() + "calendar/consultant-time/" +{ReserveId} + "/",TokenConfig())
+            axios.delete(serverURL() + "calendar/consultant-time/" +ReserveId + "/",TokenConfig())
                 .then(result => {
                     console.log(result);
                 })
@@ -64,7 +67,7 @@ class Reservation extends Component{
                 })
         }
         else{
-            axios.delete(serverURL() + "calendar/consultant-time/cancel/" +{ReserveId} + "/",TokenConfig())
+            axios.delete(serverURL() + "calendar/consultant-time/cancel/" +ReserveId + "/",TokenConfig())
                 .then(result => {
                     console.log(result);
                 })
@@ -129,7 +132,7 @@ class Reservation extends Component{
 
     getReserveOfDay(inputValue) {
         const inputValueToServer = inputValue.format("YYYY-MM-DD");
-        console.log(inputValueToServer);
+       // console.log(inputValueToServer);
         if (this.props.isInlineClass === undefined) {
             axios.get(serverURL() + "calendar/consultant-time/" + "?query= " + "&date=" + inputValueToServer,TokenConfig())
                 .then(result => {
@@ -188,7 +191,7 @@ class Reservation extends Component{
                 <Container maxWidth="lg" style={{paddingLeft:"0px",paddingRight:"0px"}}>
                     <CssBaseline/>
                     <Theme>
-                        <Paper className={classes.paper}>
+                        <Paper className={ this.props.isInlineClass === undefined ? classes.paper : classes.paper2}>
                             {
                                 this.props.isInlineClass === undefined ?
                                     <div>
@@ -260,13 +263,14 @@ class Reservation extends Component{
                                                                     display: "flex",
                                                                     flexDirection:"row",
                                                                     justifyContent: "flex-start",
-                                                                    alignItems: "baseline"
+                                                                    alignItems: "center"
                                                                 }}>
+                                                                    <FontAwesomeIcon icon={faClock} style={{color: '#2ab371',fontSize:"22px",marginLeft:"4px"}}/>
                                                                     <Typography variant={"body1"} component={"span"} align={"left"} style={{marginLeft:"8px"}}>ساعت</Typography>
-                                                                    <div className={classes.customizeButton} style={{marginLeft:"8px"}}> {this.getTimeFromStringDate(DataValue.start_date)} </div>
+                                                                    <div className={classes.customizeButton2} style={{marginLeft:"8px"}}> {this.getTimeFromStringDate(DataValue.start_date)} </div>
                                                                     {/*<Button variant="contained" onMouseDown={this.handleMouseDown} color={"primary"}> 8:00 </Button>*/}
                                                                     <Typography variant={"body1"} component={"span"} align={"left"}>-</Typography>
-                                                                    <div className={classes.customizeButton} style={{marginRight:"8px",marginLeft:"8px"}}> {this.getTimeFromStringDate(DataValue.end_date)} </div>
+                                                                    <div className={classes.customizeButton2} style={{marginRight:"8px",marginLeft:"8px"}}> {this.getTimeFromStringDate(DataValue.end_date)} </div>
                                                                     {/*<Button variant="contained" onMouseDown={this.handleMouseDown} color={"primary"}> 9:30 </Button>*/}
                                                                 </div>
                                                                 <div>
@@ -291,7 +295,7 @@ class Reservation extends Component{
                                                                             className={classes.iconButtonInterAccordionStyle}
                                                                             onClick={(event) => this.handleDeleteReserve(event,DataValue.user,DataValue.id)}
                                                                         >
-                                                                            <Close style={{ fontSize: 30}} />
+                                                                            <Close style={{ fontSize: 30,color:"#ed5050"}} />
                                                                         </IconButton>
                                                                     </Tooltip>
                                                                 </div>
@@ -301,16 +305,27 @@ class Reservation extends Component{
                                                             {/*<div>*/}
                                                                 {
                                                                     DataValue.user === null ?
-                                                                        <Typography variant={"body1"} align={"left"}> در حال حاضر فردی درخواست نداده است </Typography>
+                                                                        <div>
+                                                                        <Typography variant={"body1"} align={"left"}>در حال حاضر فردی درخواست نداده است </Typography>
+                                                                        </div>
                                                                         :
                                                                         <div>
-                                                                            <Typography variant={"body1"} align={"left"} style={{direction:"ltr"}}> وقت مشاوره برقرار است {"@"+DataValue?.user?.username} با کاربر </Typography>
+                                                                            <Typography variant={"body1"} align={"left"} style={{display:"flex"}}>
+                                                                                <Avatar alt={DataValue?.user?.first_name + DataValue?.user?.last_name} src={DataValue?.user?.avatar} className={classes.usersAvatar}>
+                                                                                </Avatar>
+                                                                                {DataValue?.user?.first_name} {DataValue?.user?.last_name}
+                                                                                {/*&nbsp;*/}
+                                                                                <span style={{marginRight:"3.2px"}}>در این زمان با موضوع</span>
+                                                                                {/*&nbsp;*/}
+                                                                                <span style={{margin:"0px 3.2px"}}>{DataValue?.title}</span>
+                                                                                {/*&nbsp;*/}
+                                                                                در خواست مشاوره داده است
+                                                                                {/*{DataValue?.user?.first_name} {DataValue?.user?.last_name} در این زمان با موضوع{DataValue?.title}در خواست مشاوره داده است*/}
+                                                                            </Typography>
                                                                             <br />
-                                                                            {/*<Typography variant={"body1"} align={"left"} style={{direction:"ltr"}}>  {"." + "سلام" + "عنوان جلسه : "} </Typography>*/}
-                                                                            {/*<br />*/}
-                                                                            <Typography variant={"body1"} align={"left"} style={{direction:"ltr"}}> .{DataValue?.title + " : "} عنوان جلسه </Typography>
-                                                                            <br />
-                                                                            <Typography variant={"body1"} align={"left"} style={{direction:"ltr"}}> .{DataValue?.description + " : "} توضیحات جلسه </Typography>
+                                                                            <Typography variant={"body1"} align={"left"}>
+                                                                                {DataValue?.description}
+                                                                            </Typography>
                                                                         </div>
                                                                 }
                                                             {/*</div>*/}
@@ -583,12 +598,32 @@ const useStyles = makeStyles((theme) => ({
         '.MuiFormHelperText-root.Mui-error' : {
             fontFamily: 'IRANSansWeb',
         },
+        '.calendarContainer .selected button, .calendarContainer .selected button:active, .calendarContainer .selected button:focus, .calendarContainer .selected button:hover :not([disabled])':{
+            backgroundColor: '#2ab371',
+            color: '#fff'
+        },
+        '.today button':{
+            border: '3px solid #27bda0 !important'
+        },
+        '.selectToday':{
+            backgroundColor: '#2ab371',
+            "&:hover":{
+                backgroundColor: "#27bda0",
+            }
+        }
+    },
+    usersAvatar:{
+        width: theme.spacing(3),
+        height: theme.spacing(3),
+        marginRight:"4px",
     },
     paper: {
         padding: theme.spacing(2),
-      //  textAlign: 'center',
-      //  color: theme.palette.text.secondary,
-      //  alignItems: "center",
+        backgroundColor:"#f3f7fa",
+    },
+    paper2: {
+        padding: theme.spacing(2),
+        //backgroundColor:"#f3f7fa",
     },
     rightSection:{
         [theme.breakpoints.down('sm')]: {
@@ -634,10 +669,14 @@ const useStyles = makeStyles((theme) => ({
         color: '#3f407d'
     },
     toggleCalenderButton:{
+        backgroundColor: '#2ab371',
+        "&:hover":{
+            backgroundColor: "#27bda0",
+        },
         marginBottom : theme.spacing(1),
         display: "block",
         width: "100%",
-        backgroundColor: "#4285f4",
+        //backgroundColor: "#4285f4",
         color: "#fff",
         outline: "0",
         borderRadius: "5px",
@@ -651,9 +690,15 @@ const useStyles = makeStyles((theme) => ({
         //-webkit-transition-property: background;
         transitionProperty: "background",
 //-webkit-transition: .2s all ease-in-out;
-        "&:hover":{
-            backgroundColor: "#1266f1",
-        }
+//         "&:hover":{
+//             backgroundColor: "#1266f1",
+//         }
+    },
+    customizeButton2:{
+        backgroundColor:"#2ab371",
+        borderRadius:"50px",
+        padding:"3px 13px",
+        color:"white",
     },
     customizeButton:{
         color: "#fff",

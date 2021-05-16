@@ -49,6 +49,10 @@ export class TimeDialog extends Component{
     componentWillReceiveProps(nextProps, nextContext) {
         //if(this.props.open !== nextProps.open){
             this.setState({open:nextProps.open});
+            if(this.props.date !== nextProps.date){
+                this.state.startDateSend = new Date(nextProps.date);
+                this.state.endDateSend = new Date(nextProps.date);
+            }
         //}
     }
     handleChange = (event) => {
@@ -65,6 +69,7 @@ export class TimeDialog extends Component{
         this.setState({endTime:e.target.value});
       };
       const classes = this.props.classes;
+      console.log(this.props.date);
         return(
             <div>
             <Dialog

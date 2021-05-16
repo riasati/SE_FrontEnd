@@ -69,7 +69,6 @@ export class EditTimeDialog extends Component{
       };
       const classes = this.props.classes;
         return(
-            <div>
             <Dialog
             open={this.state.open}
             TransitionComponent={Transition}
@@ -134,7 +133,6 @@ export class EditTimeDialog extends Component{
               </div>
             </DialogActions>
           </Dialog>
-          </div>
         )
 }
 }

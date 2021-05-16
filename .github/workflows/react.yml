@@ -9,31 +9,54 @@ on:
 
 
 jobs:
-  build:
+  docker:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [14.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - run: npm i
+      - run: npm i
 
-    - run: npm test
+      - run: npm test
 
-    - name: build and push Docker Image
-      uses: mr-smithers-excellent/docker-build-push@v5
-      with:
-        image: pargar/docker101tutorial
-        registry: docker.io
-        username:  pargar  
-        password:  hojat12345
+      - name: build and push Docker Image
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          image: pargar/docker101tutorial
+          registry: docker.io
+          username:  pargar  
+          password:  hojat12345
+      - name: Archive Production Artifact
+          uses: actions/upload-artifact@master
+          with:
+            name: build
+            path: build
         
-    
+  deploy:
+    name: Deploy
+    needs: docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Download Artifact
+        uses: actions/download-artifact@master
+        with:
+          name: build
+          path: build
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting
+        env:
+          #FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }} 
+          FIREBASE_TOKEN: 1//05At31f3rlgtkCgYIARAAGAUSNwF-L9Ir8JxwgKx48DgGt2cR3z015jrfXt9lPwX0lHJviegIxbA9qqZ5EPYkTh1Y8Nk8d-jONKE 
 

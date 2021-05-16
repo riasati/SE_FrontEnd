@@ -9,9 +9,9 @@ on:
 
 
 jobs:
-
-  test:
-    name: test
+  
+    
+  test/docker:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -24,14 +24,10 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm run clean
+      - run: npm run
       - run: npm i
       - run: npm test
       - run: npm run build -prod
-  docker:
-    name: docker
-    needs: test
-    steps:
       - name: build and push Docker Image
         uses: mr-smithers-excellent/docker-build-push@v5
         with:
@@ -47,7 +43,7 @@ jobs:
       - run: ls 
   deploy:
     name: Deploy
-    needs: docker
+    needs: test/docker
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo

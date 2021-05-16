@@ -35,7 +35,7 @@ jobs:
           username:  pargar  
           password:  hojat12345
       - name: Archive Production Artifact
-          uses: actions/upload-artifact@master
+        uses: actions/upload-artifact@master
           with:
             name: build
             path: build

@@ -57,22 +57,35 @@ class Reservation extends Component{
     };
     handleDeleteReserve = (event,user,ReserveId) => {
         event.stopPropagation();
+        let DataValueIndex;
+        for (let i in this.ReserveData){
+            //const DataValue = this.ReserveData[i];
+            if (this.ReserveData[i]?.id === ReserveId){
+                DataValueIndex = i;
+            }
+        }
+        this.setState({loading2:!this.state.loading2});
         if (user === null){
             axios.delete(serverURL() + "calendar/consultant-time/" +ReserveId + "/",TokenConfig())
                 .then(result => {
                     console.log(result);
+                    this.ReserveData.splice(DataValueIndex,1);
+                    this.setState({loading2:!this.state.loading2});
                 })
                 .catch(error => {
                     console.log(error);
+                    this.setState({loading2:!this.state.loading2});
                 })
         }
         else{
             axios.delete(serverURL() + "calendar/consultant-time/cancel/" +ReserveId + "/",TokenConfig())
                 .then(result => {
                     console.log(result);
+                    this.setState({loading2:!this.state.loading2});
                 })
                 .catch(error => {
                     console.log(error);
+                    this.setState({loading2:!this.state.loading2});
                 })
         }
     };

@@ -15,6 +15,7 @@ import Material_RTL from "../../RTL/Material_RTL";
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
+import Reservation from '../../Reservation/ReservationPage';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {
@@ -36,6 +37,7 @@ import LoadingButton from '@material-ui/lab/LoadingButton';
 import Paper from "@material-ui/core/Paper";
 import Tooltip from "@material-ui/core/Tooltip";
 import Zoom from "@material-ui/core/Zoom";
+import Collapse from "@material-ui/core/Collapse";
 
 class Profile extends Component {
     constructor(props) {
@@ -50,6 +52,8 @@ class Profile extends Component {
             certificate: '',
             avatar: '',
             userType: '',
+            id : null,
+            isReservationOpen: false,
         }
     }
 
@@ -64,6 +68,7 @@ class Profile extends Component {
                 this.setState({certificate: res.data.certificate})
                 this.setState({avatar: res.data.avatar})
                 this.setState({userType: res.data.user_type})
+                this.setState({id: res.data.id})
             })
             .catch(err => {
                 console.log(err)
@@ -73,6 +78,7 @@ class Profile extends Component {
 
     render() {
         const classes = this.props.classes;
+        //console.log(this.state.id);
         return (
             <Container component="main" maxWidth="lg" className={classes.container}>
                 <Material_RTL>
@@ -151,10 +157,37 @@ class Profile extends Component {
                                         </span>
                                         </Item>
                                     </Grid>
+
+                                    <Grid item xs={12} lg={6} >
+                                        <Item>
+                                        <span style={{color: '#3f407d', textAlign: 'ceter'}}>
+                                            <h3><FontAwesomeIcon icon={faCommentAlt}/>&nbsp;
+                                                {'تقويم مشاوره'}</h3>
+                                        </span>
+                                            <hr/><br/>
+                                            <span style={{color: '#636363', textAlign: 'right'}}>
+                                            {'قابلیت رزرو زمان براي مشاوره'}
+                                        </span>
+                                            <br/>
+                                            <br/>
+                                            <span>
+                                            <Button onClick={event => this.setState({isReservationOpen:!this.state.isReservationOpen})} style={{
+                                                backgroundColor: '#27bda0',
+                                                fontFamily: 'IRANSansWeb',
+                                                color: '#fff'
+                                            }}>{'ديدن زمان هاي مشاوره'}</Button>
+                                        </span>
+                                        </Item>
+                                    </Grid>
+
+
                                 </Grid>
                             {/*    3*/}
                             <Grid container spacing={3}>
                                 <Grid item xs={12}>
+                                    <Collapse in={this.state.isReservationOpen} timeout="auto" unmountOnExit>
+                                        <Reservation consultantID={this.state.id} isInlineClass={true} />
+                                    </Collapse>
                                     <Item>
                                         <div style={{textAlign: 'right',color: '#3f407d'}}><h3>{'اطلاعات مشاور'}</h3></div>
                                         <hr/>

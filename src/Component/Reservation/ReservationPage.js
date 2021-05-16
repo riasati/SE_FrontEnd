@@ -25,6 +25,9 @@ import TokenConfig from "../../RequestConfig/TokenConfig";
 import {CalendarTodayRounded} from "@material-ui/icons";
 import {TimeDialog} from '../Reservation/setTimeDialog';
 import {EditTimeDialog} from '../Reservation/editTime';
+import TextField from "@material-ui/core/TextField";
+
+
 class Reservation extends Component{
     constructor(props) {
         super(props);
@@ -35,6 +38,9 @@ class Reservation extends Component{
             loading2:true,
             timeDialog: false,
             editTimeDialog: false,
+            title: null,
+            description:null,
+         //   consultantID: null,
         };
         this.getReserveOfDay(this.state.CalendarValue);
     }
@@ -70,12 +76,40 @@ class Reservation extends Component{
     handleEditReserve = (event) => {
         event.stopPropagation();
     };
-    handleNormalUserNewReserve = (event) => {
+    handleNormalUserNewReserve = (event,DataValue) => {
+        event.stopPropagation();
+        const calnederDate = this.state.CalendarValue.format("YYYY-MM-DD");
+        const postBody = {
+            "start_date": calnederDate + " " + DataValue.start_time,
+            "end_date": calnederDate + " " + DataValue.end_time,
+            "title": this.state.title,
+            "description": this.state.description
+        };
+       // console.log(DataValue.start_time);
+        axios.post(serverURL() + "calendar/reserve/" + this.props.consultantID + "/",postBody,TokenConfig())
+            .then(result => {
+                console.log(result);
+                this.setState({title:"",description:""});
+            })
+            .catch(error =>{
+                console.log(error);
+                this.setState({title:"",description:""});
+            });
     };
     handleOnSelectCalendar = (date) => {
         this.reservation.scrollIntoView({ behavior: "smooth" });
         this.setState({loading2:!this.state.loading2});
         this.getReserveOfDay(date);
+    };
+    handleTitleChange = (event) => {
+        this.state.title = event.target.value;
+        //if (this.state.title === null){
+        this.setState({});
+        //}
+    };
+    handleDescriptionChange = (event) => {
+        this.state.description = event.target.value;
+        this.setState({});
     };
     ReserveData = [];
 
@@ -83,6 +117,15 @@ class Reservation extends Component{
     ReservedTime = [];
     ObsoleteEmptyTime = [];
     ObsoleteReservedTime = [];
+
+    // componentWillReceiveProps(nextProps, nextContext) {
+    //     console.log("hello");
+    //     if (this.props.consultantID !== nextProps.consultantID){
+    //         this.state.consultantID = nextProps.consultantID;
+    //         console.log(this.state.cconsultantID);
+    //         console.log("here");
+    //     }
+    // }
 
     getReserveOfDay(inputValue) {
         const inputValueToServer = inputValue.format("YYYY-MM-DD");
@@ -100,7 +143,7 @@ class Reservation extends Component{
                 });
         }
         else {
-            axios.get(serverURL() + "calendar/reserve/" + this.props.ConsultantID + "/" + "?query= " + "&date=" + inputValueToServer,TokenConfig())
+            axios.get(serverURL() + "calendar/reserve/" + this.props.consultantID + "/" + "?query= " + "&date=" + inputValueToServer,TokenConfig())
                 .then(result => {
                     console.log(result);
                     this.ReservedTime = result.data?.data?.reserved_time;
@@ -255,23 +298,35 @@ class Reservation extends Component{
                                                             </div>
                                                         </AccordionSummary>
                                                         <AccordionDetails>
-                                                            <div>
+                                                            {/*<div>*/}
                                                                 {
                                                                     DataValue.user === null ?
                                                                         <Typography variant={"body1"} align={"left"}> در حال حاضر فردی درخواست نداده است </Typography>
                                                                         :
-                                                                        <Typography variant={"body1"} align={"left"} style={{direction:"ltr"}}> وقت مشاوره برقرار است {"@"+DataValue?.user?.username} با کاربر </Typography>
+                                                                        <div>
+                                                                            <Typography variant={"body1"} align={"left"} style={{direction:"ltr"}}> وقت مشاوره برقرار است {"@"+DataValue?.user?.username} با کاربر </Typography>
+                                                                            <br />
+                                                                            {/*<Typography variant={"body1"} align={"left"} style={{direction:"ltr"}}>  {"." + "سلام" + "عنوان جلسه : "} </Typography>*/}
+                                                                            {/*<br />*/}
+                                                                            <Typography variant={"body1"} align={"left"} style={{direction:"ltr"}}> .{DataValue?.title + " : "} عنوان جلسه </Typography>
+                                                                            <br />
+                                                                            <Typography variant={"body1"} align={"left"} style={{direction:"ltr"}}> .{DataValue?.description + " : "} توضیحات جلسه </Typography>
+                                                                        </div>
                                                                 }
-                                                                <br />
-                                                            </div>
+                                                            {/*</div>*/}
                                                         </AccordionDetails>
                                                     </Accordion>
                                                 ))
                                             :
                                             <div>
                                                 {
+                                                    this.EmptyTime.length === 0 && this.ReservedTime.length === 0 && this.ObsoleteEmptyTime.length === 0 && this.ObsoleteReservedTime.length === 0 ?
+                                                        <div className={classes.NoReserveSection}>
+                                                            <Typography variant={"h6"} align={"left"} style={{textAlign:"center",alignSelf:"center",marginLeft:"auto",marginRight:"auto"}}> رزوری وجود ندارد </Typography>
+                                                        </div>
+                                                        :
                                                     this.EmptyTime.map((DataValue, index) => (
-                                                        <Accordion key={index} expanded={true}>
+                                                        <Accordion key={index}>
                                                             <AccordionSummary
                                                                 aria-controls="panel1a-content"
                                                                 id="panel1a-header"
@@ -301,34 +356,34 @@ class Reservation extends Component{
                                                                              style={{
                                                                                  marginRight: "8px",
                                                                                  marginLeft: "8px"
-                                                                             }}> {DataValue.start_time} </div>
+                                                                             }}> {DataValue.end_time} </div>
                                                                     </div>
                                                                     <div>
                                                                         <Button
-                                                                            onClick={this.handleNormalUserNewReserve}
+                                                                            style={{minWidth: "80px"}}
+                                                                            onClick={event => this.handleNormalUserNewReserve(event,DataValue)}
                                                                             color={"secondary"}
-                                                                            variant={"contained"}> رزور </Button>
+                                                                            variant={"contained"}> رزرو </Button>
                                                                     </div>
                                                                 </div>
                                                             </AccordionSummary>
-                                                            {/*{*/}
-                                                            {/*this.props.isInlineClass === undefined ?*/}
-                                                            {/*<AccordionDetails>*/}
-                                                            {/*<div>*/}
-                                                            {/*<Typography variant={"body1"} align={"left"}> در حال حاضر فردی درخواست نداده است </Typography>*/}
-                                                            {/*<br />*/}
-                                                            {/*<Typography variant={"body1"} align={"left"}> با آقای فلان وقت مشاوره برقرار است </Typography>*/}
-                                                            {/*</div>*/}
-                                                            {/*</AccordionDetails>*/}
-                                                            {/*:*/}
-                                                            {/*null*/}
-                                                            {/*}*/}
+                                                            <AccordionDetails>
+                                                            <div style={{   width: "100%",
+                                                                display: "flex",
+                                                                flexDirection: "row",
+                                                                justifyContent: "space-evenly",}}>
+                                                                <TextField id="outlined-basic" label="عنوان جلسه" variant="outlined"  value={this.state.title}
+                                                                           onChange={this.handleTitleChange} />
+                                                                <TextField id="outlined-basic" label="توضيحات جلسه" variant="outlined"  value={this.state.description}
+                                                                           onChange={this.handleDescriptionChange} />
+                                                            </div>
+                                                            </AccordionDetails>
                                                         </Accordion>
                                                     ))
                                                 }
                                                 {
                                                     this.ReservedTime.map((DataValue,index) => (
-                                                        <Accordion key={index} expanded={true}>
+                                                        <Accordion key={index} expanded={false}>
                                                             <AccordionSummary
                                                                 aria-controls="panel1a-content"
                                                                 id="panel1a-header"
@@ -358,35 +413,36 @@ class Reservation extends Component{
                                                                              style={{
                                                                                  marginRight: "8px",
                                                                                  marginLeft: "8px"
-                                                                             }}> {DataValue.start_time} </div>
+                                                                             }}> {DataValue.end_time} </div>
                                                                     </div>
                                                                     <div>
                                                                         <Button
-                                                                            //onClick={this.handleNormalUserNewReserve}
-                                                                            disable
+                                                                            //onClick={event => this.handleNormalUserNewReserve(event,DataValue)}
+                                                                            disabled
                                                                             color={"secondary"}
-                                                                            variant={"contained"}> رزور شده است </Button>
+                                                                            variant={"contained"}> رزرو شده </Button>
                                                                     </div>
                                                                 </div>
                                                             </AccordionSummary>
-                                                            {/*{*/}
-                                                            {/*this.props.isInlineClass === undefined ?*/}
+
                                                             {/*<AccordionDetails>*/}
-                                                            {/*<div>*/}
-                                                            {/*<Typography variant={"body1"} align={"left"}> در حال حاضر فردی درخواست نداده است </Typography>*/}
-                                                            {/*<br />*/}
-                                                            {/*<Typography variant={"body1"} align={"left"}> با آقای فلان وقت مشاوره برقرار است </Typography>*/}
-                                                            {/*</div>*/}
+                                                                {/*<div style={{   width: "100%",*/}
+                                                                    {/*display: "flex",*/}
+                                                                    {/*flexDirection: "row",*/}
+                                                                    {/*justifyContent: "space-evenly",}}>*/}
+                                                                {/*<TextField id="outlined-basic" label="عنوان جلسه" variant="outlined"  value={this.state.title}*/}
+                                                                           {/*onChange={this.handleTitleChange} />*/}
+                                                                {/*<TextField id="outlined-basic" label="توضيحات جلسه" variant="outlined"  value={this.state.description}*/}
+                                                                           {/*onChange={this.handleDescriptionChange} />*/}
+                                                                {/*</div>*/}
                                                             {/*</AccordionDetails>*/}
-                                                            {/*:*/}
-                                                            {/*null*/}
-                                                            {/*}*/}
+
                                                         </Accordion>
                                                     ))
                                                 }
                                                 {
                                                     this.ObsoleteEmptyTime.map((DataValue,index) => (
-                                                        <Accordion key={index} expanded={true}>
+                                                        <Accordion key={index} expanded={false} disabled>
                                                             <AccordionSummary
                                                                 aria-controls="panel1a-content"
                                                                 id="panel1a-header"
@@ -420,9 +476,9 @@ class Reservation extends Component{
                                                                     </div>
                                                                     <div>
                                                                         <Button
-                                                                            onClick={this.handleNormalUserNewReserve}
+                                                                   //         onClick={this.handleNormalUserNewReserve}
                                                                             color={"secondary"}
-                                                                            variant={"contained"}> رزور </Button>
+                                                                            variant={"contained"}> تمام شده </Button>
                                                                     </div>
                                                                 </div>
                                                             </AccordionSummary>
@@ -443,7 +499,7 @@ class Reservation extends Component{
                                                 }
                                                 {
                                                     this.ObsoleteReservedTime.map((DataValue,index) => (
-                                                        <Accordion key={index} expanded={true}>
+                                                        <Accordion key={index} expanded={false} disabled>
                                                             <AccordionSummary
                                                                 aria-controls="panel1a-content"
                                                                 id="panel1a-header"
@@ -477,9 +533,9 @@ class Reservation extends Component{
                                                                     </div>
                                                                     <div>
                                                                         <Button
-                                                                            onClick={this.handleNormalUserNewReserve}
+                                                                        //    onClick={this.handleNormalUserNewReserve}
                                                                             color={"secondary"}
-                                                                            variant={"contained"}> رزور </Button>
+                                                                            variant={"contained"}> تمام شده </Button>
                                                                     </div>
                                                                 </div>
                                                             </AccordionSummary>

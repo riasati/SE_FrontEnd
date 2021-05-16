@@ -11,16 +11,19 @@ import TextField from '@material-ui/core/TextField';
 import axios from "axios";
 import serverURL from "../../RequestConfig/serverURL";
 import TokenConfig from "../../RequestConfig/TokenConfig";
-export class TimeDialog extends Component{
+export class EditTimeDialog extends Component{
     constructor(props){
         super(props);
         this.state = {
             open : props.open,
-            startTime : '07:30',
-            endTime : '08:25',
+            startTime : props.startDate,
+            endTime : props.endDate,
             startDateSend : new Date(props.date),
             endDateSend : new Date(props.date),
+            consultantTimeId : props.ConsultantTimeId,
         }
+        console.log(props.startDate+"-----------------------")
+      console.log(props.endDate+"--------------------------")
     }
     handleClose = () => {
         this.setState({open:false});
@@ -38,7 +41,7 @@ export class TimeDialog extends Component{
         "end_date": this.state.endDateSend,
       }
 
-      axios.post(serverURL() + "calendar/consultant-time/",body,TokenConfig())
+      axios.put(serverURL() + "calendar/consultant-time/"+ this.state.consultantTimeId + "/",body,TokenConfig())
       .then(res=>{
         console.log(res)
       })
@@ -165,7 +168,7 @@ const useStyles = makeStyles((theme) => ({
 export default () =>{
     const classes = useStyles();
     return(
-        <TimeDialog classes={classes}/>
+        <EditTimeDialog classes={classes}/>
     )
 }
 

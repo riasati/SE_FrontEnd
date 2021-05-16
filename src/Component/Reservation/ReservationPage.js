@@ -24,6 +24,7 @@ import serverURL from "../../RequestConfig/serverURL";
 import TokenConfig from "../../RequestConfig/TokenConfig";
 import {CalendarTodayRounded} from "@material-ui/icons";
 import {TimeDialog} from '../Reservation/setTimeDialog';
+import {EditTimeDialog} from '../Reservation/editTime';
 class Reservation extends Component{
     constructor(props) {
         super(props);
@@ -33,6 +34,7 @@ class Reservation extends Component{
             isGregorian : false,
             loading2:true,
             timeDialog: false,
+            editTimeDialog: false,
         };
         this.getReserveOfDay(this.state.CalendarValue);
     }
@@ -127,6 +129,9 @@ class Reservation extends Component{
     handleStateTimeDialog = () =>{
         this.setState({timeDialog:!this.state.timeDialog})
     };
+    handleStateEditTimeDialog = () =>{
+        this.setState({editTimeDialog:!this.state.editTimeDialog})
+    };
     userType = localStorage.getItem('userType');
     render() {
         const classes = this.props.classes;
@@ -184,6 +189,7 @@ class Reservation extends Component{
                                         }
                                     </div>
                                     <TimeDialog open={this.state.timeDialog} handleParentState={this.handleStateTimeDialog} date={this.state.CalendarValue}/>
+                                    
                                     <div style={{ clear: "both" }}
                                          ref={(el) => { this.reservation = el; }}>
                                     </div>
@@ -227,13 +233,14 @@ class Reservation extends Component{
                                                                                  TransitionComponent={Zoom} >
                                                                             <IconButton
                                                                                 className={classes.iconButtonInterAccordionStyle}
-                                                                                onClick={this.handleEditReserve}
+                                                                                onClick={this.handleStateEditTimeDialog}
                                                                             >
                                                                                 <Edit style={{ fontSize: 30}} />
                                                                             </IconButton>
                                                                         </Tooltip>
                                                                         : null
                                                                     }
+                                                                    <EditTimeDialog open={this.state.editTimeDialog} handleParentState={this.handleStateEditTimeDialog} startDate={DataValue.start_date} endDate={DataValue.end_date} ConsultantTimeId={DataValue.id} date={this.state.CalendarValue}/>
                                                                     <Tooltip title={<Typography variant={"body2"} align={"left"} style={{color:"white"}}>{this.userType !== "normal_user" ? "حذف رزرو" : "کنسل رزرو"}</Typography>}
                                                                              placement="left"
                                                                              TransitionComponent={Zoom} >
@@ -628,7 +635,8 @@ export default (props) =>{
     const classes = useStyles();
     const p = React.useState(false);
     const timeDialogIsOpen = React.useState(false);
+    const editTimeDialogIsOpen = React.useState(false);
     return(
-        <Reservation classes={classes} p={p} consultantID={props.consultantID} isInlineClass={props.isInlineClass} timeDialogIsOpen={timeDialogIsOpen}/>
+        <Reservation classes={classes} p={p} consultantID={props.consultantID} isInlineClass={props.isInlineClass} timeDialogIsOpen={timeDialogIsOpen} editTimeDialogIsOpen={editTimeDialogIsOpen}/>
     )
 }

@@ -36,9 +36,9 @@ jobs:
           password:  hojat12345
       - name: Archive Production Artifact
         uses: actions/upload-artifact@master
-          with:
-            name: build
-            path: build
+        with:
+          name: build
+          path: build
         
   deploy:
     name: Deploy

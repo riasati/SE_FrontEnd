@@ -29,7 +29,7 @@ import TextField from "@material-ui/core/TextField";
 import { faClock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Avatar from "@material-ui/core/Avatar";
-
+import SuccessDialog from "../../RequestConfig/SuccessDialog";
 
 class Reservation extends Component{
     constructor(props) {
@@ -43,10 +43,14 @@ class Reservation extends Component{
             editTimeDialog: false,
             title: null,
             description:null,
+            setSuccessDialog:false,
          //   consultantID: null,
         };
         this.getReserveOfDay(this.state.CalendarValue);
     }
+    handleStateSuccessDialog = () =>{
+        this.setState({setSuccessDialog:!this.state.setSuccessDialog})
+    };
     componentDidMount() {
         this.setState({loading:false});
     }
@@ -70,6 +74,7 @@ class Reservation extends Component{
                 .then(result => {
                     console.log(result);
                     this.ReserveData.splice(DataValueIndex,1);
+                    this.setState({setSuccessDialog:true});
                     this.setState({loading2:!this.state.loading2});
                 })
                 .catch(error => {
@@ -81,7 +86,19 @@ class Reservation extends Component{
             axios.delete(serverURL() + "calendar/consultant-time/cancel/" +ReserveId + "/",TokenConfig())
                 .then(result => {
                     console.log(result);
-                    this.setState({loading2:!this.state.loading2});
+
+                    axios.delete(serverURL() + "calendar/consultant-time/" +ReserveId + "/",TokenConfig())
+                        .then(result => {
+                            console.log(result);
+                            this.ReserveData.splice(DataValueIndex,1);
+                            this.setState({setSuccessDialog:true});
+                            this.setState({loading2:!this.state.loading2});
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            this.setState({loading2:!this.state.loading2});
+                        });
+
                 })
                 .catch(error => {
                     console.log(error);
@@ -199,11 +216,13 @@ class Reservation extends Component{
             this.setState({timeDialog:true});
         }
         const closeTimeDialog = () => setTimeDialogIsOpen(false);
+        const calnederDate = this.state.CalendarValue.format("YYYY-MM-DD");
         return (
             <LoadingOverlay active={this.state.loading} spinner text={""}>
                 <Container maxWidth="lg" style={{paddingLeft:"0px",paddingRight:"0px"}}>
                     <CssBaseline/>
                     <Theme>
+                        <SuccessDialog open={this.state.setSuccessDialog} handleParentState={this.handleStateSuccessDialog} />
                         <Paper className={ this.props.isInlineClass === undefined ? classes.paper : classes.paper2}>
                             {
                                 this.props.isInlineClass === undefined ?
@@ -371,24 +390,25 @@ class Reservation extends Component{
                                                                         display: "flex",
                                                                         flexDirection: "row",
                                                                         justifyContent: "flex-start",
-                                                                        alignItems: "baseline"
+                                                                        alignItems: "center"
                                                                     }}>
+                                                                        <FontAwesomeIcon icon={faClock} style={{color: '#2ab371',fontSize:"22px",marginLeft:"4px"}}/>
                                                                         <Typography variant={"body1"} component={"span"}
                                                                                     align={"left"}
                                                                                     style={{marginLeft: "8px"}}>ساعت</Typography>
-                                                                        <div className={classes.customizeButton}
-                                                                             style={{marginLeft: "8px"}}> {DataValue.start_time} </div>
+                                                                        <div className={classes.customizeButton2}
+                                                                             style={{marginLeft: "8px"}}> {this.getTimeFromStringDate(calnederDate + "T" +DataValue.start_time + "Z")} </div>
                                                                         <Typography variant={"body1"} component={"span"}
                                                                                     align={"left"}>-</Typography>
-                                                                        <div className={classes.customizeButton}
+                                                                        <div className={classes.customizeButton2}
                                                                              style={{
                                                                                  marginRight: "8px",
                                                                                  marginLeft: "8px"
-                                                                             }}> {DataValue.end_time} </div>
+                                                                             }}> {this.getTimeFromStringDate(calnederDate + "T" +DataValue.end_time + "Z")} </div>
                                                                     </div>
                                                                     <div>
                                                                         <Button
-                                                                            style={{minWidth: "80px"}}
+                                                                            style={{minWidth: "87px"}}
                                                                             onClick={event => this.handleNormalUserNewReserve(event,DataValue)}
                                                                             color={"secondary"}
                                                                             variant={"contained"}> رزرو </Button>
@@ -428,24 +448,26 @@ class Reservation extends Component{
                                                                         display: "flex",
                                                                         flexDirection: "row",
                                                                         justifyContent: "flex-start",
-                                                                        alignItems: "baseline"
+                                                                        alignItems: "center"
                                                                     }}>
+                                                                        <FontAwesomeIcon icon={faClock} style={{color: '#2ab371',fontSize:"22px",marginLeft:"4px"}}/>
                                                                         <Typography variant={"body1"} component={"span"}
                                                                                     align={"left"}
                                                                                     style={{marginLeft: "8px"}}>ساعت</Typography>
-                                                                        <div className={classes.customizeButton}
-                                                                             style={{marginLeft: "8px"}}> {DataValue.start_time} </div>
+                                                                        <div className={classes.customizeButton2}
+                                                                             style={{marginLeft: "8px"}}> {this.getTimeFromStringDate(calnederDate + "T" +DataValue.start_time + "Z")} </div>
                                                                         <Typography variant={"body1"} component={"span"}
                                                                                     align={"left"}>-</Typography>
-                                                                        <div className={classes.customizeButton}
+                                                                        <div className={classes.customizeButton2}
                                                                              style={{
                                                                                  marginRight: "8px",
                                                                                  marginLeft: "8px"
-                                                                             }}> {DataValue.end_time} </div>
+                                                                             }}> {this.getTimeFromStringDate(calnederDate + "T" +DataValue.end_time + "Z")} </div>
                                                                     </div>
                                                                     <div>
                                                                         <Button
                                                                             //onClick={event => this.handleNormalUserNewReserve(event,DataValue)}
+                                                                            style={{minWidth: "87px"}}
                                                                             disabled
                                                                             color={"secondary"}
                                                                             variant={"contained"}> رزرو شده </Button>
@@ -487,20 +509,21 @@ class Reservation extends Component{
                                                                         display: "flex",
                                                                         flexDirection: "row",
                                                                         justifyContent: "flex-start",
-                                                                        alignItems: "baseline"
+                                                                        alignItems: "center"
                                                                     }}>
+                                                                        <FontAwesomeIcon icon={faClock} style={{color: '#2ab371',fontSize:"22px",marginLeft:"4px"}}/>
                                                                         <Typography variant={"body1"} component={"span"}
                                                                                     align={"left"}
                                                                                     style={{marginLeft: "8px"}}>ساعت</Typography>
-                                                                        <div className={classes.customizeButton}
-                                                                             style={{marginLeft: "8px"}}> {DataValue.start_time} </div>
+                                                                        <div className={classes.customizeButton2}
+                                                                             style={{marginLeft: "8px"}}> {this.getTimeFromStringDate(calnederDate + "T" +DataValue.start_time + "Z")} </div>
                                                                         <Typography variant={"body1"} component={"span"}
                                                                                     align={"left"}>-</Typography>
-                                                                        <div className={classes.customizeButton}
+                                                                        <div className={classes.customizeButton2}
                                                                              style={{
                                                                                  marginRight: "8px",
                                                                                  marginLeft: "8px"
-                                                                             }}> {DataValue.start_time} </div>
+                                                                             }}> {this.getTimeFromStringDate(calnederDate + "T" +DataValue.end_time + "Z")} </div>
                                                                     </div>
                                                                     <div>
                                                                         <Button
@@ -544,20 +567,21 @@ class Reservation extends Component{
                                                                         display: "flex",
                                                                         flexDirection: "row",
                                                                         justifyContent: "flex-start",
-                                                                        alignItems: "baseline"
+                                                                        alignItems: "center"
                                                                     }}>
+                                                                        <FontAwesomeIcon icon={faClock} style={{color: '#2ab371',fontSize:"22px",marginLeft:"4px"}}/>
                                                                         <Typography variant={"body1"} component={"span"}
                                                                                     align={"left"}
                                                                                     style={{marginLeft: "8px"}}>ساعت</Typography>
-                                                                        <div className={classes.customizeButton}
-                                                                             style={{marginLeft: "8px"}}> {DataValue.start_time} </div>
+                                                                        <div className={classes.customizeButton2}
+                                                                             style={{marginLeft: "8px"}}> {this.getTimeFromStringDate(calnederDate + "T" +DataValue.start_time + "Z")} </div>
                                                                         <Typography variant={"body1"} component={"span"}
                                                                                     align={"left"}>-</Typography>
-                                                                        <div className={classes.customizeButton}
+                                                                        <div className={classes.customizeButton2}
                                                                              style={{
                                                                                  marginRight: "8px",
                                                                                  marginLeft: "8px"
-                                                                             }}> {DataValue.start_time} </div>
+                                                                             }}> {this.getTimeFromStringDate(calnederDate + "T" +DataValue.end_time + "Z")} </div>
                                                                     </div>
                                                                     <div>
                                                                         <Button

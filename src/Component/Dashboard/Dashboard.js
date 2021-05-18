@@ -69,6 +69,9 @@ const useStyles = makeStyles((theme) => ({
         '.fa-layer-group': {
             marginLeft: '30%',
         },
+        '.fa-calendar-alt': {
+            marginLeft: '30%',
+        },
         '.MuiToolbar-root': {
             backgroundColor: '#3aadd9',
         },
@@ -434,7 +437,7 @@ export default function Dashboard(props) {
                                     <Route path="/Channel/:channelId">
                                         <Channel />
                                     </Route>
-                                    <Route path="/Reservation">
+                                    <Route path="/Calendar">
                                         <Reservation />
                                     </Route>
                                 </Switch>

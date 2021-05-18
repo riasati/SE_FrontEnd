@@ -31,7 +31,7 @@ class App extends Component {
                     <Route path="/Profile/:username" children={<Dashboard title={'پروفایل'}/>} component={Profile}/>
                     <Route path="/Channels" children={<Dashboard title={'کانال ها'}/>} component={Channels}/>
                     <Route path="/GroupingChannel" children={<Dashboard title={'دسته بندی'}/>} component={GroupingChannel}/>
-                    <Route path="/Reservation" children={<Dashboard title={'داشبورد'} />} component={Reservation} />
+                    <Route path="/Calendar" children={<Dashboard title={'داشبورد'} />} component={Reservation} />
                      {/*<Route path="/Dashboard"  component={Dashboard}/>*/}
                 </Router>
             </div>

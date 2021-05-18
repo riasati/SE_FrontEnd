@@ -230,7 +230,7 @@ class Reservation extends Component{
                                     </div>
                             }
                             <Grid container direction={"row"} spacing={2} justify="space-evenly">
-                                <Grid item sm={6} xs={12} className={classes.rightSection}>
+                                <Grid item md={6} sm={12} xs={12} className={classes.rightSection}>
                                     <LoadingOverlay active={this.state.loading2} spinner text={""}>
                                     <div className={classes.rowOfSelectedDay}>
                                     <Typography variant={"h6"} align={"left"}> رزرو های روز {this.getCustomFormat(this.state.CalendarValue,this.state.isGregorian)} </Typography>
@@ -586,7 +586,7 @@ class Reservation extends Component{
                                     }
                                     </LoadingOverlay>
                                 </Grid>
-                                <Grid item sm={6} xs={12} className={classes.leftSection}>
+                                <Grid item md={6} sm={12} xs={12} className={classes.leftSection}>
                                     <Calendar
                                         value={this.state.CalendarValue}
                                       //  showToggleButton
@@ -639,18 +639,18 @@ const useStyles = makeStyles((theme) => ({
         //backgroundColor:"#f3f7fa",
     },
     rightSection:{
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             order: 2,
         },
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             order: 1,
         },
     },
     leftSection:{
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             order: 1,
         },
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             order: 2,
         },
     },

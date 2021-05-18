@@ -10,7 +10,6 @@ import Slide from '@material-ui/core/Slide';
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from '@material-ui/icons/Close';
-import Grid from '@material-ui/core/Grid';
 import Theme from "../Component/Theme";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 

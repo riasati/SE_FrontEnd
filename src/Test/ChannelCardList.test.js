@@ -26,10 +26,10 @@ it("ChannelCardList Test", () => {
   //expect(container.textContent).toContain("Jenny");
 
   expect(pretty(container.innerHTML)).toMatchInlineSnapshot(`
-    "<ul class=\\"MuiList-root MuiList-dense MuiList-padding MuiList-subheader\\">
+    "<nav class=\\"MuiList-root MuiList-dense MuiList-padding MuiList-subheader\\">
       <li class=\\"MuiListSubheader-root MuiListSubheader-sticky\\">
         <h6 class=\\"MuiTypography-root MuiTypography-h6 MuiTypography-gutterBottom MuiTypography-alignLeft\\">Hello</h6>
       </li>
-    </ul>"
+    </nav>"
   `);
 });

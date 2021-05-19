@@ -24,11 +24,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - run: npm run clear
-
       - run: npm i
-
       - run: npm test
-
       - name: build and push Docker Image
         uses: mr-smithers-excellent/docker-build-push@v5
         with:
@@ -36,12 +33,6 @@ jobs:
           registry: docker.io
           username:  pargar  
           password:  hojat12345
-      - name: Archive Production Artifact
-        uses: actions/upload-artifact@master
-        with:
-          name: dist
-          path: dist
-      - run: ls 
   deploy:
     name: Deploy
     needs: docker

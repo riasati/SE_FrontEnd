@@ -39,14 +39,25 @@ jobs:
           name: build
           path: build
 
-      - name: build and push Docker Image
-        uses: mr-smithers-excellent/docker-build@v5
-      #  with:
-      #    image: pargar/docker101tutorial
-      #    registry: docker.io
-      #    username:  pargar  
-      #    password:  hojat12345
+  test:
+    name: Run test suite
+    env:
+      COMPOSE_FILE: .ci/docker-compose.yml
+      DOCKER_USER: pargar
+      DOCKER_PASS: hojat12345
 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to DockerHub
+        run: docker login -u $DOCKER_USER -p $DOCKER_PASS
+
+      - name: Build docker images
+        run: docker-compose build
+
+      - name: Run tests
+        run: docker-compose run test
 
   deploy:
     name: Deploy

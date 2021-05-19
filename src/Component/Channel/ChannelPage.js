@@ -411,13 +411,13 @@ class Channel extends Component {
         }
         return(
             <LoadingOverlay active={this.state.loading} spinner text={""}>
-                <Container maxWidth="lg">
+                <Container maxWidth="lg" style={{paddingLeft:"0px",paddingRight:"0px"}}>
                     <CssBaseline/>
                     <Theme>
                     {/*<Material_RTL>*/}
                         {/*<RTL>*/}
                             <div className={classes.rootDiv} >
-                                <Grid container direction={"column"} spacing={2} justify="space-evenly" >
+                                <Grid container direction={"column"} justify="space-evenly" >
                                             <Dialog
                                                 open={this.state.showInfo}
                                                 aria-labelledby="alert-dialog-slide-title1"
@@ -608,7 +608,7 @@ class Channel extends Component {
                                                                     this.channelsList.map((value,index) =>
                                                                     {
                                                                         if (value?.user_role === "consultant" || value?.user_role === "secretary"){
-                                                                            return <ChannelCard key={index} name={value?.name} imageSource={value?.avatar} description={value?.description} />
+                                                                            return <ChannelCard key={index} name={value?.name} id={value?.id} imageSource={value?.avatar} description={value?.description} />
                                                                         }
                                                                     })
                                                                 }
@@ -625,6 +625,7 @@ class Channel extends Component {
                                                                                 return <ChannelCard name={value?.name}
                                                                                                     imageSource={value?.avatar}
                                                                                                     key={index}
+                                                                                                    id={value?.id}
                                                                                                     description={value?.description}/>
                                                                             }
                                                                         })
@@ -760,10 +761,10 @@ const useStyles = makeStyles((theme) => ({
             fontFamily: 'IRANSansWeb',
         },
     },
-    rootDiv:{
-        padding:theme.spacing(2),
-        flexGrow: 1,
-    },
+    // rootDiv:{
+    //     padding:theme.spacing(2),
+    //     flexGrow: 1,
+    // },
     pageEdit :{
     width: "300px",
     height: "100%",

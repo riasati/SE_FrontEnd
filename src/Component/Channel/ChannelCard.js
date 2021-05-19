@@ -15,9 +15,11 @@ class ChannelCard extends Component{
     }
     render() {
         const classes = this.props.classes;
+         const url = "/Channel/" + this.props.id;
+        //const url = "/Channel/" + "43";
 
         return(
-            <ListItem button divider dense >
+            <ListItem button divider dense href={url} component={"a"}>
                 <ListItemAvatar>
                     <Avatar alt={this.props.name} src={this.props.imageSource} className={classes.channelsAvatar}>
                     </Avatar>
@@ -57,6 +59,6 @@ export default (props) =>{
     const classes = useStyles();
     const p = React.useState(false);
     return(
-        <ChannelCard classes={classes} p={p} name={props.name} imageSource={props.imageSource} description={props.description} number={props.number}/>
+        <ChannelCard classes={classes} p={p} name={props.name} imageSource={props.imageSource} description={props.description} id={props.id} number={props.number}/>
     )
 }

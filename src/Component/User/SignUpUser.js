@@ -90,6 +90,7 @@ class SignUpUser extends Component {
                     console.log(res);
                     const token ="Token "+ res.data.token;
                     localStorage.setItem('token', token);
+                    localStorage.setItem('userType', res.data?.data?.user_type);
                     window.location.href = "/Dashboard";
                 })
                 .catch(err=>{

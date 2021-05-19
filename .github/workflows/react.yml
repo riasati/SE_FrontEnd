@@ -5,7 +5,7 @@ name: CI/CD
 
 on:
   pull_request:
-    branches: [ t ]
+    branches: [ develop ]
 
 
 jobs:

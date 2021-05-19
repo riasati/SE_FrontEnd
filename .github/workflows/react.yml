@@ -5,7 +5,7 @@ name: CI/CD
 
 on:
   push:
-    branches: [ testCI/CD,develop ]
+    branches: [ testCI/CD ]
   pull_request:
     branches: [develop]
 

@@ -24,6 +24,13 @@ jobs:
 
       - run: npm i
       - run: npm test
+      -run: npm run build
+      -name: Archive production artifact
+       uses: actions/upload-artifact@main
+       with:
+        name: dist
+        path: dist
+        
       - name: build and push Docker Image
         uses: mr-smithers-excellent/docker-build-push@v5
         with:
@@ -31,12 +38,7 @@ jobs:
           registry: docker.io
           username:  pargar  
           password:  hojat12345
-      -run: npm run build
-      -name: Archive production artifact
-       uses: actions/upload-artifact@main
-       with:
-        name: dist
-        path: dist
+
 
   deploy:
     name: Deploy

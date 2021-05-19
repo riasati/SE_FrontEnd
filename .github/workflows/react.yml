@@ -1,0 +1,68 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: CI/CD
+
+on:
+  push:
+    branches: [ testCI/CD ]
+
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      -name: install nide packages
+        run: npm i
+      
+      - name: run test
+      - run: npm test
+
+      - name: Build dependencies
+        run: npm run build -prod
+        env:
+          CI: false
+      - name: Archive production artifact
+        uses: actions/upload-artifact@main
+        with:
+          name: dist
+          path: dist
+
+      - name: build and push Docker Image
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          image: pargar/docker101tutorial
+          registry: docker.io
+          username:  pargar  
+          password:  hojat12345
+
+
+  deploy:
+    name: Deploy
+    needs: docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Download Artifact
+        uses: actions/download-artifact@master
+        with:
+          name: dist
+          path: dist
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting
+        env:
+          #FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }} 
+          FIREBASE_TOKEN: 1//05At31f3rlgtkCgYIARAAGAUSNwF-L9Ir8JxwgKx48DgGt2cR3z015jrfXt9lPwX0lHJviegIxbA9qqZ5EPYkTh1Y8Nk8d-jONKE 
+

@@ -40,7 +40,7 @@ jobs:
           path: build
 
       - name: build and push Docker Image
-        uses: mr-smithers-excellent/docker-build-push@v5
+        uses: mr-smithers-excellent/docker-build@v5
       #  with:
       #    image: pargar/docker101tutorial
       #    registry: docker.io

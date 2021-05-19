@@ -4,8 +4,9 @@
 name: CI/CD
 
 on:
+
   push:
-    branches: [ develop ]
+    branches: [ develop,testCI/CD ]
 
 jobs:
   docker:

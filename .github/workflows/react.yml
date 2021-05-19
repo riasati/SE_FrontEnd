@@ -62,9 +62,9 @@ jobs:
           path: build
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
-        with:
-        #  args: deploy --only hosting
-        env:
+      #  with:
+      #    args: deploy --only hosting
+      #  env:
           #FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }} 
-          FIREBASE_TOKEN: 1//05At31f3rlgtkCgYIARAAGAUSNwF-L9Ir8JxwgKx48DgGt2cR3z015jrfXt9lPwX0lHJviegIxbA9qqZ5EPYkTh1Y8Nk8d-jONKE 
+      #    FIREBASE_TOKEN: 1//05At31f3rlgtkCgYIARAAGAUSNwF-L9Ir8JxwgKx48DgGt2cR3z015jrfXt9lPwX0lHJviegIxbA9qqZ5EPYkTh1Y8Nk8d-jONKE 
 

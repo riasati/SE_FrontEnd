@@ -161,7 +161,7 @@ class Profile extends Component {
                                     <Grid item xs={12} lg={6} >
                                         <Item>
                                         <span style={{color: '#3f407d', textAlign: 'ceter'}}>
-                                            <h3><FontAwesomeIcon icon={faCalendarAlt}/>&nbsp;
+                                            <h3><FontAwesomeIcon icon={faCalendarAlt} style={{margin:"0px"}}/>&nbsp;
                                                 {'تقويم مشاوره'}</h3>
                                         </span>
                                             <hr/><br/>

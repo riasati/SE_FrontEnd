@@ -229,7 +229,7 @@ class Reservation extends Component{
                                     <div>
                                         <Typography variant={"h5"} align={"left"} >
                                             <span style={{fontWedight:"700"}}>
-                                            <FontAwesomeIcon icon={faCalendarAlt} />
+                                            <FontAwesomeIcon icon={faCalendarAlt} style={{margin:"0px"}} />
                                             &nbsp;
                                             {'تقویم'}
                                             </span>
@@ -240,7 +240,7 @@ class Reservation extends Component{
                                     <div>
                                         <Typography variant={"h5"} align={"left"} >
                                             <span style={{fontWedight:"700"}}>
-                                                <FontAwesomeIcon icon={faCalendarAlt} />
+                                                <FontAwesomeIcon icon={faCalendarAlt} style={{margin:"0px"}}/>
                                                 &nbsp;
                                                 {'عملیات رزرو'}
                                             </span>

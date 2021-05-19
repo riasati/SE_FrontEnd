@@ -22,8 +22,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-
-      - run: npm run clear
+          
       - run: npm i
       - run: npm test
       - name: build and push Docker Image

@@ -26,7 +26,7 @@ import {CalendarTodayRounded} from "@material-ui/icons";
 import {TimeDialog} from '../Reservation/setTimeDialog';
 import {EditTimeDialog} from '../Reservation/editTime';
 import TextField from "@material-ui/core/TextField";
-import { faClock } from '@fortawesome/free-solid-svg-icons';
+import { faClock,faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Avatar from "@material-ui/core/Avatar";
 import SuccessDialog from "../../RequestConfig/SuccessDialog";
@@ -229,7 +229,7 @@ class Reservation extends Component{
                                     <div>
                                         <Typography variant={"h5"} align={"left"} >
                                             <span style={{fontWedight:"700"}}>
-                                            <CalendarTodayRounded />
+                                            <FontAwesomeIcon icon={faCalendarAlt} />
                                             &nbsp;
                                             {'تقویم'}
                                             </span>
@@ -240,7 +240,7 @@ class Reservation extends Component{
                                     <div>
                                         <Typography variant={"h5"} align={"left"} >
                                             <span style={{fontWedight:"700"}}>
-                                            <CalendarTodayRounded />
+                                                <FontAwesomeIcon icon={faCalendarAlt} />
                                                 &nbsp;
                                                 {'عملیات رزرو'}
                                             </span>

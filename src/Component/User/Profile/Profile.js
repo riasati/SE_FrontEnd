@@ -30,7 +30,7 @@ import {
 } from "@material-ui/icons"
 import InputAdornment from '@material-ui/core/InputAdornment';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faFileImage, faSignInAlt, faCommentAlt, faUser, faBullhorn, faInfoCircle,faThumbsUp,faChartLine,faHistory,faStar} from '@fortawesome/free-solid-svg-icons';
+import {faFileImage, faSignInAlt, faCommentAlt, faCalendarAlt, faUser, faBullhorn, faInfoCircle,faThumbsUp,faChartLine,faHistory,faStar} from '@fortawesome/free-solid-svg-icons';
 import IconButton from "@material-ui/core/IconButton";
 import RTL from '../../RTL/M_RTL';
 import LoadingButton from '@material-ui/lab/LoadingButton';
@@ -161,7 +161,7 @@ class Profile extends Component {
                                     <Grid item xs={12} lg={6} >
                                         <Item>
                                         <span style={{color: '#3f407d', textAlign: 'ceter'}}>
-                                            <h3><FontAwesomeIcon icon={faCommentAlt}/>&nbsp;
+                                            <h3><FontAwesomeIcon icon={faCalendarAlt}/>&nbsp;
                                                 {'تقويم مشاوره'}</h3>
                                         </span>
                                             <hr/><br/>

@@ -40,6 +40,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import {signOut} from '../User/SignOut';
+import Reservation from "../Reservation/ReservationPage";
 import { FaDivide } from 'react-icons/fa';
 import Collapse from '@material-ui/core/Collapse';
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -66,6 +67,9 @@ const useStyles = makeStyles((theme) => ({
             marginLeft: '30%',
         },
         '.fa-layer-group': {
+            marginLeft: '30%',
+        },
+        '.fa-calendar-alt': {
             marginLeft: '30%',
         },
         '.MuiToolbar-root': {
@@ -432,6 +436,9 @@ export default function Dashboard(props) {
                                     </Route>
                                     <Route path="/Channel/:channelId">
                                         <Channel />
+                                    </Route>
+                                    <Route path="/Calendar">
+                                        <Reservation />
                                     </Route>
                                 </Switch>
                             </Container>

@@ -4,7 +4,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser,faBullhorn,faThLarge,faLayerGroup } from '@fortawesome/free-solid-svg-icons';
+import { faUser,faBullhorn,faThLarge,faLayerGroup,faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import {Link} from 'react-router-dom';
 
 
@@ -18,6 +18,14 @@ export default function MainListItems(props){
       <FontAwesomeIcon icon={faThLarge}  className={classes.FontIcon}/>
       </ListItemIcon>
       <ListItemText primary="داشبورد" />
+    </ListItem>
+    </Link>
+    <Link to="/Calendar" style={{ textDecoration: 'none',}}>
+    <ListItem button className={classes.ListItem}>
+      <ListItemIcon>
+      <FontAwesomeIcon icon={faCalendarAlt}  className={classes.FontIcon}/>
+      </ListItemIcon>
+      <ListItemText primary="تقویم" />
     </ListItem>
     </Link>
     <Link to="/GroupingChannel" style={{ textDecoration: 'none',}}>

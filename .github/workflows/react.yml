@@ -24,7 +24,8 @@ jobs:
 
       - run: npm i
       - run: npm test
-      - run: npm run build
+      - name: Build dependencies
+        run: npm run build
       - name: Archive production artifact
         uses: actions/upload-artifact@main
         with:

@@ -5,10 +5,7 @@ name: CI/CD
 
 on:
   push:
-    branches: [ testCI/CD ]
-  pull_request:
     branches: [ develop ]
-
 
 jobs:
   docker:
@@ -43,11 +40,11 @@ jobs:
 
       - name: build and push Docker Image
         uses: mr-smithers-excellent/docker-build-push@v5
-      #  with:
-      #    image: pargar/docker101tutorial
-      #    registry: docker.io
-      #    username:  pargar  
-      #    password:  hojat12345
+        with:
+          image: pargar/docker101tutorial
+          registry: docker.io
+          username:  pargar  
+          password:  hojat12345
 
 
   deploy:
@@ -65,7 +62,7 @@ jobs:
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
-        #  args: deploy --only hosting
+          args: deploy --only hosting
         env:
           #FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }} 
           FIREBASE_TOKEN: 1//05At31f3rlgtkCgYIARAAGAUSNwF-L9Ir8JxwgKx48DgGt2cR3z015jrfXt9lPwX0lHJviegIxbA9qqZ5EPYkTh1Y8Nk8d-jONKE 

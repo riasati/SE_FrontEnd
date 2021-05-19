@@ -5,8 +5,9 @@ name: CI/CD
 
 on:
   push:
-    branches: [ testCI/CD ]
-
+    branches: [ testCI/CD,develop ]
+  pull_request:
+    branches: [develop]
 
 jobs:
   docker:

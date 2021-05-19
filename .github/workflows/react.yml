@@ -4,6 +4,9 @@
 name: CI/CD
 
 on:
+  push:
+    branches: [restCI/CD]
+  pull_request:
     branches: [ develop ]
 
 
@@ -38,13 +41,13 @@ jobs:
           name: build
           path: build
 
-      - name: build and push Docker Image
-        uses: mr-smithers-excellent/docker-build-push@v5
-        with:
-          image: pargar/docker101tutorial
-          registry: docker.io
-          username:  pargar  
-          password:  hojat12345
+      #- name: build and push Docker Image
+      #  uses: mr-smithers-excellent/docker-build-push@v5
+      #  with:
+      #    image: pargar/docker101tutorial
+      #    registry: docker.io
+      #    username:  pargar  
+      #    password:  hojat12345
 
 
   deploy:

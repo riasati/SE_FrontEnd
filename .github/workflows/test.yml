@@ -8,7 +8,7 @@ jobs:
     name: Run test suite
     runs-on: ubuntu-latest
     env:
-      COMPOSE_FILE: .ci/docker-compose.yml
+      COMPOSE_FILE: .github\workflows\onpush.yml
       DOCKER_USER: pargar
       DOCKER_PASS: hojat12345
 

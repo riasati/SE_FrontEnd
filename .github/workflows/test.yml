@@ -5,22 +5,10 @@ on:
 
 jobs:
   test:
-    name: Run test suite
     runs-on: ubuntu-latest
-    env:
-      COMPOSE_FILE: .github\workflows\onpush.yml
-      DOCKER_USER: pargar
-      DOCKER_PASS: hojat12345
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Login to DockerHub
-      run: docker login -u $DOCKER_USER -p $DOCKER_PASS
-
-    - name: Build docker images
-      run: docker-compose build
-
-    - name: Run tests
-      run: docker-compose run test
+      - uses: actions/checkout@v2
+      - name: Build the stack
+        run: docker-compose up -d
+      - name: Test
+        run: docker run --network container:webapp-frontend appropriate/curl -s --retry 10 --retry-connrefused http://localhost:5000/

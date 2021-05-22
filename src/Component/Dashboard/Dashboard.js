@@ -43,6 +43,7 @@ import {signOut} from '../User/SignOut';
 import Reservation from "../Reservation/ReservationPage";
 import { FaDivide } from 'react-icons/fa';
 import Collapse from '@material-ui/core/Collapse';
+import Direct from "../Direct/DirectPage";
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="down" ref={ref} {...props} />;
 });
@@ -439,6 +440,12 @@ export default function Dashboard(props) {
                                     </Route>
                                     <Route path="/Calendar">
                                         <Reservation />
+                                    </Route>
+                                    <Route path="/Direct/:consultantUsername">
+                                        <Direct />
+                                    </Route>
+                                    <Route path="/Direct">
+                                        <Direct />
                                     </Route>
                                 </Switch>
                             </Container>

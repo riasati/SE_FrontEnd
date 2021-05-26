@@ -70,8 +70,8 @@ class DragAndDrop extends Component {
         }
     }
     componentWillReceiveProps(nextProps, nextContext) {
-        console.log("RecieveProp");
-        console.log(nextProps);
+        //console.log("RecieveProp");
+        //console.log(nextProps);
         if (this.props.enable !== nextProps.enable){
             console.info("here");
             if (nextProps.enable === true){

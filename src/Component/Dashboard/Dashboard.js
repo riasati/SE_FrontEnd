@@ -441,10 +441,10 @@ export default function Dashboard(props) {
                                     <Route path="/Calendar">
                                         <Reservation />
                                     </Route>
-                                    <Route path="/Direct/:consultantUsername">
+                                    <Route path="/Direct/:AddressUsername">
                                         <Direct />
                                     </Route>
-                                    <Route path="/Direct">
+                                    <Route exact path="/Direct">
                                         <Direct />
                                     </Route>
                                 </Switch>

@@ -91,6 +91,9 @@ class SignUpUser extends Component {
                     const token ="Token "+ res.data.token;
                     localStorage.setItem('token', token);
                     localStorage.setItem('userType', res.data?.data?.user_type);
+                    localStorage.setItem('username', res.data?.data?.username);
+                    // localStorage.setItem('firstName', result.data?.data?.first_name);
+                    // localStorage.setItem('lastName', result.data?.data?.last_name);
                     window.location.href = "/Dashboard";
                 })
                 .catch(err=>{

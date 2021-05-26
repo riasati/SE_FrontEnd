@@ -33,8 +33,8 @@ class App extends Component {
                     <Route path="/Channels" children={<Dashboard title={'کانال ها'}/>} component={Channels}/>
                     <Route path="/GroupingChannel" children={<Dashboard title={'دسته بندی'}/>} component={GroupingChannel}/>
                     <Route path="/Calendar" children={<Dashboard title={'داشبورد'} />} component={Reservation} />
-                    <Route path="/Direct/:consultantUsername" children={<Dashboard title={'داشبورد'} />} component={Direct}/>
-                    <Route path="/Direct" children={<Dashboard title={'داشبورد'} />} component={Direct}/>
+                    <Route path="/Direct/:AddressUsername" children={<Dashboard title={'داشبورد'} />} component={Direct}/>
+                    <Route path="/Direct" exact children={<Dashboard title={'داشبورد'} />} component={Direct}/>
                      {/*<Route path="/Dashboard"  component={Dashboard}/>*/}
                 </Router>
             </div>

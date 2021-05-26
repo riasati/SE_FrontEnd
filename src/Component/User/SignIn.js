@@ -62,6 +62,9 @@ class SignIn extends Component {
                     console.log(this.state);
                     const token ="Token "+ result.data.token;
                     localStorage.setItem('userType', result.data?.data?.user_type);
+                    localStorage.setItem('username', result.data?.data?.username);
+                    // localStorage.setItem('firstName', result.data?.data?.first_name);
+                    // localStorage.setItem('lastName', result.data?.data?.last_name);
                     localStorage.setItem('token', token);
                     window.location.href = "/Dashboard";
                 }).catch(error => {

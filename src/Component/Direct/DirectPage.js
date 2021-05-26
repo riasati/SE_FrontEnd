@@ -14,6 +14,7 @@ import TokenConfig from "../../RequestConfig/TokenConfig";
 import Divider from "@material-ui/core/Divider";
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import DirectMessages from "./DirectMessages";
 
 class Direct extends Component{
     constructor(props) {
@@ -27,7 +28,7 @@ class Direct extends Component{
         //console.log(this.props.match.params.consultantUsername);
         //<div>hello {this.props.match.params.consultantUsername}</div>
         const classes = this.props.classes;
-        console.log(this.props.isUpSm);
+        //console.log(this.props.isUpSm);
         return(
             <LoadingOverlay active={this.state.loading} spinner text={""}>
                 <Container maxWidth="lg" style={{paddingLeft:"0px",paddingRight:"0px"}}>
@@ -36,7 +37,8 @@ class Direct extends Component{
                         <Paper>
                             <Grid container direction={this.props.isUpSm ? "row" : "column"} spacing={2} justify="space-between" style={this.props.isUpSm ? {flexWrap:"nowrap"}:{flexWrap:"wrap"}}>
                                 <Grid item md={8} sm={12} xs={12} >
-                                    <div>salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam</div>
+                                    {/*<div>salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam</div>*/}
+                                    <DirectMessages AddressUsername={this.props.match.params.AddressUsername} />
                                 </Grid>
                                 {/*<Grid item md={1} style={{padding:"0px",width:"1px"}} >*/}
                                 <Divider orientation={this.props.isUpSm ? "vertical" : "horizontal"} flexItem={this.props.isUpSm} style={this.props.isUpSm ? {margin:"0px 0px"} : {margin:"0px 8px"}} />

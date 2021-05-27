@@ -80,10 +80,15 @@ it("Profile Test", () => {
                   <hr><br><span style=\\"color: rgb(99, 99, 99); text-align: right;\\">کانال شخصی مشاور</span><br><br><span><button class=\\"MuiButtonBase-root MuiButton-root MuiButton-text\\" tabindex=\\"0\\" type=\\"button\\" style=\\"background-color: rgb(39, 189, 160); font-family: IRANSansWeb; color: rgb(255, 255, 255);\\"><span class=\\"MuiButton-label\\">رفتن به کانال مشاور</span><span class=\\"MuiTouchRipple-root\\"></span></button></span>
                 </div>
               </div>
+              <div class=\\"MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-6\\">
+                <div class=\\"MuiPaper-root WithStyles(ForwardRef(Paper))-root-6 WithStyles(ForwardRef(Paper))-root-9 MuiPaper-elevation1 MuiPaper-rounded\\"><span style=\\"color: rgb(63, 64, 125); text-align: ceter;\\"><h3><svg aria-hidden=\\"true\\" focusable=\\"false\\" data-prefix=\\"fas\\" data-icon=\\"calendar-alt\\" class=\\"svg-inline--fa fa-calendar-alt fa-w-14 \\" role=\\"img\\" xmlns=\\"http://www.w3.org/2000/svg\\" viewBox=\\"0 0 448 512\\" style=\\"margin: 0px;\\"><path fill=\\"currentColor\\" d=\\"M0 464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V192H0v272zm320-196c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM192 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM64 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zM400 64h-48V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H160V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H48C21.5 64 0 85.5 0 112v48h448v-48c0-26.5-21.5-48-48-48z\\"></path></svg>&nbsp;تقويم مشاوره</h3></span>
+                  <hr><br><span style=\\"color: rgb(99, 99, 99); text-align: right;\\">قابلیت رزرو زمان براي مشاوره</span><br><br><span><button class=\\"MuiButtonBase-root MuiButton-root MuiButton-text\\" tabindex=\\"0\\" type=\\"button\\" style=\\"background-color: rgb(39, 189, 160); font-family: IRANSansWeb; color: rgb(255, 255, 255);\\"><span class=\\"MuiButton-label\\">ديدن زمان هاي مشاوره</span><span class=\\"MuiTouchRipple-root\\"></span></button></span>
+                </div>
+              </div>
             </div>
             <div class=\\"MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3\\">
               <div class=\\"MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12\\">
-                <div class=\\"MuiPaper-root WithStyles(ForwardRef(Paper))-root-6 WithStyles(ForwardRef(Paper))-root-9 MuiPaper-elevation1 MuiPaper-rounded\\">
+                <div class=\\"MuiPaper-root WithStyles(ForwardRef(Paper))-root-6 WithStyles(ForwardRef(Paper))-root-10 MuiPaper-elevation1 MuiPaper-rounded\\">
                   <div style=\\"text-align: right; color: rgb(63, 64, 125);\\">
                     <h3>اطلاعات مشاور</h3>
                   </div>

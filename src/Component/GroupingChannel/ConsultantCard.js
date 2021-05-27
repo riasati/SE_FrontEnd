@@ -28,7 +28,7 @@ class ConsultantCard extends Component{
         return(
           <Grid item xs={12} md={4} lg={3} className={classes.container}>
             <div className={classes.div}>
-              <a href={"/Direct/"+ this.props.direct} className={classes.a}>
+              <a href={"/Profile/"+ this.props.direct} className={classes.a}>
                 { 
                   this.props.avatar !== null ? 
                     <img src={this.props.avatar} className={classes.img}/>

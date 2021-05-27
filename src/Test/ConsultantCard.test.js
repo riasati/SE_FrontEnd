@@ -35,7 +35,7 @@ it("renders with or without a name", () => {
   act(() => {
     render(<ConsultantCard consultant_first_name={"Ali"} consultant_last_name={"Asadi"} direct={"alitest"} avatar={'../../image/medicalgroup.jpg'} />, container);
   });
-  expect(container.querySelector("a").getAttribute("href")).toBe("/Direct/alitest");
+  expect(container.querySelector("a").getAttribute("href")).toBe("/Profile/alitest");
   act(() => {
     render(<ConsultantCard consultant_first_name={"Ali"} consultant_last_name={"Asadi"} direct={"alitest"} avatar={'../../image/lawyergroup.jpg'} />, container);
   });  

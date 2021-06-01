@@ -112,6 +112,11 @@ class DirectMessages extends Component{
 
 
     };
+    getSocketNameFromUsernames = (username1,username2) => {
+        const array = [username1,username2].sort((a, b) => a.localeCompare(b));
+        const str = array[0] + "-" + array[1];
+        return str;
+    }
     handleDrop = (files) => {
         for (let i = 0; i < files.length; i++) {
             if (!files[i].name) return;

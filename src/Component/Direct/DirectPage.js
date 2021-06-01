@@ -36,15 +36,16 @@ class Direct extends Component{
                     <Theme>
                         <Paper>
                             <Grid container direction={this.props.isUpSm ? "row" : "column"} spacing={2} justify="space-between" style={this.props.isUpSm ? {flexWrap:"nowrap"}:{flexWrap:"wrap"}}>
-                                <Grid item md={8} sm={12} xs={12} >
+                                <Grid item md={4} sm={12} xs={12} >
                                     {/*<div>salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam</div>*/}
-                                    <DirectMessages AddressUsername={this.props.match.params.AddressUsername} />
+                                    <div>chetori chetori chetori chetori chetori chetori chetori chetori chetori chetori chetori chetori chetori {this.props.isUpSm}</div>
+
                                 </Grid>
                                 {/*<Grid item md={1} style={{padding:"0px",width:"1px"}} >*/}
                                 <Divider orientation={this.props.isUpSm ? "vertical" : "horizontal"} flexItem={this.props.isUpSm} style={this.props.isUpSm ? {margin:"0px 0px"} : {margin:"0px 8px"}} />
                                 {/*</Grid>*/}
-                                <Grid item md={4} sm={12} xs={12} >
-                                    <div>chetori chetori chetori chetori chetori chetori chetori chetori chetori chetori chetori chetori chetori {this.props.isUpSm}</div>
+                                <Grid item md={8} sm={12} xs={12} >
+                                    <DirectMessages AddressUsername={this.props.match.params.AddressUsername} />
                                 </Grid>
                             </Grid>
                         </Paper>

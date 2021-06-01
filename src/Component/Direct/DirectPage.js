@@ -15,6 +15,7 @@ import Divider from "@material-ui/core/Divider";
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import DirectMessages from "./DirectMessages";
+import DirectList from "./DirectList";
 
 class Direct extends Component{
     constructor(props) {
@@ -24,7 +25,27 @@ class Direct extends Component{
             loading2:true,
         };
     }
+    componentWillMount(){
+        const [directList,setDirectList] = this.props.directList;
+        const [pending,setPending] = this.props.pending;
+        var res = []
+        var ll = []
+        axios.get(serverURL() + "chat/direct/contact/",TokenConfig())
+        .then(result =>{
+            console.log(result)
+            res.push(...result.data);
+            ll = res.map((q) => q);
+            console.log(ll)
+            setDirectList([...ll]);
+            console.log(directList)
+            setPending(flase)
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
     render() {
+        const [directList,setDirectList] = this.props.directList;
         //console.log(this.props.match.params.consultantUsername);
         //<div>hello {this.props.match.params.consultantUsername}</div>
         const classes = this.props.classes;
@@ -44,6 +65,17 @@ class Direct extends Component{
                                 {/*<Grid item md={1} style={{padding:"0px",width:"1px"}} >*/}
                                 <Divider orientation={this.props.isUpSm ? "vertical" : "horizontal"} flexItem={this.props.isUpSm} style={this.props.isUpSm ? {margin:"0px 0px"} : {margin:"0px 8px"}} />
                                 {/*</Grid>*/}
+                                <Grid item md={4} sm={12} xs={12} style={{backgroundColor: '#f3f7fa'}}>
+                                    <Grid container spacing={3}>
+                                        {directList.length !== 0 ? 
+                                            directList.map((q)=>{
+                                                console.log(q)
+                                                return(
+                                                <DirectList last_name={q.last_name} first_name={q.first_name}  userID={q.id} avatar={q.avatar} username={q.username} pending={pending} />)
+                                            }): null
+                                         }
+                                    </Grid>
+                                </Grid>
                                 <Grid item md={8} sm={12} xs={12} >
                                     <DirectMessages AddressUsername={this.props.match.params.AddressUsername} />
                                 </Grid>
@@ -69,8 +101,10 @@ function Auxiliary(props){
     const p = React.useState(false);
     const theme = useTheme();
     const isUpSm = useMediaQuery(theme.breakpoints.up('sm'));
+    const directList = React.useState([]);
+    const pending = React.useState(true)
     return(
-        <Direct classes={classes} p={p} match={props.match} isUpSm={isUpSm}/>
+        <Direct classes={classes} p={p} match={props.match} isUpSm={isUpSm} directList={directList} pending={pending}/>
     )
 }
 export default withRouter(Auxiliary);

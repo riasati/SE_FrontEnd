@@ -66,7 +66,7 @@ class DirectMessages extends Component{
         });
         this.state.DirectMessagesArray.push({
             message:"",
-            file:"https://css-tricks.com/wp-content/uploads/2018/10/justify-content.svg",
+            file:"",//"https://css-tricks.com/wp-content/uploads/2018/10/justify-content.svg",
             Owner:"riasati",
         });
         this.state.DirectMessagesArray.push({

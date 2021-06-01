@@ -38,7 +38,7 @@ class Direct extends Component{
             console.log(ll)
             setDirectList([...ll]);
             console.log(directList)
-            setPending(flase)
+            setPending(false)
         })
         .catch(err => {
             console.log(err);
@@ -46,6 +46,7 @@ class Direct extends Component{
     }
     render() {
         const [directList,setDirectList] = this.props.directList;
+        const [pending,setPending] = this.props.pending;
         //console.log(this.props.match.params.consultantUsername);
         //<div>hello {this.props.match.params.consultantUsername}</div>
         const classes = this.props.classes;
@@ -57,26 +58,26 @@ class Direct extends Component{
                     <Theme>
                         <Paper>
                             <Grid container direction={this.props.isUpSm ? "row" : "column"} spacing={2} justify="space-between" style={this.props.isUpSm ? {flexWrap:"nowrap"}:{flexWrap:"wrap"}}>
-                                <Grid item md={4} sm={12} xs={12} >
+                                <Grid item md={3} sm={12} xs={12} style={{backgroundColor: '#f3f7fa'}}>
                                     {/*<div>salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam salam</div>*/}
-                                    <div>chetori chetori chetori chetori chetori chetori chetori chetori chetori chetori chetori chetori chetori {this.props.isUpSm}</div>
-
+                                    {/*<div>chetori chetori chetori chetori chetori chetori chetori chetori chetori chetori chetori chetori chetori {this.props.isUpSm}</div>*/}
+                                    <Grid container spacing={3}>
+                                        {directList.length !== 0 ?
+                                            directList.map((q)=>{
+                                                console.log(q)
+                                                return(
+                                                    <DirectList last_name={q.last_name} first_name={q.first_name}  userID={q.id} avatar={q.avatar} username={q.username} pending={pending} />)
+                                            }): null
+                                        }
+                                    </Grid>
                                 </Grid>
                                 {/*<Grid item md={1} style={{padding:"0px",width:"1px"}} >*/}
                                 <Divider orientation={this.props.isUpSm ? "vertical" : "horizontal"} flexItem={this.props.isUpSm} style={this.props.isUpSm ? {margin:"0px 0px"} : {margin:"0px 8px"}} />
                                 {/*</Grid>*/}
-                                <Grid item md={4} sm={12} xs={12} style={{backgroundColor: '#f3f7fa'}}>
-                                    <Grid container spacing={3}>
-                                        {directList.length !== 0 ? 
-                                            directList.map((q)=>{
-                                                console.log(q)
-                                                return(
-                                                <DirectList last_name={q.last_name} first_name={q.first_name}  userID={q.id} avatar={q.avatar} username={q.username} pending={pending} />)
-                                            }): null
-                                         }
-                                    </Grid>
-                                </Grid>
-                                <Grid item md={8} sm={12} xs={12} >
+                                {/*<Grid item md={4} sm={12} xs={12} style={{backgroundColor: '#f3f7fa'}}>*/}
+                                    {/**/}
+                                {/*</Grid>*/}
+                                <Grid item md={9} sm={12} xs={12} >
                                     <DirectMessages AddressUsername={this.props.match.params.AddressUsername} />
                                 </Grid>
                             </Grid>

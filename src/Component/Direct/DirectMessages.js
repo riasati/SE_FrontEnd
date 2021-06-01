@@ -22,7 +22,7 @@ import {faFileUpload} from "@fortawesome/free-solid-svg-icons";
 import ErrorDialog from "../../RequestConfig/ErrorDialog";
 import Avatar from "@material-ui/core/Avatar";
 import Paper from "@material-ui/core/Paper";
-import {client, w3cwebsocket as WebSocket} from "websocket";
+import {w3cwebsocket as WebSocket} from "websocket";
 
 const MenuItem = withStyles({
     root: {
@@ -33,6 +33,8 @@ const MenuItem = withStyles({
 class DirectMessages extends Component{
     constructor(props) {
         super(props);
+        // const roomName = this.getSocketNameFromUsernames(this.username,"riasati");
+        // var ws = new WebSocket("ws://iust-se-consultant.herokuapp.com/ws/chat/"+roomName+'/');
         this.state = {
             mouseX: null,
             mouseY: null,
@@ -48,9 +50,9 @@ class DirectMessages extends Component{
             DirectMessagesArray:[],
             roomName:null,
             messages: [],
-            idChat: null ,
+            //idChat: null ,
             userName: null,
-            ws: null,
+            ws: new WebSocket("ws://iust-se-consultant.herokuapp.com/ws/chat/"+this.getSocketNameFromUsernames(this.username,"riasati")+'/'),
             timeout : 250,
         };
         // console.log(this.state.role);
@@ -457,18 +459,20 @@ class DirectMessages extends Component{
         this.setState({});
     };
     handleConnectWebSocket(){
-        var ws = new WebSocket("ws://iust-se-consultant.herokuapp.com/ws/chat/"+this.state.roomName+'/');
+        //const roomName = this.getSocketNameFromUsernames(this.username,"riasati");
+        //var ws = new WebSocket("ws://iust-se-consultant.herokuapp.com/ws/chat/"+roomName+'/');
+
         let that = this;
         var connectInterval;
-        ws.onopen = () => {
+        this.state.ws.onopen = () => {
             console.log("connected websocket main component");
 
-            this.setState({ ws: ws });
+            // this.setState({ ws: ws });
 
-            that.timeout = 250; // reset timer to 250 on open of websocket connection 
+            that.timeout = 250; // reset timer to 250 on open of websocket connection
             clearTimeout(connectInterval); // clear Interval on on open of websocket connection
         };
-        ws.onclose = e => {
+        this.state.ws.onclose = e => {
             console.log(
                 `Socket is closed. Reconnect will be attempted in ${Math.min(
                     10000 / 1000,
@@ -482,24 +486,41 @@ class DirectMessages extends Component{
         };
 
         // websocket onerror event listener
-        ws.onerror = err => {
+        this.state.ws.onerror = err => {
             console.error(
                 "Socket encountered error: ",
                 err.message,
                 "Closing socket"
             );
 
-            ws.close();
+            this.state.ws.close();
         };
+        this.state.ws.onmessage =(message)=>{
+            const dataFormServer = JSON.parse(message.data);
+            console.log('message sending is =',dataFormServer )
+            if (dataFormServer.type ==="message"){
+                this.setState({DirectMessagesArray:[...this.state.DirectMessagesArray,dataFormServer.msg]})
+                this.setState((state)=>({
+                    messages:[... state.message,
+                        {
+                            msg : dataFormServer.msg,
+                            user: dataFormServer.userName
+                        }]
+                }))
+            }
+        }
+        //this.setState({ ws: ws });
+        //console.log(ws);
+        console.log(this.state.ws);
     }
     check = () => {
         const { ws } = this.state;
-        if (!ws || ws.readyState == WebSocket.CLOSED) this.connect(); //check if websocket instance is closed, if so call `connect` function.
+        if (!ws || ws.readyState == WebSocket.CLOSED) this.handleConnectWebSocket(); //check if websocket instance is closed, if so call `connect` function.
     };
     handleSendMessage(message)
     {
         try {
-            this.ws.send(JSON.stringify({
+            this.state.ws.send(JSON.stringify({
                 idChat:this.state.idChat,
                 userName:this.state.userName,
                 type:"message",
@@ -514,20 +535,6 @@ class DirectMessages extends Component{
     componentDidMount() {
         this.setState({loading:false});
         this.handleConnectWebSocket();
-        this.ws.onmessage =(message)=>{
-            const dataFormServer = JSON.parse(message.data);
-            console.log('message sending is =',dataFormServer )
-            if (dataFormServer.type ==="message"){
-                this.setState({DirectMessagesArray:[...this.state.DirectMessagesArray,dataFormServer.msg]})
-                this.setState((state)=>({
-                    messages:[... state.message,
-                        {
-                            msg : dataFormServer.msg,
-                            user: dataFormServer.userName
-                        }]
-                }))
-            }
-        }
     }
     handleStateErrorDialog = () =>{
         this.setState({setErrorDialog:!this.state.setErrorDialog})

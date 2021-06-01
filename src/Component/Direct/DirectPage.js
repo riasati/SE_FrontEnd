@@ -16,6 +16,7 @@ import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import DirectMessages from "./DirectMessages";
 import DirectList from "./DirectList";
+import {client, w3cwebsocket as WebSocket} from "websocket";
 
 class Direct extends Component{
     constructor(props) {
@@ -44,6 +45,64 @@ class Direct extends Component{
             console.log(err);
         })
     }
+    // getSocketNameFromUsernames = (username1,username2) => {
+    //     const array = [username1,username2].sort((a, b) => a.localeCompare(b));
+    //     const str = array[0] + "-" + array[1];
+    //     return str;
+    // }
+    //username = localStorage.getItem('username');
+    // handleConnectWebSocket(){
+    //
+    //     const roomName = this.getSocketNameFromUsernames(this.username,"hasan");
+    //     var ws = new WebSocket("ws://iust-se-consultant.herokuapp.com/ws/chat/"+roomName+'/');
+    //     let that = this;
+    //     var connectInterval;
+    //     ws.onopen = () => {
+    //         console.log("connected websocket main component");
+    //
+    //         this.setState({ ws: ws });
+    //
+    //         that.timeout = 250; // reset timer to 250 on open of websocket connection
+    //         clearTimeout(connectInterval); // clear Interval on on open of websocket connection
+    //     };
+    //     ws.onclose = e => {
+    //         console.log(
+    //             `Socket is closed. Reconnect will be attempted in ${Math.min(
+    //                 10000 / 1000,
+    //                 (that.timeout + that.timeout) / 1000
+    //             )} second.`,
+    //             e.reason
+    //         );
+    //
+    //         that.timeout = that.timeout + that.timeout;
+    //         connectInterval = setTimeout(this.check, Math.min(10000, that.timeout));
+    //     };
+    //
+    //     // websocket onerror event listener
+    //     ws.onerror = err => {
+    //         console.error(
+    //             "Socket encountered error: ",
+    //             err.message,
+    //             "Closing socket"
+    //         );
+    //
+    //         ws.close();
+    //     };
+    // }
+    // handleSendMessage(message)
+    // {
+    //     try {
+    //         this.ws.send(JSON.stringify({
+    //             idChat:this.state.idChat,
+    //             userName:this.state.userName,
+    //             type:"message",
+    //             msg : message
+    //         })) //send data to the server
+    //     } catch (error) {
+    //         console.log(error) // catch error
+    //     }
+    //
+    // }
     render() {
         const [directList,setDirectList] = this.props.directList;
         const [pending,setPending] = this.props.pending;

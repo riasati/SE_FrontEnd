@@ -22,6 +22,7 @@ import {faFileUpload} from "@fortawesome/free-solid-svg-icons";
 import ErrorDialog from "../../RequestConfig/ErrorDialog";
 import Avatar from "@material-ui/core/Avatar";
 import Paper from "@material-ui/core/Paper";
+import {client, w3cwebsocket as WebSocket} from "websocket";
 
 const MenuItem = withStyles({
     root: {
@@ -45,6 +46,12 @@ class DirectMessages extends Component{
             enableDragAndDrop:true,
             setErrorDialog:false,
             DirectMessagesArray:[],
+            roomName:null,
+            messages: [],
+            idChat: null ,
+            userName: null,
+            ws: null,
+            timeout : 250,
         };
         // console.log(this.state.role);
         this.myRef = [];
@@ -449,8 +456,78 @@ class DirectMessages extends Component{
         window.getSelection().removeAllRanges();
         this.setState({});
     };
+    handleConnectWebSocket(){
+        var ws = new WebSocket("ws://iust-se-consultant.herokuapp.com/ws/chat/"+this.state.roomName+'/');
+        let that = this;
+        var connectInterval;
+        ws.onopen = () => {
+            console.log("connected websocket main component");
+
+            this.setState({ ws: ws });
+
+            that.timeout = 250; // reset timer to 250 on open of websocket connection 
+            clearTimeout(connectInterval); // clear Interval on on open of websocket connection
+        };
+        ws.onclose = e => {
+            console.log(
+                `Socket is closed. Reconnect will be attempted in ${Math.min(
+                    10000 / 1000,
+                    (that.timeout + that.timeout) / 1000
+                )} second.`,
+                e.reason
+            );
+
+            that.timeout = that.timeout + that.timeout;
+            connectInterval = setTimeout(this.check, Math.min(10000, that.timeout));
+        };
+
+        // websocket onerror event listener
+        ws.onerror = err => {
+            console.error(
+                "Socket encountered error: ",
+                err.message,
+                "Closing socket"
+            );
+
+            ws.close();
+        };
+    }
+    check = () => {
+        const { ws } = this.state;
+        if (!ws || ws.readyState == WebSocket.CLOSED) this.connect(); //check if websocket instance is closed, if so call `connect` function.
+    };
+    handleSendMessage(message)
+    {
+        try {
+            this.ws.send(JSON.stringify({
+                idChat:this.state.idChat,
+                userName:this.state.userName,
+                type:"message",
+                msg : message
+            })) //send data to the server
+        } catch (error) {
+            console.log(error) // catch error
+        }
+
+    }
+
     componentDidMount() {
         this.setState({loading:false});
+        this.handleConnectWebSocket();
+        this.ws.onmessage =(message)=>{
+            const dataFormServer = JSON.parse(message.data);
+            console.log('message sending is =',dataFormServer )
+            if (dataFormServer.type ==="message"){
+                this.setState({DirectMessagesArray:[...this.state.DirectMessagesArray,dataFormServer.msg]})
+                this.setState((state)=>({
+                    messages:[... state.message,
+                        {
+                            msg : dataFormServer.msg,
+                            user: dataFormServer.userName
+                        }]
+                }))
+            }
+        }
     }
     handleStateErrorDialog = () =>{
         this.setState({setErrorDialog:!this.state.setErrorDialog})

@@ -55,24 +55,24 @@ class DirectMessages extends Component{
         };
         // console.log(this.state.role);
         this.myRef = [];
-        this.initialization();
+        this.initialization(this.props.AddressUsername);
     }
-    initialization = () => {
-        this.state.DirectMessagesArray.push({
-            text:"salam chetori khoobi",
-            message_file:"",
-            sender:this.username,
-        });
-        this.state.DirectMessagesArray.push({
-            text:"",
-            message_file:"",//"https://css-tricks.com/wp-content/uploads/2018/10/justify-content.svg",
-            sender:this.username,
-        });
-        this.state.DirectMessagesArray.push({
-            text:"سلام نه خوب نيستم",
-            message_file:"",
-            sender:this.props.AddressUsername,
-        });
+    initialization = (AddressUsername) => {
+        // this.state.DirectMessagesArray.push({
+        //     text:"salam chetori khoobi",
+        //     message_file:"",
+        //     sender:this.username,
+        // });
+        // this.state.DirectMessagesArray.push({
+        //     text:"",
+        //     message_file:"",//"https://css-tricks.com/wp-content/uploads/2018/10/justify-content.svg",
+        //     sender:this.username,
+        // });
+        // this.state.DirectMessagesArray.push({
+        //     text:"سلام نه خوب نيستم",
+        //     message_file:"",
+        //     sender:this.props.AddressUsername,
+        // });
         // {
         //     "id": 0,
         //     "sender_id": 0,
@@ -81,8 +81,8 @@ class DirectMessages extends Component{
         //     "message_type": "string",
         //     "message_file": "string"
         // }
-        this.handleConnectWebSocket();
-        this.setState({});
+        this.handleConnectWebSocket(AddressUsername);
+
 
         axios.get(serverURL() + "profile/",TokenConfig())
             .then(result => {
@@ -95,7 +95,7 @@ class DirectMessages extends Component{
                 this.setState({});
             })
 
-        axios.get(serverURL() + "profile/" + this.props.AddressUsername + "/",TokenConfig())
+        axios.get(serverURL() + "profile/" + AddressUsername + "/",TokenConfig())
             .then(result => {
                 console.log(result);
                 this.anotherUserProfile = result.data;
@@ -106,7 +106,7 @@ class DirectMessages extends Component{
                 this.setState({});
             })
 
-        axios.get(serverURL() + "chat/direct/history/" + this.props.AddressUsername + "/?query=" + "&page=" + 1,TokenConfig())
+        axios.get(serverURL() + "chat/direct/history/" + AddressUsername + "/?query=" + "&page=" + 1,TokenConfig())
             .then(result => {
                 console.log(result);
                 this.nextLink = result.data.next;
@@ -119,6 +119,7 @@ class DirectMessages extends Component{
                 this.setState({});
             })
 
+        this.setState({});
 
         // axios.get(serverURL() + "channel-message/" + this.props.channelId + "/?query=" + "&page=" + 1,TokenConfig())
         //     .then(result => {
@@ -549,10 +550,10 @@ class DirectMessages extends Component{
         this.setState({});
     };
 
-    handleConnectWebSocket(){
+    handleConnectWebSocket(AddressUsername){
         //const roomName = this.getSocketNameFromUsernames(this.username,"riasati");
         //var ws = new WebSocket("ws://iust-se-consultant.herokuapp.com/ws/chat/"+roomName+'/');
-        this.state.ws = new WebSocket("ws://pargar.herokuapp.com/ws/chat/"+this.getSocketNameFromUsernames(this.props.AddressUsername,this.username)+'/')
+        this.state.ws = new WebSocket("ws://pargar.herokuapp.com/ws/chat/"+this.getSocketNameFromUsernames(AddressUsername,this.username)+'/')
 
         let that = this;
         var connectInterval;
@@ -595,7 +596,7 @@ class DirectMessages extends Component{
             // if (dataFormServer.OwnerUserName === this.username){
             //     //this.setState({DirectMessagesArray:[...this.state.DirectMessagesArray,dataFormServer.msg]})
             // }
-            if (dataFormServer.OwnerUserName === this.props.AddressUsername){
+            if (dataFormServer.OwnerUserName === AddressUsername){
                 if (dataFormServer.msg === "Delete"){
                     console.log("DELETE");
                     let index = this.state.DirectMessagesArray.findIndex(element => element.id === dataFormServer.messageId)
@@ -613,7 +614,7 @@ class DirectMessages extends Component{
                                     id:result.data?.id,
                                     text:result.data?.text,
                                     message_file:result.data?.message_file,
-                                    sender:this.props.AddressUsername,
+                                    sender:AddressUsername,
                                     reciever: this.username,
                                     message_type:result.data?.message_type,
                                 });
@@ -642,7 +643,7 @@ class DirectMessages extends Component{
     }
     check = () => {
         const { ws } = this.state;
-        if (!ws || ws.readyState == WebSocket.CLOSED) this.handleConnectWebSocket(); //check if websocket instance is closed, if so call `connect` function.
+        if (!ws || ws.readyState == WebSocket.CLOSED) this.handleConnectWebSocket(this.props.AddressUsername); //check if websocket instance is closed, if so call `connect` function.
     };
     handleSendMessage(message,messageId)
     {
@@ -664,6 +665,13 @@ class DirectMessages extends Component{
         this.setState({loading:false});
        // this.handleConnectWebSocket();
     }
+    componentWillReceiveProps(nextProps, nextContext) {
+        if (nextProps.AddressUsername !== this.props.AddressUsername){
+            this.state.DirectMessagesArray = [];
+            this.initialization(nextProps.AddressUsername);
+        }
+    }
+
     handleStateErrorDialog = () =>{
         this.setState({setErrorDialog:!this.state.setErrorDialog})
     };
@@ -681,8 +689,8 @@ class DirectMessages extends Component{
         const onFileChange = event => {
             this.handleDrop(event.target.files);
         };
-        // console.log(this.username);
-        // console.log(this.props.AddressUsername);
+        console.log(this.username);
+        console.log(this.props.AddressUsername);
         return(
             <div className={classes.mainDiv}>
                 {this.props.AddressUsername === undefined ? null :

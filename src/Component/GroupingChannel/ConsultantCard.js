@@ -22,20 +22,19 @@ import RTL from '../RTL/M_RTL';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle,faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import { SpeakerNotesOff } from '@material-ui/icons';
-class ChannelCard extends Component{
+class ConsultantCard extends Component{
     render(){
         const classes = this.props.classes;
         return(
           <Grid item xs={12} md={4} lg={3} className={classes.container}>
             <div className={classes.div}>
-              <a href={"/Channel/"+ this.props.channelID} className={classes.a}>
+              <a href={"/Profile/"+ this.props.direct} className={classes.a}>
                 { 
                   this.props.avatar !== null ? 
                     <img src={this.props.avatar} className={classes.img}/>
                     : 
                     <img src={'../../image/defaultavatar.jpg'} className={classes.img}/>
                 }
-                <div data-testid="pn"><h3>{this.props.name}</h3></div>
                 <div><span data-testid="cfn">{this.props.consultant_first_name}</span>&nbsp;<span data-testid="cln">{this.props.consultant_last_name}</span></div>
                 <br/>
               </a>
@@ -87,13 +86,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default (props) => {
     const classes = useStyles();
-    const name = props.name;
     const consultant_first_name = props.consultant_first_name;
     const consultant_last_name = props.consultant_last_name;
-    const invite_link = props.invite_link;
-    const channelID = props.channelID;
+    const direct = props.direct;
     const avatar = props.avatar;
     return (
-        <ChannelCard classes={classes} name={name} consultant_first_name={consultant_first_name} consultant_last_name={consultant_last_name} avatar={avatar} channelID={channelID} invite_link={invite_link}/>
+        <ConsultantCard classes={classes} consultant_first_name={consultant_first_name} consultant_last_name={consultant_last_name} avatar={avatar} direct={direct}/>
     )
 }

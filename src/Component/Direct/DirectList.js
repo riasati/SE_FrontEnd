@@ -14,7 +14,7 @@ import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Material_RTL from "../RTL/Material_RTL";
@@ -27,9 +27,12 @@ class DirectList extends Component {
     render() {
         const classes = this.props.classes;
         var fullName = this.props.first_name + ' ' + this.props.last_name;
+        const hc = q =>{
+            // alert(q)
+        }
         return (
-            <Grid item xs={12} md={12} lg={12} className={classes.container}>
-                {this.props.pending ? <div>1</div>:<div>2</div>}
+            <Link to={"/Direct/"+ this.props.username} style={{color: '#3f407d',textDecoration: 'none',}}>
+            
                 <div style={{ display: 'grid', gridTemplateColumns: '20% 80%', height: '75px', color: '#3f407d' }}>
                     <div style={{ backgroundColor: '#fff', display: 'grid', justifyContent: 'center', alignItems: 'center' }}>
                         {/* <img src={this.props.avatar} style={{ width: '50px', height: '50px', borderRadius: '100%' }} /> */}
@@ -51,8 +54,8 @@ class DirectList extends Component {
                         </div>
                     </div>
                 </div>
-
-            </Grid>
+                
+            </Link>
         )
     }
 }

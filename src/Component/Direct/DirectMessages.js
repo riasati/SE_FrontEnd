@@ -22,6 +22,7 @@ import {faFileUpload} from "@fortawesome/free-solid-svg-icons";
 import ErrorDialog from "../../RequestConfig/ErrorDialog";
 import Avatar from "@material-ui/core/Avatar";
 import Paper from "@material-ui/core/Paper";
+// import {w3cwebsocket as WebSocket} from "websocket";
 
 const MenuItem = withStyles({
     root: {
@@ -32,6 +33,8 @@ const MenuItem = withStyles({
 class DirectMessages extends Component{
     constructor(props) {
         super(props);
+        // const roomName = this.getSocketNameFromUsernames(this.username,"riasati");
+        // var ws = new WebSocket("ws://iust-se-consultant.herokuapp.com/ws/chat/"+roomName+'/');
         this.state = {
             mouseX: null,
             mouseY: null,
@@ -45,30 +48,76 @@ class DirectMessages extends Component{
             enableDragAndDrop:true,
             setErrorDialog:false,
             DirectMessagesArray:[],
+            //roomName:null,
+            //messages: [],
+            ws: null,
+           // timeout : 250,
         };
         // console.log(this.state.role);
         this.myRef = [];
         this.initialization();
     }
-    //this.messagesEnd.scrollIntoView({ behavior: "smooth" });
     initialization = () => {
         this.state.DirectMessagesArray.push({
-            message:"salam chetori khoobi",
-            file:"",
-            Owner:"riasati",
+            text:"salam chetori khoobi",
+            message_file:"",
+            sender:this.username,
         });
         this.state.DirectMessagesArray.push({
-            message:"",
-            file:"https://css-tricks.com/wp-content/uploads/2018/10/justify-content.svg",
-            Owner:"riasati",
+            text:"",
+            message_file:"",//"https://css-tricks.com/wp-content/uploads/2018/10/justify-content.svg",
+            sender:this.username,
         });
         this.state.DirectMessagesArray.push({
-            message:"سلام نه خوب نيستم",
-            file:"",
-            Owner:"hasan",
+            text:"سلام نه خوب نيستم",
+            message_file:"",
+            sender:this.props.AddressUsername,
         });
+        // {
+        //     "id": 0,
+        //     "sender_id": 0,
+        //     "reciever_id": 0,
+        //     "text": "string",
+        //     "message_type": "string",
+        //     "message_file": "string"
+        // }
+        this.handleConnectWebSocket();
         this.setState({});
 
+        axios.get(serverURL() + "profile/",TokenConfig())
+            .then(result => {
+                console.log(result);
+                this.myUserProfile = result.data;
+                this.setState({});
+            })
+            .catch(error => {
+                console.log(error);
+                this.setState({});
+            })
+
+        axios.get(serverURL() + "profile/" + this.props.AddressUsername + "/",TokenConfig())
+            .then(result => {
+                console.log(result);
+                this.anotherUserProfile = result.data;
+                this.setState({});
+            })
+            .catch(error => {
+                console.log(error);
+                this.setState({});
+            })
+
+        axios.get(serverURL() + "chat/direct/history/" + this.props.AddressUsername + "/?query=" + "&page=" + 1,TokenConfig())
+            .then(result => {
+                console.log(result);
+                this.nextLink = result.data.next;
+                this.state.DirectMessagesArray = result.data.results.reverse();
+                this.setState({});
+                this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+            })
+            .catch(error => {
+                console.log(error);
+                this.setState({});
+            })
 
 
         // axios.get(serverURL() + "channel-message/" + this.props.channelId + "/?query=" + "&page=" + 1,TokenConfig())
@@ -114,19 +163,58 @@ class DirectMessages extends Component{
     };
     getSocketNameFromUsernames = (username1,username2) => {
         const array = [username1,username2].sort((a, b) => a.localeCompare(b));
-        const str = array[0] + "-" + array[1];
+        const str = array[0] + "_" + array[1];
+        //+ "-"
         return str;
     }
     handleDrop = (files) => {
         for (let i = 0; i < files.length; i++) {
             if (!files[i].name) return;
             //console.log(files[i].type);
-            let uri = URL.createObjectURL(files[i]);
-            this.state.DirectMessagesArray.push({
-                message:"",
-                file:uri,
-                Owner:this.username
-            })
+            // let uri = URL.createObjectURL(files[i]);
+            // this.state.DirectMessagesArray.push({
+            //     text:"",
+            //     message_file:uri,
+            //     sender:this.username
+            // })
+            const formData = new FormData();
+           // let text = this.messageText;
+            formData.append(
+                "message_file",
+                files[i]
+            );
+            formData.append(
+                "message_type",
+                "i"
+            );
+            formData.append(
+                "receiver_username",
+                this.props.AddressUsername
+            );
+            axios.post(serverURL() + "chat/direct/message/",formData,TokenConfig())
+                .then(result => {
+                    console.log(result);
+                    this.state.DirectMessagesArray.push({
+                        id:result.data?.id,
+                        text:result.data?.text,
+                        message_file:result.data?.message_file,
+                        sender:this.username,
+                        reciever: this.props.AddressUsername,
+                        message_type:result.data?.message_type,
+                    });
+
+
+
+                    this.handleSendMessage("Create",result.data?.id);
+                    //this.state.needEndMessages = true;
+                    this.setState({});
+                    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+                })
+                .catch(error =>{
+                    console.log(error);
+                    //this.ErrorDialogText = error.response.data?.error;
+                    //this.setState({setErrorDialog:true});
+                });
             // const formData = new FormData();
             // formData.append(
             //     "message_file",
@@ -299,30 +387,28 @@ class DirectMessages extends Component{
         {
             // console.log("here i have to edit");
             this.state.editing = true;
-            this.messageText = this.state.DirectMessagesArray[this.indexSelected].message;
-            this.setState({});
+            this.messageText = this.state.DirectMessagesArray[this.indexSelected].text;
+
         }
         if (index === 2)
         {
             // console.log("here i have to delete");
-            this.state.DirectMessagesArray.splice(this.indexSelected, 1);
-            this.indexSelected = -1;
+
+            let id = this.state.DirectMessagesArray[this.indexSelected].id;
+            axios.delete(serverURL() + "chat/direct/message/" + id +"/",TokenConfig())
+                .then(result => {
+                    console.log(result);
+                    this.state.DirectMessagesArray.splice(this.indexSelected, 1);
+                    this.indexSelected = -1;
+                    this.handleSendMessage("Delete",id);
+                    this.setState({});
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.indexSelected = -1;
+                    this.setState({});
+                })
             this.setState({});
-            // axios.delete(serverURL() + "channel-message/" + this.props.channelId + "/" + this.newMessageFile[this.indexSelected].key +"/",TokenConfig())
-            //     .then(result => {
-            //         //console.log(result);
-            //         this.newMessageFile.splice(this.indexSelected, 1);
-            //         this.indexSelected = -1;
-            //         this.setState({});
-            //     })
-            //     .catch(error =>{
-            //         console.log(error);
-            //         this.indexSelected = -1;
-            //         this.ErrorDialogText = error.response.data?.error;
-            //         this.setState({setErrorDialog:true});
-            //     });
-            //
-            // this.setState({});
         }
         this.setState({mouseX: null, mouseY: null,})
     };
@@ -333,31 +419,28 @@ class DirectMessages extends Component{
             //     this.link = this.newMessageFile[this.indexSelected].props["aria-label"];
             // }
             // else{
-            let link = this.state.DirectMessagesArray[this.indexSelected]?.file;
+            let link = this.state.DirectMessagesArray[this.indexSelected]?.message_file;
             // }
              window.open(link, "_blank",);
 
         }
         else if (index === 1){
             //console.log("here i have to delete");
-            this.state.DirectMessagesArray.splice(this.indexSelected, 1);
-            this.indexSelected = -1;
+            let id = this.state.DirectMessagesArray[this.indexSelected].id;
+            axios.delete(serverURL() + "chat/direct/message/" + id +"/",TokenConfig())
+                .then(result => {
+                    console.log(result);
+                    this.state.DirectMessagesArray.splice(this.indexSelected, 1);
+                    this.indexSelected = -1;
+                    this.handleSendMessage("Delete",id);
+                    this.setState({});
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.indexSelected = -1;
+                    this.setState({});
+                })
             this.setState({});
-            // axios.delete(serverURL() + "channel-message/" + this.props.channelId + "/" + this.newMessageFile[this.indexSelected].key +"/",TokenConfig())
-            //     .then(result => {
-            //         console.log(result);
-            //         this.newMessageFile.splice(this.indexSelected, 1);
-            //         this.indexSelected = -1;
-            //         this.setState({});
-            //     })
-            //     .catch(error =>{
-            //         console.log(error);
-            //         this.indexSelected = -1;
-            //         this.ErrorDialogText = error.response.data?.error;
-            //         this.setState({setErrorDialog:true});
-            //     });
-            //
-            // this.setState({});
         }
         this.setState({mouseX: null, mouseY: null,})
     };
@@ -367,60 +450,76 @@ class DirectMessages extends Component{
     };
     handleSendIcon = (event) => {
         if (this.state.editing){
-            // const formData = new FormData();
-            // formData.append(
-            //     "text",
-            //     this.messageText
-            // );
-            // formData.append(
-            //     "message_type",
-            //     "t"
-            // );
             let text = this.messageText;
-            this.state.DirectMessagesArray[this.indexSelected].message = text;
-            this.indexSelected = -1;
-            //this.setState({});
-
-            // axios.put(serverURL() + "channel-message/" + this.props.channelId + "/" + this.newMessageFile[this.indexSelected].key + "/",formData,TokenConfig())
-            //     .then(result => {
-            //         //console.log(result);
-            //         const newElement = <Typography key={result.data.id} variant={"body1"}>{text}</Typography>;
-            //         this.newMessageFile.splice(this.indexSelected, 1, newElement);
-            //         this.setState({});
-            //     })
-            //     .catch(error => {
-            //         console.log(error);
-            //         this.ErrorDialogText = error.response.data?.error;
-            //         this.setState({setErrorDialog:true});
-            //     });
+            let id = this.state.DirectMessagesArray[this.indexSelected].id;
+            const formData = new FormData();
+            formData.append(
+                "text",
+                text
+            );
+            formData.append(
+                "message_type",
+                "t"
+            );
+            formData.append(
+                "receiver_username",
+                this.props.AddressUsername
+            );
+            axios.put(serverURL() + "chat/direct/message/" + id +"/",formData,TokenConfig())
+                .then(result => {
+                    console.log(result);
+                    this.state.DirectMessagesArray[this.indexSelected].text = text;
+                    this.indexSelected = -1;
+                    this.handleSendMessage("Edit",id);
+                    this.setState({});
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.indexSelected = -1;
+                    this.setState({});
+                })
+            this.setState({});
             this.state.editing = false;
         }
         else{
-            // const formData = new FormData();
-            // formData.append(
-            //     "text",
-            //     this.messageText
-            // );
-            // formData.append(
-            //     "message_type",
-            //     "t"
-            // );
+            const formData = new FormData();
             let text = this.messageText;
-            this.state.DirectMessagesArray.push({message:text,file:"",Owner:this.username});
-            // axios.post(serverURL() + "channel-message/" +this.props.channelId + "/",formData,TokenConfig())
-            //     .then(result => {
-            //         // console.log(result);
-            //         this.newMessageFile.push(
-            //             <Typography key={result.data.id} variant={"body1"} >{text}</Typography>
-            //         );
-            //         this.state.needEndMessages = true;
-            //         this.setState({});
-            //     })
-            //     .catch(error =>{
-            //         console.log(error);
-            //         this.ErrorDialogText = error.response.data?.error;
-            //         this.setState({setErrorDialog:true});
-            //     });
+            formData.append(
+                "text",
+                text
+            );
+            formData.append(
+                "message_type",
+                "t"
+            );
+            formData.append(
+                "receiver_username",
+                this.props.AddressUsername
+            );
+            axios.post(serverURL() + "chat/direct/message/",formData,TokenConfig())
+                .then(result => {
+                     console.log(result);
+                    this.state.DirectMessagesArray.push({
+                        id:result.data?.id,
+                        text:result.data?.text,
+                        message_file:result.data?.message_file,
+                        sender:this.username,
+                        reciever: this.props.AddressUsername,
+                        message_type:result.data?.message_type,
+                    });
+
+
+
+                    this.handleSendMessage("Create",result.data?.id);
+                    //this.state.needEndMessages = true;
+                    this.setState({});
+                    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+                })
+                .catch(error =>{
+                    console.log(error);
+                    //this.ErrorDialogText = error.response.data?.error;
+                    //this.setState({setErrorDialog:true});
+                });
         }
         this.messageText = "";
         this.setState({});
@@ -449,32 +548,150 @@ class DirectMessages extends Component{
         window.getSelection().removeAllRanges();
         this.setState({});
     };
+
+    handleConnectWebSocket(){
+        //const roomName = this.getSocketNameFromUsernames(this.username,"riasati");
+        //var ws = new WebSocket("ws://iust-se-consultant.herokuapp.com/ws/chat/"+roomName+'/');
+        this.state.ws = new WebSocket("ws://pargar.herokuapp.com/ws/chat/"+this.getSocketNameFromUsernames(this.props.AddressUsername,this.username)+'/')
+
+        let that = this;
+        var connectInterval;
+        this.state.ws.onopen = () => {
+            console.log("connected websocket main component");
+
+            // this.setState({ ws: ws });
+
+            that.timeout = 250; // reset timer to 250 on open of websocket connection
+            clearTimeout(connectInterval); // clear Interval on on open of websocket connection
+        };
+        this.state.ws.onclose = e => {
+            console.log(
+                `Socket is closed. Reconnect will be attempted in ${Math.min(
+                    10000 / 1000,
+                    (that.timeout + that.timeout) / 1000
+                )} second.`,
+                e.reason
+            );
+
+            that.timeout = that.timeout + that.timeout;
+            connectInterval = setTimeout(this.check, Math.min(10000, that.timeout));
+        };
+
+        // websocket onerror event listener
+        this.state.ws.onerror = err => {
+            console.error(
+                "Socket encountered error: ",
+                err.message,
+                "Closing socket"
+            );
+
+            this.state.ws.close();
+        };
+        this.state.ws.onmessage =(message)=>{
+            //console.log(message);
+            const dataFormServer = JSON.parse(message.data);
+            //console.log('message recieving is =',dataFormServer );
+
+            // if (dataFormServer.OwnerUserName === this.username){
+            //     //this.setState({DirectMessagesArray:[...this.state.DirectMessagesArray,dataFormServer.msg]})
+            // }
+            if (dataFormServer.OwnerUserName === this.props.AddressUsername){
+                if (dataFormServer.msg === "Delete"){
+                    console.log("DELETE");
+                    let index = this.state.DirectMessagesArray.findIndex(element => element.id === dataFormServer.messageId)
+                    if (index !== -1){
+                        this.state.DirectMessagesArray.splice(index, 1);
+                    }
+                    this.setState({});
+                }
+                else {
+                    axios.get(serverURL() + "chat/direct/message/" + dataFormServer.messageId + "/",TokenConfig())
+                        .then(result => {
+                            //console.log(result);
+                            if (dataFormServer.msg === "Create"){
+                                this.state.DirectMessagesArray.push({
+                                    id:result.data?.id,
+                                    text:result.data?.text,
+                                    message_file:result.data?.message_file,
+                                    sender:this.props.AddressUsername,
+                                    reciever: this.username,
+                                    message_type:result.data?.message_type,
+                                });
+                            }
+                            else if (dataFormServer.msg === "Edit"){
+                                console.log("EDIT");
+                                let index = this.state.DirectMessagesArray.findIndex(element => element.id === dataFormServer.messageId)
+                                if (index !== -1){
+                                    this.state.DirectMessagesArray[index].text = result.data?.text;
+                                }
+                            }
+                            else if (dataFormServer.msg === "Delete"){
+
+                            }
+                            this.setState({});
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        })
+                }
+            }
+        }
+        //this.setState({ ws: ws });
+        //console.log(ws);
+        console.log(this.state.ws);
+    }
+    check = () => {
+        const { ws } = this.state;
+        if (!ws || ws.readyState == WebSocket.CLOSED) this.handleConnectWebSocket(); //check if websocket instance is closed, if so call `connect` function.
+    };
+    handleSendMessage(message,messageId)
+    {
+        let msg = {
+            messageId: messageId,
+            OwnerUserName:this.username,
+            msg : message
+        };
+        try {
+            this.state.ws.send(JSON.stringify(msg)) //send data to the server
+            console.log('message sending is =',msg)
+        } catch (error) {
+            console.log(error) // catch error
+        }
+
+    }
+
     componentDidMount() {
         this.setState({loading:false});
+       // this.handleConnectWebSocket();
     }
     handleStateErrorDialog = () =>{
         this.setState({setErrorDialog:!this.state.setErrorDialog})
     };
     messageText = "";
     username = localStorage.getItem('username');
+    // firstName = localStorage.getItem('firstName');
+    // lastName = localStorage.getItem('lastName');
     indexSelected = -1;
+    nextLink = "";
+    anotherUserProfile = {};
+    myUserProfile = {};
 
     render() {
         const classes = this.props.classes;
         const onFileChange = event => {
             this.handleDrop(event.target.files);
         };
-        console.log(this.username);
-        console.log(this.props.AddressUsername);
+        // console.log(this.username);
+        // console.log(this.props.AddressUsername);
         return(
             <div className={classes.mainDiv}>
                 {this.props.AddressUsername === undefined ? null :
                     <Typography variant={"body1"} align={"left"} style={{display:"flex",alignItems:"center"}}>
-                        <Avatar alt={"ConsultantFirstName + ConsultantLastName"} src={"ConsultantAvatarAddress"} className={classes.titleAvatar}>
+                        <Avatar alt={this.anotherUserProfile.first_name + this.anotherUserProfile.last_name} src={this.anotherUserProfile.avatar} className={classes.titleAvatar}>
                         </Avatar>
-                        مشاور
+                        {this.anotherUserProfile.first_name}
                         &nbsp;
-                        {"ConsultantFirstName"} {"ConsultantLastName"}
+                        {this.anotherUserProfile.last_name}
                         {/*&nbsp;*/}
                     </Typography>
                 }
@@ -522,11 +739,11 @@ class DirectMessages extends Component{
                         <LoadingOverlay active={this.state.loading} spinner text={""}>
                             <ScrollArea className={classes.pictureDiv} speed={0.5} horizontal={false} onScroll={this.handleGetNewMessages}>
                                 {this.state.DirectMessagesArray.map((value,index) => (
-                                    <div style={value.Owner === this.props.AddressUsername ? {display:"flex",flexDirection:"row-reverse",alignItems:"center"} : {display:"flex",flexDirection:"row",alignItems:"center"}}>
-                                        <Avatar alt={"ConsultantFirstName + ConsultantLastName"} src={"ConsultantAvatarAddress"} className={classes.messageAvatar} />
-                                        <Paper ref={(ref) => { this.myRef[index] = ref;}} style={value.Owner === this.props.AddressUsername ? {} : { backgroundColor:"#effdde"}}  className={value.message !== "" ? classes.textPaper : classes.filePaper} onContextMenu={(e) => this.handleRightClick(e, value.message !== "" , index ,value.Owner === this.username)} >
-                                            {value.message === "" ? <img key={index} src={value?.file}
-                                                                         height={"100%"} width={"100%"}/> : <Typography variant={"body1"} align={"left"}>{value.message}</Typography>}
+                                    <div style={value.sender === this.props.AddressUsername ? {display:"flex",flexDirection:"row-reverse",alignItems:"center"} : {display:"flex",flexDirection:"row",alignItems:"center"}}>
+                                        <Avatar alt={value.sender === this.username ? this.myUserProfile.first_name + this.myUserProfile.last_name : this.anotherUserProfile.first_name + this.anotherUserProfile.last_name} src={value.sender === this.username ? this.myUserProfile.avatar : this.anotherUserProfile.avatar } className={classes.messageAvatar} />
+                                        <Paper ref={(ref) => { this.myRef[index] = ref;}} style={value.sender === this.props.AddressUsername ? {} : { backgroundColor:"#effdde"}}  className={value.text !== "" ? classes.textPaper : classes.filePaper} onContextMenu={(e) => this.handleRightClick(e, value.text !== null , index ,value.sender === this.username)} >
+                                            {value.text === null ? <img key={index} src={value?.message_file}
+                                                                         height={"100%"} width={"100%"}/> : <Typography variant={"body1"} align={"left"}>{value.text}</Typography>}
                                         </Paper>
                                     </div>
                                 ))}

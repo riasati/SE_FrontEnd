@@ -108,6 +108,18 @@ it("ReservationPage Test", () => {
                     <div>ج</div>
                   </div>
                   <div class=\\"dayPickerContainer\\">
+                    <div class=\\"dayWrapper\\"><button type=\\"button\\">۲۸</button>
+                      <div class=\\"highLightDot-container\\"></div>
+                    </div>
+                    <div class=\\"dayWrapper\\"><button type=\\"button\\">۲۹</button>
+                      <div class=\\"highLightDot-container\\"></div>
+                    </div>
+                    <div class=\\"dayWrapper\\"><button type=\\"button\\">۳۰</button>
+                      <div class=\\"highLightDot-container\\"></div>
+                    </div>
+                    <div class=\\"dayWrapper\\"><button type=\\"button\\">۳۱</button>
+                      <div class=\\"highLightDot-container\\"></div>
+                    </div>
                     <div class=\\"dayWrapper currentMonth\\"><button type=\\"button\\">۱</button>
                       <div class=\\"highLightDot-container\\"></div>
                     </div>
@@ -123,7 +135,7 @@ it("ReservationPage Test", () => {
                     <div class=\\"dayWrapper currentMonth\\"><button type=\\"button\\">۵</button>
                       <div class=\\"highLightDot-container\\"></div>
                     </div>
-                    <div class=\\"dayWrapper currentMonth\\"><button type=\\"button\\">۶</button>
+                    <div class=\\"dayWrapper selected currentMonth today\\"><button type=\\"button\\">۶</button>
                       <div class=\\"highLightDot-container\\"></div>
                     </div>
                     <div class=\\"dayWrapper currentMonth\\"><button type=\\"button\\">۷</button>

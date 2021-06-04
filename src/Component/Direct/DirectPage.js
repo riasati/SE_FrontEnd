@@ -33,12 +33,12 @@ class Direct extends Component{
         var ll = []
         axios.get(serverURL() + "chat/direct/contact/",TokenConfig())
         .then(result =>{
-            console.log(result)
+           // console.log(result)
             res.push(...result.data);
             ll = res.map((q) => q);
-            console.log(ll)
+           // console.log(ll)
             setDirectList([...ll]);
-            console.log(directList)
+           // console.log(directList)
             setPending(false)
         })
         .catch(err => {

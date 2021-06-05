@@ -23,7 +23,8 @@ import { Skeleton } from 'antd';
 import { ContactsOutlined } from "@material-ui/icons";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import {client, w3cwebsocket as WebSocket} from "websocket";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 class Direct extends Component{
     constructor(props) {
         super(props);
@@ -111,11 +112,15 @@ class Direct extends Component{
     render() {
         const [directList,setDirectList] = this.props.directList;
         const [pending,setPending] = this.props.pending;
+        const [chatPage,setChatPage] = this.props.chatPage;
         //console.log(this.props.match.params.consultantUsername);
         //<div>hello {this.props.match.params.consultantUsername}</div>
         const classes = this.props.classes;
         const rl =[0,1,2,3,4,5,6,7,8,9];
-        
+        const handelPage = e =>{
+            setChatPage(!chatPage)
+            this.setState({loading2: !this.state.loading2})
+        }
         //console.log(this.props.isUpSm);
         return(
             <LoadingOverlay active={this.state.loading} spinner text={""}>
@@ -148,13 +153,13 @@ class Direct extends Component{
                                     />
                                   </Card>)})
                                 :
-                                    <Grid container spacing={3}>
+                                    <Grid container spacing={3} style={!this.props.isUpSm && chatPage ? {display:"none"}:{display:"block"}}>
                                         
                                         {directList.length !== 0 ? 
                                             directList.map((q)=>{
                                                 console.log(q)
                                                 return(
-                                                    <Grid item xs={12} md={12} lg={12} className={classes.container} style={{direction: 'rtl',margin: '0px 0 -15px 0',}}>
+                                                    <Grid item xs={12} md={12} lg={12} className={classes.container} style={{direction: 'rtl',margin: '0px 0 -15px 0',}} onClick={handelPage}>
                                                         <DirectList last_name={q.last_name} first_name={q.first_name}  userID={q.id} avatar={q.avatar} username={q.username} pending={pending} />
                                                     </Grid>
                                                 )
@@ -168,7 +173,8 @@ class Direct extends Component{
                                 <Divider orientation={this.props.isUpSm ? "vertical" : "horizontal"} flexItem={this.props.isUpSm} style={this.props.isUpSm ? {margin:"0px 0px"} : {margin:"0px 8px"}} />
                                 {/*</Grid>*/}
                                 
-                                <Grid item md={8} sm={12} xs={12} >
+                                <Grid item md={8} sm={12} xs={12} style={!this.props.isUpSm && !chatPage ? {display:"none"}:{display:"block"}}>
+                                    {!this.props.isUpSm && chatPage ? <div style={{textAlign: 'left'}} onClick={handelPage}><FontAwesomeIcon size="2x" icon={faAngleLeft} style={{ color: '#3f407d',position: 'absolute',margin: '23px -30px 0 0'}} /></div> : null }
                                     {directList.length !== 0 ? 
                                             (directList.map((q)=>{
                                                 <Router>
@@ -223,8 +229,9 @@ function Auxiliary(props){
     const isUpSm = useMediaQuery(theme.breakpoints.up('sm'));
     const directList = React.useState([]);
     const pending = React.useState(true)
+    const chatPage = React.useState(false)
     return(
-        <Direct classes={classes} p={p} match={props.match} isUpSm={isUpSm} directList={directList} pending={pending}/>
+        <Direct classes={classes} p={p} match={props.match} isUpSm={isUpSm} directList={directList} pending={pending} chatPage={chatPage}/>
     )
 }
 export default withRouter(Auxiliary);

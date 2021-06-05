@@ -115,9 +115,7 @@ class Direct extends Component{
         //<div>hello {this.props.match.params.consultantUsername}</div>
         const classes = this.props.classes;
         const rl =[0,1,2,3,4,5,6,7,8,9];
-        const hc = q =>{
-            // alert(q)
-        }
+        
         //console.log(this.props.isUpSm);
         return(
             <LoadingOverlay active={this.state.loading} spinner text={""}>
@@ -126,13 +124,12 @@ class Direct extends Component{
                     <Theme>
                         <Paper>
                             <Grid container direction={this.props.isUpSm ? "row" : "column"} spacing={2} justify="space-between" style={this.props.isUpSm ? {flexWrap:"nowrap"}:{flexWrap:"wrap"}}>
-                            <Grid item md={4} sm={12} xs={12} style={{backgroundColor: '#f3f7fa'}}>
+                            <Grid item md={4} sm={12} xs={12} className={classes.chatlist} style={{backgroundColor: '#f3f7fa',overflowY: 'scroll',height: '100vh',overflowX: 'hidden',direction: 'ltr'}}>
                                     {pending ? 
                                     rl.map((i)=>{ 
                                         return( 
-                                        <Card sx={{ maxWidth: 345, m: 2 }} style={{margin: '10px 0',backgroundColor: '#f3f7fa'}}>
+                                        <Card sx={{ maxWidth: 345, m: 2 }} style={{margin: '10px 0',backgroundColor: '#f3f7fa',direction: 'rtl'}}>
                                         <CardHeader
-                                        classes={{backgroundColor: 'red'}}
                                         avatar={
                                             pending ? (
                                                 <Skeleton.Avatar  active shape={'circle'} style={{ width: '50px',height: '50px' }}/>
@@ -157,16 +154,15 @@ class Direct extends Component{
                                             directList.map((q)=>{
                                                 console.log(q)
                                                 return(
-                                                    <Grid item xs={12} md={12} lg={12} className={classes.container}>
-                                                        <DirectList last_name={q.last_name} first_name={q.first_name}  userID={q.id} avatar={q.avatar} username={q.username} pending={pending} onClick={hc(q.username)}/>
+                                                    <Grid item xs={12} md={12} lg={12} className={classes.container} style={{direction: 'rtl',margin: '0px 0 -15px 0',}}>
+                                                        <DirectList last_name={q.last_name} first_name={q.first_name}  userID={q.id} avatar={q.avatar} username={q.username} pending={pending} />
                                                     </Grid>
                                                 )
                                             }): null
                                          }
                                         </Grid>
                                 }
-                                    {/* display: 'grid',justifyContent: 'end',alignItems: 'center', height: '20vh',padding: '0', */}
-                                
+                                    
                                 
                                 </Grid>
                                 <Divider orientation={this.props.isUpSm ? "vertical" : "horizontal"} flexItem={this.props.isUpSm} style={this.props.isUpSm ? {margin:"0px 0px"} : {margin:"0px 8px"}} />
@@ -200,8 +196,25 @@ const useStyles = makeStyles((theme) => ({
         '.MuiFormHelperText-root.Mui-error' : {
             fontFamily: 'IRANSansWeb',
         },
+        
     },
-
+    chatlist:{
+        '&::-webkit-scrollbar': {
+            width: '10px',
+	        backgroundColor: '#f3f7fa',
+          },
+          '&::-webkit-scrollbar-track': {
+            webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.3)',
+	        borderRadius: '10px',
+	        backgroundColor: '#f3f7fa',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            borderRadius: '10px',
+	        webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,.3)',
+	        backgroundColor: '#ccc',
+        
+          }
+        }
 }));
 function Auxiliary(props){
     const classes = useStyles();

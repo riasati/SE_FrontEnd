@@ -57,7 +57,7 @@ class Channels extends Component {
                                                 {channelList.length !== 0 ? channelList.map((data) => {
                                                     console.log(data)
                                                     return (
-                                                        <ChannelCard name={data.name} consultant_full_name={data.consultant_full_name} invite_link={data.invite_link} avatar={data.avatar} channelID={data.channelID} />
+                                                        <ChannelCard name={data.name} consultant_full_name={data.consultant_full_name} invite_link={data.invite_link} avatar={data.avatar} channelID={data.id} />
                                                     )
                                                 }) : null}
                                             </Grid>

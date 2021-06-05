@@ -128,11 +128,12 @@ class Profile extends Component {
                                         <br/>
                                         <br/>
                                         <span>
+                                            <Link to={"/Direct/" + this.state.userName}>
                                             <Button style={{
                                                 backgroundColor: '#27bda0',
                                                 fontFamily: 'IRANSansWeb',
                                                 color: '#fff'
-                                            }}>{'ارسال پیام به مشاور'}</Button>
+                                            }}>{'ارسال پیام به مشاور'}</Button></Link>
                                         </span>
                                         </Item>
                                     </Grid>

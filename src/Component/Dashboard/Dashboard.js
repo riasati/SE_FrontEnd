@@ -73,6 +73,7 @@ const useStyles = makeStyles((theme) => ({
         '.fa-calendar-alt': {
             marginLeft: '30%',
         },
+        '.fa-comments':{marginLeft: '30%',},
         '.MuiToolbar-root': {
             backgroundColor: '#3aadd9',
         },

@@ -444,7 +444,7 @@ class GroupingChannel extends Component {
                           channelList.length !== 0 ? (channelList.map((data) => {
                             // console.log(data)
                             return (
-                              <ChannelCard name={data.name} consultant_first_name={data.consultant.first_name} consultant_last_name={data.consultant.last_name} invite_link={data.invite_link} avatar={data.avatar} channelID={data.channelID} />
+                              <ChannelCard name={data.name} consultant_first_name={data.consultant.first_name} consultant_last_name={data.consultant.last_name} invite_link={data.invite_link} avatar={data.avatar} channelID={data.id} />
                             )
                           })) : (<div style={{ color: '#3f407d', width: '100%', textAlign: 'center' }}>
                             <h2>

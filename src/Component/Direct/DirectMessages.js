@@ -163,6 +163,8 @@ class DirectMessages extends Component{
 
     };
     getSocketNameFromUsernames = (username1,username2) => {
+        if (username1 === null || username2 === null)
+            return null;
         const array = [username1,username2].sort((a, b) => a.localeCompare(b));
         const str = array[0] + "_" + array[1];
         //+ "-"
@@ -662,6 +664,7 @@ class DirectMessages extends Component{
     }
 
     componentDidMount() {
+
         this.setState({loading:false});
        // this.handleConnectWebSocket();
     }

@@ -14,6 +14,7 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import {Add} from "@material-ui/icons";
 import {Edit} from "@material-ui/icons";
+import {Call} from "@material-ui/icons";
 import {Close} from "@material-ui/icons";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from '@material-ui/core/Tooltip';
@@ -30,6 +31,7 @@ import { faClock,faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Avatar from "@material-ui/core/Avatar";
 import SuccessDialog from "../../RequestConfig/SuccessDialog";
+import {Link} from "react-router-dom";
 
 class Reservation extends Component{
     constructor(props) {
@@ -306,6 +308,18 @@ class Reservation extends Component{
                                                                     {/*<Button variant="contained" onMouseDown={this.handleMouseDown} color={"primary"}> 9:30 </Button>*/}
                                                                 </div>
                                                                 <div>
+                                                                    <Link to={"/VideoChat/"}>
+                                                                    <Tooltip title={<Typography variant={"body2"} align={"left"} style={{color:"white"}}> تماس </Typography>}
+                                                                             placement="left"
+                                                                             TransitionComponent={Zoom} >
+                                                                        <IconButton
+                                                                            className={classes.iconButtonInterAccordionStyle}
+                                                                          //  onClick={this.handleStateEditTimeDialog}
+                                                                        >
+                                                                            <Call style={{ fontSize: 30}} />
+                                                                        </IconButton>
+                                                                    </Tooltip>
+                                                                    </Link>
                                                                     { this.userType !== "normal_user" ?
                                                                         <Tooltip title={<Typography variant={"body2"} align={"left"} style={{color:"white"}}> ویرایش رزرو </Typography>}
                                                                                  placement="left"

@@ -44,6 +44,7 @@ import Reservation from "../Reservation/ReservationPage";
 import { FaDivide } from 'react-icons/fa';
 import Collapse from '@material-ui/core/Collapse';
 import Direct from "../Direct/DirectPage";
+import VideoChat from "../VideoChat/VideoChatPage";
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="down" ref={ref} {...props} />;
 });
@@ -441,6 +442,9 @@ export default function Dashboard(props) {
                                     </Route>
                                     <Route path="/Calendar">
                                         <Reservation />
+                                    </Route>
+                                    <Route path="/VideoChat">
+                                        <VideoChat />
                                     </Route>
                                     <Route path="/Direct/:AddressUsername">
                                         <Direct />

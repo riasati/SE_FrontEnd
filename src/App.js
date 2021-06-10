@@ -15,6 +15,7 @@ import CreateChannel from "./Component/Channel/CreateChannel";
 import Channel from "./Component/Channel/ChannelPage";
 import Reservation from "./Component/Reservation/ReservationPage";
 import Direct from "./Component/Direct/DirectPage";
+import VideoChat from "./Component/VideoChat/VideoChatPage";
 
 class App extends Component {
     render() {
@@ -35,6 +36,7 @@ class App extends Component {
                     <Route path="/Calendar" children={<Dashboard title={'داشبورد'} />} component={Reservation} />
                     <Route path="/Direct/:AddressUsername" children={<Dashboard title={'داشبورد'} />} component={Direct}/>
                     <Route path="/Direct" exact children={<Dashboard title={'داشبورد'} />} component={Direct}/>
+                    <Route path="/VideoChat" exact children={<Dashboard title={'داشبورد'} />} component={VideoChat}/>
                      {/*<Route path="/Dashboard"  component={Dashboard}/>*/}
                 </Router>
             </div>

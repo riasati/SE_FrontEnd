@@ -77,7 +77,7 @@ it("ReservationPage Test", () => {
                   </div>
                 </div>
                 <div class=\\"makeStyles-rowOfSelectedDay-7\\">
-                  <h6 class=\\"MuiTypography-root MuiTypography-h6 MuiTypography-alignLeft\\"> رزرو های روز 1400/3/8 </h6><button class=\\"MuiButtonBase-root MuiIconButton-root makeStyles-iconButtonAddStyle-8\\" tabindex=\\"0\\" type=\\"button\\"><span class=\\"MuiIconButton-label\\"><svg class=\\"MuiSvgIcon-root\\" focusable=\\"false\\" viewBox=\\"0 0 24 24\\" aria-hidden=\\"true\\" style=\\"font-size: 30px;\\"><path d=\\"M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z\\"></path></svg></span><span class=\\"MuiTouchRipple-root\\"></span></button>
+                  <h6 class=\\"MuiTypography-root MuiTypography-h6 MuiTypography-alignLeft\\"> رزرو های روز 1400/3/20 </h6><button class=\\"MuiButtonBase-root MuiIconButton-root makeStyles-iconButtonAddStyle-8\\" tabindex=\\"0\\" type=\\"button\\"><span class=\\"MuiIconButton-label\\"><svg class=\\"MuiSvgIcon-root\\" focusable=\\"false\\" viewBox=\\"0 0 24 24\\" aria-hidden=\\"true\\" style=\\"font-size: 30px;\\"><path d=\\"M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z\\"></path></svg></span><span class=\\"MuiTouchRipple-root\\"></span></button>
                 </div>
                 <div></div>
                 <div style=\\"clear: both;\\"></div>
@@ -108,18 +108,6 @@ it("ReservationPage Test", () => {
                     <div>ج</div>
                   </div>
                   <div class=\\"dayPickerContainer\\">
-                    <div class=\\"dayWrapper\\"><button type=\\"button\\">۲۸</button>
-                      <div class=\\"highLightDot-container\\"></div>
-                    </div>
-                    <div class=\\"dayWrapper\\"><button type=\\"button\\">۲۹</button>
-                      <div class=\\"highLightDot-container\\"></div>
-                    </div>
-                    <div class=\\"dayWrapper\\"><button type=\\"button\\">۳۰</button>
-                      <div class=\\"highLightDot-container\\"></div>
-                    </div>
-                    <div class=\\"dayWrapper\\"><button type=\\"button\\">۳۱</button>
-                      <div class=\\"highLightDot-container\\"></div>
-                    </div>
                     <div class=\\"dayWrapper currentMonth\\"><button type=\\"button\\">۱</button>
                       <div class=\\"highLightDot-container\\"></div>
                     </div>
@@ -135,13 +123,13 @@ it("ReservationPage Test", () => {
                     <div class=\\"dayWrapper currentMonth\\"><button type=\\"button\\">۵</button>
                       <div class=\\"highLightDot-container\\"></div>
                     </div>
-                    <div class=\\"dayWrapper selected currentMonth today\\"><button type=\\"button\\">۶</button>
+                    <div class=\\"dayWrapper currentMonth\\"><button type=\\"button\\">۶</button>
                       <div class=\\"highLightDot-container\\"></div>
                     </div>
                     <div class=\\"dayWrapper currentMonth\\"><button type=\\"button\\">۷</button>
                       <div class=\\"highLightDot-container\\"></div>
                     </div>
-                    <div class=\\"dayWrapper selected currentMonth today\\"><button type=\\"button\\">۸</button>
+                    <div class=\\"dayWrapper currentMonth\\"><button type=\\"button\\">۸</button>
                       <div class=\\"highLightDot-container\\"></div>
                     </div>
                     <div class=\\"dayWrapper currentMonth\\"><button type=\\"button\\">۹</button>
@@ -177,7 +165,7 @@ it("ReservationPage Test", () => {
                     <div class=\\"dayWrapper currentMonth\\"><button type=\\"button\\">۱۹</button>
                       <div class=\\"highLightDot-container\\"></div>
                     </div>
-                    <div class=\\"dayWrapper currentMonth\\"><button type=\\"button\\">۲۰</button>
+                    <div class=\\"dayWrapper selected currentMonth today\\"><button type=\\"button\\">۲۰</button>
                       <div class=\\"highLightDot-container\\"></div>
                     </div>
                     <div class=\\"dayWrapper currentMonth\\"><button type=\\"button\\">۲۱</button>

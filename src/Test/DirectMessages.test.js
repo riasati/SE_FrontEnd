@@ -57,22 +57,6 @@ it("DirectMessages Test", () => {
             </div>
             <div class=\\"scrollarea makeStyles-pictureDiv-2\\">
               <div style=\\"margin-top: 0px; margin-left: 0px;\\" class=\\"scrollarea-content \\" tabindex=\\"1\\">
-                <div style=\\"display: flex; flex-direction: row; align-items: center;\\">
-                  <div class=\\"MuiAvatar-root MuiAvatar-circle makeStyles-messageAvatar-4\\"><img alt=\\"ConsultantFirstName + ConsultantLastName\\" src=\\"ConsultantAvatarAddress\\" class=\\"MuiAvatar-img\\"></div>
-                  <div class=\\"MuiPaper-root makeStyles-textPaper-5 MuiPaper-elevation1 MuiPaper-rounded\\" style=\\"background-color: rgb(239, 253, 222);\\">
-                    <p class=\\"MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft\\">salam chetori khoobi</p>
-                  </div>
-                </div>
-                <div style=\\"display: flex; flex-direction: row; align-items: center;\\">
-                  <div class=\\"MuiAvatar-root MuiAvatar-circle makeStyles-messageAvatar-4\\"><img alt=\\"ConsultantFirstName + ConsultantLastName\\" src=\\"ConsultantAvatarAddress\\" class=\\"MuiAvatar-img\\"></div>
-                  <div class=\\"MuiPaper-root makeStyles-filePaper-6 MuiPaper-elevation1 MuiPaper-rounded\\" style=\\"background-color: rgb(239, 253, 222);\\"><img src=\\"https://css-tricks.com/wp-content/uploads/2018/10/justify-content.svg\\" height=\\"100%\\" width=\\"100%\\"></div>
-                </div>
-                <div style=\\"display: flex; flex-direction: row; align-items: center;\\">
-                  <div class=\\"MuiAvatar-root MuiAvatar-circle makeStyles-messageAvatar-4\\"><img alt=\\"ConsultantFirstName + ConsultantLastName\\" src=\\"ConsultantAvatarAddress\\" class=\\"MuiAvatar-img\\"></div>
-                  <div class=\\"MuiPaper-root makeStyles-textPaper-5 MuiPaper-elevation1 MuiPaper-rounded\\" style=\\"background-color: rgb(239, 253, 222);\\">
-                    <p class=\\"MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft\\">سلام نه خوب نيستم</p>
-                  </div>
-                </div>
                 <div style=\\"clear: both;\\"></div>
               </div>
             </div>
@@ -91,7 +75,9 @@ it("DirectMessages Test", () => {
   expect(pretty(container.innerHTML)).toMatchInlineSnapshot(`
     "<div class=\\"makeStyles-mainDiv-1\\">
       <p class=\\"MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft\\" style=\\"display: flex; align-items: center;\\">
-      <div class=\\"MuiAvatar-root MuiAvatar-circle makeStyles-titleAvatar-3\\"><img alt=\\"ConsultantFirstName + ConsultantLastName\\" src=\\"ConsultantAvatarAddress\\" class=\\"MuiAvatar-img\\"></div>مشاور &nbsp;ConsultantFirstName ConsultantLastName</p>
+      <div class=\\"MuiAvatar-root MuiAvatar-circle makeStyles-titleAvatar-3 MuiAvatar-colorDefault\\"><svg class=\\"MuiSvgIcon-root MuiAvatar-fallback\\" focusable=\\"false\\" viewBox=\\"0 0 24 24\\" aria-hidden=\\"true\\">
+          <path d=\\"M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z\\"></path>
+        </svg></div>&nbsp;</p>
       <hr class=\\"MuiDivider-root makeStyles-divider-8\\">
       <div style=\\"display: block; position: relative;\\">
         <div style=\\"display: block; position: relative;\\">
@@ -105,22 +91,6 @@ it("DirectMessages Test", () => {
             </div>
             <div class=\\"scrollarea makeStyles-pictureDiv-2\\">
               <div style=\\"margin-top: 0px; margin-left: 0px;\\" class=\\"scrollarea-content \\" tabindex=\\"1\\">
-                <div style=\\"display: flex; flex-direction: row; align-items: center;\\">
-                  <div class=\\"MuiAvatar-root MuiAvatar-circle makeStyles-messageAvatar-4\\"><img alt=\\"ConsultantFirstName + ConsultantLastName\\" src=\\"ConsultantAvatarAddress\\" class=\\"MuiAvatar-img\\"></div>
-                  <div class=\\"MuiPaper-root makeStyles-textPaper-5 MuiPaper-elevation1 MuiPaper-rounded\\" style=\\"background-color: rgb(239, 253, 222);\\">
-                    <p class=\\"MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft\\">salam chetori khoobi</p>
-                  </div>
-                </div>
-                <div style=\\"display: flex; flex-direction: row; align-items: center;\\">
-                  <div class=\\"MuiAvatar-root MuiAvatar-circle makeStyles-messageAvatar-4\\"><img alt=\\"ConsultantFirstName + ConsultantLastName\\" src=\\"ConsultantAvatarAddress\\" class=\\"MuiAvatar-img\\"></div>
-                  <div class=\\"MuiPaper-root makeStyles-filePaper-6 MuiPaper-elevation1 MuiPaper-rounded\\" style=\\"background-color: rgb(239, 253, 222);\\"><img src=\\"https://css-tricks.com/wp-content/uploads/2018/10/justify-content.svg\\" height=\\"100%\\" width=\\"100%\\"></div>
-                </div>
-                <div style=\\"display: flex; flex-direction: row-reverse; align-items: center;\\">
-                  <div class=\\"MuiAvatar-root MuiAvatar-circle makeStyles-messageAvatar-4\\"><img alt=\\"ConsultantFirstName + ConsultantLastName\\" src=\\"ConsultantAvatarAddress\\" class=\\"MuiAvatar-img\\"></div>
-                  <div class=\\"MuiPaper-root makeStyles-textPaper-5 MuiPaper-elevation1 MuiPaper-rounded\\" style=\\"\\">
-                    <p class=\\"MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft\\">سلام نه خوب نيستم</p>
-                  </div>
-                </div>
                 <div style=\\"clear: both;\\"></div>
               </div>
             </div>

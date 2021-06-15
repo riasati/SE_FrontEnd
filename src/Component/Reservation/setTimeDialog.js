@@ -40,7 +40,10 @@ export class TimeDialog extends Component{
 
       axios.post(serverURL() + "calendar/consultant-time/",body,TokenConfig())
       .then(res=>{
-        console.log(res)
+        console.log(res);
+        this.props.ReserveData.push(res.data);
+        this.setState({open:false});
+        this.props?.handleParentState();
       })
       .catch(err=>{
         console.log(err)
@@ -69,7 +72,8 @@ export class TimeDialog extends Component{
         this.setState({endTime:e.target.value});
       };
       const classes = this.props.classes;
-      console.log(this.props.date);
+      // console.log(this.props.date);
+      // console.log(this.props.ReserveData);
         return(
             <div>
             <Dialog

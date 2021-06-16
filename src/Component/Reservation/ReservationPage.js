@@ -308,18 +308,18 @@ class Reservation extends Component{
                                                                     {/*<Button variant="contained" onMouseDown={this.handleMouseDown} color={"primary"}> 9:30 </Button>*/}
                                                                 </div>
                                                                 <div>
-                                                                    <Link to={"/VideoChat/"}>
+                                                                    <a href={"/VideoChat/" + DataValue.id}>
                                                                     <Tooltip title={<Typography variant={"body2"} align={"left"} style={{color:"white"}}> تماس </Typography>}
                                                                              placement="left"
                                                                              TransitionComponent={Zoom} >
                                                                         <IconButton
                                                                             className={classes.iconButtonInterAccordionStyle}
-                                                                          //  onClick={this.handleStateEditTimeDialog}
+                                                                            //onClick={event => {window.location.href = "/VideoChat/" + DataValue.id;console.log(DataValue.id)}}
                                                                         >
                                                                             <Call style={{ fontSize: 30}} />
                                                                         </IconButton>
                                                                     </Tooltip>
-                                                                    </Link>
+                                                                    </a>
                                                                     { this.userType !== "normal_user" ?
                                                                         <Tooltip title={<Typography variant={"body2"} align={"left"} style={{color:"white"}}> ویرایش رزرو </Typography>}
                                                                                  placement="left"

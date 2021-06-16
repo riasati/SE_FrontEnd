@@ -28,6 +28,7 @@ class App extends Component {
                     <Route path="/SignUpUser" component={SignUpUser}/>
                     <Route path="/CreateChannel" exact component={CreateChannel}/>
                     <Route path="/Channel/:channelId" children={<Dashboard title={'داشبورد'} />} component={Channel}/>
+                    <Route path="/VideoChat/:consultantTimeId" children={<Dashboard title={'داشبورد'} />} component={VideoChat}/>
                     <Route path="/Dashboard" children={<Dashboard title={'داشبورد'} />} component={MainPage}/>
                     <Route path="/EditProfile" children={<Dashboard title={'پروفایل'}/>} component={EditProfile}/>
                     <Route path="/Profile/:username" children={<Dashboard title={'پروفایل'}/>} component={Profile}/>
@@ -36,7 +37,6 @@ class App extends Component {
                     <Route path="/Calendar" children={<Dashboard title={'داشبورد'} />} component={Reservation} />
                     <Route path="/Direct/:AddressUsername" children={<Dashboard title={'داشبورد'} />} component={Direct}/>
                     <Route path="/Direct" exact children={<Dashboard title={'داشبورد'} />} component={Direct}/>
-                    <Route path="/VideoChat" exact children={<Dashboard title={'داشبورد'} />} component={VideoChat}/>
                      {/*<Route path="/Dashboard"  component={Dashboard}/>*/}
                 </Router>
             </div>

@@ -272,6 +272,7 @@ class Channel extends Component {
     }
     render() {
         const classes = this.props.classes;
+        console.log(this.props.match);
         const handelGetMembers=e=>{
             this.setState({deleting:true})
             axios.get(serverURL() + "channel/channel-subscriber/"+ this.props.match.params.channelId + "/",TokenConfig())

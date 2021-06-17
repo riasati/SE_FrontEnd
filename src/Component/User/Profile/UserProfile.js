@@ -32,7 +32,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faFileImage, faSignInAlt} from '@fortawesome/free-solid-svg-icons';
 import IconButton from "@material-ui/core/IconButton";
 import RTL from '../../RTL/M_RTL';
-import LoadingButton from '@material-ui/lab/LoadingButton';
+//import LoadingButton from '@material-ui/lab/LoadingButton';
 import Paper from "@material-ui/core/Paper";
 import Tooltip from "@material-ui/core/Tooltip";
 import Zoom from "@material-ui/core/Zoom";
@@ -480,7 +480,7 @@ class ConsultantProfile extends Component {
 
                                                         </Grid>
                                                         <Grid item xs={12}>
-                                                            <LoadingButton disabled={this.state.buttonDisable} onClick={handleClick}
+                                                            <Button disabled={this.state.buttonDisable} onClick={handleClick}
                                                                            pendingPosition="center"
                                                                            className={classes.topButton}
                                                                            pending={pending}
@@ -488,7 +488,7 @@ class ConsultantProfile extends Component {
                                                                                className="fas fa-edit"></i>}
                                                                            fullWidth>
                                                                 {'اعمال تغییرات'}
-                                                            </LoadingButton>
+                                                            </Button>
                                                         </Grid>
                                                     </Grid>
                                                 </ValidatorForm>

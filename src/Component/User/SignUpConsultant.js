@@ -24,7 +24,7 @@ import Zoom from '@material-ui/core/Zoom';
 import serverURL from "../../RequestConfig/serverURL";
 import ErrorDialog from '../../RequestConfig/ErrorDialog';
 import LoadingOverlay from 'react-loading-overlay';
-import LoadingButton from '@material-ui/lab/LoadingButton';
+//import LoadingButton from '@material-ui/lab/LoadingButton';
 class SignUpConsultant extends Component {
     constructor() {
         super();
@@ -441,9 +441,9 @@ class SignUpConsultant extends Component {
                                     <Grid container>
                                         <Grid item xs={12}>
                                             <Grid>
-                                                <LoadingButton onClick={handleClick } pendingPosition="center" className={classes.topButton} pending={pending}  fullWidth>
+                                                <Button onClick={handleClick } pendingPosition="center" className={classes.topButton} pending={pending}  fullWidth>
                                                     {'ثبت نام'}
-                                                </LoadingButton>
+                                                </Button>
                                                 <ErrorDialog open={this.state.setErrorDialog} errorText={this.state.ErrorDialogText} handleParentState={this.handleStateErrorDialog} />
                                             </Grid>
                                         </Grid>

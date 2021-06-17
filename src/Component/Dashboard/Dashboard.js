@@ -443,7 +443,7 @@ export default function Dashboard(props) {
                                     <Route path="/Calendar">
                                         <Reservation />
                                     </Route>
-                                    <Route path="/VideoChat">
+                                    <Route path="/VideoChat/:consultantTimeId">
                                         <VideoChat />
                                     </Route>
                                     <Route path="/Direct/:AddressUsername">

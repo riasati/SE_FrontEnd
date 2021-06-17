@@ -31,7 +31,7 @@ class VideoChat extends Component{
 
     };
     componentDidMount() {
-        axios.post(serverURL() + "video-chat/consultant-time/start/" + this.props.match.params.consultantTimeId + "/",TokenConfig())
+        axios.post(serverURL() + "video-chat/consultant-time/start/" + this.props.match.params.consultantTimeId + "/",{},TokenConfig())
             .then(result => {
                 console.log(result);
                 this.VideoData = result.data;

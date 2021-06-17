@@ -14,31 +14,21 @@ class VideoChat extends Component{
         super(props);
         this.state = {
             loading:false,
+            connectingUrl: null,
         };
         //this.initialization();
     }
     VideoData = {};
-    connectingUrl = null;
-    initialization = () => {
-        axios.post(serverURL() + "video-chat/consultant-time/start/" + this.props.match.params.consultantTimeId + "/")
-            .then(result => {
-                console.log(result);
-                this.VideoData = result.data;
-            })
-            .catch(error => {
-                console.log(error);
-            })
-
-    };
     componentDidMount() {
         axios.post(serverURL() + "video-chat/consultant-time/start/" + this.props.match.params.consultantTimeId + "/",{},TokenConfig())
             .then(result => {
                 console.log(result);
                 this.VideoData = result.data;
-                this.connectingUrl = this.VideoData?.hostRoomUrl;
-                if (this.connectingUrl === null){
-                    this.connectingUrl = this.VideoData?.roomUrl;
+                this.state.connectingUrl = this.VideoData?.hostRoomUrl;
+                if (this.state.connectingUrl === null){
+                    this.state.connectingUrl = this.VideoData?.roomUrl;
                 }
+                this.setState({});
 
             })
             .catch(error => {
@@ -47,14 +37,14 @@ class VideoChat extends Component{
     }
 
     render() {
-        console.log(this.props.match);
+        console.log(this.state.connectingUrl);
         return (
             <LoadingOverlay active={this.state.loading} spinner text={""}>
                 <Container maxWidth="lg" style={{paddingLeft:"0px",paddingRight:"0px"}}>
                     <CssBaseline/>
                     <Theme>
                         {/*<iframe src="https://www.farsnews.ir/" style={{border:"none"}} height="500" width="100%" title="Iframe Example" />*/}
-                        <iframe src={this.connectingUrl} style={{border:"none"}} height="500" width="100%" allow="camera; microphone; fullscreen; speaker; display-capture" />
+                        <iframe src={this.state.connectingUrl} style={{border:"none"}} height="500" width="100%" allow="camera; microphone; fullscreen; speaker; display-capture" />
                     </Theme>
                 </Container>
             </LoadingOverlay>

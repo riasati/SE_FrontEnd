@@ -33,46 +33,24 @@ const MenuItem = withStyles({
 class DirectMessages extends Component{
     constructor(props) {
         super(props);
-        // const roomName = this.getSocketNameFromUsernames(this.username,"riasati");
-        // var ws = new WebSocket("ws://iust-se-consultant.herokuapp.com/ws/chat/"+roomName+'/');
         this.state = {
             mouseX: null,
             mouseY: null,
             isTextSelected:false,
             editing:false,
-            //needEndMessages:false,
             loading:true,
-            //role:this.props.role,
             textOptions:[],
             fileOptions:[],
             enableDragAndDrop:true,
             setErrorDialog:false,
             DirectMessagesArray:[],
-            //roomName:null,
-            //messages: [],
             ws: null,
-           // timeout : 250,
         };
-        // console.log(this.state.role);
         this.myRef = [];
         this.initialization(this.props.AddressUsername);
     }
+    counter = 0;
     initialization = (AddressUsername) => {
-        // this.state.DirectMessagesArray.push({
-        //     text:"salam chetori khoobi",
-        //     message_file:"",
-        //     sender:this.username,
-        // });
-        // this.state.DirectMessagesArray.push({
-        //     text:"",
-        //     message_file:"",//"https://css-tricks.com/wp-content/uploads/2018/10/justify-content.svg",
-        //     sender:this.username,
-        // });
-        // this.state.DirectMessagesArray.push({
-        //     text:"سلام نه خوب نيستم",
-        //     message_file:"",
-        //     sender:this.props.AddressUsername,
-        // });
         // {
         //     "id": 0,
         //     "sender_id": 0,
@@ -82,7 +60,6 @@ class DirectMessages extends Component{
         //     "message_file": "string"
         // }
         this.handleConnectWebSocket(AddressUsername);
-
 
         axios.get(serverURL() + "profile/",TokenConfig())
             .then(result => {
@@ -121,65 +98,17 @@ class DirectMessages extends Component{
 
         this.setState({});
 
-        // axios.get(serverURL() + "channel-message/" + this.props.channelId + "/?query=" + "&page=" + 1,TokenConfig())
-        //     .then(result => {
-        //         console.log(result);
-        //         // this.messageCount = result.data.count;
-        //         //this.previousLink = result.data.previous;
-        //         this.nextLink = result.data.next;
-        //         this.newMessagesList = result.data.results;
-        //         this.newMessagesList = [...this.newMessagesList].reverse();
-        //         this.newMessageFile = this.newMessagesList.map((value,index) => {
-        //             if (value?.message_type === "t") {
-        //                 return <Typography
-        //                     key={value?.id}
-        //                     variant={"body1"}
-        //                 >{value?.text}</Typography>
-        //             } else if (value?.message_type === "i") {
-        //                 return <img key={value?.id} src={value?.message_file}
-        //                             height={"100%"} width={"100%"}/>
-        //             } else if (value?.message_type === "a") {
-        //                 return <audio key={value?.id} src={value?.message_file} controls
-        //                               style={{
-        //                                   height: "100%",
-        //                                   width: "100%"
-        //                               }}/>
-        //             } else if (value?.message_type === "v") {
-        //                 return <video key={value?.id} src={value?.message_file}
-        //                               height={"100%"} width={"100%"}
-        //                               controls/>
-        //             }
-        //         });
-        //         this.state.needEndMessages = true;
-        //         this.setState({loading:false});
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //         this.setState({loading:false});
-        //         this.ErrorDialogText = error.response.data?.error;
-        //         this.setState({setErrorDialog:true});
-        //     })
-
-
     };
     getSocketNameFromUsernames = (username1,username2) => {
         if (username1 === null || username2 === null)
             return null;
         const array = [username1,username2].sort((a, b) => a.localeCompare(b));
         const str = array[0] + "_" + array[1];
-        //+ "-"
         return str;
-    }
+    };
     handleDrop = (files) => {
         for (let i = 0; i < files.length; i++) {
             if (!files[i].name) return;
-            //console.log(files[i].type);
-            // let uri = URL.createObjectURL(files[i]);
-            // this.state.DirectMessagesArray.push({
-            //     text:"",
-            //     message_file:uri,
-            //     sender:this.username
-            // })
             const formData = new FormData();
            // let text = this.messageText;
             formData.append(
@@ -206,10 +135,7 @@ class DirectMessages extends Component{
                         message_type:result.data?.message_type,
                     });
 
-
-
                     this.handleSendMessage("Create",result.data?.id);
-                    //this.state.needEndMessages = true;
                     this.setState({});
                     this.messagesEnd.scrollIntoView({ behavior: "smooth" });
                 })
@@ -218,101 +144,6 @@ class DirectMessages extends Component{
                     //this.ErrorDialogText = error.response.data?.error;
                     //this.setState({setErrorDialog:true});
                 });
-            // const formData = new FormData();
-            // formData.append(
-            //     "message_file",
-            //     files[i]
-            // );
-            // this.setState({loading:true});
-            // if (files[i].type.split("/")[0] === "audio"){
-            //     formData.append(
-            //         "message_type",
-            //         "a"
-            //     );
-            //     axios.post(serverURL() + "channel-message/" +this.props.channelId + "/",formData,TokenConfig())
-            //         .then(result => {
-            //             //console.log(result);
-            //             this.newMessageFile.push(
-            //                 <audio key={result.data.id} src={uri} controls style={{height:"100%",width:"100%"}} />
-            //             );
-            //             this.setState({loading:false});
-            //         })
-            //         .catch(error =>{
-            //             console.log(error);
-            //             this.setState({loading:false});
-            //             this.ErrorDialogText = error.response.data?.error;
-            //             this.setState({setErrorDialog:true});
-            //         });
-            // }
-            // else if (files[i].type.split("/")[0] === "image"){
-            //     formData.append(
-            //         "message_type",
-            //         "i"
-            //     );
-            //     axios.post(serverURL() + "channel-message/" +this.props.channelId + "/",formData,TokenConfig())
-            //         .then(result => {
-            //             //console.log(result);
-            //             this.newMessageFile.push(
-            //                 //style={{maxHeight:"500px"}}
-            //                 <img key={result.data.id} src={uri} height={"100%"} width={"100%"} />
-            //             );
-            //             this.setState({loading:false});
-            //         })
-            //         .catch(error =>{
-            //             console.log(error);
-            //             this.setState({loading:false});
-            //             this.ErrorDialogText = error.response.data?.error;
-            //             this.setState({setErrorDialog:true});
-            //         });
-            // }
-            // else if (files[i].type.split("/")[0] === "video"){
-            //     formData.append(
-            //         "message_type",
-            //         "v"
-            //     );
-            //     axios.post(serverURL() + "channel-message/" +this.props.channelId + "/",formData,TokenConfig())
-            //         .then(result => {
-            //             //console.log(result);
-            //             this.newMessageFile.push(
-            //                 <video key={result.data.id} src={uri} height={"100%"} width={"100%"} controls />
-            //             );
-            //             this.setState({loading:false});
-            //         })
-            //         .catch(error =>{
-            //             console.log(error);
-            //             this.setState({loading:false});
-            //             this.ErrorDialogText = error.response.data?.error;
-            //             this.setState({setErrorDialog:true});
-            //         });
-            // }
-            // else if (files[i].type.split("/")[0] === "application" || files[i].type.split("/")[0] === "text"){
-            //     formData.append(
-            //         "message_type",
-            //         "t"
-            //     );
-            //     axios.post(serverURL() + "channel-message/" +this.props.channelId + "/",formData,TokenConfig())
-            //         .then(result => {
-            //             //console.log(result);
-            //             this.newMessageFile.push(
-            //                 <div key={result.data.id} aria-label={uri}>
-            //                     <IconButton disabled
-            //                                 style={{padding: '0px', color: '#3f407d',display: "block", margin: "auto",}}
-            //                     >
-            //                         <AssignmentSharp style={{ fontSize: 35 }} />
-            //                     </IconButton>
-            //                     <Typography variant={"body1"} dir={"ltr"} className={this.classes.blueFontStyle}>{files[i].name}</Typography>
-            //                 </div>
-            //             );
-            //             this.setState({loading:false});
-            //         })
-            //         .catch(error =>{
-            //             console.log(error);
-            //             this.setState({loading:false});
-            //             this.ErrorDialogText = error.response.data?.error;
-            //             this.setState({setErrorDialog:true});
-            //         });
-            //
-            // }
         }
         this.setState({});
     };
@@ -320,61 +151,37 @@ class DirectMessages extends Component{
         if (value.topPosition === 0){
             if (this.counter === 0){
                 this.counter++;
-                // console.log("one time");
+                 console.log("one time");
             }
             else {
                 if (this.counter === 1){
                     this.counter++;
-                    // console.log("two time");
+                     console.log("two time");
                     this.setState({loading:true});
-                    // axios.get(this.nextLink,TokenConfig())
-                    //     .then(result => {
-                    //         // console.log(result);
-                    //         // this.messageCount = result.data.count;
-                    //         // this.previousLink = result.data.previous;
-                    //         this.nextLink = result.data.next;
-                    //         if (this.nextLink === null){
-                    //             this.counter = -1;
-                    //         }
-                    //         let newMessagesList2 = result.data.results;
-                    //         this.newMessagesList = [...newMessagesList2].reverse();
-                    //         let newMessageFile2 = this.newMessagesList.map((value,index) => {
-                    //             if (value?.message_type === "t") {
-                    //                 return <Typography
-                    //                     key={value?.id}
-                    //                     variant={"body1"}
-                    //                 >{value?.text}</Typography>
-                    //             } else if (value?.message_type === "i") {
-                    //                 return <img key={value?.id} src={value?.message_file}
-                    //                             height={"100%"} width={"100%"}/>
-                    //             } else if (value?.message_type === "a") {
-                    //                 return <audio key={value?.id} src={value?.message_file} controls
-                    //                               style={{
-                    //                                   height: "100%",
-                    //                                   width: "100%"
-                    //                               }}/>
-                    //             } else if (value?.message_type === "v") {
-                    //                 return <video key={value?.id} src={value?.message_file}
-                    //                               height={"100%"} width={"100%"}
-                    //                               controls/>
-                    //             }
-                    //         });
-                    //         this.newMessageFile = newMessageFile2.concat(this.newMessageFile);
-                    //         if (this.counter !== -1){
-                    //             this.counter = 0;
-                    //         }
-                    //         //   this.messagesEnd2.scrollArea.refresh();
-                    //         this.setState({loading:false});
-                    //     })
-                    //     .catch(error => {
-                    //         console.log(error);
-                    //         if (this.counter !== -1){
-                    //             this.counter = 0;
-                    //         }
-                    //         this.setState({loading:false});
-                    //         // this.ErrorDialogText = error?.response?.data?.error;
-                    //         // this.setState({setErrorDialog:true});
-                    //     })
+                    axios.get(this.nextLink,TokenConfig())
+                        .then(result => {
+                            // console.log(result);
+                            this.nextLink = result.data.next;
+                            if (this.nextLink === null){
+                                this.counter = -1;
+                            }
+                            let DirectMessagesArray2 = result.data.results.reverse();
+                            this.state.DirectMessagesArray = DirectMessagesArray2.concat(this.state.DirectMessagesArray);
+                            if (this.counter !== -1){
+                                this.counter = 0;
+                            }
+                            //   this.messagesEnd2.scrollArea.refresh();
+                            this.setState({loading:false});
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            if (this.counter !== -1){
+                                this.counter = 0;
+                            }
+                            this.setState({loading:false});
+                            // this.ErrorDialogText = error?.response?.data?.error;
+                            // this.setState({setErrorDialog:true});
+                        })
                 }
             }
         }
@@ -551,7 +358,6 @@ class DirectMessages extends Component{
         window.getSelection().removeAllRanges();
         this.setState({});
     };
-
     handleConnectWebSocket(AddressUsername){
         //const roomName = this.getSocketNameFromUsernames(this.username,"riasati");
         //var ws = new WebSocket("ws://iust-se-consultant.herokuapp.com/ws/chat/"+roomName+'/');
@@ -620,6 +426,8 @@ class DirectMessages extends Component{
                                     reciever: this.username,
                                     message_type:result.data?.message_type,
                                 });
+                                this.setState({});
+                                this.messagesEnd.scrollIntoView({ behavior: "smooth" });
                             }
                             else if (dataFormServer.msg === "Edit"){
                                 console.log("EDIT");
@@ -627,9 +435,6 @@ class DirectMessages extends Component{
                                 if (index !== -1){
                                     this.state.DirectMessagesArray[index].text = result.data?.text;
                                 }
-                            }
-                            else if (dataFormServer.msg === "Delete"){
-
                             }
                             this.setState({});
                         })
@@ -647,8 +452,7 @@ class DirectMessages extends Component{
         const { ws } = this.state;
         if (!ws || ws.readyState == WebSocket.CLOSED) this.handleConnectWebSocket(this.props.AddressUsername); //check if websocket instance is closed, if so call `connect` function.
     };
-    handleSendMessage(message,messageId)
-    {
+    handleSendMessage(message,messageId) {
         let msg = {
             messageId: messageId,
             OwnerUserName:this.username,
@@ -671,6 +475,7 @@ class DirectMessages extends Component{
     componentWillReceiveProps(nextProps, nextContext) {
         if (nextProps.AddressUsername !== this.props.AddressUsername){
             this.state.DirectMessagesArray = [];
+            this.counter = 0;
             this.initialization(nextProps.AddressUsername);
         }
     }
@@ -864,7 +669,7 @@ const useStyles = makeStyles((theme) => ({
         overflowY:"hidden",
         overflowX:"hidden",
         // scrollBehavior: "smooth",
-        height: "570px",
+        height: "80vh",//"570px",
         backgroundPosition: 'center',
         backgroundAttachment: "fixed",
         backgroundImage: `url(${backgroundChannel})`,

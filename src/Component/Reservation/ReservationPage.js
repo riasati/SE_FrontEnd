@@ -268,7 +268,7 @@ class Reservation extends Component{
                                             : null
                                         }
                                     </div>
-                                    <TimeDialog open={this.state.timeDialog} handleParentState={this.handleStateTimeDialog} date={this.state.CalendarValue}/>
+                                    <TimeDialog open={this.state.timeDialog} handleParentState={this.handleStateTimeDialog} date={this.state.CalendarValue} ReserveData={this.ReserveData}/>
                                     
                                     <div style={{ clear: "both" }}
                                          ref={(el) => { this.reservation = el; }}>
@@ -333,7 +333,7 @@ class Reservation extends Component{
                                                                         </Tooltip>
                                                                         : null
                                                                     }
-                                                                    <EditTimeDialog open={this.state.editTimeDialog} handleParentState={this.handleStateEditTimeDialog} startDate={DataValue.start_date} endDate={DataValue.end_date} ConsultantTimeId={DataValue.id} date={this.state.CalendarValue}/>
+                                                                    <EditTimeDialog open={this.state.editTimeDialog} handleParentState={this.handleStateEditTimeDialog} startDate={DataValue.start_date} endDate={DataValue.end_date} ConsultantTimeId={DataValue.id} date={this.state.CalendarValue} ReserveData={this.ReserveData}/>
                                                                     <Tooltip title={<Typography variant={"body2"} align={"left"} style={{color:"white"}}>{this.userType !== "normal_user" ? "حذف رزرو" : "کنسل رزرو"}</Typography>}
                                                                              placement="left"
                                                                              TransitionComponent={Zoom} >

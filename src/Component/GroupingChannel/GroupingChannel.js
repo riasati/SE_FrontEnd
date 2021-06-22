@@ -459,7 +459,7 @@ class GroupingChannel extends Component {
                           consultantList.length !== 0 ? (consultantList.map((data) => {
                             // console.log(data)
                             return (
-                              <ConsultantCard consultant_first_name={data.first_name} consultant_last_name={data.last_name} direct={data.username} avatar={data.avatar} />
+                              <ConsultantCard consultant_first_name={data.first_name} consultant_last_name={data.last_name} profile={data.username} avatar={data.avatar} satisfactionPercentage={data.satisfaction_percentage} commentsCount={data.count_of_all_comments} />
                             )
                           })) : (<div style={{ color: '#3f407d', width: '100%', textAlign: 'center' }}>
                             <h2>

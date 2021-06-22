@@ -94,7 +94,7 @@ class SignUpUser extends Component {
                     localStorage.setItem('username', res.data?.data?.username);
                     // localStorage.setItem('firstName', result.data?.data?.first_name);
                     // localStorage.setItem('lastName', result.data?.data?.last_name);
-                    window.location.href = "/Dashboard";
+                    window.location.href = "/VerifyEmail";
                 })
                 .catch(err=>{
                     setPending(false);

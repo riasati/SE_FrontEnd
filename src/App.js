@@ -1,6 +1,7 @@
 import './App.css';
 import React, {Component} from 'react';
 import SignIn from "./Component/User/SignIn";
+import VerifyEmail from "./Component/User/verifyEmail";
 import SignUpConsultant from "./Component/User/SignUpConsultant";
 import SignUpUser from "./Component/User/SignUpUser";
 import EditProfile from './Component/User/Profile/EditProfile';
@@ -25,6 +26,7 @@ class App extends Component {
                     <Route path="/signIn" component={SignIn}/>
                     <Route path="/SignUpConsultant" component={SignUpConsultant}/>
                     <Route path="/SignUpUser" component={SignUpUser}/>
+                    <Route path="/VerifyEmail" component={VerifyEmail}/>
                     <Route path="/CreateChannel" exact component={CreateChannel}/>
                     <Route path="/Channel/:channelId" children={<Dashboard title={'داشبورد'} />} component={Channel}/>
                     <Route path="/Dashboard" children={<Dashboard title={'داشبورد'} />} component={MainPage}/>

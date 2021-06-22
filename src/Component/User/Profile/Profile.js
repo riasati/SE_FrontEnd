@@ -134,11 +134,15 @@ class Profile extends Component {
                                     <Grid item xs={12} className={classes.info}>
                                         <Grid container spacing={3}>
                                             <Grid item xs={12} md={2} lg={2} className={classes.centerItem}>
+                                                {this.state.avatar !== null ? 
                                                 <img src={this.state.avatar} className={classes.avatar} />
+                                                :
+                                                <img src={'../../image/defaultavatar.jpg'} className={classes.avatar} />
+                                                }
                                             </Grid>
                                             <Grid item xs={12} md={3} lg={3} className={classes.centerItem}>
-                                                <div>
-                                                    <h2><span>{this.state.firstName}</span>&nbsp;
+                                                <div >
+                                                    <h2 style={{color: '#fff'}}><span>{this.state.firstName}</span>&nbsp;
                                                     <span>{this.state.lastName}</span></h2>
                                                     <span>متخصص{ }</span>
                                                 </div>
@@ -149,8 +153,12 @@ class Profile extends Component {
                                             <Grid item xs={12} md={2} lg={2} className={classes.centerItem}>
                                                 <div>
                                                     <span>
-                                                        <span style={{ color: '#fff' }}><FontAwesomeIcon icon={faStar} /></span>
-                                                        {'۹۹٪ رضایت از ۵۰ نظر'}
+                                                        <span style={{ color: 'rgb(250 219 20)' }}><FontAwesomeIcon icon={faStar} /></span>
+                                                        
+                                                    <span>{faNumber(this.state.satisfactionPercentage)}</span>
+                                                    <span>{"٪ رضایت از"}</span>&nbsp;
+                                                    <span>{faNumber(this.state.commentsCount)}</span>&nbsp;
+                                                    <span>{"نظر"}</span>
                                                     </span><br />
                                                     <span>۱۳ سال تجربه کار</span></div>
                                             </Grid>

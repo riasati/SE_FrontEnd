@@ -29,7 +29,7 @@ class ConsultantCard extends Component {
     return (
       <Grid item xs={12} md={4} lg={3} className={classes.container}>
         <div className={classes.div}>
-          <a href={"/Profile/" + this.props.direct} className={classes.a}>
+          <a href={"/Profile/" + this.props.profile} className={classes.a}>
             {
               this.props.avatar !== null ?
                 <img src={this.props.avatar} className={classes.img} />
@@ -39,12 +39,12 @@ class ConsultantCard extends Component {
             <div><span data-testid="cfn">{this.props.consultant_first_name}</span>&nbsp;<span data-testid="cln">{this.props.consultant_last_name}</span></div>
             <br />
             <div><div style={{direction: 'ltr'}}><Rate disabled allowHalf defaultValue={this.props.rate} /></div>
-              <div><span>{"("}</span>&nbsp;
+              <div>
               <span>{faNumber(this.props.satisfactionPercentage)}</span>&nbsp;
               <span>{"٪ از"}</span>&nbsp;
               <span>{faNumber(this.props.commentsCount)}</span>&nbsp;
               <span>{"نظر"}</span>&nbsp;
-              <span>{")"}</span>&nbsp;</div>
+              </div>
             </div>
             <br/>
           </a>
@@ -105,15 +105,12 @@ export default (props) => {
   const classes = useStyles();
   const consultant_first_name = props.consultant_first_name;
   const consultant_last_name = props.consultant_last_name;
-  const direct = props.direct;
+  const profile = props.profile;
   const avatar = props.avatar;
-  // const rate = props.rate;
-  // const satisfactionPercentage = props.satisfactionPercentage;
-  const satisfactionPercentage = '97';
-  const commentsCount = '476';
-  // const commentsCount = props.commentsCount;
-  const rate = 3;
+  const rate = props.satisfactionPercentage / 20;
+  const satisfactionPercentage = props.satisfactionPercentage;
+  const commentsCount = props.commentsCount;
   return (
-    <ConsultantCard classes={classes} consultant_first_name={consultant_first_name} consultant_last_name={consultant_last_name} avatar={avatar} direct={direct} rate={rate} satisfactionPercentage={satisfactionPercentage} commentsCount={commentsCount}/>
+    <ConsultantCard classes={classes} consultant_first_name={consultant_first_name} consultant_last_name={consultant_last_name} avatar={avatar} profile={profile} rate={rate} satisfactionPercentage={satisfactionPercentage} commentsCount={commentsCount}/>
   )
 }

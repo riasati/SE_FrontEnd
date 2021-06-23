@@ -15,10 +15,12 @@ class VideoChat extends Component{
         this.state = {
             loading:false,
             connectingUrl: null,
+            catchingError: false,
         };
         //this.initialization();
     }
     VideoData = {};
+    errorText = null;
     componentDidMount() {
         axios.post(serverURL() + "video-chat/consultant-time/start/" + this.props.match.params.consultantTimeId + "/",{},TokenConfig())
             .then(result => {
@@ -33,6 +35,10 @@ class VideoChat extends Component{
             })
             .catch(error => {
                 console.log(error);
+                this.state.catchingError = true;
+                //console.log(error.message);
+                this.errorText = error?.response?.data?.error;
+                this.setState({});
             })
     }
 
@@ -44,7 +50,35 @@ class VideoChat extends Component{
                     <CssBaseline/>
                     <Theme>
                         {/*<iframe src="https://www.farsnews.ir/" style={{border:"none"}} height="500" width="100%" title="Iframe Example" />*/}
-                        <iframe src={this.state.connectingUrl} style={{border:"none"}} height="500" width="100%" allow="camera; microphone; fullscreen; speaker; display-capture" />
+                        {this.state.catchingError === true ?
+                            <div
+                                style={{
+                                    //      border: 'dashed grey 4px',
+                                    backgroundColor: 'rgba(255,255,255,.8)',
+                                    position: 'absolute',
+                                    top: 0,
+                                    bottom: 0,
+                                    left: 0,
+                                    right: 0,
+                                    zIndex: 9999
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        position: 'absolute',
+                                        top: '50%',
+                                        right: 0,
+                                        left: 0,
+                                        textAlign: 'center',
+                                        color: 'grey',
+                                        fontSize: 36
+                                    }}
+                                >
+                                    <div style={{fontFamily:"IRANSansWeb"}}>{this.errorText}</div>
+                                </div>
+                            </div>
+                            : <iframe src={this.state.connectingUrl} style={{border:"none"}} height="500" width="100%" allow="camera; microphone; fullscreen; speaker; display-capture" />}
+
                     </Theme>
                 </Container>
             </LoadingOverlay>

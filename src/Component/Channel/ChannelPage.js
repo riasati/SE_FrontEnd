@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles, useTheme} from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
@@ -45,6 +45,7 @@ import { FcInvite } from "react-icons/fc";
 import { IoExitOutline } from "react-icons/io5";
 import { RiMailSendLine } from "react-icons/ri";
 import { FiMail } from "react-icons/fi";
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
@@ -56,6 +57,9 @@ import Slide from "@material-ui/core/Slide";
 import TokenConfig from "../../RequestConfig/TokenConfig";
 import { withRouter } from "react-router";
 import Theme from "../Theme";
+import List from "@material-ui/core/List";
+import ListSubheader from "@material-ui/core/ListSubheader";
+// import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery";
 
 
 
@@ -92,6 +96,9 @@ class Channel extends Component {
             sendInviteIcon:false,
             deleting:false,
             editing:false,
+            showRightSection:true,
+            showCenterSection:true,
+            showLeftSection:true,
         };
         this.initialization();
     }
@@ -127,7 +134,7 @@ class Channel extends Component {
             });
         axios.get(serverURL() + "user/channels/",TokenConfig())
             .then(result =>{
-               // console.log(result);
+                // console.log(result);
                 this.channelsList = result.data;
                 for (let i in this.channelsList){
                     // if (this.channelsList[i].user_role ==="consultant"){
@@ -147,7 +154,7 @@ class Channel extends Component {
             });
         axios.get(serverURL() + "channel/channel-subscriber/"+ this.props.match.params.channelId + "/",TokenConfig())
             .then(result =>{
-                this.subscribersList = result.data?.data;              
+                this.subscribersList = result.data?.data;
             })
             .catch(error => {
                 console.log(error);
@@ -159,7 +166,7 @@ class Channel extends Component {
                 this.adminsList.push(result.data?.consultant);
                 for (let i in result.data?.admin){
                     this.adminsList.push(result.data?.admin[i]);
-                }               
+                }
             })
             .catch(error => {
                 console.log(error);
@@ -168,6 +175,12 @@ class Channel extends Component {
             });
     };
     componentDidMount() {
+        //console.log("here");
+        if (this.props.isUpSm === false){
+            this.state.showRightSection = false;
+            this.state.showCenterSection = true;
+            this.state.showLeftSection = false;
+        }
         this.setState({loading:false});
         axios.get(serverURL() + "channel/" + this.props.match.params.channelId + "/",TokenConfig())
             .then(result => {
@@ -187,6 +200,26 @@ class Channel extends Component {
             });
 
     }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.isUpSm !== this.props.isUpSm){
+            if (this.props.isUpSm === true){
+                console.log("update true");
+                this.state.showRightSection = true;
+                this.state.showCenterSection = true;
+                this.state.showLeftSection = true;
+                this.setState({});
+            }
+            else{
+                // console.log("update false");
+                this.state.showRightSection = false;
+                this.state.showCenterSection = true;
+                this.state.showLeftSection = false;
+                this.state.openDrawerRight = false;
+                this.state.openDrawerLeft = false;
+                this.setState({});
+            }
+        }
+    }
 
     channelName= null;
     channelDescription = null;
@@ -197,13 +230,43 @@ class Channel extends Component {
     inviteLink = null;
 
     handleRightDrawer = e => {
-        this.state.openDrawerRight = !this.state.openDrawerRight;
-        this.handleSms();
-        this.setState({});
+        if (this.props.isUpSm === true){
+            this.state.openDrawerRight = !this.state.openDrawerRight;
+            this.handleSms();
+            this.setState({});
+        }
+        else {
+            this.state.showRightSection = true;
+            this.state.showCenterSection = false;
+            this.state.showLeftSection = false;
+            this.state.openDrawerRight = false;
+            this.setState({});
+        }
+
     };
     handleLeftDrawer = e => {
-        this.state.openDrawerLeft = !this.state.openDrawerLeft;
-        this.handleSms();
+        if (this.props.isUpSm === true){
+            this.state.openDrawerLeft = !this.state.openDrawerLeft;
+            this.handleSms();
+            this.setState({});
+        }
+        else {
+            this.state.showRightSection = false;
+            this.state.showCenterSection = false;
+            this.state.showLeftSection = true;
+            this.setState({});
+        }
+    };
+    handleRightDrawerUnderSM = e => {
+        this.state.showRightSection = false;
+        this.state.showCenterSection = true;
+        this.state.showLeftSection = false;
+        this.setState({});
+    };
+    handleLeftDrawerUnderSM = e => {
+        this.state.showRightSection = false;
+        this.state.showCenterSection = true;
+        this.state.showLeftSection = false;
         this.setState({});
     };
     handleSms = () => {
@@ -267,25 +330,25 @@ class Channel extends Component {
                 }
             }
         }
-        
-        
+
+
     }
     render() {
         const classes = this.props.classes;
-        console.log(this.props.match);
+        console.log(this.props.isUpSm);
         const handelGetMembers=e=>{
             this.setState({deleting:true})
             axios.get(serverURL() + "channel/channel-subscriber/"+ this.props.match.params.channelId + "/",TokenConfig())
-            .then(res =>{
-                console.log(res);
-                setTimeout(()=>{
-                    this.setState({deleting:false});
+                .then(res =>{
+                    console.log(res);
+                    setTimeout(()=>{
+                        this.setState({deleting:false});
                     },200)
-                this.setState({channelMember:res.data?.data})
-            })
-            .catch(error=>{
-                console.log(error);
-            })
+                    this.setState({channelMember:res.data?.data})
+                })
+                .catch(error=>{
+                    console.log(error);
+                })
         }
         const handelUploadData = e =>{
             this.setState({editing:true});
@@ -297,7 +360,7 @@ class Channel extends Component {
                 )
                 this.setState({channelName:this.state.uploadChannelName})
             }
-        
+
             if (this.state.uploadChannelDescription !=="") {
                 formData.append(
                     "description",
@@ -314,28 +377,28 @@ class Channel extends Component {
             }
             console.log(formData);
             axios.put(serverURL()+"channel/update-channel-inf/"+ this.props.match.params.channelId + "/", formData,TokenConfig())
-            .then(res =>{
-                console.log(res);
-                setTimeout(()=>{
-                    this.setState({editing:false});
-                    handleShowInfo()
+                .then(res =>{
+                    console.log(res);
+                    setTimeout(()=>{
+                        this.setState({editing:false});
+                        handleShowInfo()
                     },200)
-            })
-            .catch(err=>{
-                console.log(err);
-            });
+                })
+                .catch(err=>{
+                    console.log(err);
+                });
             this.setState({buttonDisabled:true})
-            
+
         }
         const handleImageUpload= event=>{
             this.setState({changeImageFlag:true})
             this.setState({selectFile:event.target.files[0]})
             let reader = new FileReader();
-        reader.onload = (event) => {
-        this.setState({uploadImage: event.target.result});
-        };
-        reader.readAsDataURL(event.target.files[0]);
-        this.setState({buttonDisabled: false});
+            reader.onload = (event) => {
+                this.setState({uploadImage: event.target.result});
+            };
+            reader.readAsDataURL(event.target.files[0]);
+            this.setState({buttonDisabled: false});
         }
         const handleEditChannel = (event) => {
             if (this.state.editChannel === false){
@@ -353,11 +416,11 @@ class Channel extends Component {
                 this.setState({showMembers:true})
             }
             axios.get(serverURL() + "channel/channel-subscriber/"+ this.props.match.params.channelId + "/",TokenConfig())
-            .then(res =>{
-                console.log(res);
-                this.setState({channelMember:res.data?.data})
-                this.setState({channelMemberFlag:true})
-            })
+                .then(res =>{
+                    console.log(res);
+                    this.setState({channelMember:res.data?.data})
+                    this.setState({channelMemberFlag:true})
+                })
                 .catch(error => {
                     console.log(error);
                 })
@@ -395,78 +458,79 @@ class Channel extends Component {
                 channel : this.props.match.params.channelId
             };
             axios.post(serverURL()+"request/applicant/", data,TokenConfig())
-            .then(res =>{
-                console.log(res);
-                setTimeout(()=>{
-                    this.setState({sendInviteIcon:false});
+                .then(res =>{
+                    console.log(res);
+                    setTimeout(()=>{
+                        this.setState({sendInviteIcon:false});
                     },1000)
-            })
-            .catch(err=>{
-                console.log(err);
-                this.ErrorDialogText = err.response.data?.error;
-                this.setState({setErrorDialog:true});
-                this.setState({sendInviteIcon:false});
-            });
+                })
+                .catch(err=>{
+                    console.log(err);
+                    this.ErrorDialogText = err.response.data?.error;
+                    this.setState({setErrorDialog:true});
+                    this.setState({sendInviteIcon:false});
+                });
 
-            
+
         }
+
         return(
             <LoadingOverlay active={this.state.loading} spinner text={""}>
                 <Container maxWidth="lg" style={{paddingLeft:"0px",paddingRight:"0px"}}>
                     <CssBaseline/>
                     <Theme>
-                    {/*<Material_RTL>*/}
+                        {/*<Material_RTL>*/}
                         {/*<RTL>*/}
-                            <div className={classes.rootDiv} >
-                                <Grid container direction={"column"} justify="space-evenly" >
-                                            <Dialog
-                                                open={this.state.showInfo}
-                                                aria-labelledby="alert-dialog-slide-title1"
-                                                aria-describedby="alert-dialog-slide-description"
-                                                onClose={handleShowInfo}
-                                            >
-                                            <LoadingOverlay active={this.state.editing} spinner text={""}>
-                                                <CardContent id="alert-dialog-slide-title"  component="h1" variant="h5" style={{color: "#494949",justifyContent:'right'}}>
-                                                    <Grid xs={12} container spacing={1}  direction="column" justify="flex-start" alignItems="center">
-                                                     <Grid xs={9} item  justify="center">
+                        <div className={classes.rootDiv} >
+                            <Grid container direction={"column"} justify="space-evenly" >
+                                <Dialog
+                                    open={this.state.showInfo}
+                                    aria-labelledby="alert-dialog-slide-title1"
+                                    aria-describedby="alert-dialog-slide-description"
+                                    onClose={handleShowInfo}
+                                >
+                                    <LoadingOverlay active={this.state.editing} spinner text={""}>
+                                        <CardContent id="alert-dialog-slide-title"  component="h1" variant="h5" style={{color: "#494949",justifyContent:'right'}}>
+                                            <Grid xs={12} container spacing={1}  direction="column" justify="flex-start" alignItems="center">
+                                                <Grid xs={9} item  justify="center">
                                                     <text style={{fontFamily: 'IRANSansWeb',color: "#494949",justifyContent:'right'}}>{'تغیر مشخصات کانال'}</text>
-                                                    </Grid>
-                                                    <Grid xs={9} item  justify="center">
+                                                </Grid>
+                                                <Grid xs={9} item  justify="center">
                                                     <span><BsCardText color="#494949" style={{marginTop: '10px',justifyContent: 'center'}} fontSize="large"/></span>
-                                                     </Grid>
-                                                    </Grid>
-                                                </CardContent>
-                                                <DialogContent>
-                                                    <DialogContentText id="alert-dialog-slide-description" style={{fontFamily: 'IRANSansWeb'}}>
-                                                        <Card  className={classes.paperShowChannelInfo} >
-                                                            <CardContent >
-                                                                <CardMedia component="img"  className={classes.mediaChannelInfo} src={this.state.uploadImage}/>
-                                                                <label htmlFor="upload-photo" spacing={1}>
-                                                                <input
-                                                                    style={{ display: 'none' }}
-                                                                    id="upload-photo"
-                                                                    name="upload-photo"
-                                                                    type="file"
-                                                                    onChange={handleImageUpload}
-                                                                  />
-                                                                  <Button color="primary" className={classes.button} variant="contained" component="span" style={{fontFamily: 'IRANSansWeb'}}  startIcon={'  '}>
-                                                                    <MdPhoto fontSize='large' spacing="4%" margin="7%"/>
-                                                                    <text style={{margin:'3px'}}>
+                                                </Grid>
+                                            </Grid>
+                                        </CardContent>
+                                        <DialogContent>
+                                            <DialogContentText id="alert-dialog-slide-description" style={{fontFamily: 'IRANSansWeb'}}>
+                                                <Card  className={classes.paperShowChannelInfo} >
+                                                    <CardContent >
+                                                        <CardMedia component="img"  className={classes.mediaChannelInfo} src={this.state.uploadImage}/>
+                                                        <label htmlFor="upload-photo" spacing={1}>
+                                                            <input
+                                                                style={{ display: 'none' }}
+                                                                id="upload-photo"
+                                                                name="upload-photo"
+                                                                type="file"
+                                                                onChange={handleImageUpload}
+                                                            />
+                                                            <Button color="primary" className={classes.button} variant="contained" component="span" style={{fontFamily: 'IRANSansWeb'}}  startIcon={'  '}>
+                                                                <MdPhoto fontSize='large' spacing="4%" margin="7%"/>
+                                                                <text style={{margin:'3px'}}>
                                                                     {"تغیر عکس"}
-                                                                    </text>
-                                                                  </Button>
-                                                                </label>
-                                                            </CardContent>
-                                                        <CardContent>
+                                                                </text>
+                                                            </Button>
+                                                        </label>
+                                                    </CardContent>
+                                                    <CardContent>
                                                         <Grid  className={classes.rootShowMembers} spacing={2} container
-                                                            alignItems="stretch"
-                                                            justify="flex-end"
-                                                            alignItems="stretch">
-                                                                <Grid xs={12} container spacing={1} alignItems="center"  justify="flex-end" direction="row">
-                                                                    <Grid xs={1} item>
-                                                                        <CgRename color="#2ad981"/>
-                                                                    </Grid>
-                                                                    <Grid xs={11} item justify="flex-end">
+                                                               alignItems="stretch"
+                                                               justify="flex-end"
+                                                               alignItems="stretch">
+                                                            <Grid xs={12} container spacing={1} alignItems="center"  justify="flex-end" direction="row">
+                                                                <Grid xs={1} item>
+                                                                    <CgRename color="#2ad981"/>
+                                                                </Grid>
+                                                                <Grid xs={11} item justify="flex-end">
                                                                     <TextField
                                                                         autoFocus
                                                                         InputLabelProps={{style: {fontFamily: 'IRANSansWeb'}}}
@@ -479,13 +543,13 @@ class Channel extends Component {
                                                                         name="uploadChannelName"
                                                                         onChange={this.handleChange}
                                                                     />
-                                                                        </Grid>
                                                                 </Grid>
-                                                                <Grid xs={12} container spacing={1} alignItems="center" justify="flex-end" direction="row">
-                                                                    <Grid xs={1} item  alignItems="center">
-                                                                        <MdDescription color="#2ad981"/>
-                                                                    </Grid>
-                                                                    <Grid xs={11} item>
+                                                            </Grid>
+                                                            <Grid xs={12} container spacing={1} alignItems="center" justify="flex-end" direction="row">
+                                                                <Grid xs={1} item  alignItems="center">
+                                                                    <MdDescription color="#2ad981"/>
+                                                                </Grid>
+                                                                <Grid xs={11} item>
                                                                     <TextField
                                                                         InputLabelProps={{style:{fontFamily: 'IRANSansWeb'}}}
                                                                         id="explain"
@@ -498,124 +562,175 @@ class Channel extends Component {
                                                                         name="uploadChannelDescription"
                                                                         onChange={this.handleChange}
                                                                     />
-                                                                        </Grid>
                                                                 </Grid>
-                                                                <Grid xs={6}  item>
-                                                                    <Button type="submit"  onClick={handleShowInfo}  color="primary" variant="contained" style={{ width:'100%',height:'30px',backgroundColor:'#',fontFamily: 'IRANSansWeb',margin:'5%',}} startIcon={''} >
-                                                                        <IoExitOutline fontSize="large" margin="10%"   /><text style={{margin:'6%'}}>{"بستن"}</text>
-                                                                    </Button>
-                                                                </Grid>
-                                                                <Grid xs={6}  item>
-                                                                    <div style={{ width: "100%",display: "flex",flexDirection:"row", justifyContent: "space-evenly",alignItems: "center",marginBottom:"5%"}}>
+                                                            </Grid>
+                                                            <Grid xs={6}  item>
+                                                                <Button type="submit"  onClick={handleShowInfo}  color="primary" variant="contained" style={{ width:'100%',height:'30px',backgroundColor:'#',fontFamily: 'IRANSansWeb',margin:'5%',}} startIcon={''} >
+                                                                    <IoExitOutline fontSize="large" margin="10%"   /><text style={{margin:'6%'}}>{"بستن"}</text>
+                                                                </Button>
+                                                            </Grid>
+                                                            <Grid xs={6}  item>
+                                                                <div style={{ width: "100%",display: "flex",flexDirection:"row", justifyContent: "space-evenly",alignItems: "center",marginBottom:"5%"}}>
                                                                     <Button disabled={this.state.buttonDisabled} onClick={handelUploadData}  color={'primary'} variant="contained" style={{width:'100%',height:'30px',margin:'5%',spacing:'5%',fontFamily: 'IRANSansWeb',fontSize:'small'}} startIcon={''}>
                                                                         <CloudUploadIcon fontSize='small' />
                                                                         <text style={{margin:'6%'}}>{'اعمال تغیرات'}</text></Button>
-                                                                     </div>
-                                                                </Grid>
+                                                                </div>
+                                                            </Grid>
 
                                                         </Grid>
-                                                        </CardContent>
-                                                    </Card>
-                                                    </DialogContentText>
-                                                </DialogContent>
-                                                </LoadingOverlay>
-                                            </Dialog>
+                                                    </CardContent>
+                                                </Card>
+                                            </DialogContentText>
+                                        </DialogContent>
+                                    </LoadingOverlay>
+                                </Dialog>
 
-                                            <Dialog
-                                                    open={this.state.showMembers}
-                                                    aria-labelledby="alert-dialog-slide-title"
-                                                    aria-describedby="alert-dialog-slide-description"
-                                                    onClose={handleShowMembers}
-                                                >
-                                                    <LoadingOverlay active={this.state.deleting} spinner text={""}>
-                                                     <CardContent id="alert-dialog-slide-title"  component="h1" variant="h5" style={{fontFamily: 'IRANSansWeb',color: "#494949",justifyContent:'right'}}>
-                                                         <Grid xs={12} container spacing={1}  direction="column" justify="flex-start" alignItems="center">
-                                                            <Grid xs={9} item  justify="center">
-                                                                <text style={{fontFamily: 'IRANSansWeb',color: "#494949",justifyContent:'right'}}>{'لیست اعضای گروه'}</text>
-                                                            </Grid>
-                                                            <Grid xs={9} item  justify="center">
-                                                                <span><MdPeople color="#494949" style={{marginTop: '10px',justifyContent: 'center'}} fontSize="large"/></span>
-                                                            </Grid>
-                                                         </Grid>
-                                                        </CardContent>
-                                                        <DialogContent>
-                                                        <DialogContentText id="alert-dialog-slide-description">
-                                                        <div style={{minHeight:'360px',minWidth:"550px"}}>
-                                                        <Grid container className={classes.rootShowMembers} spacing={2} style={{padding:30,justifyContent: 'center'}}>
-                                                            <Grid  item xs={12}>
-                                                                <Grid container justify="center" spacing={2}>
-                                                                    {!this.state.channelMemberFlag ? null:this.state.channelMember.map((member) => (
-                                                                        <Grid xs={4} key={member.id} item container   spacing={2} direction="row-reverse" justify="flex-start" alignItems="flex-start">
-                                                                            <Card  className={classes.paperShowMembers} >
-                                                                                <CardActionArea>
-                                                                                    <CardMedia
-                                                                                        component="img"
-                                                                                        className={classes.mediaMembers}
-                                                                                        src={member.avatar !== null ? member.avatar : photo}
-                                                                                    />
+                                <Dialog
+                                    open={this.state.showMembers}
+                                    aria-labelledby="alert-dialog-slide-title"
+                                    aria-describedby="alert-dialog-slide-description"
+                                    onClose={handleShowMembers}
+                                >
+                                    <LoadingOverlay active={this.state.deleting} spinner text={""}>
+                                        <CardContent id="alert-dialog-slide-title"  component="h1" variant="h5" style={{fontFamily: 'IRANSansWeb',color: "#494949",justifyContent:'right'}}>
+                                            <Grid xs={12} container spacing={1}  direction="column" justify="flex-start" alignItems="center">
+                                                <Grid xs={9} item  justify="center">
+                                                    <text style={{fontFamily: 'IRANSansWeb',color: "#494949",justifyContent:'right'}}>{'لیست اعضای گروه'}</text>
+                                                </Grid>
+                                                <Grid xs={9} item  justify="center">
+                                                    <span><MdPeople color="#494949" style={{marginTop: '10px',justifyContent: 'center'}} fontSize="large"/></span>
+                                                </Grid>
+                                            </Grid>
+                                        </CardContent>
+                                        <DialogContent>
+                                            <DialogContentText id="alert-dialog-slide-description">
+                                                <div style={{minHeight:'360px',minWidth:"550px"}}>
+                                                    <Grid container className={classes.rootShowMembers} spacing={2} style={{padding:30,justifyContent: 'center'}}>
+                                                        <Grid  item xs={12}>
+                                                            <Grid container justify="center" spacing={2}>
+                                                                {!this.state.channelMemberFlag ? null:this.state.channelMember.map((member) => (
+                                                                    <Grid xs={4} key={member.id} item container   spacing={2} direction="row-reverse" justify="flex-start" alignItems="flex-start">
+                                                                        <Card  className={classes.paperShowMembers} >
+                                                                            <CardActionArea>
+                                                                                <CardMedia
+                                                                                    component="img"
+                                                                                    className={classes.mediaMembers}
+                                                                                    src={member.avatar !== null ? member.avatar : photo}
+                                                                                />
                                                                                 <CardContent>
                                                                                     <text color="#725b53">{member.username}</text>
                                                                                 </CardContent>
-                                                                                </CardActionArea>
-                                                                                <CardContent>
-                                                                                    <text color="#725b53">{member.user_role}</text>
-                                                                                </CardContent>
-                                                                                <CardActionArea >
+                                                                            </CardActionArea>
+                                                                            <CardContent>
+                                                                                <text color="#725b53">{member.user_role}</text>
+                                                                            </CardContent>
+                                                                            <CardActionArea >
                                                                                 <button style={{width:"100%",height:"100%",backgroundColor:'#cccfc4'}} onClick={()=>{
-                                                                                                console.log("hello")
-                                                                                                const body={
-                                                                                                        username : member.username,
-                                                                                                    }
-                                                                                                console.log(TokenConfig())
-                                                                                                axios.delete(serverURL()+"channel/channel-subscriber/"+this.props.match.params.channelId+ "/",{headers:{Authorization : TokenConfig().headers.Authorization} ,data:{username : member.username}})
-                                                                                                .then(res =>{
-                                                                                                    console.log(res);
-                                                                                                    handelGetMembers()
-                                                                                                })
-                                                                                                .catch(err=>{
-                                                                                                    console.log(err);
-                                                                                                    this.ErrorDialogText = err.response.data?.error;
-                                                                                                    this.setState({setErrorDialog:true});
-                                                                                                });
-                                                                                            }
-                                                                                            }>
-                                                                                            <DeleteIcon   justify="right" fontSize="small"/>
-                                                                                            </button>
-                                                                                </CardActionArea>
-                                                                            </Card>
-                                                                        </Grid>
-                                                                    ))}
-                                                                </Grid>
+                                                                                    console.log("hello")
+                                                                                    const body={
+                                                                                        username : member.username,
+                                                                                    }
+                                                                                    console.log(TokenConfig())
+                                                                                    axios.delete(serverURL()+"channel/channel-subscriber/"+this.props.match.params.channelId+ "/",{headers:{Authorization : TokenConfig().headers.Authorization} ,data:{username : member.username}})
+                                                                                        .then(res =>{
+                                                                                            console.log(res);
+                                                                                            handelGetMembers()
+                                                                                        })
+                                                                                        .catch(err=>{
+                                                                                            console.log(err);
+                                                                                            this.ErrorDialogText = err.response.data?.error;
+                                                                                            this.setState({setErrorDialog:true});
+                                                                                        });
+                                                                                }
+                                                                                }>
+                                                                                    <DeleteIcon   justify="right" fontSize="small"/>
+                                                                                </button>
+                                                                            </CardActionArea>
+                                                                        </Card>
+                                                                    </Grid>
+                                                                ))}
                                                             </Grid>
                                                         </Grid>
-                                                        </div>
-                                                        </DialogContentText>
-                                                        </DialogContent>
-                                                        <Button onClick={handleShowMembers}  color="primary" variant="contained" style={{ width:'100%',height:'35px',backgroundColor:'#2c2d22',fontFamily: 'IRANSansWeb'}}>
-                                                        <IoExitOutline fontSize="large"  /><text style={{margin:'1%'}}>{"بستن"}</text>
-                                                        </Button>
-                                                    </LoadingOverlay>
-                                                </Dialog>
-                                    <ErrorDialog open={this.state.setErrorDialog} errorText={this.ErrorDialogText} handleParentState={this.handleStateErrorDialog} />
-                                    <Grid container item sm={12}>
-                                        <Grid container direction={"row"} spacing={2} justify="space-evenly">
-                                            <Grid item sm={this.state.smOfRight} xs={12} className={classes.rightSection}>
-                                                <Slide direction="right" in={this.state.openDrawerRight} mountOnEnter unmountOnExit>
-                                                <Paper className={classes.paper}>
-                                                    <Grid container direction={"column"} spacing={2} justify={"space-evenly"}>
-                                                        <Grid item xs={12}>
-                                                            <ChannelCardList title={"كانال هاي من"}>
-                                                                {
-                                                                    this.channelsList.map((value,index) =>
+                                                    </Grid>
+                                                </div>
+                                            </DialogContentText>
+                                        </DialogContent>
+                                        <Button onClick={handleShowMembers}  color="primary" variant="contained" style={{ width:'100%',height:'35px',backgroundColor:'#2c2d22',fontFamily: 'IRANSansWeb'}}>
+                                            <IoExitOutline fontSize="large"  /><text style={{margin:'1%'}}>{"بستن"}</text>
+                                        </Button>
+                                    </LoadingOverlay>
+                                </Dialog>
+                                <ErrorDialog open={this.state.setErrorDialog} errorText={this.ErrorDialogText} handleParentState={this.handleStateErrorDialog} />
+                                <Grid container item sm={12}>
+                                    <Grid container direction={"row"} spacing={this.props.isUpSm ? 2 : 0} justify="space-evenly">
+                                        <Grid item sm={this.state.smOfRight} xs={12} className={classes.rightSection}>
+                                            {this.props.isUpSm ? <Slide direction="left" in={this.state.openDrawerRight} mountOnEnter unmountOnExit>
+                                                    <Paper className={classes.paper} style={this.state.showRightSection ? {display:"block"} : {display:"none"}}>
+                                                        <Grid container direction={"column"} spacing={2} justify={"space-evenly"}>
+                                                            <Grid item xs={12}>
+                                                                <List dense component="nav" subheader={
+                                                                    <ListSubheader disableGutters>
+                                                                        <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between",alignItems: "stretch",alignContent:"center"}}>
+                                                                            <Typography variant={"h6"} align={"left"} gutterBottom >كانال هاي من</Typography>
+                                                                            {this.props.isUpSm === true ? null
+                                                                                :<IconButton style={{padding:"0", color: '#3f407d'}} onClick={this.handleRightDrawerUnderSM}>
+                                                                                    <ChevronLeft style={{fontSize:35}} />
+                                                                                </IconButton>
+                                                                            }
+                                                                        </div>
+                                                                    </ListSubheader>}
+                                                                >
+                                                                    {this.channelsList.map((value,index) =>
                                                                     {
                                                                         if (value?.user_role === "consultant" || value?.user_role === "secretary"){
                                                                             return <ChannelCard key={index} name={value?.name} id={value?.id} imageSource={value?.avatar} description={value?.description} />
                                                                         }
-                                                                    })
-                                                                }
-                                                                {/*<ChannelCard name={"عنوان کانال من"} imageSource={""} description={"من تو او ما شما ایشان حتی اگر اما"} number={200} />*/}
-                                                                {/*<ChannelCard name={"عنوان کانال من"} imageSource={""} description={"من تو او ما شما ایشان حتی اگر اما"} number={200} />*/}
-                                                            </ChannelCardList>
+                                                                    })}
+                                                                </List>
+                                                            </Grid>
+                                                            {this.seeSubscriberChannels ?
+                                                                <Grid item xs={12}>
+                                                                    <ChannelCardList title={"کانال های عضوشده"}>
+                                                                        {
+                                                                            this.channelsList.map((value, index) => {
+                                                                                if (value?.user_role === "subscriber") {
+                                                                                    return <ChannelCard name={value?.name}
+                                                                                                        imageSource={value?.avatar}
+                                                                                                        key={index}
+                                                                                                        id={value?.id}
+                                                                                                        description={value?.description}/>
+                                                                                }
+                                                                            })
+                                                                        }
+                                                                    </ChannelCardList>
+                                                                </Grid>
+                                                                : null
+                                                            }
+                                                        </Grid>
+                                                    </Paper>
+                                                </Slide>
+                                                :<Paper className={classes.paper} style={this.state.showRightSection ? {display:"block"} : {display:"none"}}>
+                                                    <Grid container direction={"column"} spacing={2} justify={"space-evenly"}>
+                                                        <Grid item xs={12}>
+                                                            <List dense component="nav" subheader={
+                                                                <ListSubheader disableGutters>
+                                                                    <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between",alignItems: "stretch",alignContent:"center"}}>
+                                                                        <Typography variant={"h6"} align={"left"} gutterBottom >كانال هاي من</Typography>
+                                                                        {this.props.isUpSm === true ? null
+                                                                            :<IconButton style={{padding:"0", color: '#3f407d'}} onClick={this.handleRightDrawerUnderSM}>
+                                                                                <ChevronLeft style={{fontSize:35}} />
+                                                                            </IconButton>
+                                                                        }
+                                                                    </div>
+                                                                </ListSubheader>}
+                                                            >
+                                                                {this.channelsList.map((value,index) =>
+                                                                {
+                                                                    if (value?.user_role === "consultant" || value?.user_role === "secretary"){
+                                                                        return <ChannelCard key={index} name={value?.name} id={value?.id} imageSource={value?.avatar} description={value?.description} />
+                                                                    }
+                                                                })}
+                                                            </List>
                                                         </Grid>
                                                         {this.seeSubscriberChannels ?
                                                             <Grid item xs={12}>
@@ -631,21 +746,21 @@ class Channel extends Component {
                                                                             }
                                                                         })
                                                                     }
-                                                                    {/*<ChannelCard name={this.inviteLink} imageSource={""} description={"شمسین شیسنشبم شنمیسش یسبنمشسینمبتمنش شسیمنب"} number={200} />*/}
-                                                                    {/*<ChannelCard name={"عنوان کانال"} imageSource={""} description={"سشینمتب شیمسنبتش یسبنمیشسنم بتشیسنمش بمسی"} number={200} />*/}
-                                                                    {/*<ChannelCard name={"عنوان کانال"} imageSource={""} description={"یمنشبت شیسنمبتش یسمنبتمنشیس بتمنیشست میتمس"} number={200} />*/}
                                                                 </ChannelCardList>
                                                             </Grid>
-                                                                : null
+                                                            : null
                                                         }
                                                     </Grid>
                                                 </Paper>
-                                                </Slide>
-                                                {/*<Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '20vh',width:'50vh' }} />*/}
-                                            </Grid>
-                                            <Grid item sm={this.state.smOfCenter} xs={12} className={classes.centerSection}>
-                                                <Paper className={classes.paper}>
-                                                    <div style={{display:"flex",flexDirection:"row-reverse",justifyContent:"space-between",alignItems: "stretch",alignContent:"center"}}>
+
+                                            }
+
+
+                                            {/*<Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '20vh',width:'50vh' }} />*/}
+                                        </Grid>
+                                        <Grid item sm={this.state.smOfCenter} xs={12} className={classes.centerSection}>
+                                            <Paper className={classes.paper} style={this.state.showCenterSection ? {display:"block"} : {display:"none"}}>
+                                                <div style={{display:"flex",flexDirection:"row-reverse",justifyContent:"space-between",alignItems: "stretch",alignContent:"center"}}>
                                                     <IconButton style={{padding:"0", color: '#3f407d'}} onClick={this.handleLeftDrawer}>
                                                         {
                                                             this.state.openDrawerLeft ? <ChevronRight style={{fontSize:35}} /> : <ChevronLeft style={{fontSize:35}} />
@@ -658,80 +773,165 @@ class Channel extends Component {
                                                             this.state.openDrawerRight ? <ChevronLeft style={{fontSize:35}} /> : <ChevronRight style={{fontSize:35}} />
                                                         }
                                                     </IconButton>
-                                                    </div>
-                                                    <Divider className={classes.divider} />
-                                                    <ChannelMessages role={this.state.role} inviteLink={this.inviteLink} channelId={this.props.match.params.channelId} />
-                                                        {/*{*/}
-                                                            {/*this.state.messageLables.map((value,index) => (*/}
-                                                                {/*<Typography component={"h2"} variant={"body1"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d'}}>عنوان کانال</Typography>*/}
-                                                            {/*))*/}
-                                                        {/*}*/}
-                                                        {/*<Typography component={"h2"} variant={"body1"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d'}}>عنوان کانال</Typography>*/}
-                                                        {/*<Typography component={"h2"} variant={"body1"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d'}}>عنوان کانال من</Typography>*/}
-                                                        {/*<Typography component={"h2"} variant={"body1"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d'}}>عنوان کانال تو</Typography>*/}
-                                                        {/*<Typography component={"h2"} variant={"body1"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d'}}>عنوان کانال او</Typography>*/}
+                                                </div>
+                                                <Divider className={classes.divider} />
+                                                <ChannelMessages role={this.state.role} inviteLink={this.inviteLink} channelId={this.props.match.params.channelId} />
+                                                {/*{*/}
+                                                {/*this.state.messageLables.map((value,index) => (*/}
+                                                {/*<Typography component={"h2"} variant={"body1"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d'}}>عنوان کانال</Typography>*/}
+                                                {/*))*/}
+                                                {/*}*/}
+                                                {/*<Typography component={"h2"} variant={"body1"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d'}}>عنوان کانال</Typography>*/}
+                                                {/*<Typography component={"h2"} variant={"body1"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d'}}>عنوان کانال من</Typography>*/}
+                                                {/*<Typography component={"h2"} variant={"body1"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d'}}>عنوان کانال تو</Typography>*/}
+                                                {/*<Typography component={"h2"} variant={"body1"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d'}}>عنوان کانال او</Typography>*/}
 
-                                                    {/*</ChannelMessages>*/}
-                                                </Paper>
-                                            </Grid>
-                                            
-                                            <Grid item sm={this.state.smOfLeft} xs={12} className={classes.leftSection}>
-                                                <Slide direction="left" in={this.state.openDrawerLeft} mountOnEnter unmountOnExit>
-                                                <Paper className={classes.paper}  >
-                                                    <Card className={classes.paperShowChannelInfo}>
-                                                    <CardMedia
-                                                            component="img"
+                                                {/*</ChannelMessages>*/}
+                                            </Paper>
+                                        </Grid>
+
+                                        <Grid item sm={this.state.smOfLeft} xs={12} className={classes.leftSection}>
+                                            {this.props.isUpSm ? <Slide direction="right" in={this.state.openDrawerLeft} mountOnEnter unmountOnExit>
+                                                    <Paper className={classes.paper} style={this.state.showLeftSection ? {display:"block"} : {display:"none"}}>
+
+                                                        {this.props.isUpSm ? null :
+                                                            <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between",alignItems: "stretch",alignContent:"center"}}>
+                                                                <IconButton style={{padding:"0", color: '#3f407d'}} onClick={this.handleLeftDrawerUnderSM}>
+                                                                    <ChevronRight style={{fontSize:35}} />
+                                                                </IconButton>
+                                                                <Typography variant={"h6"} align={"left"} gutterBottom >مشخصات كانال</Typography>
+
+                                                            </div>
+                                                        }
+
+                                                        <Card className={classes.paperShowChannelInfo}>
+                                                            <CardMedia
+                                                                component="img"
                                                                 className={classes.mediaChannel}
                                                                 src={this.state.image}
-                                                    />
+                                                            />
+                                                            <CardContent>
+                                                                <Grid xs={12}>
+                                                                    <text color="#725b53">{this.state.channelName}{console.log("this.props.role :",this.state.role)}</text>
+                                                                    <Grid xs={12}>
+                                                                        <text color="#725b53">{this.state.channelDescription}</text>
+                                                                    </Grid>
+                                                                    <Grid xs={12}>
+                                                                        <text color="#725b53">{this.state.channelLink}</text>
+                                                                    </Grid>
+                                                                </Grid>
+                                                            </CardContent>
+                                                        </Card>
+                                                        <ul/>
+                                                        {(this.state.role === "consultant") && !(this.state.role === "subscriber") ?
+                                                            <Grid item >
+                                                                <div style={{ width: "100%",display: "flex",flexDirection:"row", justifyContent: "space-evenly",alignItems: "center",marginBottom:"5px"}}  >
+                                                                    <Grid item xs={17}>
+                                                                        <Button width= "100%" variant="contained" color={'primary'}  onClick={handleShowInfo} endIcon={<FiEdit/>} style={{fontFamily: 'IRANSansWeb',fontSize:"10px"}}>ویرایش  کانال</Button>
+                                                                    </Grid>
+                                                                </div>
+                                                                <div style={{ width: "100%",display: "flex",flexDirection:"row", justifyContent: "space-evenly",alignItems: "center",marginBottom:"5px"}}  >
+                                                                    <Button variant="contained" color={'primary'}  onClick={handleShowMembers} endIcon={<BsFillPeopleFill />} style={{fontFamily: 'IRANSansWeb',fontSize:"10px",margin:"1%"}}>ویرایش اعضا</Button>
+                                                                    <Button variant="contained" color={'primary'}  onClick={handleConsultantApplySubscribe} style={{fontFamily: 'IRANSansWeb',fontSize:"10px",margin:"1%"}}  endIcon={<FcInvite/>}>{"دعوت عضو"}</Button>
+                                                                </div>
+                                                                <Collapse in={this.state.consultantSubscribe} timeout="auto" unmountOnExit>
+                                                                    <TextField fullWidth
+                                                                               placeholder={"شناسه فرد مورد نظر را وارد کنید"}
+                                                                               value={this.state.inviteUser}
+                                                                               name="inviteUser"
+                                                                               onChange={this.handleChange}
+                                                                               style={{marginTop:"5px",marginBottom:"5px"}}
+                                                                               InputProps={{
+                                                                                   style: {fontFamily: 'IRANSansWeb',textAlign:"right"},
+                                                                                   endAdornment: (
+                                                                                       <InputAdornment position="end">
+                                                                                           <IconButton
+                                                                                               style={{padding: '0px', color: '#3f407d'}}
+                                                                                               //    onClick={handleSendIcon}
+                                                                                               // onMouseDown={this.handleMouseDownPassword}
+                                                                                           >
+                                                                                               {this.state.sendInviteIcon ? <RiMailSendLine style={{ fontSize: 25 }}/> : <FiMail onClick={handelInviteMember} style={{ fontSize: 25 }} />}
+                                                                                           </IconButton>
+                                                                                       </InputAdornment>)
+                                                                               }}
+                                                                    />
+                                                                </Collapse>
+                                                            </Grid>
+                                                            :  null }
+                                                        <Button style={{color:"#3f407d",alignSelf:"baseline",marginTop:"5px"}}>
+                                                            <Typography variant={"body2"} align={"left"} style={{alignSelf: "baseline"}}>ترک کانال</Typography>
+                                                        </Button>
+                                                        <Button style={{color:"#3f407d",alignSelf:"baseline",marginTop:"5px"}}>
+                                                            <Typography variant={"body2"} align={"left"} style={{alignSelf: "baseline"}}>گزارش تخلف کانال</Typography>
+                                                        </Button>
+                                                    </Paper>
+                                                </Slide>
+                                                :     <Paper className={classes.paper} style={this.state.showLeftSection ? {display:"block"} : {display:"none"}}>
+
+                                                    {this.props.isUpSm ? null :
+                                                        <div style={{display:"flex",flexDirection:"row",marginBottom:"5px",justifyContent:"space-between"}}>
+                                                            <IconButton style={{padding:"0", color: '#3f407d'}} onClick={this.handleLeftDrawerUnderSM}>
+                                                                <ChevronRight style={{fontSize:35}} />
+                                                            </IconButton>
+                                                            <Typography variant={"h6"} align={"left"} gutterBottom >مشخصات كانال</Typography>
+                                                            &nbsp;&nbsp;
+                                                        </div>
+                                                    }
+
+                                                    <Card className={classes.paperShowChannelInfo}>
+                                                        <CardMedia
+                                                            component="img"
+                                                            className={classes.mediaChannel}
+                                                            src={this.state.image}
+                                                        />
                                                         <CardContent>
-                                                        <Grid xs={12}>
+                                                            <Grid xs={12}>
                                                                 <text color="#725b53">{this.state.channelName}{console.log("this.props.role :",this.state.role)}</text>
-                                                            <Grid xs={12}>
-                                                                <text color="#725b53">{this.state.channelDescription}</text>
+                                                                <Grid xs={12}>
+                                                                    <text color="#725b53">{this.state.channelDescription}</text>
+                                                                </Grid>
+                                                                <Grid xs={12}>
+                                                                    <text color="#725b53">{this.state.channelLink}</text>
+                                                                </Grid>
                                                             </Grid>
-                                                            <Grid xs={12}>
-                                                                <text color="#725b53">{this.state.channelLink}</text>
-                                                            </Grid>
-                                                        </Grid>
                                                         </CardContent>
                                                     </Card>
                                                     <ul/>
-                                                    {(this.state.role === "consultant") && !(this.state.role === "subscriber") ? 
-                                                    <Grid item >
-                                                    <div style={{ width: "100%",display: "flex",flexDirection:"row", justifyContent: "space-evenly",alignItems: "center",marginBottom:"5px"}}  >
-                                                        <Grid item xs={17}>
-                                                        <Button width= "100%" variant="contained" color={'primary'}  onClick={handleShowInfo} endIcon={<FiEdit/>} style={{fontFamily: 'IRANSansWeb',fontSize:"10px"}}>ویرایش  کانال</Button>
+                                                    {(this.state.role === "consultant") && !(this.state.role === "subscriber") ?
+                                                        <Grid item >
+                                                            <div style={{ width: "100%",display: "flex",flexDirection:"row", justifyContent: "space-evenly",alignItems: "center",marginBottom:"5px"}}  >
+                                                                <Grid item xs={17}>
+                                                                    <Button width= "100%" variant="contained" color={'primary'}  onClick={handleShowInfo} endIcon={<FiEdit/>} style={{fontFamily: 'IRANSansWeb',fontSize:"10px"}}>ویرایش  کانال</Button>
+                                                                </Grid>
+                                                            </div>
+                                                            <div style={{ width: "100%",display: "flex",flexDirection:"row", justifyContent: "space-evenly",alignItems: "center",marginBottom:"5px"}}  >
+                                                                <Button variant="contained" color={'primary'}  onClick={handleShowMembers} endIcon={<BsFillPeopleFill />} style={{fontFamily: 'IRANSansWeb',fontSize:"10px",margin:"1%"}}>ویرایش اعضا</Button>
+                                                                <Button variant="contained" color={'primary'}  onClick={handleConsultantApplySubscribe} style={{fontFamily: 'IRANSansWeb',fontSize:"10px",margin:"1%"}}  endIcon={<FcInvite/>}>{"دعوت عضو"}</Button>
+                                                            </div>
+                                                            <Collapse in={this.state.consultantSubscribe} timeout="auto" unmountOnExit>
+                                                                <TextField fullWidth
+                                                                           placeholder={"شناسه فرد مورد نظر را وارد کنید"}
+                                                                           value={this.state.inviteUser}
+                                                                           name="inviteUser"
+                                                                           onChange={this.handleChange}
+                                                                           style={{marginTop:"5px",marginBottom:"5px"}}
+                                                                           InputProps={{
+                                                                               style: {fontFamily: 'IRANSansWeb',textAlign:"right"},
+                                                                               endAdornment: (
+                                                                                   <InputAdornment position="end">
+                                                                                       <IconButton
+                                                                                           style={{padding: '0px', color: '#3f407d'}}
+                                                                                           //    onClick={handleSendIcon}
+                                                                                           // onMouseDown={this.handleMouseDownPassword}
+                                                                                       >
+                                                                                           {this.state.sendInviteIcon ? <RiMailSendLine style={{ fontSize: 25 }}/> : <FiMail onClick={handelInviteMember} style={{ fontSize: 25 }} />}
+                                                                                       </IconButton>
+                                                                                   </InputAdornment>)
+                                                                           }}
+                                                                />
+                                                            </Collapse>
                                                         </Grid>
-                                                    </div>
-                                                    <div style={{ width: "100%",display: "flex",flexDirection:"row", justifyContent: "space-evenly",alignItems: "center",marginBottom:"5px"}}  >
-                                                        <Button variant="contained" color={'primary'}  onClick={handleShowMembers} endIcon={<BsFillPeopleFill />} style={{fontFamily: 'IRANSansWeb',fontSize:"10px",margin:"1%"}}>ویرایش اعضا</Button>
-                                                        <Button variant="contained" color={'primary'}  onClick={handleConsultantApplySubscribe} style={{fontFamily: 'IRANSansWeb',fontSize:"10px",margin:"1%"}}  endIcon={<FcInvite/>}>{"دعوت عضو"}</Button>
-                                                    </div>
-                                                    <Collapse in={this.state.consultantSubscribe} timeout="auto" unmountOnExit>
-                                                        <TextField fullWidth
-                                                                   placeholder={"شناسه فرد مورد نظر را وارد کنید"}
-                                                                   value={this.state.inviteUser}
-                                                                   name="inviteUser"
-                                                                   onChange={this.handleChange}
-                                                                   style={{marginTop:"5px",marginBottom:"5px"}}
-                                                                   InputProps={{
-                                                                       style: {fontFamily: 'IRANSansWeb',textAlign:"right"},
-                                                                       endAdornment: (
-                                                                           <InputAdornment position="end">
-                                                                               <IconButton
-                                                                                   style={{padding: '0px', color: '#3f407d'}}
-                                                                               //    onClick={handleSendIcon}
-                                                                                   // onMouseDown={this.handleMouseDownPassword}
-                                                                               >
-                                                                                   {this.state.sendInviteIcon ? <RiMailSendLine style={{ fontSize: 25 }}/> : <FiMail onClick={handelInviteMember} style={{ fontSize: 25 }} />}
-                                                                               </IconButton>
-                                                                           </InputAdornment>)
-                                                                   }}
-                                                        />
-                                                    </Collapse>
-                                                    </Grid>
-                                                    :  null }
+                                                        :  null }
                                                     <Button style={{color:"#3f407d",alignSelf:"baseline",marginTop:"5px"}}>
                                                         <Typography variant={"body2"} align={"left"} style={{alignSelf: "baseline"}}>ترک کانال</Typography>
                                                     </Button>
@@ -739,16 +939,16 @@ class Channel extends Component {
                                                         <Typography variant={"body2"} align={"left"} style={{alignSelf: "baseline"}}>گزارش تخلف کانال</Typography>
                                                     </Button>
                                                 </Paper>
-                                                </Slide>
-                                                {/*<Typography component="div" style={{ backgroundColor: '#2f18fc', height: '20vh',width:'50vh' }} />*/}
-                                            </Grid>
+                                            }
+                                            {/*<Typography component="div" style={{ backgroundColor: '#2f18fc', height: '20vh',width:'50vh' }} />*/}
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                            </div>
-                            {/*<Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '30vh' }} />*/}
+                            </Grid>
+                        </div>
+                        {/*<Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '30vh' }} />*/}
                         {/*</RTL>*/}
-                    {/*</Material_RTL>*/}
+                        {/*</Material_RTL>*/}
                     </Theme>
                 </Container>
             </LoadingOverlay>
@@ -767,17 +967,17 @@ const useStyles = makeStyles((theme) => ({
     //     flexGrow: 1,
     // },
     pageEdit :{
-    width: "300px",
-    height: "100%",
-    min_height : "5em",
-    margin_right: "auto",
-    margin_left: "auto",
-    margin_top: "5em",
-    padding: "2em",
-    z_index: 15000,
+        width: "300px",
+        height: "100%",
+        min_height : "5em",
+        margin_right: "auto",
+        margin_left: "auto",
+        margin_top: "5em",
+        padding: "2em",
+        z_index: 15000,
     },
     rootShowMembers: {
-    flexGrow: 1,
+        flexGrow: 1,
     },
     mediaMembers: {
         maxWidth: 150,
@@ -809,7 +1009,7 @@ const useStyles = makeStyles((theme) => ({
         spacing:"10px",
     },
     button: {
-    margin: theme.spacing(1),
+        margin: theme.spacing(1),
     },
     paper: {
         padding: theme.spacing(2),
@@ -819,7 +1019,7 @@ const useStyles = makeStyles((theme) => ({
     },
     rightSection:{
         [theme.breakpoints.down('sm')]: {
-            order: 2,
+            order: 1,
         },
         [theme.breakpoints.up('sm')]: {
             order: 1,
@@ -835,7 +1035,7 @@ const useStyles = makeStyles((theme) => ({
     },
     leftSection:{
         [theme.breakpoints.down('sm')]: {
-            order: 2,
+            order: 1,
         },
         [theme.breakpoints.up('sm')]: {
             order: 1,
@@ -862,8 +1062,10 @@ const useStyles = makeStyles((theme) => ({
 function Auxiliary(props){
     const classes = useStyles();
     const p = React.useState(false);
+    const theme = useTheme();
+    const isUpSm = useMediaQuery(theme.breakpoints.up('sm'));
     return(
-        <Channel classes={classes} p={p} match={props.match}/>
+        <Channel classes={classes} p={p} isUpSm={isUpSm} match={props.match}/>
     )
 }
 export default withRouter(Auxiliary);

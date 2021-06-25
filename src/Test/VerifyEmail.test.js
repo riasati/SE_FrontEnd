@@ -61,7 +61,9 @@ it("VerifyEmail Test", () => {
             </div>
             <div></div>
             <div><br>
-              <div data-testid=\\"div1\\">کد ۵ رقمی که به ایمیل شما ارسال شده را وارد کنید</div><br>
+              <div class=\\"MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2\\">
+                <div class=\\"MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12\\">کد ۵ رقمی که به ایمیل شما ارسال شده را وارد کنید</div>
+              </div><br>
               <div class=\\"MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2\\">
                 <div class=\\"MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1\\"></div>
                 <div class=\\"MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2\\">

@@ -21,27 +21,27 @@ afterEach(() => {
 
 it("renders with or without a name", () => {
   act(() => {
-    render(<ConsultantCard consultant_first_name={"Ali"} consultant_last_name={"Asadi"} direct={"alitest"} avatar={'../../image/medicalgroup.jpg'} />, container);
+    render(<ConsultantCard consultant_first_name={"Ali"} consultant_last_name={"Asadi"} profile={"alitest"} avatar={'../../image/medicalgroup.jpg'} />, container);
   });
   expect(container.querySelector("span").textContent).toBe("Ali");
   act(() => {
-    render(<ConsultantCard consultant_first_name={"Ali"} consultant_last_name={"Asadi"} direct={"alitest"} avatar={'../../image/medicalgroup.jpg'} />, container);
+    render(<ConsultantCard consultant_first_name={"Ali"} consultant_last_name={"Asadi"} profile={"alitest"} avatar={'../../image/medicalgroup.jpg'} />, container);
   });
   expect(container.querySelector("[data-testid='cfn']").textContent).toEqual("Ali");
   act(() => {
-    render(<ConsultantCard consultant_first_name={"Ali"} consultant_last_name={"Asadi"} direct={"alitest"} avatar={'../../image/medicalgroup.jpg'} />, container);
+    render(<ConsultantCard consultant_first_name={"Ali"} consultant_last_name={"Asadi"} profile={"alitest"} avatar={'../../image/medicalgroup.jpg'} />, container);
   });
   expect(container.querySelector("[data-testid='cln']").textContent).toEqual("Asadi");
   act(() => {
-    render(<ConsultantCard consultant_first_name={"Ali"} consultant_last_name={"Asadi"} direct={"alitest"} avatar={'../../image/medicalgroup.jpg'} />, container);
+    render(<ConsultantCard consultant_first_name={"Ali"} consultant_last_name={"Asadi"} profile={"alitest"} avatar={'../../image/medicalgroup.jpg'} />, container);
   });
   expect(container.querySelector("a").getAttribute("href")).toBe("/Profile/alitest");
   act(() => {
-    render(<ConsultantCard consultant_first_name={"Ali"} consultant_last_name={"Asadi"} direct={"alitest"} avatar={'../../image/lawyergroup.jpg'} />, container);
+    render(<ConsultantCard consultant_first_name={"Ali"} consultant_last_name={"Asadi"} profile={"alitest"} avatar={'../../image/lawyergroup.jpg'} />, container);
   });  
   expect(container.querySelector("img").src).toContain("http://localhost/image/lawyergroup.jpg");
   act(() => {
-    render(<ConsultantCard consultant_first_name={"Ali"} consultant_last_name={"Asadi"} direct={"alitest"} avatar={null} />, container);
+    render(<ConsultantCard consultant_first_name={"Ali"} consultant_last_name={"Asadi"} profile={"alitest"} avatar={null} />, container);
   });  
   expect(container.querySelector("img").src).toContain("http://localhost/image/defaultavatar.jpg");
 });

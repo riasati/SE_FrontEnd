@@ -89,7 +89,7 @@ it("ReservationPage Test", () => {
             <div class=\\"MuiGrid-root makeStyles-leftSection-5 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 MuiGrid-grid-md-6\\">
               <div class=\\"calendarContainer jalaali makeStyles-calender-13\\">
                 <div><button type=\\"button\\" class=\\"makeStyles-toggleCalenderButton-10\\">تاریخ شمسی</button>
-                  <div class=\\"heading\\"><button class=\\"title\\">خرداد ۱۴۰۰</button><button type=\\"button\\" title=\\"ماه قبل\\" class=\\"prev\\"><svg version=\\"1.1\\" xmlns=\\"http://www.w3.org/2000/svg\\" x=\\"0px\\" y=\\"0px\\" viewBox=\\"0 0 315.5 315.5\\" style=\\"enable-background:new 0 0 315.5 315.5;\\" xml:space=\\"preserve\\">
+                  <div class=\\"heading\\"><button class=\\"title\\">تیر ۱۴۰۰</button><button type=\\"button\\" title=\\"ماه قبل\\" class=\\"prev\\"><svg version=\\"1.1\\" xmlns=\\"http://www.w3.org/2000/svg\\" x=\\"0px\\" y=\\"0px\\" viewBox=\\"0 0 315.5 315.5\\" style=\\"enable-background:new 0 0 315.5 315.5;\\" xml:space=\\"preserve\\">
                         <g>
                           <path class=\\"arrow-icon\\" d=\\"M242,141L109,8c-5-5-12-8-18-8S79,3,74,8c-10,10-10,24,0,34l116,116L74,274c-10,10-10,24,0,34s25,10,35,0l133-133c5-5,7-11,7-17C249,151,247,146,242,141z\\"></path>
                         </g>
@@ -108,6 +108,15 @@ it("ReservationPage Test", () => {
                     <div>ج</div>
                   </div>
                   <div class=\\"dayPickerContainer\\">
+                    <div class=\\"dayWrapper\\"><button type=\\"button\\">۲۹</button>
+                      <div class=\\"highLightDot-container\\"></div>
+                    </div>
+                    <div class=\\"dayWrapper\\"><button type=\\"button\\">۳۰</button>
+                      <div class=\\"highLightDot-container\\"></div>
+                    </div>
+                    <div class=\\"dayWrapper\\"><button type=\\"button\\">۳۱</button>
+                      <div class=\\"highLightDot-container\\"></div>
+                    </div>
                     <div class=\\"dayWrapper currentMonth\\"><button type=\\"button\\">۱</button>
                       <div class=\\"highLightDot-container\\"></div>
                     </div>
@@ -117,7 +126,7 @@ it("ReservationPage Test", () => {
                     <div class=\\"dayWrapper currentMonth\\"><button type=\\"button\\">۳</button>
                       <div class=\\"highLightDot-container\\"></div>
                     </div>
-                    <div class=\\"dayWrapper currentMonth\\"><button type=\\"button\\">۴</button>
+                    <div class=\\"dayWrapper selected currentMonth today\\"><button type=\\"button\\">۴</button>
                       <div class=\\"highLightDot-container\\"></div>
                     </div>
                     <div class=\\"dayWrapper currentMonth\\"><button type=\\"button\\">۵</button>
@@ -202,15 +211,6 @@ it("ReservationPage Test", () => {
                       <div class=\\"highLightDot-container\\"></div>
                     </div>
                     <div class=\\"dayWrapper\\"><button type=\\"button\\">۱</button>
-                      <div class=\\"highLightDot-container\\"></div>
-                    </div>
-                    <div class=\\"dayWrapper\\"><button type=\\"button\\">۲</button>
-                      <div class=\\"highLightDot-container\\"></div>
-                    </div>
-                    <div class=\\"dayWrapper\\"><button type=\\"button\\">۳</button>
-                      <div class=\\"highLightDot-container\\"></div>
-                    </div>
-                    <div class=\\"dayWrapper\\"><button type=\\"button\\">۴</button>
                       <div class=\\"highLightDot-container\\"></div>
                     </div>
                   </div>

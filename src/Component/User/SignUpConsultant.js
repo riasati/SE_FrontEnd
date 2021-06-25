@@ -146,7 +146,7 @@ class SignUpConsultant extends Component {
                 // localStorage.setItem('firstName', result.data?.data?.first_name);
                 // localStorage.setItem('lastName', result.data?.data?.last_name);
                 localStorage.setItem('token', token);
-                window.location.href = "/CreateChannel";
+                window.location.href = "/VerifyEmail";
             })
             .catch(err=>{
                 setPending(false);

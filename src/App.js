@@ -16,6 +16,7 @@ import CreateChannel from "./Component/Channel/CreateChannel";
 import Channel from "./Component/Channel/ChannelPage";
 import Reservation from "./Component/Reservation/ReservationPage";
 import Direct from "./Component/Direct/DirectPage";
+import VideoChat from "./Component/VideoChat/VideoChatPage";
 
 class App extends Component {
     render() {
@@ -29,6 +30,7 @@ class App extends Component {
                     <Route path="/VerifyEmail" component={VerifyEmail}/>
                     <Route path="/CreateChannel" exact component={CreateChannel}/>
                     <Route path="/Channel/:channelId" children={<Dashboard title={'داشبورد'} />} component={Channel}/>
+                    <Route path="/VideoChat/:consultantTimeId" children={<Dashboard title={'داشبورد'} />} component={VideoChat}/>
                     <Route path="/Dashboard" children={<Dashboard title={'داشبورد'} />} component={MainPage}/>
                     <Route path="/EditProfile" children={<Dashboard title={'پروفایل'}/>} component={EditProfile}/>
                     <Route path="/Profile/:username" children={<Dashboard title={'پروفایل'}/>} component={Profile}/>

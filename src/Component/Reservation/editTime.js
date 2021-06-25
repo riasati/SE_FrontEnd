@@ -41,9 +41,16 @@ export class EditTimeDialog extends Component{
         "end_date": this.state.endDateSend,
       }
 
-      axios.put(serverURL() + "calendar/consultant-time/"+ this.state.consultantTimeId + "/",body,TokenConfig())
+      axios.put(serverURL() + "calendar/consultant-time/"+ this.props.ConsultantTimeId + "/",body,TokenConfig())
       .then(res=>{
-        console.log(res)
+        console.log(res);
+        // console.log(this.state.consultantTimeId);
+        // console.log(this.props.ConsultantTimeId);
+        let index = this.props.ReserveData.findIndex(value => {return value.id === this.props.ConsultantTimeId});
+        this.props.ReserveData[index].start_date = this.state.startDateSend;
+        this.props.ReserveData[index].end_date = this.state.endDateSend;
+        this.setState({open:false});
+        this.props?.handleParentState();
       })
       .catch(err=>{
         console.log(err)

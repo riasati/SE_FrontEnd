@@ -14,6 +14,7 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import {Add} from "@material-ui/icons";
 import {Edit} from "@material-ui/icons";
+import {Call} from "@material-ui/icons";
 import {Close} from "@material-ui/icons";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from '@material-ui/core/Tooltip';
@@ -30,6 +31,7 @@ import { faClock,faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Avatar from "@material-ui/core/Avatar";
 import SuccessDialog from "../../RequestConfig/SuccessDialog";
+import {Link} from "react-router-dom";
 
 class Reservation extends Component{
     constructor(props) {
@@ -266,7 +268,7 @@ class Reservation extends Component{
                                             : null
                                         }
                                     </div>
-                                    <TimeDialog open={this.state.timeDialog} handleParentState={this.handleStateTimeDialog} date={this.state.CalendarValue}/>
+                                    <TimeDialog open={this.state.timeDialog} handleParentState={this.handleStateTimeDialog} date={this.state.CalendarValue} ReserveData={this.ReserveData}/>
                                     
                                     <div style={{ clear: "both" }}
                                          ref={(el) => { this.reservation = el; }}>
@@ -306,6 +308,18 @@ class Reservation extends Component{
                                                                     {/*<Button variant="contained" onMouseDown={this.handleMouseDown} color={"primary"}> 9:30 </Button>*/}
                                                                 </div>
                                                                 <div>
+                                                                    <a href={"/VideoChat/" + DataValue.id}>
+                                                                    <Tooltip title={<Typography variant={"body2"} align={"left"} style={{color:"white"}}> تماس </Typography>}
+                                                                             placement="left"
+                                                                             TransitionComponent={Zoom} >
+                                                                        <IconButton
+                                                                            className={classes.iconButtonInterAccordionStyle}
+                                                                            //onClick={event => {window.location.href = "/VideoChat/" + DataValue.id;console.log(DataValue.id)}}
+                                                                        >
+                                                                            <Call style={{ fontSize: 30}} />
+                                                                        </IconButton>
+                                                                    </Tooltip>
+                                                                    </a>
                                                                     { this.userType !== "normal_user" ?
                                                                         <Tooltip title={<Typography variant={"body2"} align={"left"} style={{color:"white"}}> ویرایش رزرو </Typography>}
                                                                                  placement="left"
@@ -319,7 +333,7 @@ class Reservation extends Component{
                                                                         </Tooltip>
                                                                         : null
                                                                     }
-                                                                    <EditTimeDialog open={this.state.editTimeDialog} handleParentState={this.handleStateEditTimeDialog} startDate={DataValue.start_date} endDate={DataValue.end_date} ConsultantTimeId={DataValue.id} date={this.state.CalendarValue}/>
+                                                                    <EditTimeDialog open={this.state.editTimeDialog} handleParentState={this.handleStateEditTimeDialog} startDate={DataValue.start_date} endDate={DataValue.end_date} ConsultantTimeId={DataValue.id} date={this.state.CalendarValue} ReserveData={this.ReserveData}/>
                                                                     <Tooltip title={<Typography variant={"body2"} align={"left"} style={{color:"white"}}>{this.userType !== "normal_user" ? "حذف رزرو" : "کنسل رزرو"}</Typography>}
                                                                              placement="left"
                                                                              TransitionComponent={Zoom} >

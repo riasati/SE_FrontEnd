@@ -17,7 +17,7 @@ import RTL from '../RTL/M_RTL';
 import serverURL from "../../RequestConfig/serverURL";
 import ErrorDialog from '../../RequestConfig/ErrorDialog';
 import LoadingOverlay from 'react-loading-overlay';
-import LoadingButton from '@material-ui/lab/LoadingButton';
+//import LoadingButton from '@material-ui/lab/LoadingButton';
 class SignIn extends Component {
     constructor() {
         super();
@@ -155,9 +155,9 @@ class SignIn extends Component {
                                     <Grid container>
                                         <Grid item xs={12}>
                                             <Grid>
-                                                <LoadingButton onClick={handleClick } pendingPosition="center" className={classes.topButton} pending={pending}  fullWidth>
+                                                <Button onClick={handleClick } pendingPosition="center" className={classes.topButton} pending={pending}  fullWidth>
                                                     ورود
-                                                </LoadingButton>
+                                                </Button>
                                                 <ErrorDialog open={this.state.setErrorDialog} errorText={this.state.ErrorDialogText} handleParentState={this.handleStateErrorDialog} />
                                             </Grid>
                                         </Grid>

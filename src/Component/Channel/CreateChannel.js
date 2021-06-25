@@ -41,6 +41,7 @@ class CreateChannel extends Component{
             showbox:true,
             loading:true,
             showError:true,
+            channelId: '',
         }
     }
         componentDidMount() {
@@ -93,7 +94,7 @@ class CreateChannel extends Component{
             axios.post(serverURL()+"channel/", formData,TokenConfig())
             .then(res =>{
                 console.log(res);
-                window.location.href = "channel/"+ this.state.channelLink;
+                window.location.href = "channel/"+ res.data.id;
                 this.setState({showbox:false});
             })
             .catch(err=>{

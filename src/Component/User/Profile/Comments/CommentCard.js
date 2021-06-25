@@ -45,17 +45,17 @@ class CommentCard extends Component {
                                         <img src={'../../image/defaultavatar.jpg'} className={classes.img} style={!this.props.isUpSm ? {width:"25%",height: '25%'}:{width:"75%",height: '75%',}}/>
                                 }
                             </div>
-                            <div>{this.props.userFirstName}</div>
+                            <div data-testid="fname">{this.props.userFirstName}</div>
                         </div>
                     </Grid>
                     <Grid item xs={12} sm={10} >
                         <Grid container>
                             <Grid item xs={12} style={{padding: '1% 3%'}}>
                                 <div style={{direction: 'ltr',float: 'left'}}><Rate disabled allowHalf defaultValue={this.props.rate} /></div>
-                                <div style={{float: 'right',color: '#c8c7be'}}>{faNumber(date.format('jYYYY/jMM/jDD'))}</div>
+                                <div data-testid="date" style={{float: 'right',color: '#c8c7be'}}>{faNumber(date.format('jYYYY/jMM/jDD'))}</div>
                             </Grid>
                             <Grid item xs={12} style={{  }}>
-                                <div style={{ textAlign: 'justify',padding: '20px' }}>{this.props.comment}</div>
+                                <div data-testid="comment" style={{ textAlign: 'justify',padding: '20px' }}>{this.props.comment}</div>
                           </Grid>
                         </Grid>
                     </Grid>

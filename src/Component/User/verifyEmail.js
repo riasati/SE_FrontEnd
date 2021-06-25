@@ -7,22 +7,27 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import serverURL from "../../RequestConfig/serverURL";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 class VerifyEmail extends Component {
   constructor() {
     super();
     this.state = {
-      token: localStorage.getItem('token').split(' ')[1],
+      token: localStorage.getItem('token') !== null ? localStorage.getItem('token').split(' ')[1] : null,
+      userType: localStorage.getItem('userType') === "normal_user" ? "user" : "consultant",
       code: '',
       ssn1: '',
       ssn2: '',
       ssn3: '',
       ssn4: '',
       ssn5: '',
+      errormessage: '',
     }
   }
   render() {
     const classes = this.props.classes;
     const [ssnValues, setValue] = this.props.ssnValues;
+    const [alert, setAlert] = this.props.alert;
     const handleChange = e => {
       const { maxLength, value, name } = e.target;
       const [fieldName, fieldIndex] = name.split("-");
@@ -54,7 +59,7 @@ class VerifyEmail extends Component {
       formData.append("token",this.state.token);
       formData.append("code",this.state.ssn1 + this.state.ssn2 + this.state.ssn3 + this.state.ssn4 + this.state.ssn5
       );
-      axios.post(serverURL() + "user/signup-activate-email/", formData)
+      axios.post(serverURL() + this.state.userType + "/signup-activate-email/", formData)
         .then(res => {
           console.log(res);
           if (localStorage.getItem('userType') === "normal_user"){
@@ -65,7 +70,9 @@ class VerifyEmail extends Component {
           }
         })
         .catch(err => {
-          console.log(err);
+          console.log(err.response);
+          this.setState({errormessage : err.response.data.error})
+          setAlert(true)
         })
     }
     return (
@@ -76,12 +83,17 @@ class VerifyEmail extends Component {
               <div className={classes.header}><h2 style={{ color: '#3f407d' }}> تایید ایمیل</h2></div>
               <div>
               </div>
-              <div>
+              <div> 
+                {alert ? 
+                <Grid container spacing={2} style={{backgroundColor: 'rgb(244, 67, 54)',color: '#fff',borderRadius: '5px',textAlign: 'right'}}>
+                  <Grid item xs={12}>   {this.state.errormessage}    <FontAwesomeIcon icon={faExclamationCircle} style={{ color: '#fff' }} /></Grid><br />
+                </Grid> : null
+                }
                 <br />
-                <div>
-                  کد ۵ رقمی که به ایمیل شما ارسال شده را وارد کنید
-                </div>
-                <br />
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>کد ۵ رقمی که به ایمیل شما ارسال شده را وارد کنید
+                </Grid>
+                </Grid><br />
                 <Grid container spacing={2}>
                   <Grid item xs={1}></Grid>
                   <Grid item xs={2}>
@@ -129,6 +141,7 @@ class VerifyEmail extends Component {
                         required
                         name="ssn-3"
                         type="text"
+                        data-testid="tf1"
                         maxLength={1}
                         className={classes.input}
                         onChange={handleChange}
@@ -263,6 +276,7 @@ const useStyles = makeStyles((theme) => ({
 const CountDownTimer = ({ hoursMinSecs }) => {
   const classes = useStyles();
   const [disButton, setDisButton] = React.useState(true);
+  const [userType, setUsertype] = React.useState(localStorage.getItem('userType') === "normal_user" ? "user" : "consultant");
   const { hours = 0, minutes = 0, seconds = 60 } = hoursMinSecs;
   const [[hrs, mins, secs], setTime] = React.useState([hours, minutes, seconds]);
 
@@ -289,14 +303,14 @@ const CountDownTimer = ({ hoursMinSecs }) => {
       "token",
       localStorage.getItem('token').split(' ')[1]
     );
-    axios.post(serverURL() + "user/resent-code/", formData)
+    axios.post(serverURL() + userType + "/resent-code/", formData)
       .then(res => {
         console.log(res)
         setTime([parseInt(hours), parseInt(minutes), parseInt(seconds)])
         setDisButton(true);
       })
       .catch(err => {
-        console.log(err)
+        console.log(err.message)
       })
   }
 
@@ -346,7 +360,8 @@ export default () => {
     ssn5: "",
   });
   const disButton = React.useState(true);
+  const alert = React.useState(false);
   return (
-    <VerifyEmail classes={classes} ssnValues={ssnValues} disButton={disButton} />
+    <VerifyEmail classes={classes} ssnValues={ssnValues} disButton={disButton} alert={alert} />
   )
 }

@@ -95,11 +95,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 function faNumber(n){
   const farsidigit = ["۰","۱","۲","۳","۴","۵","۶","۷","۸","۹","٫"];
-  return n
-  .toString()
-  .split("")
-  .map(x => x !== "." ? farsidigit[x] : farsidigit[10])
-  .join("")
+  if (typeof(n) === 'string'){
+    return n
+    .toString()
+    .split("")
+    .map(x => x !== "." ? farsidigit[x] : farsidigit[10])
+    .join("")
+  }
 }
 export default (props) => {
   const classes = useStyles();

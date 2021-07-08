@@ -71,7 +71,7 @@ class VerifyEmail extends Component {
         })
         .catch(err => {
           console.log(err.response);
-          this.setState({errormessage : err.response.data.error})
+          this.setState({errormessage : err.response?.data?.error})
           setAlert(true)
         })
     }

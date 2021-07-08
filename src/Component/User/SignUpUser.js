@@ -98,48 +98,7 @@ class SignUpUser extends Component {
                 })
                 .catch(err=>{
                     setPending(false);
-                    let errMessage = "";
-                    let resError = err.response.data;
-                    // typeof resError.error.username !== "undefined" ? errMessage += resError.error.username[0] : null;
-                    // typeof(resError.error.email) !== "undefined" ? errMessage += resError.error.email[0] : null;
-                    // typeof(resError.error.phone_number) !== "undefined" ? errMessage += resError.error.phone_number[0] : null;
-                    // typeof(resError.error.password) !== "undefined" ? errMessage += resError.error.password[0] : null;
-                    // typeof(resError.error.password_repetition) !== "undefined" ? errMessage += resError.error.password_repetition[0] : null;
-                    if (typeof (resError.error) !== "undefined")
-                    {
-                        if (typeof(resError.error.username) !== "undefined")
-                        {
-                            errMessage += resError.error.username[0];
-                        }
-                        if (typeof (resError.error.email) !== "undefined")
-                        {
-                            errMessage += resError.error.email[0];
-                        }
-                        if (typeof (resError.error.phone_number) !== "undefined")
-                        {
-                            errMessage += resError.error.phone_number[0];
-                        }
-                        if (typeof (resError.error.password) !== "undefined")
-                        {
-                            errMessage += resError.error.password[0] ;
-                        }
-                        if (typeof (resError.error.password_repetition) !== "undefined")
-                        {
-                            errMessage += resError.error.password_repetition[0] ;
-                        }
-                    }
-                    if (errMessage === "")
-                    {
-                        errMessage = err.message
-                    }
-                    // console.log(err.response.data.error.email[0]);
-                    // console.log(err.response.data.error.phone_number[0]);
-                    // console.log(err.response.data.error.password[0]);
-                    // console.log(err.response.data.error.password_repetition[0]);
-                    //console.log(err.response.data.phone_number);
-                    this.ErrorDialogText = errMessage;
-                    this.setState({setErrorDialog:true});
-                    //this.setState({setErrorDialog:true,ErrorDialogText:errMessage});
+                    this.setState({setErrorDialog:true,ErrorDialogText:err.response.data?.error});
                 });
         };
 

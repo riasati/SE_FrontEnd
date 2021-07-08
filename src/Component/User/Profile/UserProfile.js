@@ -243,6 +243,8 @@ class ConsultantProfile extends Component {
                 setTimeout(()=>{
                     this.setState({editing:false});
                     },1000)
+                localStorage.setItem('username', this.state.userName);
+                window.location.reload();
             })
             .catch(err => {
                 console.log(err)

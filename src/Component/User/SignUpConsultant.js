@@ -151,7 +151,7 @@ class SignUpConsultant extends Component {
             .catch(err=>{
                 setPending(false);
                 console.log(err);
-                this.setState({setErrorDialog:true,ErrorDialogText:err.message});
+                this.setState({setErrorDialog:true,ErrorDialogText:err.response.data?.error});
             });
           }
         return (

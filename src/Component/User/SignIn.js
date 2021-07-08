@@ -69,10 +69,13 @@ class SignIn extends Component {
                     window.location.href = "/Dashboard";
                 }).catch(error => {
                     setPending(false);
-                    console.log(error);
-                    console.log(error.response);
-                    console.log(error.response.status);
-                    this.setState({setErrorDialog:true,ErrorDialogText:error.message});
+                   // console.log(error);
+                    //console.log(error.response);
+                   // console.log(error.response.status);
+                // console.log(typeof error.response?.data?.error);
+                    if (typeof error.response?.data?.error === "string"){
+                        this.setState({setErrorDialog:true,ErrorDialogText:error.response?.data?.error});
+                    }
                     if(error.response.status === 406){
                         window.location.href = "/VerifyEmail";
                     }

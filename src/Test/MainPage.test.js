@@ -63,13 +63,13 @@ it("MainPage Test", () => {
                     </svg> وکالت </h2>
                 </div>
                 <div class=\\"MuiPaper-root makeStyles-paper-3 makeStyles-fixedHeight-4 MuiPaper-elevation1 MuiPaper-rounded\\">
-                  <div class=\\"sc-jSFjdj lhpneZ rec rec-carousel-wrapper \\" style=\\"color: rgb(39, 189, 160);\\">
-                    <div class=\\"sc-eCApnc jCKguF rec rec-carousel\\" style=\\"height: 0px;\\"><button tabindex=\\"0\\" class=\\"sc-bdnxRM ehkxHv rec rec-arrow rec rec-arrow-left\\" disabled=\\"\\" type=\\"button\\">❮</button>
-                      <div class=\\"sc-dlnjwi dTGAUq rec rec-slider-container\\">
-                        <div class=\\"sc-hKFxyN gXEQKd rec rec-slider\\" style=\\"transition: all 500ms ease; right: 0px;\\">
+                  <div class=\\"sc-jRQAMF gGcoYH rec rec-carousel-wrapper \\" style=\\"color: rgb(39, 189, 160);\\">
+                    <div class=\\"sc-eCImvq ixXTzo rec rec-carousel\\" style=\\"height: 0px;\\"><button tabindex=\\"0\\" class=\\"sc-bdvvaa hSiCVM rec rec-arrow rec rec-arrow-left\\" disabled=\\"\\" type=\\"button\\">❮</button>
+                      <div class=\\"sc-dkPtyc imakzv rec rec-slider-container\\">
+                        <div class=\\"sc-hKwCoD eNbzjJ rec rec-slider\\" style=\\"transition: all 500ms ease; right: 0px;\\">
                           <div class=\\"rec rec-swipable\\" style=\\"display: flex; flex-direction: row;\\">
                             <div class=\\"rec rec-carousel-item rec-carousel-item-0 rec-carousel-item-visible\\">
-                              <div id=\\"0\\" style=\\"width: 0px; padding: 0px 0px 0px 0px;\\" class=\\"sc-gtsrHT cAlXfM rec rec-item-wrapper\\">
+                              <div id=\\"0\\" style=\\"width: 0px; padding: 0px 0px 0px 0px;\\" class=\\"sc-gsDJrp SpQeE rec rec-item-wrapper\\">
                                 <div class=\\"MuiCircularProgress-root makeStyles-CircularProgress-6 MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate\\" style=\\"width: 40px; height: 40px; color: rgb(14, 145, 140);\\" role=\\"progressbar\\" tabindex=\\"0\\"><svg class=\\"MuiCircularProgress-svg\\" viewBox=\\"22 22 44 44\\">
                                     <circle class=\\"MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate\\" cx=\\"44\\" cy=\\"44\\" r=\\"20.2\\" fill=\\"none\\" stroke-width=\\"3.6\\"></circle>
                                   </svg></div>
@@ -77,9 +77,9 @@ it("MainPage Test", () => {
                             </div>
                           </div>
                         </div>
-                      </div><button tabindex=\\"0\\" class=\\"sc-bdnxRM ehkxHv rec rec-arrow rec rec-arrow-right\\" disabled=\\"\\" type=\\"button\\">❯</button>
+                      </div><button tabindex=\\"0\\" class=\\"sc-bdvvaa hSiCVM rec rec-arrow rec rec-arrow-right\\" disabled=\\"\\" type=\\"button\\">❯</button>
                     </div>
-                    <div class=\\"sc-iCoGMd xzcEF rec rec-pagination\\"><button tabindex=\\"-1\\" class=\\"sc-gKAaRy ejXxNI rec rec-dot rec rec-dot_active\\" type=\\"button\\"></button></div>
+                    <div class=\\"sc-iCfLBT kGrYtS rec rec-pagination\\"><button tabindex=\\"-1\\" class=\\"sc-gKckTs cetQhm rec rec-dot rec rec-dot_active\\" type=\\"button\\"></button></div>
                   </div>
                 </div>
               </div>
@@ -90,13 +90,13 @@ it("MainPage Test", () => {
                     </svg> تحصیلی </h2>
                 </div>
                 <div class=\\"MuiPaper-root makeStyles-paper-3 makeStyles-fixedHeight-4 MuiPaper-elevation1 MuiPaper-rounded\\">
-                  <div class=\\"sc-jSFjdj lhpneZ rec rec-carousel-wrapper \\">
-                    <div class=\\"sc-eCApnc jCKguF rec rec-carousel\\" style=\\"height: 0px;\\"><button tabindex=\\"0\\" class=\\"sc-bdnxRM ehkxHv rec rec-arrow rec rec-arrow-left\\" disabled=\\"\\" type=\\"button\\">❮</button>
-                      <div class=\\"sc-dlnjwi dTGAUq rec rec-slider-container\\">
-                        <div class=\\"sc-hKFxyN gXEQKd rec rec-slider\\" style=\\"transition: all 500ms ease; right: 0px;\\">
+                  <div class=\\"sc-jRQAMF gGcoYH rec rec-carousel-wrapper \\">
+                    <div class=\\"sc-eCImvq ixXTzo rec rec-carousel\\" style=\\"height: 0px;\\"><button tabindex=\\"0\\" class=\\"sc-bdvvaa hSiCVM rec rec-arrow rec rec-arrow-left\\" disabled=\\"\\" type=\\"button\\">❮</button>
+                      <div class=\\"sc-dkPtyc imakzv rec rec-slider-container\\">
+                        <div class=\\"sc-hKwCoD eNbzjJ rec rec-slider\\" style=\\"transition: all 500ms ease; right: 0px;\\">
                           <div class=\\"rec rec-swipable\\" style=\\"display: flex; flex-direction: row;\\">
                             <div class=\\"rec rec-carousel-item rec-carousel-item-0 rec-carousel-item-visible\\">
-                              <div id=\\"0\\" style=\\"width: 0px; padding: 0px 0px 0px 0px;\\" class=\\"sc-gtsrHT cAlXfM rec rec-item-wrapper\\">
+                              <div id=\\"0\\" style=\\"width: 0px; padding: 0px 0px 0px 0px;\\" class=\\"sc-gsDJrp SpQeE rec rec-item-wrapper\\">
                                 <div class=\\"MuiCircularProgress-root makeStyles-CircularProgress-6 MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate\\" style=\\"width: 40px; height: 40px; color: rgb(14, 145, 140);\\" role=\\"progressbar\\" tabindex=\\"0\\"><svg class=\\"MuiCircularProgress-svg\\" viewBox=\\"22 22 44 44\\">
                                     <circle class=\\"MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate\\" cx=\\"44\\" cy=\\"44\\" r=\\"20.2\\" fill=\\"none\\" stroke-width=\\"3.6\\"></circle>
                                   </svg></div>
@@ -104,9 +104,9 @@ it("MainPage Test", () => {
                             </div>
                           </div>
                         </div>
-                      </div><button tabindex=\\"0\\" class=\\"sc-bdnxRM ehkxHv rec rec-arrow rec rec-arrow-right\\" disabled=\\"\\" type=\\"button\\">❯</button>
+                      </div><button tabindex=\\"0\\" class=\\"sc-bdvvaa hSiCVM rec rec-arrow rec rec-arrow-right\\" disabled=\\"\\" type=\\"button\\">❯</button>
                     </div>
-                    <div class=\\"sc-iCoGMd xzcEF rec rec-pagination\\"><button tabindex=\\"-1\\" class=\\"sc-gKAaRy ejXxNI rec rec-dot rec rec-dot_active\\" type=\\"button\\"></button></div>
+                    <div class=\\"sc-iCfLBT kGrYtS rec rec-pagination\\"><button tabindex=\\"-1\\" class=\\"sc-gKckTs cetQhm rec rec-dot rec rec-dot_active\\" type=\\"button\\"></button></div>
                   </div>
                 </div>
               </div>
@@ -115,13 +115,13 @@ it("MainPage Test", () => {
                   <h2><i class=\\"fas fa-head-side-brain\\"></i> روانشناسی </h2>
                 </div>
                 <div class=\\"MuiPaper-root makeStyles-paper-3 makeStyles-fixedHeight-4 MuiPaper-elevation1 MuiPaper-rounded\\">
-                  <div class=\\"sc-jSFjdj lhpneZ rec rec-carousel-wrapper \\">
-                    <div class=\\"sc-eCApnc jCKguF rec rec-carousel\\" style=\\"height: 0px;\\"><button tabindex=\\"0\\" class=\\"sc-bdnxRM ehkxHv rec rec-arrow rec rec-arrow-left\\" disabled=\\"\\" type=\\"button\\">❮</button>
-                      <div class=\\"sc-dlnjwi dTGAUq rec rec-slider-container\\">
-                        <div class=\\"sc-hKFxyN gXEQKd rec rec-slider\\" style=\\"transition: all 500ms ease; right: 0px;\\">
+                  <div class=\\"sc-jRQAMF gGcoYH rec rec-carousel-wrapper \\">
+                    <div class=\\"sc-eCImvq ixXTzo rec rec-carousel\\" style=\\"height: 0px;\\"><button tabindex=\\"0\\" class=\\"sc-bdvvaa hSiCVM rec rec-arrow rec rec-arrow-left\\" disabled=\\"\\" type=\\"button\\">❮</button>
+                      <div class=\\"sc-dkPtyc imakzv rec rec-slider-container\\">
+                        <div class=\\"sc-hKwCoD eNbzjJ rec rec-slider\\" style=\\"transition: all 500ms ease; right: 0px;\\">
                           <div class=\\"rec rec-swipable\\" style=\\"display: flex; flex-direction: row;\\">
                             <div class=\\"rec rec-carousel-item rec-carousel-item-0 rec-carousel-item-visible\\">
-                              <div id=\\"0\\" style=\\"width: 0px; padding: 0px 0px 0px 0px;\\" class=\\"sc-gtsrHT cAlXfM rec rec-item-wrapper\\">
+                              <div id=\\"0\\" style=\\"width: 0px; padding: 0px 0px 0px 0px;\\" class=\\"sc-gsDJrp SpQeE rec rec-item-wrapper\\">
                                 <div class=\\"MuiCircularProgress-root makeStyles-CircularProgress-6 MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate\\" style=\\"width: 40px; height: 40px; color: rgb(14, 145, 140);\\" role=\\"progressbar\\" tabindex=\\"0\\"><svg class=\\"MuiCircularProgress-svg\\" viewBox=\\"22 22 44 44\\">
                                     <circle class=\\"MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate\\" cx=\\"44\\" cy=\\"44\\" r=\\"20.2\\" fill=\\"none\\" stroke-width=\\"3.6\\"></circle>
                                   </svg></div>
@@ -129,9 +129,9 @@ it("MainPage Test", () => {
                             </div>
                           </div>
                         </div>
-                      </div><button tabindex=\\"0\\" class=\\"sc-bdnxRM ehkxHv rec rec-arrow rec rec-arrow-right\\" disabled=\\"\\" type=\\"button\\">❯</button>
+                      </div><button tabindex=\\"0\\" class=\\"sc-bdvvaa hSiCVM rec rec-arrow rec rec-arrow-right\\" disabled=\\"\\" type=\\"button\\">❯</button>
                     </div>
-                    <div class=\\"sc-iCoGMd xzcEF rec rec-pagination\\"><button tabindex=\\"-1\\" class=\\"sc-gKAaRy ejXxNI rec rec-dot rec rec-dot_active\\" type=\\"button\\"></button></div>
+                    <div class=\\"sc-iCfLBT kGrYtS rec rec-pagination\\"><button tabindex=\\"-1\\" class=\\"sc-gKckTs cetQhm rec rec-dot rec rec-dot_active\\" type=\\"button\\"></button></div>
                   </div>
                 </div>
               </div>
@@ -142,13 +142,13 @@ it("MainPage Test", () => {
                     </svg> پزشکی </h2>
                 </div>
                 <div class=\\"MuiPaper-root makeStyles-paper-3 makeStyles-fixedHeight-4 MuiPaper-elevation1 MuiPaper-rounded\\">
-                  <div class=\\"sc-jSFjdj lhpneZ rec rec-carousel-wrapper \\">
-                    <div class=\\"sc-eCApnc jCKguF rec rec-carousel\\" style=\\"height: 0px;\\"><button tabindex=\\"0\\" class=\\"sc-bdnxRM ehkxHv rec rec-arrow rec rec-arrow-left\\" disabled=\\"\\" type=\\"button\\">❮</button>
-                      <div class=\\"sc-dlnjwi dTGAUq rec rec-slider-container\\">
-                        <div class=\\"sc-hKFxyN gXEQKd rec rec-slider\\" style=\\"transition: all 500ms ease; right: 0px;\\">
+                  <div class=\\"sc-jRQAMF gGcoYH rec rec-carousel-wrapper \\">
+                    <div class=\\"sc-eCImvq ixXTzo rec rec-carousel\\" style=\\"height: 0px;\\"><button tabindex=\\"0\\" class=\\"sc-bdvvaa hSiCVM rec rec-arrow rec rec-arrow-left\\" disabled=\\"\\" type=\\"button\\">❮</button>
+                      <div class=\\"sc-dkPtyc imakzv rec rec-slider-container\\">
+                        <div class=\\"sc-hKwCoD eNbzjJ rec rec-slider\\" style=\\"transition: all 500ms ease; right: 0px;\\">
                           <div class=\\"rec rec-swipable\\" style=\\"display: flex; flex-direction: row;\\">
                             <div class=\\"rec rec-carousel-item rec-carousel-item-0 rec-carousel-item-visible\\">
-                              <div id=\\"0\\" style=\\"width: 0px; padding: 0px 0px 0px 0px;\\" class=\\"sc-gtsrHT cAlXfM rec rec-item-wrapper\\">
+                              <div id=\\"0\\" style=\\"width: 0px; padding: 0px 0px 0px 0px;\\" class=\\"sc-gsDJrp SpQeE rec rec-item-wrapper\\">
                                 <div class=\\"MuiCircularProgress-root makeStyles-CircularProgress-6 MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate\\" style=\\"width: 40px; height: 40px; color: rgb(14, 145, 140);\\" role=\\"progressbar\\" tabindex=\\"0\\"><svg class=\\"MuiCircularProgress-svg\\" viewBox=\\"22 22 44 44\\">
                                     <circle class=\\"MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate\\" cx=\\"44\\" cy=\\"44\\" r=\\"20.2\\" fill=\\"none\\" stroke-width=\\"3.6\\"></circle>
                                   </svg></div>
@@ -156,9 +156,9 @@ it("MainPage Test", () => {
                             </div>
                           </div>
                         </div>
-                      </div><button tabindex=\\"0\\" class=\\"sc-bdnxRM ehkxHv rec rec-arrow rec rec-arrow-right\\" disabled=\\"\\" type=\\"button\\">❯</button>
+                      </div><button tabindex=\\"0\\" class=\\"sc-bdvvaa hSiCVM rec rec-arrow rec rec-arrow-right\\" disabled=\\"\\" type=\\"button\\">❯</button>
                     </div>
-                    <div class=\\"sc-iCoGMd xzcEF rec rec-pagination\\"><button tabindex=\\"-1\\" class=\\"sc-gKAaRy ejXxNI rec rec-dot rec rec-dot_active\\" type=\\"button\\"></button></div>
+                    <div class=\\"sc-iCfLBT kGrYtS rec rec-pagination\\"><button tabindex=\\"-1\\" class=\\"sc-gKckTs cetQhm rec rec-dot rec rec-dot_active\\" type=\\"button\\"></button></div>
                   </div>
                 </div>
               </div>
@@ -167,13 +167,13 @@ it("MainPage Test", () => {
                   <h2><i class=\\"far fa-ballot-check\\"></i> کنکور </h2>
                 </div>
                 <div class=\\"MuiPaper-root makeStyles-paper-3 makeStyles-fixedHeight-4 MuiPaper-elevation1 MuiPaper-rounded\\">
-                  <div class=\\"sc-jSFjdj lhpneZ rec rec-carousel-wrapper \\">
-                    <div class=\\"sc-eCApnc jCKguF rec rec-carousel\\" style=\\"height: 0px;\\"><button tabindex=\\"0\\" class=\\"sc-bdnxRM ehkxHv rec rec-arrow rec rec-arrow-left\\" disabled=\\"\\" type=\\"button\\">❮</button>
-                      <div class=\\"sc-dlnjwi dTGAUq rec rec-slider-container\\">
-                        <div class=\\"sc-hKFxyN gXEQKd rec rec-slider\\" style=\\"transition: all 500ms ease; right: 0px;\\">
+                  <div class=\\"sc-jRQAMF gGcoYH rec rec-carousel-wrapper \\">
+                    <div class=\\"sc-eCImvq ixXTzo rec rec-carousel\\" style=\\"height: 0px;\\"><button tabindex=\\"0\\" class=\\"sc-bdvvaa hSiCVM rec rec-arrow rec rec-arrow-left\\" disabled=\\"\\" type=\\"button\\">❮</button>
+                      <div class=\\"sc-dkPtyc imakzv rec rec-slider-container\\">
+                        <div class=\\"sc-hKwCoD eNbzjJ rec rec-slider\\" style=\\"transition: all 500ms ease; right: 0px;\\">
                           <div class=\\"rec rec-swipable\\" style=\\"display: flex; flex-direction: row;\\">
                             <div class=\\"rec rec-carousel-item rec-carousel-item-0 rec-carousel-item-visible\\">
-                              <div id=\\"0\\" style=\\"width: 0px; padding: 0px 0px 0px 0px;\\" class=\\"sc-gtsrHT cAlXfM rec rec-item-wrapper\\">
+                              <div id=\\"0\\" style=\\"width: 0px; padding: 0px 0px 0px 0px;\\" class=\\"sc-gsDJrp SpQeE rec rec-item-wrapper\\">
                                 <div class=\\"MuiCircularProgress-root makeStyles-CircularProgress-6 MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate\\" style=\\"width: 40px; height: 40px; color: rgb(14, 145, 140);\\" role=\\"progressbar\\" tabindex=\\"0\\"><svg class=\\"MuiCircularProgress-svg\\" viewBox=\\"22 22 44 44\\">
                                     <circle class=\\"MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate\\" cx=\\"44\\" cy=\\"44\\" r=\\"20.2\\" fill=\\"none\\" stroke-width=\\"3.6\\"></circle>
                                   </svg></div>
@@ -181,9 +181,9 @@ it("MainPage Test", () => {
                             </div>
                           </div>
                         </div>
-                      </div><button tabindex=\\"0\\" class=\\"sc-bdnxRM ehkxHv rec rec-arrow rec rec-arrow-right\\" disabled=\\"\\" type=\\"button\\">❯</button>
+                      </div><button tabindex=\\"0\\" class=\\"sc-bdvvaa hSiCVM rec rec-arrow rec rec-arrow-right\\" disabled=\\"\\" type=\\"button\\">❯</button>
                     </div>
-                    <div class=\\"sc-iCoGMd xzcEF rec rec-pagination\\"><button tabindex=\\"-1\\" class=\\"sc-gKAaRy ejXxNI rec rec-dot rec rec-dot_active\\" type=\\"button\\"></button></div>
+                    <div class=\\"sc-iCfLBT kGrYtS rec rec-pagination\\"><button tabindex=\\"-1\\" class=\\"sc-gKckTs cetQhm rec rec-dot rec rec-dot_active\\" type=\\"button\\"></button></div>
                   </div>
                 </div>
               </div>
@@ -192,13 +192,13 @@ it("MainPage Test", () => {
                   <h2><i class=\\"fas fa-globe-stand\\"></i> مهاجرت </h2>
                 </div>
                 <div class=\\"MuiPaper-root makeStyles-paper-3 makeStyles-fixedHeight-4 MuiPaper-elevation1 MuiPaper-rounded\\">
-                  <div class=\\"sc-jSFjdj lhpneZ rec rec-carousel-wrapper \\">
-                    <div class=\\"sc-eCApnc jCKguF rec rec-carousel\\" style=\\"height: 0px;\\"><button tabindex=\\"0\\" class=\\"sc-bdnxRM ehkxHv rec rec-arrow rec rec-arrow-left\\" disabled=\\"\\" type=\\"button\\">❮</button>
-                      <div class=\\"sc-dlnjwi dTGAUq rec rec-slider-container\\">
-                        <div class=\\"sc-hKFxyN gXEQKd rec rec-slider\\" style=\\"transition: all 500ms ease; right: 0px;\\">
+                  <div class=\\"sc-jRQAMF gGcoYH rec rec-carousel-wrapper \\">
+                    <div class=\\"sc-eCImvq ixXTzo rec rec-carousel\\" style=\\"height: 0px;\\"><button tabindex=\\"0\\" class=\\"sc-bdvvaa hSiCVM rec rec-arrow rec rec-arrow-left\\" disabled=\\"\\" type=\\"button\\">❮</button>
+                      <div class=\\"sc-dkPtyc imakzv rec rec-slider-container\\">
+                        <div class=\\"sc-hKwCoD eNbzjJ rec rec-slider\\" style=\\"transition: all 500ms ease; right: 0px;\\">
                           <div class=\\"rec rec-swipable\\" style=\\"display: flex; flex-direction: row;\\">
                             <div class=\\"rec rec-carousel-item rec-carousel-item-0 rec-carousel-item-visible\\">
-                              <div id=\\"0\\" style=\\"width: 0px; padding: 0px 0px 0px 0px;\\" class=\\"sc-gtsrHT cAlXfM rec rec-item-wrapper\\">
+                              <div id=\\"0\\" style=\\"width: 0px; padding: 0px 0px 0px 0px;\\" class=\\"sc-gsDJrp SpQeE rec rec-item-wrapper\\">
                                 <div class=\\"MuiCircularProgress-root makeStyles-CircularProgress-6 MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate\\" style=\\"width: 40px; height: 40px; color: rgb(14, 145, 140);\\" role=\\"progressbar\\" tabindex=\\"0\\"><svg class=\\"MuiCircularProgress-svg\\" viewBox=\\"22 22 44 44\\">
                                     <circle class=\\"MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate\\" cx=\\"44\\" cy=\\"44\\" r=\\"20.2\\" fill=\\"none\\" stroke-width=\\"3.6\\"></circle>
                                   </svg></div>
@@ -206,9 +206,9 @@ it("MainPage Test", () => {
                             </div>
                           </div>
                         </div>
-                      </div><button tabindex=\\"0\\" class=\\"sc-bdnxRM ehkxHv rec rec-arrow rec rec-arrow-right\\" disabled=\\"\\" type=\\"button\\">❯</button>
+                      </div><button tabindex=\\"0\\" class=\\"sc-bdvvaa hSiCVM rec rec-arrow rec rec-arrow-right\\" disabled=\\"\\" type=\\"button\\">❯</button>
                     </div>
-                    <div class=\\"sc-iCoGMd xzcEF rec rec-pagination\\"><button tabindex=\\"-1\\" class=\\"sc-gKAaRy ejXxNI rec rec-dot rec rec-dot_active\\" type=\\"button\\"></button></div>
+                    <div class=\\"sc-iCfLBT kGrYtS rec rec-pagination\\"><button tabindex=\\"-1\\" class=\\"sc-gKckTs cetQhm rec rec-dot rec rec-dot_active\\" type=\\"button\\"></button></div>
                   </div>
                 </div>
               </div>

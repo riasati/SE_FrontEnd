@@ -74,6 +74,9 @@ function stringAvatar(name) {
 function stringToColor(string) {
     let hash = 0;
     let i;
+    if (typeof string === "undefined"){
+        return null
+    }
 
     /* eslint-disable no-bitwise */
     for (i = 0; i < string.length; i += 1) {

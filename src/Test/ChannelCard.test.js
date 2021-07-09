@@ -47,8 +47,8 @@ it("ChannelCard Test", () => {
           </svg></div>
       </div>
       <div class=\\"MuiListItemText-root MuiListItemText-dense MuiListItemText-multiline\\">
-        <p class=\\"MuiTypography-root MuiTypography-body1 MuiTypography-noWrap MuiTypography-gutterBottom MuiTypography-alignLeft MuiTypography-displayBlock\\"></p>
-        <p class=\\"MuiTypography-root MuiTypography-body2 MuiTypography-noWrap MuiTypography-gutterBottom MuiTypography-alignLeft MuiTypography-displayBlock\\">Margaret</p>
+        <p class=\\"MuiTypography-root MuiTypography-body1 MuiTypography-noWrap MuiTypography-gutterBottom MuiTypography-alignLeft MuiTypography-displayBlock\\" style=\\"font-family: IRANSansWeb;\\"></p>
+        <p class=\\"MuiTypography-root MuiTypography-body2 MuiTypography-noWrap MuiTypography-gutterBottom MuiTypography-alignLeft MuiTypography-displayBlock\\" style=\\"font-family: IRANSansWeb; color: rgb(9, 175, 88);\\">Margaret</p>
       </div><span class=\\"MuiTouchRipple-root\\"></span>
     </a>"
   `);

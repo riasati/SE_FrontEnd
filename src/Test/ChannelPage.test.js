@@ -65,10 +65,24 @@ it("ChannelPage Test", () => {
           <div class=\\"MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiGrid-justify-xs-space-evenly\\">
             <div></div>
             <div class=\\"MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-sm-12\\">
-              <div class=\\"MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-space-evenly\\">
-                <div class=\\"MuiGrid-root makeStyles-rightSection-10 MuiGrid-item MuiGrid-grid-xs-12\\"></div>
+              <div class=\\"MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-evenly\\">
+                <div class=\\"MuiGrid-root makeStyles-rightSection-10 MuiGrid-item MuiGrid-grid-xs-12\\">
+                  <div class=\\"MuiPaper-root makeStyles-paper-9 MuiPaper-elevation1 MuiPaper-rounded\\" style=\\"display: none;\\">
+                    <div class=\\"MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-direction-xs-column MuiGrid-justify-xs-space-evenly\\">
+                      <div class=\\"MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12\\">
+                        <nav class=\\"MuiList-root MuiList-dense MuiList-padding MuiList-subheader\\">
+                          <li class=\\"MuiListSubheader-root MuiListSubheader-sticky\\">
+                            <div style=\\"display: flex; flex-direction: row; justify-content: space-between; align-items: stretch; align-content: center;\\">
+                              <h6 class=\\"MuiTypography-root MuiTypography-h6 MuiTypography-gutterBottom MuiTypography-alignLeft\\">كانال هاي من</h6><button class=\\"MuiButtonBase-root MuiIconButton-root\\" tabindex=\\"0\\" type=\\"button\\" style=\\"padding: 0px; color: rgb(63, 64, 125);\\"><span class=\\"MuiIconButton-label\\"><svg class=\\"MuiSvgIcon-root\\" focusable=\\"false\\" viewBox=\\"0 0 24 24\\" aria-hidden=\\"true\\" style=\\"font-size: 35px;\\"><path d=\\"M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z\\"></path></svg></span><span class=\\"MuiTouchRipple-root\\"></span></button>
+                            </div>
+                          </li>
+                        </nav>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div class=\\"MuiGrid-root makeStyles-centerSection-11 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-8\\">
-                  <div class=\\"MuiPaper-root makeStyles-paper-9 MuiPaper-elevation1 MuiPaper-rounded\\">
+                  <div class=\\"MuiPaper-root makeStyles-paper-9 MuiPaper-elevation1 MuiPaper-rounded\\" style=\\"display: block;\\">
                     <div style=\\"display: flex; flex-direction: row-reverse; justify-content: space-between; align-items: stretch; align-content: center;\\"><button class=\\"MuiButtonBase-root MuiIconButton-root\\" tabindex=\\"0\\" type=\\"button\\" style=\\"padding: 0px; color: rgb(63, 64, 125);\\"><span class=\\"MuiIconButton-label\\"><svg class=\\"MuiSvgIcon-root\\" focusable=\\"false\\" viewBox=\\"0 0 24 24\\" aria-hidden=\\"true\\" style=\\"font-size: 35px;\\"><path d=\\"M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z\\"></path></svg></span><span class=\\"MuiTouchRipple-root\\"></span></button>
                       <h6 class=\\"MuiTypography-root MuiTypography-h6\\" style=\\"align-self: center;\\"></h6><button class=\\"MuiButtonBase-root MuiIconButton-root\\" tabindex=\\"0\\" type=\\"button\\" style=\\"padding: 0px; color: rgb(63, 64, 125);\\"><span class=\\"MuiIconButton-label\\"><svg class=\\"MuiSvgIcon-root\\" focusable=\\"false\\" viewBox=\\"0 0 24 24\\" aria-hidden=\\"true\\" style=\\"font-size: 35px;\\"><path d=\\"M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z\\"></path></svg></span><span class=\\"MuiTouchRipple-root\\"></span></button>
                     </div>
@@ -93,7 +107,22 @@ it("ChannelPage Test", () => {
                     </div>
                   </div>
                 </div>
-                <div class=\\"MuiGrid-root makeStyles-leftSection-12 MuiGrid-item MuiGrid-grid-xs-12\\"></div>
+                <div class=\\"MuiGrid-root makeStyles-leftSection-12 MuiGrid-item MuiGrid-grid-xs-12\\">
+                  <div class=\\"MuiPaper-root makeStyles-paper-9 MuiPaper-elevation1 MuiPaper-rounded\\" style=\\"display: none;\\">
+                    <div style=\\"display: flex; flex-direction: row; margin-bottom: 5px; justify-content: space-between;\\"><button class=\\"MuiButtonBase-root MuiIconButton-root\\" tabindex=\\"0\\" type=\\"button\\" style=\\"padding: 0px; color: rgb(63, 64, 125);\\"><span class=\\"MuiIconButton-label\\"><svg class=\\"MuiSvgIcon-root\\" focusable=\\"false\\" viewBox=\\"0 0 24 24\\" aria-hidden=\\"true\\" style=\\"font-size: 35px;\\"><path d=\\"M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z\\"></path></svg></span><span class=\\"MuiTouchRipple-root\\"></span></button>
+                      <h6 class=\\"MuiTypography-root MuiTypography-h6 MuiTypography-gutterBottom MuiTypography-alignLeft\\">مشخصات كانال</h6>&nbsp;&nbsp;
+                    </div>
+                    <div class=\\"MuiPaper-root MuiCard-root makeStyles-paperShowChannelInfo-6 MuiPaper-elevation1 MuiPaper-rounded\\"><img class=\\"MuiCardMedia-root makeStyles-mediaChannel-5 MuiCardMedia-media MuiCardMedia-img\\">
+                      <div class=\\"MuiCardContent-root\\">
+                        <div class=\\"MuiGrid-root MuiGrid-grid-xs-12\\"><text color=\\"#725b53\\"></text>
+                          <div class=\\"MuiGrid-root MuiGrid-grid-xs-12\\"><text color=\\"#725b53\\"></text></div>
+                          <div class=\\"MuiGrid-root MuiGrid-grid-xs-12\\"><text color=\\"#725b53\\"></text></div>
+                        </div>
+                      </div>
+                    </div>
+                    <ul></ul><button class=\\"MuiButtonBase-root MuiButton-root MuiButton-text\\" tabindex=\\"0\\" type=\\"button\\" style=\\"color: rgb(63, 64, 125); align-self: baseline; margin-top: 5px;\\"><span class=\\"MuiButton-label\\"><p class=\\"MuiTypography-root MuiTypography-body2 MuiTypography-alignLeft\\" style=\\"align-self: baseline;\\">ترک کانال</p></span><span class=\\"MuiTouchRipple-root\\"></span></button><button class=\\"MuiButtonBase-root MuiButton-root MuiButton-text\\" tabindex=\\"0\\" type=\\"button\\" style=\\"color: rgb(63, 64, 125); align-self: baseline; margin-top: 5px;\\"><span class=\\"MuiButton-label\\"><p class=\\"MuiTypography-root MuiTypography-body2 MuiTypography-alignLeft\\" style=\\"align-self: baseline;\\">گزارش تخلف کانال</p></span><span class=\\"MuiTouchRipple-root\\"></span></button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

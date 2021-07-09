@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {ThemeProvider} from "@material-ui/styles";
-import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+import {createMuiTheme} from "@material-ui/core/styles";
 import responsiveFontSizes from "@material-ui/core/styles/responsiveFontSizes";
 
 let theme = createMuiTheme({

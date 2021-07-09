@@ -11,7 +11,7 @@ import AppBar from '@material-ui/core/AppBar';
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from '@material-ui/icons/Close';
 import Theme from "../Component/Theme";
-import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+import {createMuiTheme} from "@material-ui/core/styles";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;

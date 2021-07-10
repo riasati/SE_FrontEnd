@@ -102,45 +102,52 @@ class Home extends Component {
                         <section class="py-5" id="team">
                             <div class="container">
                                 <div class="wow fadeIn">
-                                    <h2 class="h1 pt-5 pb-3 text-center">Our team members</h2>
+                                    <h2 class="h1 pt-5 pb-3 text-center">اعضای تیم</h2>
                                     <p class="px-5 mb-5 pb-3 lead text-center blue-grey-text">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, error amet numquam iure provident voluptate
-                                        esse quasi, veritatis totam voluptas nostrum quisquam eum porro a pariatur accusamus veniam.
+                                        
                                     </p>
                                 </div>
                                 <div class="row mb-lg-4 center-on-small-only">
                                     <div class="col-lg-6 col-md-12 mb-5 wow fadeInLeft" data-wow-delay=".3s">
-                                        <div class="col-md-6 float-left"><img class="img-fluid rounded z-depth-1 mb-3" src="img/woman-1.jpg" alt="team member" /></div>
+                                        <div class="col-md-6 float-left"><img class="img-fluid rounded z-depth-1 mb-3" src="assets/img/mojtaba.jpg" alt="team member" /></div>
                                         <div class="col-md-6 float-right">
-                                            <div class="h4">Nicole West</div>
-                                            <h6 class="font-weight-bold blue-grey-text mb-4">Lead Designer</h6>
-                                            <p class="grey-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod eos id officiis hic tenetur.</p><a href="https://twitter.com" target="_blank"><i class="fa fa-twitter"></i><span class="ml-1">@nicolewest</span></a>
+                                            <div class="h4">مجتبی نافذ</div>
+                                            <h6 class="font-weight-bold blue-grey-text mb-4">Back End</h6>
+                                            <p class="grey-text">بک اند دولوپر با جنگو</p><a href="https://telegram.org" target="_blank"><i class="fa fa-telegram"></i><span class="ml-1">@mojtaba_nafez</span></a>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-12 mb-5 wow fadeInRight" data-wow-delay=".3s">
-                                        <div class="col-md-6 float-left"><img class="img-fluid rounded z-depth-1 mb-3" src="img/woman-2.jpg" alt="team member" /></div>
+                                        <div class="col-md-6 float-left"><img class="img-fluid rounded z-depth-1 mb-3" src="assets/img/hamid.jpg" alt="team member" /></div>
                                         <div class="col-md-6 float-right">
-                                            <div class="h4">Hannah Cruz</div>
-                                            <h6 class="font-weight-bold blue-grey-text mb-4">Photographer</h6>
-                                            <p class="grey-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod eos id officiis hic tenetur.</p><a href="https://twitter.com" target="_blank"><i class="fa fa-twitter"></i><span class="ml-1">@hannahcruz</span></a>
+                                            <div class="h4">حمیدرضا آذرباد</div>
+                                            <h6 class="font-weight-bold blue-grey-text mb-4">Back End</h6>
+                                            <p class="grey-text">بک اند دولوپر با جنگو</p><a href="https://telegram.org" target="_blank"><i class="fa fa-telegram"></i><span class="ml-1">@h_azarbad</span></a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row center-on-small-only">
                                     <div class="col-lg-6 col-md-12 mb-5 wow fadeInLeft" data-wow-delay=".3s">
-                                        <div class="col-md-6 float-left"><img class="img-fluid rounded z-depth-1 mb-3" src="img/man-1.jpg" alt="team member" /></div>
+                                        <div class="col-md-6 float-left"><img class="img-fluid rounded z-depth-1 mb-3" src="assets/img/hojjat.jpg" alt="team member" /></div>
                                         <div class="col-md-6 float-right">
-                                            <div class="h4">Mark Hall</div>
-                                            <h6 class="font-weight-bold blue-grey-text mb-4">Web Developer</h6>
-                                            <p class="grey-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod eos id officiis hic tenetur.</p><a href="https://twitter.com" target="_blank"><i class="fa fa-twitter"></i><span class="ml-1">@markhall</span></a>
+                                            <div class="h4">محمد مهدی سوری</div>
+                                            <h6 class="font-weight-bold blue-grey-text mb-4">Front End</h6>
+                                            <p class="grey-text">فرانت اند دولوپر با ری اکت</p><a href="https://telegram.org" target="_blank"><i class="fa fa-telegram"></i><span class="ml-1">@nikjo0</span></a>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-12 mb-5 wow fadeInRight" data-wow-delay=".3s">
-                                        <div class="col-md-6 float-left"><img class="img-fluid rounded z-depth-1 mb-3" src="img/man-2.jpg" alt="team member" /></div>
+                                        <div class="col-md-6 float-left"><img class="img-fluid rounded z-depth-1 mb-3" src="assets/img/man-2.jpg" alt="team member" /></div>
                                         <div class="col-md-6 float-right">
-                                            <div class="h4">Vincent Harris</div>
-                                            <h6 class="font-weight-bold blue-grey-text mb-4">Web Developer</h6>
-                                            <p class="grey-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod eos id officiis hic tenetur.</p><a href="https://twitter.com" target="_blank"><i class="fa fa-twitter"></i><span class="ml-1">@vincentharris</span></a>
+                                            <div class="h4">حجت نیکجو مقدم</div>
+                                            <h6 class="font-weight-bold blue-grey-text mb-4">Front End</h6>
+                                            <p class="grey-text">فرانت اند دولوپر با ری اکت</p><a href="https://telegram.org" target="_blank"><i class="fa fa-telegram"></i><span class="ml-1">@mohammadmahdi7872</span></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-12 mb-5 wow fadeInRight" data-wow-delay=".3s">
+                                        <div class="col-md-6 float-left"><img class="img-fluid rounded z-depth-1 mb-3" src="assets/img/man-1.jpg" alt="team member" /></div>
+                                        <div class="col-md-6 float-right">
+                                            <div class="h4">علی اسدی</div>
+                                            <h6 class="font-weight-bold blue-grey-text mb-4">Front End</h6>
+                                            <p class="grey-text">فرانت اند دولوپر با ری اکت</p><a href="https://telegram.org" target="_blank"><i class="fa fa-telegram"></i><span class="ml-1">@A_aliasadi_A</span></a>
                                         </div>
                                     </div>
                                 </div>

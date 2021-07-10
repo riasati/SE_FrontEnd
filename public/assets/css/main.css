@@ -3,6 +3,7 @@ html {
 
 #intro {
   background: url("../img/defaultavatar.jpg") no-repeat center center;
+
   background-size: cover; }
 
 .top-nav-collapse {

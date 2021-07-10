@@ -7,13 +7,13 @@ class Home extends Component {
                 <header>
 
                     <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar" id="navbar">
-                        <div class="container"><a class="navbar-brand" href="#"><strong>پرگار</strong></a>
+                        <div class="container"><a class="navbar-brand" href="#" ><strong>پرگار</strong></a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                             <div class="collapse navbar-collapse" id="navbarContent">
                                 <ul class="navbar-nav ml-auto">
-                                    <li class="nav-item"><a class="nav-link active" href="#about">درباره ما</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#team">تیم ما</a></li>
                                     <li class="nav-item"><a class="nav-link" href="#contact">تماس با ما</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#team">تیم ما</a></li>
+                                    <li class="nav-item"><a class="nav-link active" href="#about">درباره ما</a></li>
                                 </ul><a class="btn btn-primary btn-rounded my-0" href="/signIn">ورود</a>
                             </div>
                         </div>
@@ -26,7 +26,7 @@ class Home extends Component {
                                     <div class="col-md-10 col-lg-6 text-center text-md-left margins">
                                         <div class="white-text">
                                             <div class="wow fadeInLeft" data-wow-delay="0.3s">
-                                                <h1 class="h1-responsive font-weight-bold mt-sm-5">چندین بار زندگی کن</h1>
+                                                <h1 class="h1-responsive font-weight-bold mt-sm-5" style={{color: 'honeydew'}} >چندین بار زندگی کن</h1>
                                                 <div class="h6">
                                                     انسان ها با صرف عمر خود تجربه های گرانبهایی کسب می کنند
                                                     <br/>
@@ -113,7 +113,7 @@ class Home extends Component {
                                         <div class="col-md-6 float-right">
                                             <div class="h4">مجتبی نافذ</div>
                                             <h6 class="font-weight-bold blue-grey-text mb-4">Back End</h6>
-                                            <p class="grey-text">بک اند دولوپر با جنگو</p><a href="https://telegram.org" target="_blank"><i class="fa fa-telegram"></i><span class="ml-1">@mojtaba_nafez</span></a>
+                                            <p class="grey-text"> DJango بک اند </p><a href="https://t.me/mojtaba_nafez" target="_blank" style={{textDecoration: 'none'}}><i class="fa fa-telegram"></i><span class="ml-1">@mojtaba_nafez</span></a>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-12 mb-5 wow fadeInRight" data-wow-delay=".3s">
@@ -121,7 +121,7 @@ class Home extends Component {
                                         <div class="col-md-6 float-right">
                                             <div class="h4">حمیدرضا آذرباد</div>
                                             <h6 class="font-weight-bold blue-grey-text mb-4">Back End</h6>
-                                            <p class="grey-text">بک اند دولوپر با جنگو</p><a href="https://telegram.org" target="_blank"><i class="fa fa-telegram"></i><span class="ml-1">@h_azarbad</span></a>
+                                            <p class="grey-text">DJango بک اند </p><a href="https://t.me/h_azarbad77" target="_blank" style={{textDecoration: 'none'}}><i class="fa fa-telegram"></i><span class="ml-1">@h_azarbad77</span></a>
                                         </div>
                                     </div>
                                 </div>
@@ -129,34 +129,34 @@ class Home extends Component {
                                     <div class="col-lg-6 col-md-12 mb-5 wow fadeInLeft" data-wow-delay=".3s">
                                         <div class="col-md-6 float-left"><img class="img-fluid rounded z-depth-1 mb-3" src="assets/img/hojjat.jpg" alt="team member" /></div>
                                         <div class="col-md-6 float-right">
+                                            <div class="h4">حجت نیکجو</div>
+                                            <h6 class="font-weight-bold blue-grey-text mb-4">Front End</h6>
+                                            <p class="grey-text">  React js فرانت اند </p><a href="https://t.me/nikjo0" target="_blank" style={{textDecoration: 'none'}}><i class="fa fa-telegram"></i><span class="ml-1">@nikjo0</span></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-12 mb-5 wow fadeInRight" data-wow-delay=".3s">
+                                        <div class="col-md-6 float-left"><img class="img-fluid rounded z-depth-1 mb-3" src="assets/img/mahdi.jpg" alt="team member" /></div>
+                                        <div class="col-md-6 float-right">
                                             <div class="h4">محمد مهدی سوری</div>
                                             <h6 class="font-weight-bold blue-grey-text mb-4">Front End</h6>
-                                            <p class="grey-text">فرانت اند دولوپر با ری اکت</p><a href="https://telegram.org" target="_blank"><i class="fa fa-telegram"></i><span class="ml-1">@nikjo0</span></a>
+                                            <p class="grey-text">  React js فرانت اند </p><a href="https://t.me/mohammadmahdi7872" target="_blank" style={{textDecoration: 'none'}}><i class="fa fa-telegram"></i><span class="ml-1">@mohammadmahdi7872</span></a>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-12 mb-5 wow fadeInRight" data-wow-delay=".3s">
-                                        <div class="col-md-6 float-left"><img class="img-fluid rounded z-depth-1 mb-3" src="assets/img/man-2.jpg" alt="team member" /></div>
-                                        <div class="col-md-6 float-right">
-                                            <div class="h4">حجت نیکجو مقدم</div>
-                                            <h6 class="font-weight-bold blue-grey-text mb-4">Front End</h6>
-                                            <p class="grey-text">فرانت اند دولوپر با ری اکت</p><a href="https://telegram.org" target="_blank"><i class="fa fa-telegram"></i><span class="ml-1">@mohammadmahdi7872</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-12 mb-5 wow fadeInRight" data-wow-delay=".3s">
-                                        <div class="col-md-6 float-left"><img class="img-fluid rounded z-depth-1 mb-3" src="assets/img/man-1.jpg" alt="team member" /></div>
+                                    <div class="col-lg-6 col-md-12 mb-5 wow fadeInLeft" data-wow-delay=".3s">
+                                        <div class="col-md-6 float-left"><img class="img-fluid rounded z-depth-1 mb-3" src="assets/img/aliasadi.jpg" alt="team member" /></div>
                                         <div class="col-md-6 float-right">
                                             <div class="h4">علی اسدی</div>
                                             <h6 class="font-weight-bold blue-grey-text mb-4">Front End</h6>
-                                            <p class="grey-text">فرانت اند دولوپر با ری اکت</p><a href="https://telegram.org" target="_blank"><i class="fa fa-telegram"></i><span class="ml-1">@A_aliasadi_A</span></a>
+                                            <p class="grey-text">  React js فرانت اند </p><a href="https://t.me/A_aliasadi_A" target="_blank" style={{textDecoration: 'none'}}><i class="fa fa-telegram"></i><span class="ml-1">@A_aliasadi_A</span></a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </section>
-                        <section id="contact" 
+                        <section id="contact"
                         // style={{"background-image:url('img/panorama-3094696_1920.jpg')"}}
                         >
-                            <div class="rgba-black-strong py-5">
+                            <div class="rgba-black-strong py-5 card-image" id="pricing">
                                 <div class="container">
                                     <div class="wow fadeIn">
                                         <h2 class="h1 text-white pt-5 pb-3 text-center">تماس با ما</h2>
@@ -168,12 +168,12 @@ class Home extends Component {
                                         <div class="card-body p-5">
                                             <div class="row">
                                                 <div class="col-md-8">
-                                                    <form action="https://formspree.io/consultant.iust.se@gmail.com" method="POST">
+                                                    <form  method="POST">
                                                         <div class="row">
                                                             <div class="col-md-6">
-                                                                <div class="md-form">
-                                                                    <input class="form-control" id="name" type="text" name="name" required="required" />
-                                                                    <label for="name">نام کامل</label>
+                                                                <div class="md-form" style={{direction: 'rtl',textAlign: 'right'}}>
+                                                                    <input class="form-control" id="name" type="text" name="name" required="required" style={{direction: 'rtl',textAlign: 'right'}}/>
+                                                                    <label for="name" style={{direction: 'rtl',textAlign: 'right'}}>نام کامل</label>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
@@ -192,13 +192,13 @@ class Home extends Component {
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <div class="md-form">
-                                                                    <textarea class="md-textarea" id="message" name="message" required="required"></textarea>
+                                                                    <input class="form-control" id="message" type="text" name="message" required="required" />
                                                                     <label for="message">پیام شما</label>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="center-on-small-only mb-4">
-                                                            <button class="btn btn-indigo ml-0" type="submit"><i class="fa fa-paper-plane-o mr-2"></i> ارسال</button>
+                                                            <button class="btn btn-indigo ml-0" type="submit"><i class="fa fa-paper-plane-o mr-2"></i><a href="mailto: consultant.iust.se@gmail.com" style={{textDecoration: 'none'}}>ارسال</a> </button>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -225,13 +225,13 @@ class Home extends Component {
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="mb-5 flex-center"><a class="px-3" href="#"><i class="fa fa-facebook fa-lg white-text"></i></a><a class="px-3" href="#"><i class="fa fa-twitter fa-lg white-text"></i></a><a class="px-3" href="#"><i class="fa fa-google-plus fa-lg white-text"></i></a><a class="px-3" href="#"><i class="fa fa-linkedin fa-lg white-text"></i></a></div>
+                                    <div class="mb-5 flex-center"><a class="px-3" href="https://t.me/pargarconsultant"><i class="fa fa-telegram fa-lg white-text"></i></a><a class="px-3" href="#"><i class="fa fa-twitter fa-lg white-text"></i></a><a class="px-3" href="#"><i class="fa fa-instagram fa-lg white-text"></i></a><a class="px-3" href="#"><i class="fa fa-linkedin fa-lg white-text"></i></a></div>
                                 </div>
                             </div>
                         </div>
                         <div class="footer-copyright text-center py-3 font-small">
                             <div class="container-fluid">
-                                <div>&copy; <a href="undefined/">Material Landing</a> - Design: <a href="https://templateflip.com/" target="_blank">TemplateFlip</a></div>
+                                <div>&copy; طراحی - <a href="/" style={{textDecoration: 'none'}}>تیم پرگار</a><a href="https://templateflip.com/" target="_blank" style={{textDecoration: 'none'}}>TemplateFlip</a></div>
                             </div>
                         </div>
                     </footer>

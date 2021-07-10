@@ -97,7 +97,7 @@ class SignIn extends Component {
                                     <Grid container spacing={2} component="h6">
                                         <Grid item xs={12}>
                                             <TextValidator
-                                                variant="outlined"
+                                                variant="filled"
                                                 margin="normal"
                                                 required
                                                 fullWidth
@@ -122,7 +122,7 @@ class SignIn extends Component {
                                         </Grid>
                                         <Grid item xs={12}>
                                             <TextValidator
-                                                variant="outlined"
+                                                variant="filled"
                                                 margin="normal"
                                                 required
                                                 fullWidth

@@ -143,7 +143,7 @@ class SignUpUser extends Component {
                                         <Grid item xs={12} sm={3}>
                                             <TextValidator
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 id="first_name"
@@ -169,7 +169,7 @@ class SignUpUser extends Component {
                                         <Grid item xs={12} sm={3}>
                                             <TextValidator
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 id="last_name"
@@ -195,7 +195,7 @@ class SignUpUser extends Component {
                                         <Grid item xs={12} sm={6}>
                                             <TextValidator  
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 id="username"
@@ -221,7 +221,7 @@ class SignUpUser extends Component {
                                         <Grid item xs={12} sm={6}>
                                             <TextValidator
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 id="email"
@@ -248,7 +248,7 @@ class SignUpUser extends Component {
                                         <Grid item xs={12} sm={6}>
                                             <TextValidator
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 id="phone_number"
@@ -274,7 +274,7 @@ class SignUpUser extends Component {
                                         <Grid item xs={12} sm={6}>
                                             <TextValidator
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 name="password"
@@ -306,7 +306,7 @@ class SignUpUser extends Component {
                                         <Grid item xs={12} sm={6}>
                                             <TextValidator
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 name="password_repetition"

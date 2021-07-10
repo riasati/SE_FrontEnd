@@ -28,11 +28,11 @@ class Home extends Component {
                                     <div class="col-md-10 col-lg-6 text-center text-md-left margins">
                                         <div class="white-text">
                                             <div class="wow fadeInLeft" data-wow-delay="0.3s">
-                                                <h1 class="h1-responsive font-weight-bold mt-sm-5">Your Success is Our Mission.</h1>
+                                                <h1 class="h1-responsive font-weight-bold mt-sm-5">چندین بار زندگی کن</h1>
                                                 <div class="h6">
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem repellendus quasi fuga nesciunt
-                                                    dolorum nulla magnam veniam sapiente, fugiat! Commodi sequi non animi ea dolor molestiae
-                                                    iste.
+                                                   
+                                                    انسان ها با صرف عمر خود تجربه های گران بهایی را به دست می آورند.
+                                                    ما به شما کمک می کنیم تا از تجربه های آن ها در راستای فردایی بهتر استفاده کنید
                                                 </div>
                                             </div>
                                             <br/>

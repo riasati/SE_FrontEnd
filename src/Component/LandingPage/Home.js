@@ -11,11 +11,9 @@ class Home extends Component {
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                             <div class="collapse navbar-collapse" id="navbarContent">
                                 <ul class="navbar-nav ml-auto">
-                                    <li class="nav-item"><a class="nav-link active" href="#about">About</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                                    <li class="nav-item"><a class="nav-link active" href="#about">درباره ما</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#team">تیم ما</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#contact">تماس با ما</a></li>
                                 </ul><a class="btn btn-primary btn-rounded my-0" href="/signIn">ورود</a>
                             </div>
                         </div>
@@ -28,22 +26,15 @@ class Home extends Component {
                                     <div class="col-md-10 col-lg-6 text-center text-md-left margins">
                                         <div class="white-text">
                                             <div class="wow fadeInLeft" data-wow-delay="0.3s">
-                                                <h1 class="h1-responsive font-weight-bold mt-sm-5">Your Success is Our Mission.</h1>
+                                                <h1 class="h1-responsive font-weight-bold mt-sm-5">چندین بار زندگی کن</h1>
                                                 <div class="h6">
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem repellendus quasi fuga nesciunt
-                                                    dolorum nulla magnam veniam sapiente, fugiat! Commodi sequi non animi ea dolor molestiae
-                                                    iste.
+                                                    انسان ها با صرف عمر خود تجربه های گرانبهایی کسب می کنند
+                                                    <br/>
+                                                    ما به شما کمک می کنیم تا از تجربه های آن ها در راستای فردایی بهتر استفاده کنید
                                                 </div>
                                             </div>
                                             <br/>
-                                                <div class="wow fadeInLeft" data-wow-delay="0.3s">
-                                                    <a class="btn btn-white dark-grey-text font-weight-bold ml-0" href="https://www.youtube.com/watch?v=60ItHLz5WEA" target="_blank">
-                                                        <i class="fa fa-play mr-1"></i> View Demo
-                                                    </a>
-                                                    <a class="btn btn-outline-white" href="#">
-                                                        Learn more
-                                                    </a>
-                                                </div>
+                                                
                                         </div>
                                         </div>
                                     </div>
@@ -55,55 +46,53 @@ class Home extends Component {
                         <section class="row no-gutters" id="features" style={{margin: 'auto'}}>
                             <div class="col-lg-3 col-md-6 col-sm-12 deep-purple lighten-1 text-white">
                                 <div class="p-5 text-center wow zoomIn" data-wow-delay=".1s"><i class="fa fa-line-chart fa-2x"></i>
-                                    <div class="h5 mt-3">Agile Frameworks</div>
-                                    <p class="mt-5">Leverage agile frameworks to provide a robust synopsis for high level overviews.</p>
+                                    <div class="h5 mt-3">جامع بودن موضوعات</div>
+                                    <p class="mt-5">در موضوعات متفاوت به مشاوران ما اعتماد کنید</p>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6 purple lighten-1 text-white">
-                                <div class="p-5 text-center wow zoomIn" data-wow-delay=".3s"><i class="fa fa-industry fa-2x"></i>
-                                    <div class="h5 mt-3">Corporate Strategy</div>
-                                    <p class="mt-5">Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition</p>
+                                <div class="p-5 text-center wow zoomIn" data-wow-delay=".3s"><i class="fas fa-comments fa-2x"></i>
+
+                                    <div class="h5 mt-3">مشاوره متنی</div>
+                                    <p class="mt-5">امکان ارسال پیام و گفتگو با مشاور</p>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6 teal lighten-1 text-white">
-                                <div class="p-5 text-center wow zoomIn" data-wow-delay=".5s"><i class="fa fa-users fa-2x"></i>
-                                    <div class="h5 mt-3"> Workplace Diversity</div>
-                                    <p class="mt-5">Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.</p>
+                                <div class="p-5 text-center wow zoomIn" data-wow-delay=".5s"><i class="fas fa-video fa-2x"></i>
+
+                                    <div class="h5 mt-3"> مشاوره ی تصویری</div>
+                                    <p class="mt-5">به صورت برخط با مشاوران ما تماس تصویری برقرار کنید</p>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6 light-blue lighten-1 text-white">
                                 <div class="p-5 text-center wow zoomIn" data-wow-delay=".7s"><i class="fa fa-bullhorn fa-2x"></i>
-                                    <div class="h5 mt-3"> Survival Strategies</div>
-                                    <p class="mt-5">Bring to the table win-win survival strategies to ensure proactive domination.</p>
+                                    <div class="h5 mt-3"> کانال های تخصصی</div>
+                                    <p class="mt-5">مشاوران ما را در کانال های تخصصی شان دنبال کنید</p>
                                 </div>
                             </div>
                         </section>
                         <section class="text-center py-5 grey lighten-4" id="about">
                             <div class="container">
                                 <div class="wow fadeIn">
-                                    <h2 class="h1 pt-5 pb-3">Why work with us?</h2>
-                                    <p class="px-5 mb-5 pb-3 lead blue-grey-text">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                                        aliqua. Ut enim ad minim veniam.
-                                    </p>
+                                    <h2 class="h1 pt-5 pb-3">چرا پرگار؟</h2>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-4 mb-5 wow fadeInUp" data-wow-delay=".3s"><i class="fa fa-dashboard fa-3x orange-text"></i>
-                                        <h3 class="h4 mt-3">Design</h3>
+                                    <div class="col-md-4 mb-5 wow fadeInUp" data-wow-delay=".3s"><i class="fas fa-tachometer-alt fa-3x orange-text"></i>
+                                        <h3 class="h4 mt-3">سرعت پاسخگویی</h3>
                                         <p class="mt-3 blue-grey-text">
                                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit maiores nam, aperiam minima assumenda deleniti
                                             hic.
                                         </p>
                                     </div>
-                                    <div class="col-md-4 mb-5 wow fadeInUp" data-wow-delay=".4s"><i class="fa fa-comments-o fa-3x cyan-text"></i>
-                                        <h3 class="h4 mt-3">Feedback</h3>
+                                    <div class="col-md-4 mb-5 wow fadeInUp" data-wow-delay=".4s"><i class="fas fa-address-card fa-3x cyan-text"></i>
+                                        <h3 class="h4 mt-3">مشاوران با تجربه</h3>
                                         <p class="mt-3 blue-grey-text">
                                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit maiores nam, aperiam minima assumenda deleniti
                                             hic.
                                         </p>
                                     </div>
-                                    <div class="col-md-4 mb-5 wow fadeInUp" data-wow-delay=".5s"><i class="fa fa-cubes fa-3x red-text"></i>
-                                        <h3 class="h4 mt-3">Execution</h3>
+                                    <div class="col-md-4 mb-5 wow fadeInUp" data-wow-delay=".5s"><i class="fas fa-shield-alt fa-3x"></i>
+                                        <h3 class="h4 mt-3">حفط حریم شخصی</h3>
                                         <p class="mt-3 blue-grey-text">
                                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit maiores nam, aperiam minima assumenda deleniti
                                             hic.
@@ -112,173 +101,7 @@ class Home extends Component {
                                 </div>
                             </div>
                         </section>
-                        <section class="py-5" id="projects">
-                            <div class="container">
-                                <div class="wow fadeIn">
-                                    <h2 class="text-center h1 my-4">Our best projects</h2>
-                                    <p class="px-5 mb-5 pb-3 lead blue-grey-text text-center">
-                                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                                        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                    </p>
-                                </div>
-                                <div class="row wow fadeInLeft" data-wow-delay=".3s">
-                                    <div class="col-lg-6 col-xl-5 pr-lg-5 pb-5"><img class="img-fluid rounded z-depth-2" src="img/kuala-lumpur.jpg" alt="project image" /></div>
-                                    <div class="col-lg-6 col-xl-7 pl-lg-5 pb-4">
-                                        <div class="row mb-3">
-                                            <div class="col-1 mr-1"><i class="fa fa-book fa-2x cyan-text"></i></div>
-                                            <div class="col-10">
-                                                <h5 class="font-weight-bold">Education</h5>
-                                                <p class="grey-text">
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit maiores nam, aperiam minima assumenda
-                                                    voluptate velit.
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-1 mr-1"><i class="fa fa-code fa-2x red-text"></i></div>
-                                            <div class="col-10">
-                                                <h5 class="font-weight-bold">Technology</h5>
-                                                <p class="grey-text">
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit maiores nam, aperiam minima assumenda
-                                                    voluptate velit.
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-1 mr-1"><i class="fa fa-money fa-2x deep-purple-text"></i></div>
-                                            <div class="col-10">
-                                                <h5 class="font-weight-bold">Finance</h5>
-                                                <p class="grey-text">
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit maiores nam, aperiam minima assumenda
-                                                    voluptate velit.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr />
-                                <div class="row pt-5 wow fadeInRight" data-wow-delay=".3s">
-                                    <div class="col-lg-6 col-xl-7 mb-3">
-                                        <div class="row mb-3">
-                                            <div class="col-1 mr-1"><i class="fa fa-bar-chart fa-2x indigo-text"></i></div>
-                                            <div class="col-10">
-                                                <h5 class="font-weight-bold">Marketing</h5>
-                                                <p class="grey-text">
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit maiores nam, aperiam minima assumenda
-                                                    voluptate velit.
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-1 mr-1"><i class="fa fa-music fa-2x pink-text"></i></div>
-                                            <div class="col-10">
-                                                <h5 class="font-weight-bold">Entertainment</h5>
-                                                <p class="grey-text">
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit maiores nam, aperiam minima assumenda
-                                                    voluptate velit.
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-1 mr-1"><i class="fa fa-smile-o fa-2x blue-text"></i></div>
-                                            <div class="col-10">
-                                                <h5 class="font-weight-bold">Communication</h5>
-                                                <p class="grey-text">
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit maiores nam, aperiam minima assumenda
-                                                    voluptate velit.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-xl-5 mb-3"><img class="img-fluid rounded z-depth-2" src="img/san-francisco.jpg" alt="project image" /></div>
-                                </div>
-                            </div>
-                        </section>
-                        <section class="text-center py-5 indigo darken-1 text-white" id="pricing">
-                            <div class="container">
-                                <div class="wow fadeIn">
-                                    <h2 class="h1 pt-5 pb-3">Our pricing plans</h2>
-                                    <p class="px-5 mb-5 pb-3 lead">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, error amet numquam iure provident voluptate esse quasi,
-                                        veritatis totam voluptas nostrum quisquam eum porro a pariatur accusamus veniam.
-                                    </p>
-                                </div>
-                                <div class="row wow zoomIn">
-                                    <div class="col-lg-4 col-md-12 mb-5">
-                                        <div class="card card-image">
-                                            <div class="text-white text-center pricing-card d-flex align-items-center rgba-stylish-strong py-3 px-3 rounded">
-                                                <div class="card-body">
-                                                    <div class="h5">Individual</div>
-                                                    <div class="py-5"><sup class="display-4">$</sup><span class="display-1">9</span><span class="display-4">/m</span></div>
-                                                    <ul class="list-unstyled">
-                                                        <li>
-                                                            <p><strong>1</strong> person</p>
-                                                        </li>
-                                                        <li>
-                                                            <p><strong>10</strong> projects</p>
-                                                        </li>
-                                                        <li>
-                                                            <p><strong>100</strong> features</p>
-                                                        </li>
-                                                        <li>
-                                                            <p><strong>20GB</strong> storage</p>
-                                                        </li>
-                                                    </ul><a class="btn btn-outline-white mt-5"> Buy now</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-12 mb-5">
-                                        <div class="card card-image">
-                                            <div class="text-white text-center pricing-card d-flex align-items-center rgba-teal-strong py-3 px-3 rounded">
-                                                <div class="card-body">
-                                                    <div class="h5">Startup</div>
-                                                    <div class="py-5"><sup class="display-4">$</sup><span class="display-1">29</span><span class="display-4">/m</span></div>
-                                                    <ul class="list-unstyled">
-                                                        <li>
-                                                            <p><strong>10</strong> person</p>
-                                                        </li>
-                                                        <li>
-                                                            <p><strong>100</strong> projects</p>
-                                                        </li>
-                                                        <li>
-                                                            <p><strong>200</strong> features</p>
-                                                        </li>
-                                                        <li>
-                                                            <p><strong>100GB</strong> storage</p>
-                                                        </li>
-                                                    </ul><a class="btn btn-outline-white mt-5"> Buy now</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-12 mb-5">
-                                        <div class="card card-image">
-                                            <div class="text-white text-center pricing-card d-flex align-items-center rgba-red-strong py-3 px-3 rounded">
-                                                <div class="card-body">
-                                                    <div class="h5">Enterprise</div>
-                                                    <div class="py-5"><sup class="display-4">$</sup><span class="display-1">99</span><span class="display-4">/m</span></div>
-                                                    <ul class="list-unstyled">
-                                                        <li>
-                                                            <p><strong>10+</strong> person</p>
-                                                        </li>
-                                                        <li>
-                                                            <p><strong>Unlimited</strong> projects</p>
-                                                        </li>
-                                                        <li>
-                                                            <p><strong>Unlimited</strong> features</p>
-                                                        </li>
-                                                        <li>
-                                                            <p><strong>1TB</strong> storage</p>
-                                                        </li>
-                                                    </ul><a class="btn btn-outline-white mt-5"> Buy now</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
+                    
                         <section class="py-5" id="team">
                             <div class="container">
                                 <div class="wow fadeIn">

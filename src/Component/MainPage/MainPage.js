@@ -55,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
   title:{
     textAlign: 'left',
     color: '#3f407d',
+    fontSize: '25px',
   },
   CircularProgress:{
     color: '#0e918c !important',
@@ -143,7 +144,7 @@ export default function MainPage() {
           <Grid container spacing={3}>
             {/* Chart */}
             <Grid item xs={12} md={12} lg={12}>
-              <div className={classes.title}><h2><FontAwesomeIcon icon={faBalanceScale}/> وکالت </h2></div>
+              <div className={classes.title}><div><FontAwesomeIcon icon={faBalanceScale}/> وکالت </div></div>
               <Paper className={fixedHeightPaper}>
                 <Carousel breakPoints={breakPoints} isRTL={'true'} style={{color:'#27bda0'}}>
                   {pending ? (<CircularProgress className={classes.CircularProgress} style={{color: '#0e918c'}}/>):
@@ -158,7 +159,7 @@ export default function MainPage() {
               </Paper>
             </Grid>
             <Grid item xs={12} md={12} lg={12}>
-            <div className={classes.title}><h2><FontAwesomeIcon icon={faUniversity}/> تحصیلی </h2></div>
+            <div className={classes.title}><div><FontAwesomeIcon icon={faUniversity}/> تحصیلی </div></div>
               <Paper className={fixedHeightPaper}>
                 <Carousel breakPoints={breakPoints} isRTL={'true'}>
                 {pending ? (<CircularProgress className={classes.CircularProgress} style={{color: '#0e918c'}}/>):
@@ -173,7 +174,7 @@ export default function MainPage() {
               </Paper>
             </Grid>
             <Grid item xs={12} md={12} lg={12}>
-            <div className={classes.title}><h2><i class="fas fa-head-side-brain"></i> روانشناسی </h2></div>
+            <div className={classes.title}><div><i class="fas fa-head-side-brain"></i> روانشناسی </div></div>
               <Paper className={fixedHeightPaper}>
                 <Carousel breakPoints={breakPoints} isRTL={'true'}>
                 {pending ? (<CircularProgress className={classes.CircularProgress} style={{color: '#0e918c'}}/>):
@@ -188,7 +189,7 @@ export default function MainPage() {
               </Paper>
             </Grid>
             <Grid item xs={12} md={12} lg={12}>
-            <div className={classes.title}><h2><FontAwesomeIcon icon={faUserMd}/> پزشکی </h2></div>
+            <div className={classes.title}><div><FontAwesomeIcon icon={faUserMd}/> پزشکی </div></div>
               <Paper className={fixedHeightPaper}>
                 <Carousel breakPoints={breakPoints} isRTL={'true'}>
                 {pending ? (<CircularProgress className={classes.CircularProgress} style={{color: '#0e918c'}}/>):
@@ -203,7 +204,7 @@ export default function MainPage() {
               </Paper>
             </Grid>
             <Grid item xs={12} md={12} lg={12}>
-            <div className={classes.title}><h2><i class="far fa-ballot-check"></i> کنکور </h2></div>
+            <div className={classes.title}><div><i class="far fa-ballot-check"></i> کنکور </div></div>
               <Paper className={fixedHeightPaper}>
                 <Carousel breakPoints={breakPoints} isRTL={'true'}>
                 {pending ? (<CircularProgress className={classes.CircularProgress} style={{color: '#0e918c'}}/>):
@@ -218,7 +219,7 @@ export default function MainPage() {
               </Paper>
             </Grid>
             <Grid item xs={12} md={12} lg={12}>
-            <div className={classes.title}><h2><i class="fas fa-globe-stand"></i> مهاجرت </h2></div>
+            <div className={classes.title}><div><i class="fas fa-globe-stand"></i> مهاجرت </div></div>
               <Paper className={fixedHeightPaper}>
                 <Carousel breakPoints={breakPoints} isRTL={'true'}>
                 {pending ? (<CircularProgress className={classes.CircularProgress} style={{color: '#0e918c'}}/>):

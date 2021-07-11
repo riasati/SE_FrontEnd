@@ -12,7 +12,7 @@ class SuggestionChannelCard extends Component{
                     :
                         <img src={this.props.imagesrc} className={classes.img1} style={{}}/>
                     }
-                <div><h3>{this.props.channelName}</h3></div>
+                <div><div style={{fontSize: '20px',marginTop: '5px'}}>{this.props.channelName}</div></div><br/>
                 <div>{this.props.consultantName}</div>
                 </a>
             </Grid>
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
         height:'100px',
         borderRadius: '100%',
         marginTop:'10%',
-        border: '2px solid #27bda0',
+        border: '1px solid #27bda0',
         transition:'all ease 0.5s',
         "&:hover": {
             filter: 'drop-shadow(0px 0px 10px #27bda0)',
@@ -37,16 +37,17 @@ const useStyles = makeStyles((theme) => ({
     div1:{
         width: '100%',
         height: '230px',
-        borderRadius:' 10px',
+        borderRadius:' 7px',
         marginLeft: '15px',
         marginTop: '5px',
         marginBottom: '5px',
         color: '#3f407d',
-        border: '3px solid #27bda0',
-        backgroundColor:'#f3f7fa',
+        border: '1px solid #27bda0',
+        backgroundColor:'#fff',
         transition:'all ease 0.5s',
         "&:hover": {
-            boxShadow: '1px 1px 10px 0px #2ab371',
+            // boxShadow: '1px 1px 10px 0px #2ab371',
+            backgroundColor: '#f3f7fa',
         },
     }
   }));

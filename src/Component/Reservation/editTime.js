@@ -93,7 +93,7 @@ export class EditTimeDialog extends Component{
               <form  noValidate>
                 <TextField
                 fullWidth
-                variant='outlined'
+                variant="filled"
                 value={this.state.startTime}
                   id="time"
                   label="زمان شروع"
@@ -113,7 +113,7 @@ export class EditTimeDialog extends Component{
               <form  noValidate>
                 <TextField
                 fullWidth
-                variant='outlined'
+                variant="filled"
                   id="time"
                   label="زمان پایان"
                   type="time"

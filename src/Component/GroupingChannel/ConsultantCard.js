@@ -60,11 +60,12 @@ const useStyles = makeStyles((theme) => ({
   },
   div: {
     borderRadius: '10px',
-    border: '3px solid #27bda0',
-    backgroundColor: '#f3f7fa',
+    border: '1px solid #27bda0',
+    backgroundColor: '#fff',
     transition: 'all ease 0.5s',
     "&:hover": {
-      boxShadow: '1px 1px 10px 0px #2ab371',
+      // boxShadow: '1px 1px 10px 0px #2ab371',
+      backgroundColor: '#f3f7fa',
     },
   },
   a: {
@@ -76,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100px',
     borderRadius: '100%',
     marginTop: '10%',
-    border: '2px solid #27bda0',
+    border: '1px solid #27bda0',
     transition: 'all ease 0.5s',
     "&:hover": {
       filter: 'drop-shadow(0px 0px 10px #27bda0)',

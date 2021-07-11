@@ -59,6 +59,7 @@ class Profile extends Component {
             satisfactionPercentage: 0,
             commentsCount: 0,
             nextpage: '',
+            channelId: '',
         }
     }
 
@@ -74,6 +75,7 @@ class Profile extends Component {
                 this.setState({ avatar: res.data.avatar })
                 this.setState({ userType: res.data.user_type })
                 this.setState({ id: res.data.id })
+                this.setState({ channelId: res.data.channel_id })
             })
             .catch(err => {
                 console.log(err)
@@ -170,8 +172,8 @@ class Profile extends Component {
                                         <Grid item xs={12} lg={6} >
                                             <Item>
                                                 <span style={{ color: '#3f407d', textAlign: 'ceter' }}>
-                                                    <h3><FontAwesomeIcon icon={faCommentAlt} />&nbsp;
-                                            {'مشاوره آنلاین متنی'}</h3>
+                                                    <div style={{fontSize: '20px'}}><FontAwesomeIcon icon={faCommentAlt} />&nbsp;
+                                            {'مشاوره آنلاین متنی'}</div>
                                                 </span>
                                                 <hr /><br />
                                                 <span style={{ color: '#636363', textAlign: 'right' }}>
@@ -180,11 +182,12 @@ class Profile extends Component {
                                                 <br />
                                                 <br />
                                                 <span>
-                                                    <Link to={"/Direct/" + this.state.userName}>
+                                                    <Link to={"/Direct/" + this.state.userName} style={{textDecoration: 'none',}}>
                                                         <Button style={{
                                                             backgroundColor: '#27bda0',
                                                             fontFamily: 'IRANSansWeb',
-                                                            color: '#fff'
+                                                            color: '#fff',
+                                                            
                                                         }}>{'ارسال پیام به مشاور'}</Button></Link>
                                                 </span>
                                             </Item>
@@ -192,8 +195,8 @@ class Profile extends Component {
                                         <Grid item xs={12} lg={6}>
                                             <Item>
                                                 <span style={{ color: '#3f407d', textAlign: 'center' }}>
-                                                    <h3><FontAwesomeIcon icon={faBullhorn} style={{ margin: '0' }} />&nbsp;
-                                            {'کانال مشاور'}</h3>
+                                                    <div style={{fontSize: '20px'}}><FontAwesomeIcon icon={faBullhorn} style={{ margin: '0' }} />&nbsp;
+                                            {'کانال مشاور'}</div>
                                                 </span>
                                                 <hr /><br />
                                                 <span style={{ color: '#636363', textAlign: 'right' }}>
@@ -202,11 +205,12 @@ class Profile extends Component {
                                                 <br />
                                                 <br />
                                                 <span>
+                                                <Link to={"/Channel/" + this.state.channelId} style={{textDecoration: 'none',}}>
                                                     <Button style={{
                                                         backgroundColor: '#27bda0',
                                                         fontFamily: 'IRANSansWeb',
                                                         color: '#fff'
-                                                    }}>{'رفتن به کانال مشاور'}</Button>
+                                                    }}>{'رفتن به کانال مشاور'}</Button></Link>
                                                 </span>
                                             </Item>
                                         </Grid>
@@ -214,8 +218,8 @@ class Profile extends Component {
                                         <Grid item xs={12} lg={6} >
                                             <Item>
                                                 <span style={{ color: '#3f407d', textAlign: 'ceter' }}>
-                                                    <h3><FontAwesomeIcon icon={faCalendarAlt} style={{ margin: "0px" }} />&nbsp;
-                                                {'تقويم مشاوره'}</h3>
+                                                    <div style={{fontSize: '20px'}}><FontAwesomeIcon icon={faCalendarAlt} style={{ margin: "0px" }} />&nbsp;
+                                                {'تقويم مشاوره'}</div>
                                                 </span>
                                                 <hr /><br />
                                                 <span style={{ color: '#636363', textAlign: 'right' }}>
@@ -242,7 +246,7 @@ class Profile extends Component {
                                                 <Reservation consultantID={this.state.id} isInlineClass={true} />
                                             </Collapse>
                                             <Item>
-                                                <div style={{ textAlign: 'right', color: '#3f407d' }}><h3>{'اطلاعات مشاور'}</h3></div>
+                                                <div style={{ textAlign: 'right', color: '#3f407d' }}><div style={{fontSize: '20px'}}>{'اطلاعات مشاور'}</div></div>
                                                 <hr />
                                                 <div>
                                                     <Accordion defaultExpanded={true} className={classes.colorfont}>
@@ -320,13 +324,13 @@ class Profile extends Component {
                                         <Grid item xs={12} >
                                             <Item>
                                                 <div style={{ textAlign: 'right', color: '#3f407d' }}>
-                                                    <h3 style={{color: '#3f407d',display:'inline-block' }}>
+                                                    <div style={{color: '#3f407d',display:'inline-block' }}>
                                                         <span>{'نظرات در مورد'}</span>
                                                         &nbsp;
                                                         <span>{this.state.firstName}</span>
                                                         &nbsp;
                                                         <span>{this.state.lastName}</span>
-                                                    </h3>&nbsp;
+                                                    </div>&nbsp;
                                                     <strong><span style={{direction: 'ltr'}}><Rate disabled allowHalf value={parseInt(this.state.rate)} /></span>&nbsp;&nbsp;
                                                     <span>{"("}</span>&nbsp;
                                                     <span>{faNumber(this.state.satisfactionPercentage)}</span>&nbsp;
@@ -373,12 +377,16 @@ class Profile extends Component {
                                     <Grid item xs={12} className={classes.info}>
                                         <Grid container spacing={3}>
                                             <Grid item xs={12} md={2} lg={2} className={classes.centerItem}>
+                                            {this.state.avatar !== null ? 
                                                 <img src={this.state.avatar} className={classes.avatar} />
+                                                :
+                                                <img src={'../../image/defaultavatar.jpg'} className={classes.avatar} />
+                                                }
                                             </Grid>
                                             <Grid item xs={12} md={3} lg={3} className={classes.centerItem}>
                                                 <div>
-                                                    <h2><span>{this.state.firstName}</span>&nbsp;
-                                                <span>{this.state.lastName}</span></h2>
+                                                    <div style={{fontSize: '20px'}}><span>{this.state.firstName}</span>&nbsp;
+                                                <span>{this.state.lastName}</span></div>
                                                 </div>
                                             </Grid>
                                             <Grid item xs={0} md={5} lg={5} className={classes.centerItem}>
@@ -392,21 +400,22 @@ class Profile extends Component {
                                         <Grid item xs={12} lg={6} >
                                             <Item>
                                                 <span style={{ color: '#3f407d', textAlign: 'ceter' }}>
-                                                    <h3><FontAwesomeIcon icon={faCommentAlt} />&nbsp;
-                                        {'ارسال پیام'}</h3>
+                                                    <div style={{fontSize: '20px'}}><FontAwesomeIcon icon={faCommentAlt} />&nbsp;
+                                        {'ارسال پیام'}</div>
                                                 </span>
                                                 <hr /><br />
                                                 <span style={{ color: '#636363', textAlign: 'right' }}>
-                                                    {'قابلیت ارسال صدا، تصویر و فایل برای مشاور'}
+                                                    {'قابلیت ارسال صدا، تصویر و فایل '}
                                                 </span>
                                                 <br />
                                                 <br />
                                                 <span>
+                                                <Link to={"/Direct/" + this.state.userName} style={{textDecoration: 'none',}}>
                                                     <Button style={{
                                                         backgroundColor: '#27bda0',
                                                         fontFamily: 'IRANSansWeb',
                                                         color: '#fff'
-                                                    }}>{'ارسال پیام'}</Button>
+                                                    }}>{'ارسال پیام'}</Button></Link>
                                                 </span>
                                             </Item>
                                         </Grid>
@@ -415,7 +424,7 @@ class Profile extends Component {
                                     <Grid container spacing={3}>
                                         <Grid item xs={12}>
                                             <Item>
-                                                <div style={{ textAlign: 'right', color: '#3f407d' }}><h3>{'اطلاعات مشاور'}</h3></div>
+                                                <div style={{ textAlign: 'right', color: '#3f407d' }}><div style={{fontSize: '20px'}}>{'اطلاعات کاربر'}</div></div>
                                                 <hr />
                                                 <div>
                                                     <Accordion defaultExpanded={true} className={classes.colorfont}>

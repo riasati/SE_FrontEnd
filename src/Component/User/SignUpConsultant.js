@@ -191,7 +191,7 @@ class SignUpConsultant extends Component {
                                         <Grid item xs={12} sm={3}>
                                             <TextValidator
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 id="first_name"
@@ -217,7 +217,7 @@ class SignUpConsultant extends Component {
                                         <Grid item xs={12} sm={3}>
                                             <TextValidator
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 id="last_name"
@@ -243,7 +243,7 @@ class SignUpConsultant extends Component {
                                         <Grid item xs={12} sm={6}>
                                             <TextValidator
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 id="username"
@@ -269,7 +269,7 @@ class SignUpConsultant extends Component {
                                         <Grid item xs={12} sm={6}>
                                             <TextValidator
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 id="email"
@@ -293,7 +293,7 @@ class SignUpConsultant extends Component {
                                             />
                                         </Grid>
                                         <Grid item xs={12} sm={3}>
-                                            <FormControl variant="outlined" className={classes.formControl}>
+                                            <FormControl variant="filled" className={classes.formControl}>
                                                 <InputLabel id="user_type"><span style={{fontFamily: 'IRANSansWeb'}}>حوزه مشاوره</span></InputLabel>
                                                 <Select
                                                     size="normal"
@@ -325,7 +325,7 @@ class SignUpConsultant extends Component {
                                         <Grid item xs={12} sm={3}>
                                             <TextValidator
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 id="phone_number"
@@ -351,7 +351,7 @@ class SignUpConsultant extends Component {
                                         <Grid item xs={12} sm={6}>
                                             <TextValidator
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 name="password"
@@ -383,7 +383,7 @@ class SignUpConsultant extends Component {
                                         <Grid item xs={12} sm={6}>
                                             <TextValidator
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 name="password_repetition"
@@ -429,7 +429,7 @@ class SignUpConsultant extends Component {
                                             <Tooltip title={<span style={{fontFamily: 'IRANSansWeb',fontSize: '12px'}}>حذف فایل</span>}
                                                      placement="left"
                                                      TransitionComponent={Zoom} style={{fontFamily: 'IRANSansWeb'}} >
-                                                <Button onClick={handleEliminateFileClick} style={{color:'#3f407d',fontFamily: 'IRANSansWeb'}} varient={"outlined"}>
+                                                <Button onClick={handleEliminateFileClick} style={{color:'#3f407d',fontFamily: 'IRANSansWeb'}} varient={"filled"}>
                                                     <span>فایل</span>
                                                     <span>&nbsp;{this.state.certificate.name}&nbsp;</span>
                                                     <span>آماده ارسال است</span>

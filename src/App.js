@@ -17,13 +17,13 @@ import Channel from "./Component/Channel/ChannelPage";
 import Reservation from "./Component/Reservation/ReservationPage";
 import Direct from "./Component/Direct/DirectPage";
 import VideoChat from "./Component/VideoChat/VideoChatPage";
-
+import Home from './Component/LandingPage/Home';
 class App extends Component {
     render() {
         return (
             <div className="App">
                 <Router>
-                    <Route path="/" exact component={SignIn}/>
+                    <Route path="/" exact component={Home}/>
                     <Route path="/signIn" component={SignIn}/>
                     <Route path="/SignUpConsultant" component={SignUpConsultant}/>
                     <Route path="/SignUpUser" component={SignUpUser}/>

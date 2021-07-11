@@ -865,12 +865,12 @@ class Channel extends Component {
                                                                 </Collapse>
                                                             </Grid>
                                                             :  null }
-                                                        <Button style={{color:"#3f407d",alignSelf:"baseline",marginTop:"5px"}}>
-                                                            <Typography variant={"body2"} align={"left"} style={{alignSelf: "baseline"}}>ترک کانال</Typography>
-                                                        </Button>
-                                                        <Button style={{color:"#3f407d",alignSelf:"baseline",marginTop:"5px"}}>
-                                                            <Typography variant={"body2"} align={"left"} style={{alignSelf: "baseline"}}>گزارش تخلف کانال</Typography>
-                                                        </Button>
+                                                        {/*<Button style={{color:"#3f407d",alignSelf:"baseline",marginTop:"5px"}}>*/}
+                                                            {/*<Typography variant={"body2"} align={"left"} style={{alignSelf: "baseline"}}>ترک کانال</Typography>*/}
+                                                        {/*</Button>*/}
+                                                        {/*<Button style={{color:"#3f407d",alignSelf:"baseline",marginTop:"5px"}}>*/}
+                                                            {/*<Typography variant={"body2"} align={"left"} style={{alignSelf: "baseline"}}>گزارش تخلف کانال</Typography>*/}
+                                                        {/*</Button>*/}
                                                     </Paper>
                                                 </Slide>
                                                 :     <Paper className={classes.paper} style={this.state.showLeftSection ? {display:"block"} : {display:"none"}}>

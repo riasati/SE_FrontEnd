@@ -59,7 +59,7 @@ import { withRouter } from "react-router";
 import Theme from "../Theme";
 import List from "@material-ui/core/List";
 import ListSubheader from "@material-ui/core/ListSubheader";
-import SuccessDialog from "../Reservation/ReservationPage";
+import SuccessDialog from "../../RequestConfig/SuccessDialog";
 // import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery";
 
 

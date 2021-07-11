@@ -32,6 +32,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Avatar from "@material-ui/core/Avatar";
 import SuccessDialog from "../../RequestConfig/SuccessDialog";
 import {Link} from "react-router-dom";
+import ErrorDialog from "../../RequestConfig/ErrorDialog";
 
 class Reservation extends Component{
     constructor(props) {
@@ -46,12 +47,16 @@ class Reservation extends Component{
             title: null,
             description:null,
             setSuccessDialog:false,
+            setErrorDialog:false,
          //   consultantID: null,
         };
         this.getReserveOfDay(this.state.CalendarValue);
     }
     handleStateSuccessDialog = () =>{
         this.setState({setSuccessDialog:!this.state.setSuccessDialog})
+    };
+    handleStateErrorDialog = () =>{
+        this.setState({setErrorDialog:!this.state.setErrorDialog})
     };
     componentDidMount() {
         this.setState({loading:false});
@@ -82,6 +87,14 @@ class Reservation extends Component{
                 .catch(error => {
                     console.log(error);
                     this.setState({loading2:!this.state.loading2});
+                    if(typeof error.response.data?.error === "string"){
+                        this.ErrorDialogText = error.response.data?.error;
+                    }
+                    else{
+                        this.ErrorDialogText = error.message;
+                    }
+
+                    this.setState({setErrorDialog:true});
                 })
         }
         else{
@@ -125,6 +138,7 @@ class Reservation extends Component{
             .then(result => {
                 console.log(result);
                 this.setState({title:"",description:""});
+                this.setState({setSuccessDialog:true});
             })
             .catch(error =>{
                 console.log(error);
@@ -146,6 +160,7 @@ class Reservation extends Component{
         this.state.description = event.target.value;
         this.setState({});
     };
+    ErrorDialogText = "";
     ReserveData = [];
 
     EmptyTime = [];
@@ -225,6 +240,7 @@ class Reservation extends Component{
                     <CssBaseline/>
                     <Theme>
                         <SuccessDialog open={this.state.setSuccessDialog} handleParentState={this.handleStateSuccessDialog} />
+                        <ErrorDialog open={this.state.setErrorDialog} errorText={this.ErrorDialogText} handleParentState={this.handleStateErrorDialog} />
                         <Paper className={ this.props.isInlineClass === undefined ? classes.paper : classes.paper2}>
                             {
                                 this.props.isInlineClass === undefined ?

@@ -59,6 +59,7 @@ import { withRouter } from "react-router";
 import Theme from "../Theme";
 import List from "@material-ui/core/List";
 import ListSubheader from "@material-ui/core/ListSubheader";
+import SuccessDialog from "../Reservation/ReservationPage";
 // import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery";
 
 
@@ -89,6 +90,7 @@ class Channel extends Component {
             buttonDisabled:true,
             inviteUser:'',
             setErrorDialog:false,
+            setSuccessDialog:false,
             channelMemberFlag:false,
             changeNameFlag:false,
             changeDescriptionFlag:false,
@@ -105,6 +107,9 @@ class Channel extends Component {
     ErrorDialogText = "";
     handleStateErrorDialog = () =>{
         this.setState({setErrorDialog:!this.state.setErrorDialog})
+    };
+    handleStateSuccessDialog = () =>{
+        this.setState({setSuccessDialog:!this.state.setSuccessDialog})
     };
     initialization = () => {
         axios.get(serverURL() +"user/channel-role/" + this.props.match.params.channelId +"/",TokenConfig())
@@ -463,6 +468,7 @@ class Channel extends Component {
                     setTimeout(()=>{
                         this.setState({sendInviteIcon:false});
                     },1000)
+                    this.setState({setSuccessDialog:true});
                 })
                 .catch(err=>{
                     console.log(err);
@@ -661,6 +667,7 @@ class Channel extends Component {
                                     </LoadingOverlay>
                                 </Dialog>
                                 <ErrorDialog open={this.state.setErrorDialog} errorText={this.ErrorDialogText} handleParentState={this.handleStateErrorDialog} />
+                                <SuccessDialog open={this.state.setSuccessDialog} handleParentState={this.handleStateSuccessDialog} />
                                 <Grid container item sm={12}>
                                     <Grid container direction={"row"} spacing={this.props.isUpSm ? 2 : 0} justify="space-evenly">
                                         <Grid item sm={this.state.smOfRight} xs={12} className={classes.rightSection}>
@@ -932,12 +939,12 @@ class Channel extends Component {
                                                             </Collapse>
                                                         </Grid>
                                                         :  null }
-                                                    <Button style={{color:"#3f407d",alignSelf:"baseline",marginTop:"5px"}}>
-                                                        <Typography variant={"body2"} align={"left"} style={{alignSelf: "baseline"}}>ترک کانال</Typography>
-                                                    </Button>
-                                                    <Button style={{color:"#3f407d",alignSelf:"baseline",marginTop:"5px"}}>
-                                                        <Typography variant={"body2"} align={"left"} style={{alignSelf: "baseline"}}>گزارش تخلف کانال</Typography>
-                                                    </Button>
+                                                    {/*<Button style={{color:"#3f407d",alignSelf:"baseline",marginTop:"5px"}}>*/}
+                                                        {/*<Typography variant={"body2"} align={"left"} style={{alignSelf: "baseline"}}>ترک کانال</Typography>*/}
+                                                    {/*</Button>*/}
+                                                    {/*<Button style={{color:"#3f407d",alignSelf:"baseline",marginTop:"5px"}}>*/}
+                                                        {/*<Typography variant={"body2"} align={"left"} style={{alignSelf: "baseline"}}>گزارش تخلف کانال</Typography>*/}
+                                                    {/*</Button>*/}
                                                 </Paper>
                                             }
                                             {/*<Typography component="div" style={{ backgroundColor: '#2f18fc', height: '20vh',width:'50vh' }} />*/}

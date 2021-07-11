@@ -13,9 +13,9 @@ export default class ChannelCardList extends Component{
     render() {
 
         return(
-            <List dense subheader={
+            <List dense component="nav" subheader={
                 <ListSubheader disableGutters>
-                    <Typography component={"h2"} variant={"body1"} align={"left"} gutterBottom style={{fontFamily: 'IRANSansWeb',color: '#3f407d'}} >{this.props.title}</Typography>
+                    <Typography variant={"h6"} align={"left"} gutterBottom >{this.props.title}</Typography>
                 </ListSubheader>}
             >
                 {this.props.children}

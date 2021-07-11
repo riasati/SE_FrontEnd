@@ -1,3 +1,3 @@
 export default function(){
-     return "http://consultantiust.herokuapp.com/";
+     return "http://consultant-iust.herokuapp.com/";
 }

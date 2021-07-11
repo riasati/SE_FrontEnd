@@ -18,7 +18,7 @@ import RTL from '../RTL/M_RTL';
 import ErrorDialog from '../../RequestConfig/ErrorDialog';
 import serverURL from "../../RequestConfig/serverURL";
 import LoadingOverlay from 'react-loading-overlay';
-
+//import LoadingButton from '@material-ui/lab/LoadingButton';
 class SignUpUser extends Component {
     constructor() {
         super();
@@ -33,16 +33,16 @@ class SignUpUser extends Component {
             showPassword: false,
             isLoading: false,
             setErrorDialog:false,
-            ErrorDialogText:'',
+        //    ErrorDialogText:'',
             loading:true
         }
     }
 
     handleChange = e => {
-        this.setState({setErrorDialog:false});
+       // this.setState({setErrorDialog:false});
         this.setState({[e.target.name]: e.target.value});
     }
-
+    ErrorDialogText = '';
     handleClickShowPassword = () => {
         this.setState({
             ...this.state,
@@ -52,6 +52,9 @@ class SignUpUser extends Component {
 
     handleMouseDownPassword = (event) => {
         event.preventDefault();
+    };
+    handleStateErrorDialog = () =>{
+        this.setState({setErrorDialog:!this.state.setErrorDialog})
     };
 
     componentDidMount() {
@@ -78,65 +81,24 @@ class SignUpUser extends Component {
             }
             };
         const classes = this.props.classes;
-        const header = {
-            mode: 'cors',
-            headers:{
-                'Access-Control-Allow-Origin': '*',
-                'Content-Type': 'application/json',
-                mode: 'cors',
-            }
-        };
+        const [pending, setPending] = this.props.pending;
         var handleClick = e => {
-            //setPendign(true);
+            setPending(true);
             e.preventDefault();
             axios.post(serverURL() + "user/signup/", this.state)
                 .then(res =>{
                     console.log(res);
                     const token ="Token "+ res.data.token;
                     localStorage.setItem('token', token);
-                    window.location.href = "/Dashboard";
+                    localStorage.setItem('userType', res.data?.data?.user_type);
+                    localStorage.setItem('username', res.data?.data?.username);
+                    // localStorage.setItem('firstName', result.data?.data?.first_name);
+                    // localStorage.setItem('lastName', result.data?.data?.last_name);
+                    window.location.href = "/VerifyEmail";
                 })
                 .catch(err=>{
-                    let errMessage = "";
-                    let resError = err.response.data;
-                    // typeof resError.error.username !== "undefined" ? errMessage += resError.error.username[0] : null;
-                    // typeof(resError.error.email) !== "undefined" ? errMessage += resError.error.email[0] : null;
-                    // typeof(resError.error.phone_number) !== "undefined" ? errMessage += resError.error.phone_number[0] : null;
-                    // typeof(resError.error.password) !== "undefined" ? errMessage += resError.error.password[0] : null;
-                    // typeof(resError.error.password_repetition) !== "undefined" ? errMessage += resError.error.password_repetition[0] : null;
-                    if (typeof (resError.error) !== "undefined")
-                    {
-                        if (typeof(resError.error.username) !== "undefined")
-                        {
-                            errMessage += resError.error.username[0];
-                        }
-                        if (typeof (resError.error.email) !== "undefined")
-                        {
-                            errMessage += resError.error.email[0];
-                        }
-                        if (typeof (resError.error.phone_number) !== "undefined")
-                        {
-                            errMessage += resError.error.phone_number[0];
-                        }
-                        if (typeof (resError.error.password) !== "undefined")
-                        {
-                            errMessage += resError.error.password[0] ;
-                        }
-                        if (typeof (resError.error.password_repetition) !== "undefined")
-                        {
-                            errMessage += resError.error.password_repetition[0] ;
-                        }
-                    }
-                    if (errMessage === "")
-                    {
-                        errMessage = err.message
-                    }
-                    // console.log(err.response.data.error.email[0]);
-                    // console.log(err.response.data.error.phone_number[0]);
-                    // console.log(err.response.data.error.password[0]);
-                    // console.log(err.response.data.error.password_repetition[0]);
-                    //console.log(err.response.data.phone_number);
-                    this.setState({setErrorDialog:true,ErrorDialogText:errMessage});
+                    setPending(false);
+                    this.setState({setErrorDialog:true,ErrorDialogText:err.response.data?.error});
                 });
         };
 
@@ -181,7 +143,7 @@ class SignUpUser extends Component {
                                         <Grid item xs={12} sm={3}>
                                             <TextValidator
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 id="first_name"
@@ -207,7 +169,7 @@ class SignUpUser extends Component {
                                         <Grid item xs={12} sm={3}>
                                             <TextValidator
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 id="last_name"
@@ -233,7 +195,7 @@ class SignUpUser extends Component {
                                         <Grid item xs={12} sm={6}>
                                             <TextValidator  
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 id="username"
@@ -259,7 +221,7 @@ class SignUpUser extends Component {
                                         <Grid item xs={12} sm={6}>
                                             <TextValidator
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 id="email"
@@ -286,7 +248,7 @@ class SignUpUser extends Component {
                                         <Grid item xs={12} sm={6}>
                                             <TextValidator
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 id="phone_number"
@@ -312,7 +274,7 @@ class SignUpUser extends Component {
                                         <Grid item xs={12} sm={6}>
                                             <TextValidator
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 name="password"
@@ -344,7 +306,7 @@ class SignUpUser extends Component {
                                         <Grid item xs={12} sm={6}>
                                             <TextValidator
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 name="password_repetition"
@@ -372,11 +334,10 @@ class SignUpUser extends Component {
                                     <Grid container>
                                         <Grid item xs={12}>
                                             <Grid>
-                                                <Button onClick={handleConfirmPassword} className={classes.topButton} fullWidth
-                                                        variant="contained" style={{fontFamily: 'IRANSansWeb'}}>
+                                                <Button onClick={handleClick } pendingPosition="center" className={classes.topButton} pending={pending}  fullWidth>
                                                     {'ثبت نام'}
                                                 </Button>
-                                                <ErrorDialog open={this.state.setErrorDialog} errorText={this.state.ErrorDialogText} />
+                                                <ErrorDialog open={this.state.setErrorDialog} errorText={this.ErrorDialogText} handleParentState={this.handleStateErrorDialog} />
                                             </Grid>
                                         </Grid>
                                     </Grid>
@@ -461,7 +422,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default () => {
     const classes = useStyles();
+    const pending = React.useState(false);
     return (
-        <SignUpUser classes={classes}/>
+        <SignUpUser classes={classes} pending={pending}/>
     )
 }

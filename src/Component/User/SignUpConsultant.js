@@ -24,7 +24,7 @@ import Zoom from '@material-ui/core/Zoom';
 import serverURL from "../../RequestConfig/serverURL";
 import ErrorDialog from '../../RequestConfig/ErrorDialog';
 import LoadingOverlay from 'react-loading-overlay';
-
+//import LoadingButton from '@material-ui/lab/LoadingButton';
 class SignUpConsultant extends Component {
     constructor() {
         super();
@@ -60,6 +60,9 @@ class SignUpConsultant extends Component {
     handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
+    handleStateErrorDialog = () =>{
+        this.setState({setErrorDialog:!this.state.setErrorDialog})
+    };
 
     componentDidMount() {
         // custom rule will have name 'isPasswordMatch'
@@ -85,6 +88,7 @@ class SignUpConsultant extends Component {
             }
             };
         const classes = this.props.classes;
+        const [pending, setPending] = this.props.pending;
         const [file,setFile] = this.props.isFileLoaded;
         const onFileChange = event => { 
             this.setState({ certificate: event.target.files[0] }); 
@@ -94,7 +98,8 @@ class SignUpConsultant extends Component {
             this.setState({certificate:null});
             setFile(false);
         };
-        const handleClick = e => { 
+        const handleClick = e => {
+            setPending(true);
             const formData = new FormData(); 
             formData.append( 
               "certificate", 
@@ -136,12 +141,17 @@ class SignUpConsultant extends Component {
             .then(res =>{
                 console.log(res);
                 const token = "Token " + res.data.token;
+                localStorage.setItem('userType', res.data?.data?.user_type);
+                localStorage.setItem('username', res.data?.data?.username);
+                // localStorage.setItem('firstName', result.data?.data?.first_name);
+                // localStorage.setItem('lastName', result.data?.data?.last_name);
                 localStorage.setItem('token', token);
-                window.location.href = "/CreateChannel";
+                window.location.href = "/VerifyEmail";
             })
             .catch(err=>{
+                setPending(false);
                 console.log(err);
-                this.setState({setErrorDialog:true,ErrorDialogText:err.message});
+                this.setState({setErrorDialog:true,ErrorDialogText:err.response.data?.error});
             });
           }
         return (
@@ -181,7 +191,7 @@ class SignUpConsultant extends Component {
                                         <Grid item xs={12} sm={3}>
                                             <TextValidator
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 id="first_name"
@@ -207,7 +217,7 @@ class SignUpConsultant extends Component {
                                         <Grid item xs={12} sm={3}>
                                             <TextValidator
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 id="last_name"
@@ -233,7 +243,7 @@ class SignUpConsultant extends Component {
                                         <Grid item xs={12} sm={6}>
                                             <TextValidator
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 id="username"
@@ -259,7 +269,7 @@ class SignUpConsultant extends Component {
                                         <Grid item xs={12} sm={6}>
                                             <TextValidator
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 id="email"
@@ -283,7 +293,7 @@ class SignUpConsultant extends Component {
                                             />
                                         </Grid>
                                         <Grid item xs={12} sm={3}>
-                                            <FormControl variant="outlined" className={classes.formControl}>
+                                            <FormControl variant="filled" className={classes.formControl}>
                                                 <InputLabel id="user_type"><span style={{fontFamily: 'IRANSansWeb'}}>حوزه مشاوره</span></InputLabel>
                                                 <Select
                                                     size="normal"
@@ -304,18 +314,18 @@ class SignUpConsultant extends Component {
                                                     }}
                                                 >
                                                     <MenuItem value={"Lawyer"}><span style={{fontFamily: 'IRANSansWeb'}}>وکالت</span></MenuItem>
-                                                    <MenuItem value={"Educational_immigration"}><span style={{fontFamily: 'IRANSansWeb'}}>مهاجرت تحصیلی</span></MenuItem>
                                                     <MenuItem value={"medical"}><span style={{fontFamily: 'IRANSansWeb'}}>پزشکی</span></MenuItem>
                                                     <MenuItem value={"Psychology"}><span style={{fontFamily: 'IRANSansWeb'}}>روانشناسی</span></MenuItem>
-                                                    <MenuItem value={"Entrance_Exam"}><span style={{fontFamily: 'IRANSansWeb'}}>کنکور</span></MenuItem>
-                                                    <MenuItem value={"Academic_advice"}><span style={{fontFamily: 'IRANSansWeb'}}>تحصیلی</span></MenuItem>
+                                                    <MenuItem value={"EntranceExam"}><span style={{fontFamily: 'IRANSansWeb'}}>کنکور</span></MenuItem>
+                                                    <MenuItem value={"AcademicAdvice"}><span style={{fontFamily: 'IRANSansWeb'}}>تحصیلی</span></MenuItem>
+                                                    <MenuItem value={"Immigration"}><span style={{fontFamily: 'IRANSansWeb'}}>مهاجرت</span></MenuItem>
                                                 </Select>
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={12} sm={3}>
                                             <TextValidator
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 id="phone_number"
@@ -341,7 +351,7 @@ class SignUpConsultant extends Component {
                                         <Grid item xs={12} sm={6}>
                                             <TextValidator
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 name="password"
@@ -373,7 +383,7 @@ class SignUpConsultant extends Component {
                                         <Grid item xs={12} sm={6}>
                                             <TextValidator
                                                 size="normal"
-                                                variant="outlined"
+                                                variant="filled"
                                                 required
                                                 fullWidth
                                                 name="password_repetition"
@@ -419,7 +429,7 @@ class SignUpConsultant extends Component {
                                             <Tooltip title={<span style={{fontFamily: 'IRANSansWeb',fontSize: '12px'}}>حذف فایل</span>}
                                                      placement="left"
                                                      TransitionComponent={Zoom} style={{fontFamily: 'IRANSansWeb'}} >
-                                                <Button onClick={handleEliminateFileClick} style={{color:'#3f407d',fontFamily: 'IRANSansWeb'}} varient={"outlined"}>
+                                                <Button onClick={handleEliminateFileClick} style={{color:'#3f407d',fontFamily: 'IRANSansWeb'}} varient={"filled"}>
                                                     <span>فایل</span>
                                                     <span>&nbsp;{this.state.certificate.name}&nbsp;</span>
                                                     <span>آماده ارسال است</span>
@@ -431,11 +441,10 @@ class SignUpConsultant extends Component {
                                     <Grid container>
                                         <Grid item xs={12}>
                                             <Grid>
-                                                <Button onClick={handleConfirmPassword} className={classes.topButton} fullWidth
-                                                        variant="contained" style={{fontFamily: 'IRANSansWeb'}}>
+                                                <Button onClick={handleClick } pendingPosition="center" className={classes.topButton} pending={pending}  fullWidth>
                                                     {'ثبت نام'}
                                                 </Button>
-                                                <ErrorDialog open={this.state.setErrorDialog} errorText={this.state.ErrorDialogText} />
+                                                <ErrorDialog open={this.state.setErrorDialog} errorText={this.state.ErrorDialogText} handleParentState={this.handleStateErrorDialog} />
                                             </Grid>
                                         </Grid>
                                     </Grid>
@@ -521,8 +530,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default () => {
     const classes = useStyles();
-    const isFileLoaded = React.useState(false)
+    const isFileLoaded = React.useState(false);
+    const pending = React.useState(false);
     return (
-        <SignUpConsultant classes={classes} isFileLoaded={isFileLoaded}/>
+        <SignUpConsultant classes={classes} isFileLoaded={isFileLoaded} pending={pending}/>
     )
 }

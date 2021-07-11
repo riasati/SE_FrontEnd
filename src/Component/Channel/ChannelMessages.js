@@ -12,7 +12,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
-import {Done} from "@material-ui/icons";
+import {Add, Done, Send} from "@material-ui/icons";
 import {AssignmentSharp} from "@material-ui/icons";
 import {CloudUpload} from "@material-ui/icons";
 import axios from "axios";
@@ -20,6 +20,9 @@ import serverURL from "../../RequestConfig/serverURL";
 import TokenConfig from "../../RequestConfig/TokenConfig";
 import ScrollArea from  'react-scrollbar';
 import LoadingOverlay from 'react-loading-overlay';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faFileUpload} from "@fortawesome/free-solid-svg-icons";
+import ErrorDialog from "./ChannelPage";
 
 const MenuItem = withStyles({
     root: {
@@ -41,6 +44,7 @@ class ChannelMessages extends Component{
             textOptions:[],
             fileOptions:[],
             enableDragAndDrop:false,
+            setErrorDialog:false,
         };
        // console.log(this.state.role);
         this.myRef = [];
@@ -59,6 +63,7 @@ class ChannelMessages extends Component{
     counter = 0;
     link = "";
     //messagesEnd2 = null;
+    ErrorDialogText = "";
     initialization = () => {
         axios.get(serverURL() + "channel-message/" + this.props.channelId + "/?query=" + "&page=" + 1,TokenConfig())
             .then(result => {
@@ -70,10 +75,10 @@ class ChannelMessages extends Component{
                 this.newMessagesList = [...this.newMessagesList].reverse();
                 this.newMessageFile = this.newMessagesList.map((value,index) => {
                     if (value?.message_type === "t") {
-                        return <Typography component={"h2"}
+                        return <Typography
                                            key={value?.id}
-                                           variant={"body1"} gutterBottom
-                                           className={this.classes.blueFontStyle} >{value?.text}</Typography>
+                                           variant={"body1"}
+                                            >{value?.text}</Typography>
                     } else if (value?.message_type === "i") {
                         return <img key={value?.id} src={value?.message_file}
                                     height={"100%"} width={"100%"}/>
@@ -95,18 +100,20 @@ class ChannelMessages extends Component{
             .catch(error => {
                 console.log(error);
                 this.setState({loading:false});
+                this.ErrorDialogText = error.response.data?.error;
+                this.setState({setErrorDialog:true});
             })
     };
     handleGetNewMessages = (value) => {
         if (value.topPosition === 0){
             if (this.counter === 0){
                 this.counter++;
-                console.log("one time");
+               // console.log("one time");
             }
             else {
                 if (this.counter === 1){
                     this.counter++;
-                    console.log("two time");
+                   // console.log("two time");
                     this.setState({loading:true});
                     axios.get(this.nextLink,TokenConfig())
                         .then(result => {
@@ -121,10 +128,10 @@ class ChannelMessages extends Component{
                             this.newMessagesList = [...newMessagesList2].reverse();
                             let newMessageFile2 = this.newMessagesList.map((value,index) => {
                                 if (value?.message_type === "t") {
-                                    return <Typography component={"h2"}
+                                    return <Typography
                                                        key={value?.id}
-                                                       variant={"body1"} gutterBottom
-                                                       className={this.classes.blueFontStyle}>{value?.text}</Typography>
+                                                       variant={"body1"}
+                                                       >{value?.text}</Typography>
                                 } else if (value?.message_type === "i") {
                                     return <img key={value?.id} src={value?.message_file}
                                                 height={"100%"} width={"100%"}/>
@@ -153,6 +160,8 @@ class ChannelMessages extends Component{
                                 this.counter = 0;
                             }
                             this.setState({loading:false});
+                            // this.ErrorDialogText = error?.response?.data?.error;
+                            // this.setState({setErrorDialog:true});
                         })
                 }
             }
@@ -185,6 +194,8 @@ class ChannelMessages extends Component{
                     .catch(error =>{
                         console.log(error);
                         this.setState({loading:false});
+                        this.ErrorDialogText = error.response.data?.error;
+                        this.setState({setErrorDialog:true});
                     });
             }
             else if (files[i].type.split("/")[0] === "image"){
@@ -204,6 +215,8 @@ class ChannelMessages extends Component{
                     .catch(error =>{
                         console.log(error);
                         this.setState({loading:false});
+                        this.ErrorDialogText = error.response.data?.error;
+                        this.setState({setErrorDialog:true});
                     });
             }
             else if (files[i].type.split("/")[0] === "video"){
@@ -222,6 +235,8 @@ class ChannelMessages extends Component{
                     .catch(error =>{
                         console.log(error);
                         this.setState({loading:false});
+                        this.ErrorDialogText = error.response.data?.error;
+                        this.setState({setErrorDialog:true});
                     });
             }
             else if (files[i].type.split("/")[0] === "application" || files[i].type.split("/")[0] === "text"){
@@ -239,7 +254,7 @@ class ChannelMessages extends Component{
                                 >
                                     <AssignmentSharp style={{ fontSize: 35 }} />
                                 </IconButton>
-                                <Typography component={"h2"} variant={"body1"} dir={"ltr"} className={this.classes.blueFontStyle}>{files[i].name}</Typography>
+                                <Typography variant={"body1"} dir={"ltr"} className={this.classes.blueFontStyle}>{files[i].name}</Typography>
                             </div>
                         );
                         this.setState({loading:false});
@@ -247,6 +262,8 @@ class ChannelMessages extends Component{
                     .catch(error =>{
                         console.log(error);
                         this.setState({loading:false});
+                        this.ErrorDialogText = error.response.data?.error;
+                        this.setState({setErrorDialog:true});
                     });
 
             }
@@ -302,6 +319,8 @@ class ChannelMessages extends Component{
                 .catch(error =>{
                     console.log(error);
                     this.indexSelected = -1;
+                    this.ErrorDialogText = error.response.data?.error;
+                    this.setState({setErrorDialog:true});
                 });
 
             this.setState({});
@@ -360,7 +379,9 @@ class ChannelMessages extends Component{
             }
         }
         }
-
+    handleStateErrorDialog = () =>{
+        this.setState({setErrorDialog:!this.state.setErrorDialog})
+    };
     render() {
         const classes = this.props.classes;
         const onFileChange = event => {
@@ -393,6 +414,8 @@ class ChannelMessages extends Component{
                     .catch(error =>{
                         console.log(error);
                         this.indexSelected = -1;
+                        this.ErrorDialogText = error.response.data?.error;
+                        this.setState({setErrorDialog:true});
                     });
 
                 // let findingElement = this.newMessageFile.find((jsx) => jsx.props.children === "salam");
@@ -421,12 +444,14 @@ class ChannelMessages extends Component{
                 axios.put(serverURL() + "channel-message/" + this.props.channelId + "/" + this.newMessageFile[this.indexSelected].key + "/",formData,TokenConfig())
                     .then(result => {
                         //console.log(result);
-                        const newElement = <Typography key={result.data.id} component={"h2"} variant={"body1"} className={classes.blueFontStyle}>{text}</Typography>;
+                        const newElement = <Typography key={result.data.id} variant={"body1"}>{text}</Typography>;
                         this.newMessageFile.splice(this.indexSelected, 1, newElement);
                         this.setState({});
                     })
                     .catch(error => {
                         console.log(error);
+                        this.ErrorDialogText = error.response.data?.error;
+                        this.setState({setErrorDialog:true});
                     });
                 this.state.editing = false;
             }
@@ -445,13 +470,15 @@ class ChannelMessages extends Component{
                     .then(result => {
                        // console.log(result);
                         this.newMessageFile.push(
-                            <Typography key={result.data.id} component={"h2"} variant={"body1"} className={classes.blueFontStyle}>{text}</Typography>
+                            <Typography key={result.data.id} variant={"body1"} >{text}</Typography>
                         );
                         this.state.needEndMessages = true;
                         this.setState({});
                     })
                     .catch(error =>{
                         console.log(error);
+                        this.ErrorDialogText = error.response.data?.error;
+                        this.setState({setErrorDialog:true});
                     });
             }
             this.messageText = "";
@@ -461,14 +488,18 @@ class ChannelMessages extends Component{
             axios.post(serverURL() + "channel/subscription/",{"invite_link":this.props.inviteLink},TokenConfig())
                 .then(result => {
                    // console.log(result);
+                    window.location.reload();
                 })
                 .catch(error => {
                     console.log(error);
-                    console.log(error.response.data.error);
+                    this.ErrorDialogText = error.response.data?.error;
+                    this.setState({setErrorDialog:true});
+                    //console.log(error.response.data.error);
                 })
         };
         return(
             <div>
+                {/*<ErrorDialog open={this.state.setErrorDialog} errorText={this.ErrorDialogText} handleParentState={this.handleStateErrorDialog} />*/}
             <DragAndDrop handleDrop={this.handleDrop} enable={this.state.enableDragAndDrop}>
                 <LoadingOverlay active={this.state.loading} spinner text={""}>
                 <ScrollArea className={classes.mainDiv} speed={0.5} horizontal={false} onScroll={this.handleGetNewMessages}>
@@ -520,43 +551,80 @@ class ChannelMessages extends Component{
                 </ScrollArea>
                 </LoadingOverlay>
             </DragAndDrop>
-                {this.props.role === "nothing" ?
-                    null :
-                    <Divider className={classes.divider} />
-                }
                 <input
                     style={{display : 'none'}}
                     id='file' type="file" onChange={onFileChange} multiple/>
-                {this.props.role === "consultant" ?
-                    <TextField id="standard-basic" multiline fullWidth
-                               placeholder={"پیام خود را وارد کنید"}
-                               value={this.messageText}
-                               onChange={this.handleTextFieldChange}
-                               InputProps={{
-                                   style: {fontFamily: 'IRANSansWeb'},
-                                   endAdornment: (
-                                       <InputAdornment position="end">
-                                           <label htmlFor='file'>
-                                           <IconButton
-                                               aria-label="upload picture"
-                                               component="span"
-                                               style={{padding: '0px', color: '#3f407d'}}
-                                           >
-                                               <CloudUpload style={{ fontSize: 35 }} />
-                                           </IconButton>
-                                           </label>
-                                           <IconButton
-                                               style={{padding: '0px', color: '#3f407d'}}
-                                               onClick={handleSendIcon}
-                                           >
-                                               <Done style={{ fontSize: 35 }} />
-                                           </IconButton>
-                                       </InputAdornment>)
-                               }}
-                    /> :
-                    this.props.role === "subscriber" ? null :
-                        <Button variant="contained" fullWidth color={'primary'} onClick={handleJoinChannel}>پیوستن به کانال</Button>
+                {this.props.role === null ? null :
+                    this.props.role === "consultant" ? <div>
+                        <Divider className={classes.divider} />
+                        <TextField id="standard-basic" multiline fullWidth
+                                   placeholder={"پیام خود را وارد کنید"}
+                                   value={this.messageText}
+                                   onChange={this.handleTextFieldChange}
+                                   InputProps={{
+                                       style: {fontFamily: 'IRANSansWeb'},
+                                       endAdornment: (
+                                           <InputAdornment position="end">
+                                               <label htmlFor='file'>
+                                                   <IconButton
+                                                       aria-label="upload picture"
+                                                       component="span"
+                                                       style={{margin:"2px",padding: '0px', color: '#3f407d'}}
+                                                   >
+                                                       {/*<CloudUpload style={{ fontSize: 35 }} />*/}
+                                                       <FontAwesomeIcon icon={faFileUpload} style={{color: '#3f407d'}}/>
+                                                   </IconButton>
+                                               </label>
+                                               <IconButton
+                                                   style={{margin:"2px",padding: '0px', color: '#3f407d'}}
+                                                   onClick={handleSendIcon}
+                                               >
+                                                   {/*<Done style={{ fontSize: 35}} />*/}
+                                                   <Send style={{ fontSize: 30 ,transform: "rotate(-180deg)"}} />
+                                               </IconButton>
+                                           </InputAdornment>)
+                                   }}
+                        />
+                </div> : this.props.role === "nothing" ? <Button variant="contained" endIcon={<Add />} fullWidth color={'primary'} onClick={handleJoinChannel}>پیوستن به کانال</Button>
+                        : null
                 }
+                {/*{this.props.role === "nothing" ?*/}
+                    {/*null :*/}
+                    {/*<Divider className={classes.divider} />*/}
+                {/*}*/}
+
+                {/*{this.props.role === "consultant" ?*/}
+                    {/*<TextField id="standard-basic" multiline fullWidth*/}
+                               {/*placeholder={"پیام خود را وارد کنید"}*/}
+                               {/*value={this.messageText}*/}
+                               {/*onChange={this.handleTextFieldChange}*/}
+                               {/*InputProps={{*/}
+                                   {/*style: {fontFamily: 'IRANSansWeb'},*/}
+                                   {/*endAdornment: (*/}
+                                       {/*<InputAdornment position="end">*/}
+                                           {/*<label htmlFor='file'>*/}
+                                           {/*<IconButton*/}
+                                               {/*aria-label="upload picture"*/}
+                                               {/*component="span"*/}
+                                               {/*style={{margin:"2px",padding: '0px', color: '#3f407d'}}*/}
+                                           {/*>*/}
+                                               {/*/!*<CloudUpload style={{ fontSize: 35 }} />*!/*/}
+                                               {/*<FontAwesomeIcon icon={faFileUpload} style={{color: '#3f407d'}}/>*/}
+                                           {/*</IconButton>*/}
+                                           {/*</label>*/}
+                                           {/*<IconButton*/}
+                                               {/*style={{margin:"2px",padding: '0px', color: '#3f407d'}}*/}
+                                               {/*onClick={handleSendIcon}*/}
+                                           {/*>*/}
+                                               {/*/!*<Done style={{ fontSize: 35}} />*!/*/}
+                                               {/*<Send style={{ fontSize: 30 ,transform: "rotate(-180deg)"}} />*/}
+                                           {/*</IconButton>*/}
+                                       {/*</InputAdornment>)*/}
+                               {/*}}*/}
+                    {/*/> :*/}
+                    {/*this.props.role === "subscriber" ? null :*/}
+                        {/*<Button variant="contained" endIcon={<Add />} fullWidth color={'primary'} onClick={handleJoinChannel}>پیوستن به کانال</Button>*/}
+                {/*}*/}
               </div>
         )
     }

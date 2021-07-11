@@ -331,7 +331,7 @@ class ConsultantProfile extends Component {
                                                         <Grid item xs={12} sm={6}>
                                                             <TextValidator
                                                                 size="normal"
-                                                                variant="outlined"
+                                                                variant="filled"
                                                                 required
                                                                 fullWidth
                                                                 id="firstName"
@@ -359,7 +359,7 @@ class ConsultantProfile extends Component {
                                                         <Grid item xs={12} sm={6}>
                                                             <TextValidator
                                                                 size="normal"
-                                                                variant="outlined"
+                                                                variant="filled"
                                                                 required
                                                                 fullWidth
                                                                 id="lastName"
@@ -387,7 +387,7 @@ class ConsultantProfile extends Component {
                                                         <Grid item xs={12} sm={6}>
                                                             <TextValidator
                                                                 size="normal"
-                                                                variant="outlined"
+                                                                variant="filled"
                                                                 required
                                                                 fullWidth
                                                                 id="phoneNumber"
@@ -415,7 +415,7 @@ class ConsultantProfile extends Component {
                                                         <Grid item xs={12} sm={6}>
                                                             <TextValidator
                                                                 size="normal"
-                                                                variant="outlined"
+                                                                variant="filled"
                                                                 required
                                                                 fullWidth
                                                                 id="userName"
@@ -446,7 +446,7 @@ class ConsultantProfile extends Component {
                                                         <Grid item xs={12} sm={8}>
                                                             <TextValidator
                                                                 size="normal"
-                                                                variant="outlined"
+                                                                variant="filled"
                                                                 required
                                                                 fullWidth
                                                                 id="email"

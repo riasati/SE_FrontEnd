@@ -434,9 +434,9 @@ class Reservation extends Component{
                                                                 display: "flex",
                                                                 flexDirection: "row",
                                                                 justifyContent: "space-evenly",}}>
-                                                                <TextField id="outlined-basic" label="عنوان جلسه" variant="outlined"  value={this.state.title}
+                                                                <TextField id="outlined-basic" label="عنوان جلسه" variant="filled"  value={this.state.title}
                                                                            onChange={this.handleTitleChange} />
-                                                                <TextField id="outlined-basic" label="توضيحات جلسه" variant="outlined"  value={this.state.description}
+                                                                <TextField id="outlined-basic" label="توضيحات جلسه" variant="filled"  value={this.state.description}
                                                                            onChange={this.handleDescriptionChange} />
                                                             </div>
                                                             </AccordionDetails>

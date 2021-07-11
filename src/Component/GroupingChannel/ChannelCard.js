@@ -35,7 +35,7 @@ class ChannelCard extends Component{
                     : 
                     <img src={'../../image/defaultavatar.jpg'} className={classes.img}/>
                 }
-                <div data-testid="pn"><h3>{this.props.name}</h3></div>
+                <div data-testid="pn"><div style={{fontSize: '20px',marginTop: '5px'}} >{this.props.name}</div></div>
                 <div><span data-testid="cfn">{this.props.consultant_first_name}</span>&nbsp;<span data-testid="cln">{this.props.consultant_last_name}</span></div>
                 <br/>
               </a>
@@ -51,11 +51,12 @@ const useStyles = makeStyles((theme) => ({
     },
     div:{
       borderRadius: '10px',
-      border: '3px solid #27bda0',
-      backgroundColor:'#f3f7fa',
+      border: '1px solid #27bda0',
+      backgroundColor:'#fff',
       transition:'all ease 0.5s',
       "&:hover": {
-          boxShadow: '1px 1px 10px 0px #2ab371',
+          // boxShadow: '1px 1px 10px 0px #2ab371',
+          backgroundColor: '#f3f7fa',
       },
     },
     a:{
@@ -67,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
         height:'100px',
         borderRadius: '100%',
         marginTop:'10%',
-        border: '2px solid #27bda0',
+        border: '1px solid #27bda0',
         transition:'all ease 0.5s',
         "&:hover": {
             filter: 'drop-shadow(0px 0px 10px #27bda0)',
@@ -75,6 +76,7 @@ const useStyles = makeStyles((theme) => ({
     },
     container: {
       padding: '5%',
+      backgroundColor: '#f3f7fa',
     },
     paper: {
       padding: theme.spacing(2),

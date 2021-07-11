@@ -348,14 +348,14 @@ class GroupingChannel extends Component {
             <Container maxWidth="lg" className={classes.container}>
               <Grid container spacing={3}>
                 <Grid item xs={12} md={12} lg={12}>
-                  <Paper className={fixedHeightPaper}>
+                  <Paper className={fixedHeightPaper} style={{backgroundColor: '#f3f7fa',}}>
                     <ValidatorForm className={classes.form} noValidate>
                       <Grid container spacing={3} component="h6">
                         <Grid item xs={0} sm={0} md={1}>
 
                         </Grid>
                         <Grid item xs={12} sm={12} md={2}>
-                          <FormControl variant="outlined" className={classes.formControl}>
+                          <FormControl variant="filled" className={classes.formControl}>
                             <InputLabel id="searchgroup"><span style={{ fontFamily: 'IRANSansWeb' }}>نوع جستوجو</span></InputLabel>
                             <Select
                               size="normal"
@@ -376,9 +376,10 @@ class GroupingChannel extends Component {
                           </FormControl>
                         </Grid>
                         <Grid item xs={12} sm={12} md={2}>
-                          <FormControl variant="outlined" className={classes.formControl}>
+                          <FormControl variant="filled" className={classes.formControl}>
                             <InputLabel id="searchgroup"><span style={{ fontFamily: 'IRANSansWeb' }}>حوزه مشاوره</span></InputLabel>
                             <Select
+                            variant="filled"
                               size="normal"
                               labelId="searchgroup"
                               id="searchgroup"
@@ -406,9 +407,10 @@ class GroupingChannel extends Component {
                           <TextValidator
                             size="normal"
                             fullWidth
-                            variant="outlined"
+                            variant="filled"
                             id="searchword"
-                            placeholder={"جست و جو"}
+                            placeholder={"کلمه مد نظر را وارد کنید"}
+                            label="جستوجو"
                             name="searchword"
                             autoComplete="searchword"
                             type="string"
@@ -472,7 +474,7 @@ class GroupingChannel extends Component {
                     </Grid>
                     <br />
                     {pending1 ? null : 
-                    <div>
+                    <div style={{backgroundColor: '#f3f7fa',}}>
                       <ReactPaginate
                         previousLabel={<FontAwesomeIcon icon={faAngleRight} style={{ fontSize: '15px', }} />}
                         nextLabel={<FontAwesomeIcon icon={faAngleLeft} style={{ fontSize: '15px', }} />}

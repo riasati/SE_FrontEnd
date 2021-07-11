@@ -47,7 +47,7 @@ class DirectList extends Component {
                     </div>
                     <div style={{ backgroundColor: '#fff', textAlign: 'right', display: 'grid', alignItems: 'center' }}>
                         <div>
-                            <h3 style={{ margin: '0px 0px -20px 0' }}><span>{this.props.first_name}</span>&nbsp;<span>{this.props.last_name}</span></h3>
+                            <div style={{ margin: '0px 0px -20px 0',fontSize: '15px' }}><span>{this.props.first_name}</span>&nbsp;<span>{this.props.last_name}</span></div>
                         </div>
                         <div>
                             جهت پر کردن فضا

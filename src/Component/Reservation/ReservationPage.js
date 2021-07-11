@@ -130,6 +130,7 @@ class Reservation extends Component{
         const postBody = {
             "start_date": calnederDate + " " + DataValue.start_time,
             "end_date": calnederDate + " " + DataValue.end_time,
+            "id" : DataValue.id,
             "title": this.state.title,
             "description": this.state.description
         };
